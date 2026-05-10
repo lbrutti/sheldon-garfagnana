@@ -9,7 +9,7 @@
     "endDateTs": 1985904000,
     "value": 85000,
     "category": "heritage",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.085707,
     "lng": 10.381984,
     "status": "not_started"
@@ -24,7 +24,7 @@
     "endDateTs": 2046211200,
     "value": 395000,
     "category": "mobility",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.007813,
     "lng": 10.591577,
     "status": "not_started"
@@ -39,7 +39,7 @@
     "endDateTs": 1948406400,
     "value": 50000,
     "category": "heritage",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.072937,
     "lng": 10.482584,
     "status": "not_started"
@@ -54,7 +54,7 @@
     "endDateTs": 2044915200,
     "value": 1330000,
     "category": "environment",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.055947,
     "lng": 10.444272,
     "status": "not_started"
@@ -69,7 +69,7 @@
     "endDateTs": 1831680000,
     "value": 1480000,
     "category": "environment",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.149982,
     "lng": 10.402198,
     "status": "progress"
@@ -84,7 +84,7 @@
     "endDateTs": 2039299200,
     "value": 1040000,
     "category": "heritage",
-    "comune": "Villa Collemandina",
+    "municipality": "Villa Collemandina",
     "lat": 44.182452,
     "lng": 10.384301,
     "status": "not_started"
@@ -99,7 +99,7 @@
     "endDateTs": 2029536000,
     "value": 1230000,
     "category": "environment",
-    "comune": "Castelnuovo di Garfagnana",
+    "municipality": "Castelnuovo di Garfagnana",
     "lat": 44.10573,
     "lng": 10.41195,
     "status": "not_started"
@@ -114,7 +114,7 @@
     "endDateTs": 1886457600,
     "value": 1095000,
     "category": "heritage",
-    "comune": "Castelnuovo di Garfagnana",
+    "municipality": "Castelnuovo di Garfagnana",
     "lat": 44.108836,
     "lng": 10.40706,
     "status": "progress"
@@ -129,7 +129,7 @@
     "endDateTs": 1890691200,
     "value": 1415000,
     "category": "mobility",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.183529,
     "lng": 10.331313,
     "status": "not_started"
@@ -144,7 +144,7 @@
     "endDateTs": 1697414400,
     "value": 1650000,
     "category": "society",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.084301,
     "lng": 10.382647,
     "status": "complete"
@@ -159,7 +159,7 @@
     "endDateTs": 1728864000,
     "value": 1900000,
     "category": "environment",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.181464,
     "lng": 10.334667,
     "status": "complete"
@@ -174,7 +174,7 @@
     "endDateTs": 1930780800,
     "value": 1285000,
     "category": "mobility",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.083496,
     "lng": 10.384995,
     "status": "not_started"
@@ -189,7 +189,7 @@
     "endDateTs": 1992470400,
     "value": 1670000,
     "category": "environment",
-    "comune": "Molazzana",
+    "municipality": "Molazzana",
     "lat": 44.08488,
     "lng": 10.365781,
     "status": "not_started"
@@ -204,7 +204,7 @@
     "endDateTs": 1947888000,
     "value": 305000,
     "category": "mobility",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.054049,
     "lng": 10.4422,
     "status": "not_started"
@@ -219,7 +219,7 @@
     "endDateTs": 2026425600,
     "value": 1710000,
     "category": "environment",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.150955,
     "lng": 10.398264,
     "status": "not_started"
@@ -234,7 +234,7 @@
     "endDateTs": 1861401600,
     "value": 1605000,
     "category": "heritage",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.071757,
     "lng": 10.486793,
     "status": "progress"
@@ -249,7 +249,7 @@
     "endDateTs": 1976918400,
     "value": 825000,
     "category": "heritage",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.147083,
     "lng": 10.402532,
     "status": "not_started"
@@ -264,7 +264,7 @@
     "endDateTs": 2046816000,
     "value": 1790000,
     "category": "heritage",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.21429,
     "lng": 10.215512,
     "status": "not_started"
@@ -279,7 +279,7 @@
     "endDateTs": 2054505600,
     "value": 410000,
     "category": "society",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.169284,
     "lng": 10.280483,
     "status": "not_started"
@@ -294,7 +294,7 @@
     "endDateTs": 2071958400,
     "value": 1285000,
     "category": "environment",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.133672,
     "lng": 10.417647,
     "status": "not_started"
@@ -309,7 +309,7 @@
     "endDateTs": 1908057600,
     "value": 1090000,
     "category": "society",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.217607,
     "lng": 10.282436,
     "status": "not_started"
@@ -324,7 +324,7 @@
     "endDateTs": 2045174400,
     "value": 1950000,
     "category": "mobility",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.233235,
     "lng": 10.283893,
     "status": "not_started"
@@ -339,7 +339,7 @@
     "endDateTs": 1874534400,
     "value": 930000,
     "category": "heritage",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.149198,
     "lng": 10.400016,
     "status": "not_started"
@@ -354,7 +354,7 @@
     "endDateTs": 1699574400,
     "value": 1020000,
     "category": "society",
-    "comune": "Molazzana",
+    "municipality": "Molazzana",
     "lat": 44.083331,
     "lng": 10.365511,
     "status": "complete"
@@ -369,7 +369,7 @@
     "endDateTs": 1869350400,
     "value": 910000,
     "category": "heritage",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.217279,
     "lng": 10.21617,
     "status": "not_started"
@@ -384,7 +384,7 @@
     "endDateTs": 1850515200,
     "value": 1300000,
     "category": "heritage",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.184803,
     "lng": 10.334472,
     "status": "progress"
@@ -399,7 +399,7 @@
     "endDateTs": 1946419200,
     "value": 1905000,
     "category": "mobility",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.184186,
     "lng": 10.33167,
     "status": "not_started"
@@ -414,7 +414,7 @@
     "endDateTs": 1815436800,
     "value": 1260000,
     "category": "environment",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.184391,
     "lng": 10.266873,
     "status": "not_started"
@@ -429,7 +429,7 @@
     "endDateTs": 1866326400,
     "value": 1960000,
     "category": "society",
-    "comune": "Castelnuovo di Garfagnana",
+    "municipality": "Castelnuovo di Garfagnana",
     "lat": 44.107763,
     "lng": 10.410145,
     "status": "progress"
@@ -444,7 +444,7 @@
     "endDateTs": 1999987200,
     "value": 95000,
     "category": "environment",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.164528,
     "lng": 10.364315,
     "status": "not_started"
@@ -459,7 +459,7 @@
     "endDateTs": 1838505600,
     "value": 310000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.217758,
     "lng": 10.281016,
     "status": "not_started"
@@ -474,7 +474,7 @@
     "endDateTs": 1875139200,
     "value": 85000,
     "category": "heritage",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.16639,
     "lng": 10.366269,
     "status": "not_started"
@@ -489,7 +489,7 @@
     "endDateTs": 1942790400,
     "value": 990000,
     "category": "environment",
-    "comune": "Castelnuovo di Garfagnana",
+    "municipality": "Castelnuovo di Garfagnana",
     "lat": 44.107849,
     "lng": 10.409887,
     "status": "not_started"
@@ -504,7 +504,7 @@
     "endDateTs": 1820016000,
     "value": 140000,
     "category": "mobility",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.163122,
     "lng": 10.312911,
     "status": "not_started"
@@ -519,7 +519,7 @@
     "endDateTs": 2008454400,
     "value": 1025000,
     "category": "environment",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.007576,
     "lng": 10.589068,
     "status": "not_started"
@@ -534,7 +534,7 @@
     "endDateTs": 2064528000,
     "value": 1200000,
     "category": "environment",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.135169,
     "lng": 10.417611,
     "status": "not_started"
@@ -549,7 +549,7 @@
     "endDateTs": 2048198400,
     "value": 365000,
     "category": "society",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.968578,
     "lng": 10.550206,
     "status": "not_started"
@@ -564,7 +564,7 @@
     "endDateTs": 1936051200,
     "value": 1370000,
     "category": "environment",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.219605,
     "lng": 10.28611,
     "status": "not_started"
@@ -579,7 +579,7 @@
     "endDateTs": 2006726400,
     "value": 985000,
     "category": "mobility",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.234186,
     "lng": 10.284055,
     "status": "not_started"
@@ -594,7 +594,7 @@
     "endDateTs": 1891209600,
     "value": 1835000,
     "category": "society",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.132222,
     "lng": 10.417057,
     "status": "not_started"
@@ -609,7 +609,7 @@
     "endDateTs": 1939766400,
     "value": 855000,
     "category": "environment",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.214947,
     "lng": 10.216505,
     "status": "not_started"
@@ -624,7 +624,7 @@
     "endDateTs": 2067465600,
     "value": 620000,
     "category": "environment",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.218066,
     "lng": 10.214194,
     "status": "not_started"
@@ -639,7 +639,7 @@
     "endDateTs": 2029881600,
     "value": 570000,
     "category": "society",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.218158,
     "lng": 10.286095,
     "status": "not_started"
@@ -654,7 +654,7 @@
     "endDateTs": 1993075200,
     "value": 1895000,
     "category": "mobility",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.082582,
     "lng": 10.381996,
     "status": "not_started"
@@ -669,7 +669,7 @@
     "endDateTs": 1830643200,
     "value": 540000,
     "category": "society",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.00718,
     "lng": 10.590969,
     "status": "progress"
@@ -684,7 +684,7 @@
     "endDateTs": 1967846400,
     "value": 1340000,
     "category": "mobility",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.01291,
     "lng": 10.591542,
     "status": "not_started"
@@ -699,7 +699,7 @@
     "endDateTs": 1745971200,
     "value": 335000,
     "category": "society",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.010193,
     "lng": 10.590544,
     "status": "complete"
@@ -714,7 +714,7 @@
     "endDateTs": 1930348800,
     "value": 890000,
     "category": "mobility",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.058238,
     "lng": 10.44571,
     "status": "not_started"
@@ -729,7 +729,7 @@
     "endDateTs": 2068070400,
     "value": 545000,
     "category": "mobility",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.965854,
     "lng": 10.551889,
     "status": "not_started"
@@ -744,7 +744,7 @@
     "endDateTs": 1820793600,
     "value": 255000,
     "category": "heritage",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.064587,
     "lng": 10.531068,
     "status": "progress"
@@ -759,7 +759,7 @@
     "endDateTs": 1955836800,
     "value": 1885000,
     "category": "environment",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.059578,
     "lng": 10.440591,
     "status": "not_started"
@@ -774,7 +774,7 @@
     "endDateTs": 2053209600,
     "value": 505000,
     "category": "environment",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.169413,
     "lng": 10.281041,
     "status": "not_started"
@@ -789,7 +789,7 @@
     "endDateTs": 1865548800,
     "value": 1110000,
     "category": "environment",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.964465,
     "lng": 10.547588,
     "status": "not_started"
@@ -804,7 +804,7 @@
     "endDateTs": 1930435200,
     "value": 1365000,
     "category": "environment",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.167725,
     "lng": 10.28207,
     "status": "not_started"
@@ -819,7 +819,7 @@
     "endDateTs": 1808611200,
     "value": 180000,
     "category": "society",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.167292,
     "lng": 10.314755,
     "status": "not_started"
@@ -834,7 +834,7 @@
     "endDateTs": 1905120000,
     "value": 1015000,
     "category": "society",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.18524,
     "lng": 10.266317,
     "status": "not_started"
@@ -849,7 +849,7 @@
     "endDateTs": 2016316800,
     "value": 1370000,
     "category": "environment",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.083799,
     "lng": 10.385651,
     "status": "not_started"
@@ -864,7 +864,7 @@
     "endDateTs": 1987545600,
     "value": 1450000,
     "category": "heritage",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.064887,
     "lng": 10.53142,
     "status": "not_started"
@@ -879,7 +879,7 @@
     "endDateTs": 1953158400,
     "value": 545000,
     "category": "society",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.215917,
     "lng": 10.218809,
     "status": "not_started"
@@ -894,7 +894,7 @@
     "endDateTs": 1997654400,
     "value": 450000,
     "category": "society",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.058709,
     "lng": 10.442742,
     "status": "not_started"
@@ -909,7 +909,7 @@
     "endDateTs": 2052259200,
     "value": 915000,
     "category": "mobility",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.183229,
     "lng": 10.331221,
     "status": "not_started"
@@ -924,7 +924,7 @@
     "endDateTs": 1893715200,
     "value": 810000,
     "category": "heritage",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.130364,
     "lng": 10.415639,
     "status": "not_started"
@@ -939,7 +939,7 @@
     "endDateTs": 1858550400,
     "value": 1575000,
     "category": "mobility",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.234633,
     "lng": 10.283405,
     "status": "progress"
@@ -954,7 +954,7 @@
     "endDateTs": 1721865600,
     "value": 1475000,
     "category": "mobility",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.057511,
     "lng": 10.446125,
     "status": "complete"
@@ -969,7 +969,7 @@
     "endDateTs": 1783641600,
     "value": 1130000,
     "category": "environment",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.082582,
     "lng": 10.384135,
     "status": "not_started"
@@ -984,7 +984,7 @@
     "endDateTs": 2029708800,
     "value": 165000,
     "category": "mobility",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.011612,
     "lng": 10.592481,
     "status": "not_started"
@@ -999,7 +999,7 @@
     "endDateTs": 2019340800,
     "value": 650000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.217293,
     "lng": 10.282608,
     "status": "not_started"
@@ -1014,7 +1014,7 @@
     "endDateTs": 2076192000,
     "value": 1990000,
     "category": "environment",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.132485,
     "lng": 10.416433,
     "status": "not_started"
@@ -1029,7 +1029,7 @@
     "endDateTs": 2052172800,
     "value": 140000,
     "category": "environment",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.233921,
     "lng": 10.28509,
     "status": "not_started"
@@ -1044,7 +1044,7 @@
     "endDateTs": 1736035200,
     "value": 125000,
     "category": "environment",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.074979,
     "lng": 10.483678,
     "status": "complete"
@@ -1059,7 +1059,7 @@
     "endDateTs": 1856822400,
     "value": 1995000,
     "category": "heritage",
-    "comune": "Fosciandora",
+    "municipality": "Fosciandora",
     "lat": 44.118963,
     "lng": 10.451551,
     "status": "progress"
@@ -1074,7 +1074,7 @@
     "endDateTs": 1952467200,
     "value": 1740000,
     "category": "heritage",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.074258,
     "lng": 10.485378,
     "status": "not_started"
@@ -1089,7 +1089,7 @@
     "endDateTs": 1931040000,
     "value": 1205000,
     "category": "mobility",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.168162,
     "lng": 10.284755,
     "status": "not_started"
@@ -1104,7 +1104,7 @@
     "endDateTs": 2024092800,
     "value": 1465000,
     "category": "heritage",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.010809,
     "lng": 10.587022,
     "status": "not_started"
@@ -1119,7 +1119,7 @@
     "endDateTs": 1855267200,
     "value": 1045000,
     "category": "heritage",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.064749,
     "lng": 10.534288,
     "status": "not_started"
@@ -1134,7 +1134,7 @@
     "endDateTs": 1970697600,
     "value": 1175000,
     "category": "society",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.969418,
     "lng": 10.548002,
     "status": "not_started"
@@ -1149,7 +1149,7 @@
     "endDateTs": 1818460800,
     "value": 645000,
     "category": "mobility",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.215685,
     "lng": 10.216332,
     "status": "not_started"
@@ -1164,7 +1164,7 @@
     "endDateTs": 1877472000,
     "value": 1730000,
     "category": "heritage",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.183111,
     "lng": 10.334165,
     "status": "progress"
@@ -1179,7 +1179,7 @@
     "endDateTs": 1896220800,
     "value": 70000,
     "category": "heritage",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.166611,
     "lng": 10.368006,
     "status": "not_started"
@@ -1194,7 +1194,7 @@
     "endDateTs": 1701388800,
     "value": 1015000,
     "category": "mobility",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.967393,
     "lng": 10.552204,
     "status": "complete"
@@ -1209,7 +1209,7 @@
     "endDateTs": 1992297600,
     "value": 720000,
     "category": "environment",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.214229,
     "lng": 10.217015,
     "status": "not_started"
@@ -1224,7 +1224,7 @@
     "endDateTs": 1788825600,
     "value": 355000,
     "category": "heritage",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.964594,
     "lng": 10.548367,
     "status": "not_started"
@@ -1239,7 +1239,7 @@
     "endDateTs": 1893110400,
     "value": 795000,
     "category": "mobility",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.215718,
     "lng": 10.216075,
     "status": "not_started"
@@ -1254,7 +1254,7 @@
     "endDateTs": 2005776000,
     "value": 785000,
     "category": "heritage",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.168777,
     "lng": 10.285554,
     "status": "not_started"
@@ -1269,7 +1269,7 @@
     "endDateTs": 1914019200,
     "value": 1145000,
     "category": "mobility",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.150811,
     "lng": 10.400639,
     "status": "not_started"
@@ -1284,7 +1284,7 @@
     "endDateTs": 1895270400,
     "value": 1235000,
     "category": "environment",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.183679,
     "lng": 10.334775,
     "status": "not_started"
@@ -1299,7 +1299,7 @@
     "endDateTs": 1826496000,
     "value": 1120000,
     "category": "environment",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.135813,
     "lng": 10.414328,
     "status": "progress"
@@ -1314,7 +1314,7 @@
     "endDateTs": 1838764800,
     "value": 675000,
     "category": "society",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.965155,
     "lng": 10.55047,
     "status": "progress"
@@ -1329,7 +1329,7 @@
     "endDateTs": 1722297600,
     "value": 485000,
     "category": "environment",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.168087,
     "lng": 10.280408,
     "status": "complete"
@@ -1344,7 +1344,7 @@
     "endDateTs": 1867622400,
     "value": 1845000,
     "category": "society",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.068589,
     "lng": 10.532668,
     "status": "progress"
@@ -1359,7 +1359,7 @@
     "endDateTs": 1793145600,
     "value": 1100000,
     "category": "mobility",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.084629,
     "lng": 10.381431,
     "status": "progress"
@@ -1374,7 +1374,7 @@
     "endDateTs": 1852329600,
     "value": 1720000,
     "category": "environment",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.184402,
     "lng": 10.332013,
     "status": "not_started"
@@ -1389,7 +1389,7 @@
     "endDateTs": 1858204800,
     "value": 1850000,
     "category": "mobility",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.065319,
     "lng": 10.534037,
     "status": "progress"
@@ -1404,7 +1404,7 @@
     "endDateTs": 1797379200,
     "value": 720000,
     "category": "mobility",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.168862,
     "lng": 10.365996,
     "status": "progress"
@@ -1419,7 +1419,7 @@
     "endDateTs": 1991520000,
     "value": 585000,
     "category": "heritage",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.010923,
     "lng": 10.592923,
     "status": "not_started"
@@ -1434,7 +1434,7 @@
     "endDateTs": 2045347200,
     "value": 1800000,
     "category": "heritage",
-    "comune": "Fosciandora",
+    "municipality": "Fosciandora",
     "lat": 44.113937,
     "lng": 10.45156,
     "status": "not_started"
@@ -1449,7 +1449,7 @@
     "endDateTs": 2019427200,
     "value": 715000,
     "category": "mobility",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.13629,
     "lng": 10.415158,
     "status": "not_started"
@@ -1464,7 +1464,7 @@
     "endDateTs": 1952899200,
     "value": 1305000,
     "category": "environment",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.067734,
     "lng": 10.530606,
     "status": "not_started"
@@ -1479,7 +1479,7 @@
     "endDateTs": 1933372800,
     "value": 1995000,
     "category": "environment",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.181408,
     "lng": 10.335581,
     "status": "not_started"
@@ -1494,7 +1494,7 @@
     "endDateTs": 1788220800,
     "value": 880000,
     "category": "society",
-    "comune": "Castelnuovo di Garfagnana",
+    "municipality": "Castelnuovo di Garfagnana",
     "lat": 44.108485,
     "lng": 10.408315,
     "status": "progress"
@@ -1509,7 +1509,7 @@
     "endDateTs": 1923782400,
     "value": 1945000,
     "category": "environment",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.011392,
     "lng": 10.588547,
     "status": "not_started"
@@ -1524,7 +1524,7 @@
     "endDateTs": 1833667200,
     "value": 490000,
     "category": "environment",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.21891,
     "lng": 10.281463,
     "status": "not_started"
@@ -1539,7 +1539,7 @@
     "endDateTs": 1948147200,
     "value": 1290000,
     "category": "heritage",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.065257,
     "lng": 10.530894,
     "status": "not_started"
@@ -1554,7 +1554,7 @@
     "endDateTs": 1810425600,
     "value": 1005000,
     "category": "society",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.166129,
     "lng": 10.282564,
     "status": "progress"
@@ -1569,7 +1569,7 @@
     "endDateTs": 2062540800,
     "value": 150000,
     "category": "society",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.065818,
     "lng": 10.534094,
     "status": "not_started"
@@ -1584,7 +1584,7 @@
     "endDateTs": 1970784000,
     "value": 755000,
     "category": "environment",
-    "comune": "Villa Collemandina",
+    "municipality": "Villa Collemandina",
     "lat": 44.18293,
     "lng": 10.385568,
     "status": "not_started"
@@ -1599,7 +1599,7 @@
     "endDateTs": 2068934400,
     "value": 1570000,
     "category": "mobility",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.185707,
     "lng": 10.332928,
     "status": "not_started"
@@ -1614,7 +1614,7 @@
     "endDateTs": 2076537600,
     "value": 640000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.216309,
     "lng": 10.280861,
     "status": "not_started"
@@ -1629,7 +1629,7 @@
     "endDateTs": 2025561600,
     "value": 425000,
     "category": "mobility",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.151449,
     "lng": 10.400518,
     "status": "not_started"
@@ -1644,7 +1644,7 @@
     "endDateTs": 1794787200,
     "value": 280000,
     "category": "environment",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.182129,
     "lng": 10.267985,
     "status": "progress"
@@ -1659,7 +1659,7 @@
     "endDateTs": 1890000000,
     "value": 1825000,
     "category": "environment",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.169637,
     "lng": 10.282785,
     "status": "not_started"
@@ -1674,7 +1674,7 @@
     "endDateTs": 1759708800,
     "value": 555000,
     "category": "heritage",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.217334,
     "lng": 10.219478,
     "status": "progress"
@@ -1689,7 +1689,7 @@
     "endDateTs": 1940284800,
     "value": 1790000,
     "category": "environment",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.166723,
     "lng": 10.365118,
     "status": "not_started"
@@ -1704,7 +1704,7 @@
     "endDateTs": 1665705600,
     "value": 145000,
     "category": "society",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.184024,
     "lng": 10.267232,
     "status": "complete"
@@ -1719,7 +1719,7 @@
     "endDateTs": 1892764800,
     "value": 1940000,
     "category": "heritage",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.012323,
     "lng": 10.587343,
     "status": "not_started"
@@ -1734,7 +1734,7 @@
     "endDateTs": 1742860800,
     "value": 1155000,
     "category": "environment",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.185886,
     "lng": 10.333482,
     "status": "complete"
@@ -1749,7 +1749,7 @@
     "endDateTs": 1707177600,
     "value": 1760000,
     "category": "society",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.964576,
     "lng": 10.548094,
     "status": "complete"
@@ -1764,7 +1764,7 @@
     "endDateTs": 1980460800,
     "value": 950000,
     "category": "mobility",
-    "comune": "Fosciandora",
+    "municipality": "Fosciandora",
     "lat": 44.115237,
     "lng": 10.44834,
     "status": "not_started"
@@ -1779,7 +1779,7 @@
     "endDateTs": 1686268800,
     "value": 975000,
     "category": "environment",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.180947,
     "lng": 10.331537,
     "status": "complete"
@@ -1794,7 +1794,7 @@
     "endDateTs": 1773878400,
     "value": 1205000,
     "category": "mobility",
-    "comune": "Molazzana",
+    "municipality": "Molazzana",
     "lat": 44.085978,
     "lng": 10.368601,
     "status": "progress"
@@ -1809,7 +1809,7 @@
     "endDateTs": 1982102400,
     "value": 740000,
     "category": "heritage",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.007351,
     "lng": 10.588588,
     "status": "not_started"
@@ -1824,7 +1824,7 @@
     "endDateTs": 1823472000,
     "value": 1260000,
     "category": "environment",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.215493,
     "lng": 10.284386,
     "status": "not_started"
@@ -1839,7 +1839,7 @@
     "endDateTs": 1879027200,
     "value": 1855000,
     "category": "mobility",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.068566,
     "lng": 10.535874,
     "status": "not_started"
@@ -1854,7 +1854,7 @@
     "endDateTs": 1786147200,
     "value": 1210000,
     "category": "society",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.053701,
     "lng": 10.440958,
     "status": "progress"
@@ -1869,7 +1869,7 @@
     "endDateTs": 1924819200,
     "value": 1165000,
     "category": "heritage",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.234978,
     "lng": 10.285728,
     "status": "not_started"
@@ -1884,7 +1884,7 @@
     "endDateTs": 1814313600,
     "value": 1080000,
     "category": "environment",
-    "comune": "Vergemoli",
+    "municipality": "Vergemoli",
     "lat": 44.085535,
     "lng": 10.385879,
     "status": "progress"
@@ -1899,7 +1899,7 @@
     "endDateTs": 1891123200,
     "value": 845000,
     "category": "heritage",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.213972,
     "lng": 10.284127,
     "status": "not_started"
@@ -1914,7 +1914,7 @@
     "endDateTs": 1936742400,
     "value": 1390000,
     "category": "environment",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.057586,
     "lng": 10.445916,
     "status": "not_started"
@@ -1929,7 +1929,7 @@
     "endDateTs": 1903132800,
     "value": 980000,
     "category": "mobility",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.166487,
     "lng": 10.313534,
     "status": "not_started"
@@ -1944,7 +1944,7 @@
     "endDateTs": 2041459200,
     "value": 815000,
     "category": "heritage",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.168437,
     "lng": 10.368587,
     "status": "not_started"
@@ -1959,7 +1959,7 @@
     "endDateTs": 2030313600,
     "value": 255000,
     "category": "environment",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.164977,
     "lng": 10.313698,
     "status": "not_started"
@@ -1974,7 +1974,7 @@
     "endDateTs": 1715040000,
     "value": 745000,
     "category": "environment",
-    "comune": "Villa Collemandina",
+    "municipality": "Villa Collemandina",
     "lat": 44.180656,
     "lng": 10.38571,
     "status": "complete"
@@ -1989,7 +1989,7 @@
     "endDateTs": 2029795200,
     "value": 860000,
     "category": "heritage",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.007735,
     "lng": 10.591769,
     "status": "not_started"
@@ -2004,7 +2004,7 @@
     "endDateTs": 1903392000,
     "value": 830000,
     "category": "society",
-    "comune": "Castelnuovo di Garfagnana",
+    "municipality": "Castelnuovo di Garfagnana",
     "lat": 44.10745,
     "lng": 10.407857,
     "status": "not_started"
@@ -2019,7 +2019,7 @@
     "endDateTs": 1851811200,
     "value": 1770000,
     "category": "mobility",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.069454,
     "lng": 10.536169,
     "status": "not_started"
@@ -2034,7 +2034,7 @@
     "endDateTs": 1934150400,
     "value": 1065000,
     "category": "heritage",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.182101,
     "lng": 10.266887,
     "status": "not_started"
@@ -2049,7 +2049,7 @@
     "endDateTs": 1861488000,
     "value": 1565000,
     "category": "society",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.216468,
     "lng": 10.219365,
     "status": "not_started"
@@ -2064,7 +2064,7 @@
     "endDateTs": 1767657600,
     "value": 245000,
     "category": "society",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.162126,
     "lng": 10.313881,
     "status": "progress"
@@ -2079,7 +2079,7 @@
     "endDateTs": 1694649600,
     "value": 365000,
     "category": "heritage",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.072294,
     "lng": 10.483825,
     "status": "complete"
@@ -2094,7 +2094,7 @@
     "endDateTs": 2009491200,
     "value": 750000,
     "category": "environment",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.169383,
     "lng": 10.283468,
     "status": "not_started"
@@ -2109,7 +2109,7 @@
     "endDateTs": 1720396800,
     "value": 1395000,
     "category": "environment",
-    "comune": "Villa Collemandina",
+    "municipality": "Villa Collemandina",
     "lat": 44.181549,
     "lng": 10.381475,
     "status": "complete"
@@ -2124,7 +2124,7 @@
     "endDateTs": 2061417600,
     "value": 1030000,
     "category": "environment",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.236196,
     "lng": 10.282431,
     "status": "not_started"
@@ -2139,7 +2139,7 @@
     "endDateTs": 1924214400,
     "value": 1900000,
     "category": "heritage",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.072578,
     "lng": 10.485099,
     "status": "not_started"
@@ -2154,7 +2154,7 @@
     "endDateTs": 2064960000,
     "value": 1845000,
     "category": "society",
-    "comune": "Villa Collemandina",
+    "municipality": "Villa Collemandina",
     "lat": 44.181204,
     "lng": 10.385529,
     "status": "not_started"
@@ -2169,7 +2169,7 @@
     "endDateTs": 1805673600,
     "value": 1870000,
     "category": "mobility",
-    "comune": "Fosciandora",
+    "municipality": "Fosciandora",
     "lat": 44.118446,
     "lng": 10.449921,
     "status": "not_started"
@@ -2184,7 +2184,7 @@
     "endDateTs": 1878249600,
     "value": 1345000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.218195,
     "lng": 10.285192,
     "status": "progress"
@@ -2199,7 +2199,7 @@
     "endDateTs": 1872115200,
     "value": 1915000,
     "category": "mobility",
-    "comune": "Gallicano",
+    "municipality": "Gallicano",
     "lat": 44.056266,
     "lng": 10.443112,
     "status": "progress"
@@ -2214,7 +2214,7 @@
     "endDateTs": 1792540800,
     "value": 605000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.219476,
     "lng": 10.283009,
     "status": "progress"
@@ -2229,7 +2229,7 @@
     "endDateTs": 1915315200,
     "value": 260000,
     "category": "heritage",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.23034,
     "lng": 10.28188,
     "status": "not_started"
@@ -2244,7 +2244,7 @@
     "endDateTs": 1771545600,
     "value": 1705000,
     "category": "environment",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.151347,
     "lng": 10.400818,
     "status": "not_started"
@@ -2259,7 +2259,7 @@
     "endDateTs": 2024611200,
     "value": 190000,
     "category": "mobility",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.167774,
     "lng": 10.280823,
     "status": "not_started"
@@ -2274,7 +2274,7 @@
     "endDateTs": 1751155200,
     "value": 855000,
     "category": "mobility",
-    "comune": "Camporgiano",
+    "municipality": "Camporgiano",
     "lat": 44.180767,
     "lng": 10.333503,
     "status": "progress"
@@ -2289,7 +2289,7 @@
     "endDateTs": 1854921600,
     "value": 590000,
     "category": "environment",
-    "comune": "Fosciandora",
+    "municipality": "Fosciandora",
     "lat": 44.115522,
     "lng": 10.44902,
     "status": "not_started"
@@ -2304,7 +2304,7 @@
     "endDateTs": 2005948800,
     "value": 1660000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.218784,
     "lng": 10.281128,
     "status": "not_started"
@@ -2319,7 +2319,7 @@
     "endDateTs": 1828396800,
     "value": 1895000,
     "category": "environment",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.166051,
     "lng": 10.285843,
     "status": "not_started"
@@ -2334,7 +2334,7 @@
     "endDateTs": 1947801600,
     "value": 105000,
     "category": "environment",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.166179,
     "lng": 10.315311,
     "status": "not_started"
@@ -2349,7 +2349,7 @@
     "endDateTs": 1772064000,
     "value": 120000,
     "category": "heritage",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.182352,
     "lng": 10.267938,
     "status": "progress"
@@ -2364,7 +2364,7 @@
     "endDateTs": 1865203200,
     "value": 1975000,
     "category": "environment",
-    "comune": "Molazzana",
+    "municipality": "Molazzana",
     "lat": 44.084567,
     "lng": 10.365957,
     "status": "not_started"
@@ -2379,7 +2379,7 @@
     "endDateTs": 2054505600,
     "value": 175000,
     "category": "mobility",
-    "comune": "Fosciandora",
+    "municipality": "Fosciandora",
     "lat": 44.113746,
     "lng": 10.45046,
     "status": "not_started"
@@ -2394,7 +2394,7 @@
     "endDateTs": 1966896000,
     "value": 530000,
     "category": "society",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.218934,
     "lng": 10.215165,
     "status": "not_started"
@@ -2409,7 +2409,7 @@
     "endDateTs": 1848873600,
     "value": 1155000,
     "category": "environment",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.07464,
     "lng": 10.484573,
     "status": "not_started"
@@ -2424,7 +2424,7 @@
     "endDateTs": 1980892800,
     "value": 835000,
     "category": "environment",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.009561,
     "lng": 10.592088,
     "status": "not_started"
@@ -2439,7 +2439,7 @@
     "endDateTs": 2008540800,
     "value": 1620000,
     "category": "environment",
-    "comune": "Castiglione di Garfagnana",
+    "municipality": "Castiglione di Garfagnana",
     "lat": 44.152435,
     "lng": 10.399429,
     "status": "not_started"
@@ -2454,7 +2454,7 @@
     "endDateTs": 1738886400,
     "value": 715000,
     "category": "society",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.216473,
     "lng": 10.214387,
     "status": "complete"
@@ -2469,7 +2469,7 @@
     "endDateTs": 1886371200,
     "value": 1065000,
     "category": "environment",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.130437,
     "lng": 10.417298,
     "status": "progress"
@@ -2484,7 +2484,7 @@
     "endDateTs": 1836864000,
     "value": 1850000,
     "category": "mobility",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.969127,
     "lng": 10.549527,
     "status": "not_started"
@@ -2499,7 +2499,7 @@
     "endDateTs": 1696723200,
     "value": 580000,
     "category": "environment",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.184693,
     "lng": 10.265032,
     "status": "complete"
@@ -2514,7 +2514,7 @@
     "endDateTs": 1866758400,
     "value": 1875000,
     "category": "mobility",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.064769,
     "lng": 10.531779,
     "status": "not_started"
@@ -2529,7 +2529,7 @@
     "endDateTs": 2046988800,
     "value": 155000,
     "category": "society",
-    "comune": "Villa Collemandina",
+    "municipality": "Villa Collemandina",
     "lat": 44.184504,
     "lng": 10.384032,
     "status": "not_started"
@@ -2544,7 +2544,7 @@
     "endDateTs": 2023228800,
     "value": 1400000,
     "category": "society",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.218415,
     "lng": 10.281379,
     "status": "not_started"
@@ -2559,7 +2559,7 @@
     "endDateTs": 2029276800,
     "value": 1115000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.214054,
     "lng": 10.285311,
     "status": "not_started"
@@ -2574,7 +2574,7 @@
     "endDateTs": 1954800000,
     "value": 1990000,
     "category": "mobility",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.964522,
     "lng": 10.551789,
     "status": "not_started"
@@ -2589,7 +2589,7 @@
     "endDateTs": 1879459200,
     "value": 775000,
     "category": "society",
-    "comune": "Molazzana",
+    "municipality": "Molazzana",
     "lat": 44.085723,
     "lng": 10.364577,
     "status": "not_started"
@@ -2604,7 +2604,7 @@
     "endDateTs": 1779926400,
     "value": 1355000,
     "category": "society",
-    "comune": "Pieve Fosciana",
+    "municipality": "Pieve Fosciana",
     "lat": 44.133586,
     "lng": 10.414058,
     "status": "progress"
@@ -2619,7 +2619,7 @@
     "endDateTs": 1800921600,
     "value": 1295000,
     "category": "society",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.182604,
     "lng": 10.267245,
     "status": "not_started"
@@ -2634,7 +2634,7 @@
     "endDateTs": 1963785600,
     "value": 1410000,
     "category": "society",
-    "comune": "Vagli Sotto",
+    "municipality": "Vagli Sotto",
     "lat": 44.168013,
     "lng": 10.284727,
     "status": "not_started"
@@ -2649,7 +2649,7 @@
     "endDateTs": 1843257600,
     "value": 1405000,
     "category": "heritage",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.164956,
     "lng": 10.314007,
     "status": "not_started"
@@ -2664,7 +2664,7 @@
     "endDateTs": 1964390400,
     "value": 690000,
     "category": "heritage",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.166579,
     "lng": 10.365866,
     "status": "not_started"
@@ -2679,7 +2679,7 @@
     "endDateTs": 2062022400,
     "value": 1805000,
     "category": "society",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.215463,
     "lng": 10.284766,
     "status": "not_started"
@@ -2694,7 +2694,7 @@
     "endDateTs": 1956614400,
     "value": 655000,
     "category": "society",
-    "comune": "Fosciandora",
+    "municipality": "Fosciandora",
     "lat": 44.118291,
     "lng": 10.452105,
     "status": "not_started"
@@ -2709,7 +2709,7 @@
     "endDateTs": 2080512000,
     "value": 375000,
     "category": "mobility",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.215538,
     "lng": 10.215847,
     "status": "not_started"
@@ -2724,7 +2724,7 @@
     "endDateTs": 1837641600,
     "value": 300000,
     "category": "mobility",
-    "comune": "Castelnuovo di Garfagnana",
+    "municipality": "Castelnuovo di Garfagnana",
     "lat": 44.106343,
     "lng": 10.406616,
     "status": "progress"
@@ -2739,7 +2739,7 @@
     "endDateTs": 1885766400,
     "value": 1330000,
     "category": "mobility",
-    "comune": "Villa Collemandina",
+    "municipality": "Villa Collemandina",
     "lat": 44.181935,
     "lng": 10.382245,
     "status": "not_started"
@@ -2754,7 +2754,7 @@
     "endDateTs": 1972252800,
     "value": 1870000,
     "category": "society",
-    "comune": "Careggine",
+    "municipality": "Careggine",
     "lat": 44.164868,
     "lng": 10.315817,
     "status": "not_started"
@@ -2769,7 +2769,7 @@
     "endDateTs": 1809648000,
     "value": 1265000,
     "category": "mobility",
-    "comune": "Bagni di Lucca",
+    "municipality": "Bagni di Lucca",
     "lat": 44.012488,
     "lng": 10.588405,
     "status": "not_started"
@@ -2784,7 +2784,7 @@
     "endDateTs": 1999123200,
     "value": 855000,
     "category": "environment",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.214043,
     "lng": 10.282074,
     "status": "not_started"
@@ -2799,7 +2799,7 @@
     "endDateTs": 1773187200,
     "value": 610000,
     "category": "mobility",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.18588,
     "lng": 10.267737,
     "status": "progress"
@@ -2814,7 +2814,7 @@
     "endDateTs": 1780185600,
     "value": 1260000,
     "category": "heritage",
-    "comune": "Molazzana",
+    "municipality": "Molazzana",
     "lat": 44.083051,
     "lng": 10.363745,
     "status": "progress"
@@ -2829,7 +2829,7 @@
     "endDateTs": 1964995200,
     "value": 1625000,
     "category": "heritage",
-    "comune": "Molazzana",
+    "municipality": "Molazzana",
     "lat": 44.084343,
     "lng": 10.3695,
     "status": "not_started"
@@ -2844,7 +2844,7 @@
     "endDateTs": 1891900800,
     "value": 630000,
     "category": "environment",
-    "comune": "Minucciano",
+    "municipality": "Minucciano",
     "lat": 44.21833,
     "lng": 10.214663,
     "status": "progress"
@@ -2859,7 +2859,7 @@
     "endDateTs": 1939593600,
     "value": 1505000,
     "category": "heritage",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.215289,
     "lng": 10.285541,
     "status": "not_started"
@@ -2874,7 +2874,7 @@
     "endDateTs": 1749513600,
     "value": 690000,
     "category": "environment",
-    "comune": "Borgo a Mozzano",
+    "municipality": "Borgo a Mozzano",
     "lat": 43.966638,
     "lng": 10.551051,
     "status": "progress"
@@ -2889,7 +2889,7 @@
     "endDateTs": 2065046400,
     "value": 1615000,
     "category": "mobility",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.217926,
     "lng": 10.285955,
     "status": "not_started"
@@ -2904,7 +2904,7 @@
     "endDateTs": 2027548800,
     "value": 1070000,
     "category": "mobility",
-    "comune": "Giuncugnano",
+    "municipality": "Giuncugnano",
     "lat": 44.23235,
     "lng": 10.284551,
     "status": "not_started"
@@ -2919,7 +2919,7 @@
     "endDateTs": 1754352000,
     "value": 1080000,
     "category": "heritage",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.075555,
     "lng": 10.485484,
     "status": "progress"
@@ -2934,7 +2934,7 @@
     "endDateTs": 1797984000,
     "value": 1085000,
     "category": "mobility",
-    "comune": "San Romano in Garfagnana",
+    "municipality": "San Romano in Garfagnana",
     "lat": 44.166949,
     "lng": 10.364257,
     "status": "progress"
@@ -2949,7 +2949,7 @@
     "endDateTs": 1834444800,
     "value": 1840000,
     "category": "society",
-    "comune": "Sillano Giuncugnano",
+    "municipality": "Sillano Giuncugnano",
     "lat": 44.218599,
     "lng": 10.28105,
     "status": "not_started"
@@ -2964,7 +2964,7 @@
     "endDateTs": 1790035200,
     "value": 1690000,
     "category": "environment",
-    "comune": "Piazza al Serchio",
+    "municipality": "Piazza al Serchio",
     "lat": 44.181751,
     "lng": 10.266194,
     "status": "not_started"
@@ -2979,7 +2979,7 @@
     "endDateTs": 2065392000,
     "value": 1250000,
     "category": "heritage",
-    "comune": "Barga",
+    "municipality": "Barga",
     "lat": 44.073812,
     "lng": 10.483543,
     "status": "not_started"
@@ -2994,7 +2994,7 @@
     "endDateTs": 1991347200,
     "value": 1070000,
     "category": "mobility",
-    "comune": "Coreglia Antelminelli",
+    "municipality": "Coreglia Antelminelli",
     "lat": 44.06894,
     "lng": 10.530988,
     "status": "not_started"

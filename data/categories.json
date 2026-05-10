@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "name": "society"
+  },
+  {
+    "id": 2,
+    "name": "mobility"
+  },
+  {
+    "id": 3,
+    "name": "environment"
+  },
+  {
+    "id": 4,
+    "name": "heritage"
+  }
+]
