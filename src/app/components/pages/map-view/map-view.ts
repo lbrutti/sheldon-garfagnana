@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-map-view',
+  selector: 'sheldon-map-view',
   imports: [],
   templateUrl: './map-view.html',
   styleUrl: './map-view.scss',

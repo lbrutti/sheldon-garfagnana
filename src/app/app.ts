@@ -4,8 +4,9 @@ import Header from './components/libs/header/header';
 import Footer from './components/libs/footer/footer';
 
 @Component({
-  selector: 'app-root',
-  imports: [RouterOutlet,
+  selector: 'sheldon-root',
+  imports: [
+    RouterOutlet,
     Header,
     Footer],
   templateUrl: './app.html',
