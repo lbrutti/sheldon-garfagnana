@@ -1,17 +1,23 @@
 import {Component, signal} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import Header from './components/libs/header/header';
 import Footer from './components/libs/footer/footer';
+import Navigation from './components/libs/navigation/navigation';
 
 @Component({
   selector: 'sheldon-root',
   imports: [
-    RouterOutlet,
-    Header,
-    Footer],
+
+    Footer,
+    Navigation
+  ],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App {
   protected readonly title = signal('sheldon-garfagnana');
+  protected links: { url: string; name: string }[] = [
+    {url: 'dashboard', name: 'dashboard'},
+    {url: 'stories', name: 'stories'},
+    {url: 'map', name: 'map'}
+  ];
+  protected activeLink: string ='';
 }

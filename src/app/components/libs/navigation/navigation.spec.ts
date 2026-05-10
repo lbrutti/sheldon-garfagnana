@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Header } from './header';
+import { Navigation } from './navigation';
 
-describe('Header', () => {
+describe('Navigation', () => {
   let component: Header;
   let fixture: ComponentFixture<Header>;
 
