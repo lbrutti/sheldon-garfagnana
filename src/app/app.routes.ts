@@ -1,14 +1,15 @@
 import {Routes} from '@angular/router';
+import Dashboard from './components/pages/dashboard/dashboard';
 
 
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./components/pages/dashboard/dashboard')
+    component: Dashboard
   },
   {
     path: 'dashboard',
-    loadComponent: () => import('./components/pages/dashboard/dashboard')
+    component: Dashboard
   },
   {
     path: 'stories',
