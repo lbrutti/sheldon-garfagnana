@@ -9,7 +9,6 @@ import {RouterLink, RouterOutlet} from '@angular/router';
     MatTabNav,
     MatTabNavPanel,
     MatTabLink,
-    Footer,
     RouterOutlet,
     RouterLink
   ],
