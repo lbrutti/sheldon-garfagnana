@@ -1,17 +1,17 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import Footer from './footer';
+import GlobalSearch from './global-search';
 
-describe(Footer, () => {
-  let component: Footer;
-  let fixture: ComponentFixture<Footer>;
+describe('GlobalSearch', () => {
+  let component: GlobalSearch;
+  let fixture: ComponentFixture<GlobalSearch>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Footer],
+      imports: [GlobalSearch],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Footer);
+    fixture = TestBed.createComponent(GlobalSearch);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

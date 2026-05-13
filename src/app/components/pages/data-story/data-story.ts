@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'sheldon-data-story',
+  selector: 'sheldon-public-story',
   imports: [],
   templateUrl: './data-story.html',
   styleUrl: './data-story.scss',

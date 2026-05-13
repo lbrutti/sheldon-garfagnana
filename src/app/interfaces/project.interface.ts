@@ -28,7 +28,7 @@ export default interface ProjectInterface {
   "endDateTs": number,
   "value": number,
   "category": string,
-  "comune": string,
+  "municipality": string,
   "lat": number,
   "lng": number,
   "status": string

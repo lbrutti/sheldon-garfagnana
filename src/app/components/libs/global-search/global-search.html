@@ -1,0 +1,10 @@
+<mat-form-field>
+  <mat-label>Input</mat-label>
+  <input matInput [matAutocomplete]="auto"
+         [(ngModel)]="searchTerm">
+  <mat-autocomplete #auto="matAutocomplete">
+    @for (option of filteredSuggestions(); track option) {
+      <mat-option [value]="option">{{ option }}</mat-option>
+    }
+  </mat-autocomplete>
+</mat-form-field>
