@@ -24,15 +24,30 @@ export default class GlobalSearch implements OnInit {
   projects = input<ProjectInterface[]>([]);
   searchTerm: Signal<string> = signal<string>('');
 
-  suggestions: Signal<string[]> = computed(() => {
-    return Array.from(new Set([...this.projects().flatMap((p: ProjectInterface) => {
-      return [p.category, p.municipality];
-    })])).sort();
+  suggestions: Signal<{ value: string, key: string }[]> = computed(() => {
+    let municipalitySuggestions: { [key: string]: { value: string, key: string } } = {};
+    let categorySuggestions: { [key: string]: { value: string, key: string } } = {};
+    this.projects().map((p: ProjectInterface) => {
+      if (!municipalitySuggestions[`${p.municipality.toUpperCase()}}`]) {
+        municipalitySuggestions[`${p.municipality.toUpperCase()}`] = {
+          value: p.municipality,
+          key: 'municipality'
+        };
+      }
+
+      if (!categorySuggestions[`${p.category.toUpperCase()}}`]) {
+        categorySuggestions[`${p.category.toUpperCase()}`] = {
+          value: p.category,
+          key: 'category'
+        };
+      }
+    });
+    return [...Object.values(categorySuggestions), ...Object.values(municipalitySuggestions)].sort((a, b) => a.value.localeCompare(b.value));
   });
-  filteredSuggestions: Signal<string[]> = computed(() => {
+  filteredSuggestions: Signal<{ value: string, key: string }[]> = computed(() => {
     const term = this.searchTerm().toUpperCase();
     return this.suggestions().filter(suggestion => {
-      return suggestion.toUpperCase().startsWith(term)
+      return suggestion.value.toUpperCase().startsWith(term)
     })
   });
 
