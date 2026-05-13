@@ -32,7 +32,6 @@ export default class GlobalSearch {
   myControlSignal = toSignal(this.myControl.valueChanges);
 
   projects = input<ProjectInterface[]>([]);
-  searchTerm: Signal<string> = signal<string>('');
 
   suggestions: Signal<AutocompleteOption[]> = computed(() => {
     let municipalitySuggestions: { [key: string]: AutocompleteOption } = {};
@@ -73,12 +72,8 @@ export default class GlobalSearch {
   }
 
   protected applyFilter($event: any) {
-    console.log(this.searchTerm());
-    console.log($event);
+    console.log(this.myControlSignal());
   }
 
-  protected applyFilterSelection($event: any) {
-    console.log(this.searchTerm());
-    console.log($event);
-  }
+
 }

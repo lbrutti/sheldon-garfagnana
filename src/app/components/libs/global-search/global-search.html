@@ -4,8 +4,8 @@
     <input matInput
            [matAutocomplete]="auto"
            [formControl]="myControl"
-           (keydown.enter)="applyFilter($event)"
-           (change)="applyFilterSelection($event)">
+           (input)="applyFilter($event)"
+           (focus)="applyFilter($event)">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       @for (option of filteredSuggestions(); track option) {
         <mat-option [value]="option">{{ option.value }}</mat-option>
