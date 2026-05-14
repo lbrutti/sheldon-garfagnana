@@ -5,6 +5,9 @@ import {MatOption} from '@angular/material/select';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {MatButton} from '@angular/material/button';
+import {MatChip, MatChipSet} from '@angular/material/chips';
+import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 
 interface AutocompleteOption {
   value: string;
@@ -22,14 +25,20 @@ interface AutocompleteOption {
     MatAutocompleteTrigger,
     FormsModule,
     ReactiveFormsModule,
+    MatButtonToggle,
+    MatButtonToggleGroup,
   ],
   templateUrl: './global-search.html',
   styleUrl: './global-search.scss',
 })
 
 export default class GlobalSearch {
-  myControl = new FormControl<string | AutocompleteOption>({key: '', value: ''});
-  myControlSignal = toSignal(this.myControl.valueChanges);
+  textBox = new FormControl<string | AutocompleteOption>({key: '', value: ''});
+  textBoxSignal = toSignal(this.textBox.valueChanges);
+
+  chipSet = new FormControl<AutocompleteOption[]>([]);
+  chipSetSignal = toSignal(this.chipSet.valueChanges);
+
 
   projects = input<ProjectInterface[]>([]);
 
@@ -54,12 +63,26 @@ export default class GlobalSearch {
     return [...Object.values(categorySuggestions), ...Object.values(municipalitySuggestions)].sort((a, b) => a.value.localeCompare(b.value));
   });
 
+  chips: Signal<AutocompleteOption[]> = computed(() => {
+    let categorySuggestions: { [key: string]: AutocompleteOption } = {};
+    this.projects().map((p: ProjectInterface) => {
+      if (!categorySuggestions[`${p.category.toUpperCase()}}`]) {
+        categorySuggestions[`${p.category.toUpperCase()}`] = {
+          value: p.category,
+          key: 'category'
+        };
+      }
+    });
+    return Object.values(categorySuggestions).sort((a, b) => a.value.localeCompare(b.value));
+
+  });
+
   filteredSuggestions: Signal<AutocompleteOption[]> = computed(() => {
     let term: string = '';
-    if (typeof this.myControlSignal() === 'string') {
-      term = (this.myControlSignal() as string);
+    if (typeof this.textBoxSignal() === 'string') {
+      term = (this.textBoxSignal() as string);
     } else {
-      term = (this.myControlSignal() as AutocompleteOption)?.value;
+      term = (this.textBoxSignal() as AutocompleteOption)?.value;
     }
 
     return term ? this.suggestions().filter(suggestion => {
@@ -72,7 +95,7 @@ export default class GlobalSearch {
   }
 
   protected applyFilter($event: any) {
-    console.log(this.myControlSignal());
+    console.log([this.textBoxSignal(), ...this.chipSetSignal()].filter(f => f));
   }
 
 

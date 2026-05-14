@@ -3,7 +3,7 @@
     <mat-label>Input</mat-label>
     <input matInput
            [matAutocomplete]="auto"
-           [formControl]="myControl"
+           [formControl]="textBox"
            (input)="applyFilter($event)"
            (focus)="applyFilter($event)">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -12,4 +12,16 @@
       }
     </mat-autocomplete>
   </mat-form-field>
+  <mat-button-toggle-group
+    [formControl]="chipSet"
+    name="ingredients"
+    aria-label="Ingredients"
+    multiple>
+    @for (option of chips(); track option) {
+      <mat-button-toggle
+        [value]="option"
+        (change)="(applyFilter($event))">{{ option.value }}
+      </mat-button-toggle>
+    }
+  </mat-button-toggle-group>
 </form>
