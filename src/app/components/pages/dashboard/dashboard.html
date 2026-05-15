@@ -1,1 +1,2 @@
-<sheldon-global-search [projects]="projects()"/>
+<sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>
+{{ this.filters() | json }}

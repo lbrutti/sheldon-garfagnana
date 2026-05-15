@@ -4,8 +4,8 @@
     <input matInput
            [matAutocomplete]="auto"
            [formControl]="textBox"
-           (input)="applyFilter($event)"
-           (focus)="applyFilter($event)">
+           (input)="applyFilter()"
+           (focus)="applyFilter()">
     <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
       @for (option of filteredSuggestions(); track option) {
         <mat-option [value]="option">{{ option.value }}</mat-option>
@@ -20,7 +20,7 @@
     @for (option of chips(); track option) {
       <mat-button-toggle
         [value]="option"
-        (change)="(applyFilter($event))">{{ option.value }}
+        (change)="(applyFilter())">{{ option.value }}
       </mat-button-toggle>
     }
   </mat-button-toggle-group>

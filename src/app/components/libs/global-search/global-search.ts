@@ -1,18 +1,14 @@
-import {Component, computed, input, signal, Signal} from '@angular/core';
+import {Component, computed, input, output, Signal} from '@angular/core';
 import ProjectInterface from '../../../interfaces/project.interface';
 import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
 import {MatOption} from '@angular/material/select';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {MatButton} from '@angular/material/button';
-import {MatChip, MatChipSet} from '@angular/material/chips';
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {FilterOptionInterface} from '../../../interfaces';
 
-interface AutocompleteOption {
-  value: string;
-  key: string;
-}
+
 
 @Component({
   selector: 'sheldon-global-search',
@@ -33,18 +29,19 @@ interface AutocompleteOption {
 })
 
 export default class GlobalSearch {
-  textBox = new FormControl<string | AutocompleteOption>({key: '', value: ''});
+  textBox = new FormControl<string | FilterOptionInterface>({key: '', value: ''});
   textBoxSignal = toSignal(this.textBox.valueChanges);
 
-  chipSet = new FormControl<AutocompleteOption[]>([]);
+  chipSet = new FormControl<FilterOptionInterface[]>([]);
   chipSetSignal = toSignal(this.chipSet.valueChanges);
 
 
   projects = input<ProjectInterface[]>([]);
+  filter = output<(string|FilterOptionInterface)[]>();
 
-  suggestions: Signal<AutocompleteOption[]> = computed(() => {
-    let municipalitySuggestions: { [key: string]: AutocompleteOption } = {};
-    let categorySuggestions: { [key: string]: AutocompleteOption } = {};
+  suggestions: Signal<FilterOptionInterface[]> = computed(() => {
+    let municipalitySuggestions: { [key: string]: FilterOptionInterface } = {};
+    let categorySuggestions: { [key: string]: FilterOptionInterface } = {};
     this.projects().map((p: ProjectInterface) => {
       if (!municipalitySuggestions[`${p.municipality.toUpperCase()}}`]) {
         municipalitySuggestions[`${p.municipality.toUpperCase()}`] = {
@@ -63,8 +60,8 @@ export default class GlobalSearch {
     return [...Object.values(categorySuggestions), ...Object.values(municipalitySuggestions)].sort((a, b) => a.value.localeCompare(b.value));
   });
 
-  chips: Signal<AutocompleteOption[]> = computed(() => {
-    let categorySuggestions: { [key: string]: AutocompleteOption } = {};
+  chips: Signal<FilterOptionInterface[]> = computed(() => {
+    let categorySuggestions: { [key: string]: FilterOptionInterface } = {};
     this.projects().map((p: ProjectInterface) => {
       if (!categorySuggestions[`${p.category.toUpperCase()}}`]) {
         categorySuggestions[`${p.category.toUpperCase()}`] = {
@@ -77,12 +74,12 @@ export default class GlobalSearch {
 
   });
 
-  filteredSuggestions: Signal<AutocompleteOption[]> = computed(() => {
+  filteredSuggestions: Signal<FilterOptionInterface[]> = computed(() => {
     let term: string = '';
     if (typeof this.textBoxSignal() === 'string') {
       term = (this.textBoxSignal() as string);
     } else {
-      term = (this.textBoxSignal() as AutocompleteOption)?.value;
+      term = (this.textBoxSignal() as FilterOptionInterface)?.value;
     }
 
     return term ? this.suggestions().filter(suggestion => {
@@ -94,8 +91,8 @@ export default class GlobalSearch {
     return tokenName?.value ?? '';
   }
 
-  protected applyFilter($event: any) {
-    console.log([this.textBoxSignal(), ...this.chipSetSignal()].filter(f => f));
+  protected applyFilter() {
+    this.filter.emit([this.textBoxSignal(), ...this.chipSetSignal()].filter(f => f));
   }
 
 
