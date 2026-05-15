@@ -47,23 +47,34 @@ export default class ChartHorizontalBarComponent {
   annotationsSignal: Signal<any> = computed(() => {
     const annotations: any = {};
     this.projectSeries().labels.forEach((label, i) => {
-      annotations[`label${i}`] = {
+      annotations[`label_${i}`] = {
         type: 'label',
-        yValue: (ctx: any) => this.yValue(ctx, label),
+        yValue: label,
+        textAlign: 'left',   // text grows rightward from the anchor point
+        xValue: 0,
+        xAdjust: 8,
         content: label,
-        backgroundColor: 'rgba(245,245,245)',
+        backgroundColor: 'transparent',
         color: 'red',
-        font: {size: 13, weight: 'bold'}
+        position: {x: 'start', y: 'center'}, // anchor box from its left edge
+      };
+const value =this.projectSeries().datasets[0].data[i];
+      annotations[`count_${i}`] = {
+        type: 'label',
+        yValue: label,
+        xValue: (ctx:any)=>ctx.chart.scales.x.max,
+        xAdjust: -10,
+        content: value,
+        backgroundColor: 'transparent',
+        color: 'red',
+        textAlign: 'right',
+        position: {x: 'end', y: 'center'}, // anchor box from its left edge
       };
     });
+
     return annotations;
   });
 
-  yValue(ctx: any, label: string | unknown) {
-    const chart = ctx.chart;
-    const dataset = chart.data.datasets[0];
-    return dataset.data[chart.data.labels.indexOf(label)];
-  }
 
   public barChartOptions = computed(() => {
     return {
@@ -71,14 +82,22 @@ export default class ChartHorizontalBarComponent {
       indexAxis: ("y" as "x" | "y"),
       // We use these empty structures as placeholders for dynamic theming.
       scales: {
-        x: {},
-        y: {},
+        x: {
+          display: false,
+
+        },
+        y: {
+          display: false,
+        },
       },
       plugins: {
         legend: {
           display: false,
         },
-        annotations: this.annotationsSignal()
+        annotation: {
+          clip: true, // <-- critical: clips annotations to the chart area
+          annotations: this.annotationsSignal()
+        },
       }
     };
   });
