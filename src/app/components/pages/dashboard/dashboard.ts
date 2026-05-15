@@ -1,17 +1,19 @@
 import {Component, computed, OnInit, signal, Signal} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import GlobalSearchComponent from '../../libs/global-search/global-search.component';
-import {FilterOptionInterface, ProjectInterface} from '../../../interfaces';
+import {DataInterface, FilterOptionInterface, ProjectInterface} from '../../../interfaces';
 import ChartHorizontalBarComponent from '../../libs/chart-horizontal-bar/chart-horizontal-bar.component';
+import {components} from '../../libs';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [GlobalSearchComponent,  ChartHorizontalBarComponent],
+  imports: [GlobalSearchComponent, ChartHorizontalBarComponent, components],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export default class Dashboard implements OnInit {
   protected projects: Signal<ProjectInterface[]> = signal([]);
+  protected popolazione: Signal<DataInterface[]> = signal([]);
   protected filters = signal<(string | FilterOptionInterface)[]>([]);
   filteredProjects = computed(() => {
     return this.projects().filter((project: ProjectInterface) => {
@@ -27,7 +29,9 @@ export default class Dashboard implements OnInit {
 
   ngOnInit(): void {
     this.apiService.getProjects();
-    this.projects = this.apiService.projects;
+    this.apiService.getPopolazione();
+    this.projects = this.apiService.progetti;
+    this.popolazione = this.apiService.popolazione;
   }
 
   protected applyFilters($event: (string | FilterOptionInterface)[]) {

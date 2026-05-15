@@ -12,7 +12,7 @@ import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
 
 @Component({
-  selector: 'sheldon-chart-h-bars',
+  selector: 'sheldon-chart-v-bars',
   imports: [
     CardComponent,
     MatButtonToggleGroup,
@@ -20,10 +20,10 @@ import {ChartData, ChartEvent} from 'chart.js';
     MatIcon,
     BaseChartDirective,
   ],
-  templateUrl: './chart-horizontal-bar.component.html',
-  styleUrl: './chart-horizontal-bar.component.scss',
+  templateUrl: './chart-vertical-bar.component.html',
+  styleUrl: './chart-vertical-bar.component.scss',
 })
-export default class ChartHorizontalBarComponent {
+export default class ChartVerticaleBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
@@ -79,7 +79,7 @@ export default class ChartHorizontalBarComponent {
   public barChartOptions: Signal<ChartConfiguration<'bar'>['options']> = computed(() => {
     return {
       //set bars horizontally
-      indexAxis: "y",
+      indexAxis: "x",
       // We use these empty structures as placeholders for dynamic theming.
       scales: {
         x: {

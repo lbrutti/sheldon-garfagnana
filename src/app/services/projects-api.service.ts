@@ -1,12 +1,13 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ProjectInterface} from '../interfaces';
+import {DataInterface, ProjectInterface} from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectsApiService {
-  private writableSignal: WritableSignal<ProjectInterface[]> = signal<ProjectInterface[]>([]);
+  private _progetti: WritableSignal<ProjectInterface[]> = signal<ProjectInterface[]>([]);
+  private _popolazione: WritableSignal<DataInterface[]> = signal<DataInterface[]>([]);
 
   constructor(protected readonly httpClient: HttpClient) {
   }
@@ -16,11 +17,22 @@ export class ProjectsApiService {
       responseType:
         'json'
     }).subscribe((res: any) => {
-      this.writableSignal.set(res);
+      this._progetti.set(res);
+    });
+
+  }
+
+  getPopolazione() {
+    this.httpClient.get('data/popolazione.json', {
+      responseType:
+        'json'
+    }).subscribe((res: any) => {
+      this._popolazione.set(res);
     });
 
   }
 
 
-  projects = this.writableSignal.asReadonly();
+  progetti = this._progetti.asReadonly();
+  popolazione = this._popolazione.asReadonly();
 }
