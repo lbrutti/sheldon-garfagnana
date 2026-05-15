@@ -2,6 +2,7 @@
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container content>
     <mat-button-toggle-group
+      (change)="onSortChange($event)"
       value="desc">
       <mat-button-toggle value="desc">
         <mat-icon>arrow_downward</mat-icon>

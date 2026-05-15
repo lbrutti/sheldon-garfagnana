@@ -1,4 +1,4 @@
-import {Component, computed, input, Signal, ViewChild} from '@angular/core';
+import {Component, computed, input, signal, Signal, ViewChild} from '@angular/core';
 
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
@@ -24,22 +24,23 @@ export default class ProjectsByKeyCardComponent {
 
   groupBy = input<string>('municipality');
   projects = input<ProjectInterface[]>([]);
-  title=input<string>('Numero di progetti per comune');
+  title = input<string>('Numero di progetti per comune');
 
   projectSeries: Signal<ChartData<'bar'>> = computed(() => {
     const grouped = Object.groupBy(this.projects(), (p: any) => p[this.groupBy()]);
     const groupKeys = Object.keys(grouped);
+    groupKeys.sort((a, b) => {
+      const comparison = grouped[a].length - grouped[b].length;
+      return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
+    })
     let dataset: any = [];
     groupKeys.map(label => {
       dataset.push(grouped[label].length);
     });
-    const data = {data: dataset}
-
-
-    return {labels: groupKeys, datasets: [data]};
-
-
+    return {labels: groupKeys, datasets: [{data: dataset}]};
   });
+
+  sortDirection = signal<string>('desc');
   public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     //set bars horizontally
     indexAxis: 'y',
@@ -67,7 +68,8 @@ export default class ProjectsByKeyCardComponent {
     console.log(event, active);
   }
 
-  protected onSortDirectionChange($event: MatButtonToggleChange) {
 
+  protected onSortChange($event: MatButtonToggleChange) {
+    this.sortDirection.set($event.value);
   }
 }

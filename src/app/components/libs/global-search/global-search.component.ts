@@ -8,7 +8,6 @@ import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-to
 import {FilterOptionInterface, ProjectInterface} from '../../../interfaces';
 
 
-
 @Component({
   selector: 'sheldon-global-search',
   imports: [
@@ -36,7 +35,7 @@ export default class GlobalSearchComponent {
 
 
   projects = input<ProjectInterface[]>([]);
-  filter = output<(string|FilterOptionInterface)[]>();
+  filter = output<(string | FilterOptionInterface)[]>();
 
   suggestions: Signal<FilterOptionInterface[]> = computed(() => {
     let municipalitySuggestions: { [key: string]: FilterOptionInterface } = {};
@@ -91,8 +90,7 @@ export default class GlobalSearchComponent {
   }
 
   protected applyFilter() {
-    this.filter.emit([this.textBoxSignal(), ...this.chipSetSignal()].filter(f => f));
+    this.filter.emit([this.textBoxSignal(), ...(this.chipSetSignal() || [])].filter(f => f));
   }
-
 
 }
