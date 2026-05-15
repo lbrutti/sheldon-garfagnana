@@ -1,12 +1,10 @@
 import {Component, signal} from '@angular/core';
-import Footer from './components/libs/footer/footer';
 import Navigation from './components/libs/navigation/navigation';
 
 @Component({
   selector: 'sheldon-root',
   imports: [
 
-    Footer,
     Navigation
   ],
   templateUrl: './app.html',

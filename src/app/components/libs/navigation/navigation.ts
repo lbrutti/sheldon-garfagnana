@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {MatTabLink, MatTabNav, MatTabNavPanel} from '@angular/material/tabs';
-import Footer from '../footer/footer';
+import Footer from '../card/card';
 import {RouterLink, RouterOutlet} from '@angular/router';
 
 @Component({

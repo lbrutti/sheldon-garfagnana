@@ -4,10 +4,11 @@ import GlobalSearch from '../../libs/global-search/global-search';
 import ProjectInterface from '../../../interfaces/project.interface';
 import {FilterOptionInterface} from '../../../interfaces';
 import {JsonPipe} from '@angular/common';
+import Card from '../../libs/card/card';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [GlobalSearch, JsonPipe],
+  imports: [GlobalSearch, JsonPipe, Card],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
