@@ -23,7 +23,7 @@ import {MatIcon} from '@angular/material/icon';
     MatIcon,
     MatIconButton
   ],
-  templateUrl: './card.html',
-  styleUrl: './card.scss',
+  templateUrl: './card.component.html',
+  styleUrl: './card.component.scss',
 })
-export default class Card {}
+export default class CardComponent {}

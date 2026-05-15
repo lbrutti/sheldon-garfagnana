@@ -1,4 +1,6 @@
 <sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>
 
-<sheldon-project-municipality
-  [projects]="filteredProjects()"></sheldon-project-municipality>
+<sheldon-projects-by-key-card
+  groupBy="municipality"
+  title="Numero di progetti per comune"
+  [projects]="filteredProjects()"/>

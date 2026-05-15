@@ -1,0 +1,24 @@
+<sheldon-card>
+  <ng-container title>{{ this.title() }}</ng-container>
+  <ng-container content>
+    <mat-button-toggle-group
+      value="desc">
+      <mat-button-toggle value="desc">
+        <mat-icon>arrow_downward</mat-icon>
+      </mat-button-toggle>
+      <mat-button-toggle value="asc">
+        <mat-icon>arrow_upward</mat-icon>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+    {{ projects().length }}
+    <canvas
+      baseChart
+      [data]="projectSeries()"
+      [options]="barChartOptions"
+      [type]="barChartType"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)"
+    >
+    </canvas>
+  </ng-container>
+</sheldon-card>

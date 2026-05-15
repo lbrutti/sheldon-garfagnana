@@ -1,12 +1,12 @@
 import {Component, computed, OnInit, signal, Signal} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
-import GlobalSearch from '../../libs/global-search/global-search';
+import GlobalSearchComponent from '../../libs/global-search/global-search.component';
 import {FilterOptionInterface, ProjectInterface} from '../../../interfaces';
-import ProjectsByMunicipalityCard from '../../libs/projects-by-municipality-card/projects-by-municipality-card';
+import ProjectsByKeyCardComponent from '../../libs/projects-by-key-card/projects-by-key-card.component';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [GlobalSearch, ProjectsByMunicipalityCard],
+  imports: [GlobalSearchComponent,  ProjectsByKeyCardComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

@@ -1,11 +1,11 @@
 import {Component, signal} from '@angular/core';
-import Navigation from './components/libs/navigation/navigation';
+import NavigationComponent from './components/libs/navigation/navigation.component';
 
 @Component({
   selector: 'sheldon-root',
   imports: [
 
-    Navigation
+    NavigationComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.scss',

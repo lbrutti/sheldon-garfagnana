@@ -23,11 +23,11 @@ import {FilterOptionInterface, ProjectInterface} from '../../../interfaces';
     MatButtonToggle,
     MatButtonToggleGroup,
   ],
-  templateUrl: './global-search.html',
-  styleUrl: './global-search.scss',
+  templateUrl: './global-search.component.html',
+  styleUrl: './global-search.component.scss',
 })
 
-export default class GlobalSearch {
+export default class GlobalSearchComponent {
   textBox = new FormControl<string | FilterOptionInterface>({key: '', value: ''});
   textBoxSignal = toSignal(this.textBox.valueChanges);
 

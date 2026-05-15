@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {MatTabLink, MatTabNav, MatTabNavPanel} from '@angular/material/tabs';
-import Footer from '../card/card';
+import Footer from '../card/card.component';
 import {RouterLink, RouterOutlet} from '@angular/router';
 
 @Component({
@@ -12,10 +12,10 @@ import {RouterLink, RouterOutlet} from '@angular/router';
     RouterOutlet,
     RouterLink
   ],
-  templateUrl: './navigation.html',
-  styleUrl: './navigation.scss',
+  templateUrl: './navigation.component.html',
+  styleUrl: './navigation.component.scss',
 })
-export default class Navigation {
+export default class NavigationComponent {
   @Input() links: { url: string, name: string }[] = [];
   protected activeLink = '';
 }
