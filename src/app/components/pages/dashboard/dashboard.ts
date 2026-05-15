@@ -19,9 +19,12 @@ export default class Dashboard implements OnInit {
     return this.projects().filter((project: ProjectInterface) => {
       return this.filters().length === 0 || this.filters().every((f: string | FilterOptionInterface) => {
         return (project as any)[(f as FilterOptionInterface).key] === (f as FilterOptionInterface).value;
-
       })
     });
+  });
+  popolazioneLastYear = computed(() => {
+    const lastYear = Math.max(...this.popolazione().map(p => p.anno));
+    return this.popolazione().filter(d => d.anno === lastYear);
   });
 
   constructor(protected apiService: ProjectsApiService) {

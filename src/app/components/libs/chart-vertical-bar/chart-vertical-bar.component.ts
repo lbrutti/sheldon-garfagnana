@@ -7,9 +7,11 @@ Chart.register(annotationPlugin);
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MatIcon} from '@angular/material/icon';
-import {DataInterface, ProjectInterface} from '../../../interfaces';
+import {DataInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
+
+import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 
 @Component({
   selector: 'sheldon-chart-v-bars',
@@ -19,6 +21,7 @@ import {ChartData, ChartEvent} from 'chart.js';
     MatButtonToggle,
     MatIcon,
     BaseChartDirective,
+    DynamicFilterComponent
   ],
   templateUrl: './chart-vertical-bar.component.html',
   styleUrl: './chart-vertical-bar.component.scss',
@@ -27,22 +30,24 @@ export default class ChartVerticaleBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
-  sortDirection = signal<string>('desc');
+  filterBy = input<string>('nome_comune');
+  limit = input<number>(15);
   groupBy = input<string>('nome_comune');
+  sortDirection = signal<string>('desc');
   data = input<DataInterface[]>([]);
   dataSeries: Signal<ChartData<'bar'>> = computed(() => {
     const grouped = Object.groupBy(this.data(), (p: any) => p[this.groupBy()]);
-    const groupKeys = Object.keys(grouped);
-    groupKeys.sort((a, b) => {
-      const comparison = grouped[a].length - grouped[b].length;
+    let groupKeys = Object.keys(grouped).sort((a, b) => {
+      const comparison = grouped[a].reduce((acc, d) => acc += d.valore, 0) - grouped[b].reduce((acc, d) => acc += d.valore, 0);
       return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
-    })
+    }).slice(0, this.limit())
     let dataset: any = [];
     groupKeys.map(label => {
-      dataset.push(grouped[label].length);
+      dataset.push(grouped[label].reduce((acc, d) => acc += d.valore, 0));
     });
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
+
 
   annotationsSignal: Signal<any> = computed(() => {
     const annotations: any = {};
@@ -83,7 +88,7 @@ export default class ChartVerticaleBarComponent {
       // We use these empty structures as placeholders for dynamic theming.
       scales: {
         x: {
-          display: false,
+          display: true,
 
         },
         y: {
@@ -94,10 +99,10 @@ export default class ChartVerticaleBarComponent {
         legend: {
           display: false,
         },
-        annotation: {
-          clip: true, // <-- critical: clips annotations to the chart area
-          annotations: this.annotationsSignal()
-        },
+        // annotation: {
+        //   clip: true, // <-- critical: clips annotations to the chart area
+        //   annotations: this.annotationsSignal()
+        // },
       }
     };
   });
@@ -106,15 +111,19 @@ export default class ChartVerticaleBarComponent {
 
   // events
   public chartClicked({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 
   public chartHovered({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 
 
   protected onSortChange($event: MatButtonToggleChange) {
     this.sortDirection.set($event.value);
+  }
+
+  protected onFilterChange($event: any) {
+    console.log($event);
   }
 }

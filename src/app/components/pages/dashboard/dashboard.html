@@ -1,6 +1,9 @@
 <sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>
 
 <sheldon-chart-v-bars
+  #w_bar_popolazione
   groupBy="nome_comune"
-  title="Numero di progetti per comune"
-  [data]="popolazione()"/>
+  title="Popolazione per comune"
+  filterBy="nome_comune|unione"
+  [data]="popolazioneLastYear()"
+  [limit]="10"/>
