@@ -2,11 +2,11 @@ import {Component, computed, OnInit, signal, Signal} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import GlobalSearchComponent from '../../libs/global-search/global-search.component';
 import {FilterOptionInterface, ProjectInterface} from '../../../interfaces';
-import ProjectsByKeyCardComponent from '../../libs/projects-by-key-card/projects-by-key-card.component';
+import ChartHorizontalBarComponent from '../../libs/chart-horizontal-bar/chart-horizontal-bar.component';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [GlobalSearchComponent,  ProjectsByKeyCardComponent],
+  imports: [GlobalSearchComponent,  ChartHorizontalBarComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })

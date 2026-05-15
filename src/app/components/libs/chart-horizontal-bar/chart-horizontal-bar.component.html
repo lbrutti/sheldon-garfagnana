@@ -15,7 +15,7 @@
     <canvas
       baseChart
       [data]="projectSeries()"
-      [options]="barChartOptions"
+      [options]="barChartOptions()"
       [type]="barChartType"
       (chartHover)="chartHovered($event)"
       (chartClick)="chartClicked($event)"
