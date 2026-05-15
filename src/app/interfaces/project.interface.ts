@@ -18,7 +18,7 @@
  *
  */
 
-export default interface ProjectInterface {
+export declare interface ProjectInterface {
   "id": number,
   "name": string,
   "description": string,

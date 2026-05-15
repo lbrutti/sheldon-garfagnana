@@ -1,6 +1,6 @@
 import {Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import ProjectInterface from '../interfaces/project.interface';
+import {ProjectInterface} from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

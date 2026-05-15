@@ -1,7 +1,4 @@
 <sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>
 
-<sheldon-card>
-  <ng-container title>Title 1</ng-container>
-  <ng-container subtitle>Subtitle 1</ng-container>
-  <ng-container content>Content 1</ng-container>
-</sheldon-card>
+<sheldon-project-municipality
+  [projects]="filteredProjects()"></sheldon-project-municipality>

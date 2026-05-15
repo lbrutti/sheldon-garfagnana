@@ -8,7 +8,6 @@ import {
   MatCardTitle
 } from '@angular/material/card';
 import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatToolbar} from '@angular/material/toolbar';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({

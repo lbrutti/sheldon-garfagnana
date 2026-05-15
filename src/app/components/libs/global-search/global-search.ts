@@ -1,12 +1,11 @@
 import {Component, computed, input, output, Signal} from '@angular/core';
-import ProjectInterface from '../../../interfaces/project.interface';
 import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
 import {MatOption} from '@angular/material/select';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {FilterOptionInterface} from '../../../interfaces';
+import {FilterOptionInterface, ProjectInterface} from '../../../interfaces';
 
 
 
