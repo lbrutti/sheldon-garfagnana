@@ -4,6 +4,7 @@
   #w_bar_popolazione
   groupBy="nome_comune"
   title="Popolazione per comune"
-  filterBy="nome_comune|unione"
+  filterBy="unione|nome_comune"
+  masterField="unione"
   [data]="popolazioneLastYear()"
   [limit]="10"/>

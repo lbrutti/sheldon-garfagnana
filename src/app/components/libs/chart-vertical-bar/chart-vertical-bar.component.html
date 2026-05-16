@@ -14,11 +14,13 @@
     </mat-button-toggle-group>
     <!--    FILTERING -->
     <sheldon-dynamic-filter
-      [filterBy]="this.filterBy()"
+      [filterBy]="this.filtersFields()"
+      [dataset]="this.data()"
+      [masterField]="this.masterField()"
       (filterChange)="onFilterChange($event)" )/>
     <canvas
       baseChart
-      [data]="dataSeries()"
+      [data]="chartData()"
       [options]="barChartOptions()"
       [type]="barChartType"
       (chartHover)="chartHovered($event)"

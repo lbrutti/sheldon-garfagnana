@@ -1,4 +1,4 @@
-import {Component, computed, input, signal, Signal, ViewChild} from '@angular/core';
+import {Component, computed, input, signal, Signal, ViewChild, WritableSignal} from '@angular/core';
 import {Chart, ChartConfiguration} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -7,7 +7,7 @@ Chart.register(annotationPlugin);
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MatIcon} from '@angular/material/icon';
-import {DataInterface} from '../../../interfaces';
+import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
 
@@ -31,12 +31,26 @@ export default class ChartVerticaleBarComponent {
 
   title = input<string>('Numero di progetti per comune');
   filterBy = input<string>('nome_comune');
+  filtersFields = computed<string[]>((): string[] => {
+    return this.filterBy().split('|');
+  });
+  private appliedFilters = signal<FilterOptionInterface[]>([]);
+
+  masterField = input<string | null>(null);
   limit = input<number>(15);
   groupBy = input<string>('nome_comune');
   sortDirection = signal<string>('desc');
   data = input<DataInterface[]>([]);
-  dataSeries: Signal<ChartData<'bar'>> = computed(() => {
-    const grouped = Object.groupBy(this.data(), (p: any) => p[this.groupBy()]);
+  chartData: Signal<ChartData<'bar'>> = computed(() => {
+    const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
+    // CONTROLLARE QUI
+    const filteredData = filterSet ? this.data().filter(d => {
+      const guard = filterSet ? (this.appliedFilters().every(filter => {
+        return filter.value.length && (filter.value === (d as any)[filter.key]);
+      })) : true;
+      return guard;
+    }) : this.data();
+    const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
     let groupKeys = Object.keys(grouped).sort((a, b) => {
       const comparison = grouped[a].reduce((acc, d) => acc += d.valore, 0) - grouped[b].reduce((acc, d) => acc += d.valore, 0);
       return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
@@ -51,7 +65,7 @@ export default class ChartVerticaleBarComponent {
 
   annotationsSignal: Signal<any> = computed(() => {
     const annotations: any = {};
-    this.dataSeries().labels.forEach((label, i) => {
+    this.chartData().labels.forEach((label, i) => {
       annotations[`label_${i}`] = {
         type: 'label',
         yValue: label,
@@ -63,7 +77,7 @@ export default class ChartVerticaleBarComponent {
         color: 'red',
         position: {x: 'start', y: 'center'}, // anchor box from its left edge
       };
-      const value = this.dataSeries().datasets[0].data[i];
+      const value = this.chartData().datasets[0].data[i];
       annotations[`count_${i}`] = {
         type: 'label',
         yValue: label,
@@ -109,7 +123,6 @@ export default class ChartVerticaleBarComponent {
   public barChartType = 'bar' as const;
 
 
-  // events
   public chartClicked({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
     // console.log(event, active);
   }
@@ -123,7 +136,9 @@ export default class ChartVerticaleBarComponent {
     this.sortDirection.set($event.value);
   }
 
-  protected onFilterChange($event: any) {
-    console.log($event);
+  protected onFilterChange($event: FilterOptionInterface[]) {
+    this.appliedFilters.set($event)
   }
+
+
 }

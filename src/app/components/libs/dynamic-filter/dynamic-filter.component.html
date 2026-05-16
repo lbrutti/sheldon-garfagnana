@@ -9,18 +9,14 @@
         [id]="field"
         [formControlName]="field"
         [placeholder]="'Filter by ' + field"
-        [matAutocomplete]="optionsFor(field).length ? auto : nullAuto"
+        [matAutocomplete]="auto"
       />
 
-      <!-- Autocomplete panel — shown only when options are provided -->
       <mat-autocomplete #auto="matAutocomplete">
         @for (opt of filteredOptions(field); track opt.key) {
-          <mat-option [value]="opt.key">{{ opt.value }}</mat-option>
+          <mat-option [value]="opt.value">{{ opt.value }}</mat-option>
         }
       </mat-autocomplete>
-
-      <!-- Empty autocomplete reference used for fields with no options -->
-      <mat-autocomplete #nullAuto="matAutocomplete" />
 
     </mat-form-field>
   }

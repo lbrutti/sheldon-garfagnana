@@ -5,80 +5,120 @@ import {
   inject,
   input,
   output,
+  signal,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TitleCasePipe} from '@angular/common';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatAutocomplete, MatAutocompleteTrigger, MatOption} from '@angular/material/autocomplete';
-
-export interface FilterOption {
-  key: string;
-  value: string;
-}
+import {
+  MatAutocomplete,
+  MatAutocompleteTrigger,
+  MatOption,
+} from '@angular/material/autocomplete';
+import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 
 @Component({
   selector: 'sheldon-dynamic-filter',
   standalone: true,
-  imports: [ReactiveFormsModule, TitleCasePipe, MatInput, MatAutocomplete, MatOption, MatAutocompleteTrigger, MatLabel, MatFormField],
+  imports: [
+    ReactiveFormsModule,
+    TitleCasePipe,
+    MatInput,
+    MatAutocomplete,
+    MatOption,
+    MatAutocompleteTrigger,
+    MatLabel,
+    MatFormField,
+  ],
   templateUrl: './dynamic-filter.component.html',
   styleUrl: './dynamic-filter.component.scss',
 })
-export class DynamicFilterComponent {
-  /** Pipe-separated list of fields, e.g. 'nome_comune|unione' */
-  filterBy = input<string>('');
+export class DynamicFilterComponent<T extends Record<string, unknown>> {
+  /** String array of field names to filter on, e.g. ['nome_comune', 'unione'] */
+  filterBy = input<string[]>([]);
 
   /**
-   * Map of field name → options for autocomplete.
-   * e.g. { nome_comune: [{ key: 'Roma', value: 'Roma' }, ...] }
-   * Fields with no entry get a plain matInput with no autocomplete.
+   * The full dataset. The component uses it to derive cascading autocomplete
+   * options: when one field is set, only values present in the matching rows
+   * are offered in the other fields.
    */
-  options = input<Record<string, FilterOption[]>>({});
+  dataset = input<DataInterface[]>([]);
 
+  masterField = input<string | null>(null);
   /** Emits the full form value on every (debounced) change */
-  filterChange = output<Record<string, string>>();
+  filterChange = output<FilterOptionInterface[]>();
 
   private fb = inject(FormBuilder);
 
-  /** Derived signal: splits filterBy into field name array */
   fields = computed(() =>
-    (this.filterBy() ?? '')
-      .split('|')
-      .map((f) => f.trim())
-      .filter(Boolean)
+    (this.filterBy() ?? []).map((f) => f.trim()).filter(Boolean)
   );
 
   filterForm: FormGroup = this.fb.group({});
+
+  /**
+   * Reactive snapshot of the current form value, updated on every keystroke.
+   * Stored as a signal so computed() chains stay reactive.
+   */
+  private formValue = signal<Record<string, string>>({});
 
   constructor() {
     effect(() => this._buildForm(this.fields()));
   }
 
-  /** All options for a given field (empty array → plain input) */
-  optionsFor(field: string): FilterOption[] {
-    return this.options()?.[field] ?? [];
-  }
+  // ---------------------------------------------------------------------------
+  // Cascading autocomplete logic
+  // ---------------------------------------------------------------------------
 
   /**
-   * Options filtered by the current control value.
-   * Matches against both key and value, case-insensitive.
+   * Returns the autocomplete options for `field`, constrained by whatever
+   * values are already set in the *other* fields.
+   *
+   * Steps:
+   *  1. Start with the full dataset.
+   *  2. For every OTHER field that has a non-empty value, keep only rows
+   *     where that column matches.
+   *  3. Collect distinct values of `field` from the surviving rows.
+   *  4. Narrow further by the partial text the user has typed in THIS field.
    */
-  filteredOptions(field: string): FilterOption[] {
-    const all = this.optionsFor(field);
-    if (!all.length) return [];
+  filteredOptions(field: string): FilterOptionInterface[] {
+    const data = this.dataset();
+    if (!data.length) return [];
 
-    const query = (this.filterForm.get(field)?.value ?? '').toLowerCase();
-    if (!query) return all;
+    const currentValues = this.formValue();
 
-    return all.filter(
-      (o) =>
-        o.key.toLowerCase().includes(query) ||
-        o.value.toLowerCase().includes(query)
-    );
+    const isMasterField = field === this.masterField();
+    const constrainedRows = isMasterField
+      ? data
+      : data.filter((row) =>
+        this.fields()
+          .filter((f) => f !== field)
+          .every((f) => {
+            const active = (currentValues[f] ?? '').trim();
+            return !active || String((row as any)[f] ?? '') === active;
+          })
+      );
+
+
+    // 3 — distinct values for this field from surviving rows
+    const distinctValues = [
+      ...new Set(constrainedRows.map((row) => String((row as any)[field] ?? ''))),
+    ].filter(Boolean).sort();
+
+    // 4 — narrow by partial text typed in this field
+    const query = (currentValues[field] ?? '').toLowerCase();
+
+
+    const isExactMatch = isMasterField && distinctValues.some((v) => v.toLowerCase() === query);
+    const matched = (query && !isExactMatch)
+      ? distinctValues.filter((v) => v.toLowerCase().includes(query))  // still typing
+      : distinctValues;                                                  // selected or empty → show all
+    return matched.map((v) => ({key: v, value: v}));
+  }
+
+  hasOptions(field: string): boolean {
+    return this.filteredOptions(field).length > 0;
   }
 
   // ---------------------------------------------------------------------------
@@ -93,12 +133,35 @@ export class DynamicFilterComponent {
 
     this.filterForm = this.fb.group(controls);
 
+    // Keep formValue signal in sync so filteredOptions() stays reactive
+    this.filterForm.valueChanges.subscribe((v) => this.formValue.set(v));
+
+    // When the master field is set to a recognised option, reset all other fields
+    const master = this.masterField();
+    if (master && this.filterForm.contains(master)) {
+      this.filterForm.get(master)!.valueChanges
+        .pipe(distinctUntilChanged())
+        .subscribe((masterValue: string) => {
+          const isKnownOption = this.dataset().some(
+            (row) => String((row as any)[master] ?? '') === masterValue
+          );
+          if (isKnownOption) {
+            fields
+              .filter((f) => f !== master)
+              .forEach((f) => this.filterForm.get(f)?.setValue('', {emitEvent: true}));
+          }
+        });
+    }
+
+    // Emit debounced output
     this.filterForm.valueChanges
       .pipe(
         debounceTime(300),
         distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b))
       )
-      .subscribe((value) => this.filterChange.emit(value));
+      .subscribe((value) => {
+        const filters: FilterOptionInterface[] = Object.keys(value).map(k => ({key: k, value: value[k]}));
+        this.filterChange.emit(filters);
+      });
   }
-
 }
