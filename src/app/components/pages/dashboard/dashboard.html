@@ -1,10 +1,38 @@
-<sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>
+<!--<sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>-->
 
 <sheldon-chart-v-bars
-  #w_bar_popolazione
   groupBy="nome_comune"
   title="Popolazione per comune"
-  filterBy="unione|nome_comune"
+  filterBy="unione"
   masterField="unione"
+  reduceBy="sum"
   [data]="popolazioneLastYear()"
   [limit]="10"/>
+<sheldon-chart-h-bars
+  groupBy="nome_comune"
+  title="Popolazione per comune (stacked bars)"
+  filterBy="unione"
+  masterField="unione"
+  reduceBy="sum"
+  [data]="popolazioneLastYear()"
+  [limit]="10"/>
+
+
+<sheldon-chart-line
+  groupBy="anno"
+  title="Andamento popolazione per comune"
+  filterBy="unione|nome_comune"
+  masterField="unione"
+  reduceBy="sum"
+  [data]="popolazione()"
+  [limit]="-1"/>
+
+
+<sheldon-kpi
+  groupBy="nome_comune"
+  title="Popolazione totale dell'area"
+  filterBy="unione|nome_comune"
+  masterField="unione"
+  reduceBy="sum"
+  [data]="popolazioneLastYear()"
+  [limit]="-1"/>

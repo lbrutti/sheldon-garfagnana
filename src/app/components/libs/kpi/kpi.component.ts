@@ -14,7 +14,7 @@ import {ChartData, ChartEvent} from 'chart.js';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 
 @Component({
-  selector: 'sheldon-chart-v-bars',
+  selector: 'sheldon-kpi',
   imports: [
     CardComponent,
     MatButtonToggleGroup,
@@ -23,10 +23,10 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
     BaseChartDirective,
     DynamicFilterComponent
   ],
-  templateUrl: './chart-vertical-bar.component.html',
-  styleUrl: './chart-vertical-bar.component.scss',
+  templateUrl: './kpi.component.html',
+  styleUrl: './kpi.component.scss',
 })
-export default class ChartVerticalBarComponent {
+export default class KpiComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
@@ -51,6 +51,7 @@ export default class ChartVerticalBarComponent {
       })) : true;
       return guard;
     }) : this.data();
+    console.log(filteredData.map(d => d.valore).reduce((acc: number, val: number) => acc + val));
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
     let groupKeys = Object.keys(grouped).sort((a, b) => {
       const comparison = this.getReducedValue(grouped, a) - this.getReducedValue(grouped, b);
@@ -63,6 +64,8 @@ export default class ChartVerticalBarComponent {
     });
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
+
+
   private getReducedValue(grouped: Partial<Record<any, any[]>>, label: string) {
     switch (this.reduceBy()) {
       case 'sum':

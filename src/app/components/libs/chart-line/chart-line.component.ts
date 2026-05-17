@@ -1,4 +1,4 @@
-import {Component, computed, input, signal, Signal, ViewChild, WritableSignal} from '@angular/core';
+import {Component, computed, input, signal, Signal, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -14,20 +14,20 @@ import {ChartData, ChartEvent} from 'chart.js';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 
 @Component({
-  selector: 'sheldon-chart-v-bars',
+  selector: 'sheldon-chart-line',
   imports: [
     CardComponent,
-    MatButtonToggleGroup,
-    MatButtonToggle,
-    MatIcon,
+    // MatButtonToggleGroup,
+    // MatButtonToggle,
+    // MatIcon,
     BaseChartDirective,
     DynamicFilterComponent
   ],
-  templateUrl: './chart-vertical-bar.component.html',
-  styleUrl: './chart-vertical-bar.component.scss',
+  templateUrl: './chart-line.component.html',
+  styleUrl: './chart-line.component.scss',
 })
-export default class ChartVerticalBarComponent {
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+export default class ChartLineComponent {
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'line'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
   filterBy = input<string>('nome_comune');
@@ -43,7 +43,7 @@ export default class ChartVerticalBarComponent {
   data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
 
-  chartData: Signal<ChartData<'bar'>> = computed(() => {
+  chartData: Signal<ChartData<'line'>> = computed(() => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     const filteredData = filterSet ? this.data().filter(d => {
       const guard = filterSet ? (this.appliedFilters().every(filter => {
@@ -52,10 +52,11 @@ export default class ChartVerticalBarComponent {
       return guard;
     }) : this.data();
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
-    let groupKeys = Object.keys(grouped).sort((a, b) => {
-      const comparison = this.getReducedValue(grouped, a) - this.getReducedValue(grouped, b);
-      return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
-    }).slice(0, this.limit())
+    let groupKeys = Object.keys(grouped);
+    // .sort((a, b) => {
+    //   const comparison = this.getReducedValue(grouped, a) - this.getReducedValue(grouped, b);
+    //   return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
+    // }).slice(0, this.limit())
     let dataset: any = [];
     groupKeys.map(label => {
       const reducedValue = this.getReducedValue(grouped, label);
@@ -63,6 +64,8 @@ export default class ChartVerticalBarComponent {
     });
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
+
+
   private getReducedValue(grouped: Partial<Record<any, any[]>>, label: string) {
     switch (this.reduceBy()) {
       case 'sum':
@@ -106,7 +109,7 @@ export default class ChartVerticalBarComponent {
   });
 
 
-  public barChartOptions: Signal<ChartConfiguration<'bar'>['options']> = computed(() => {
+  public chartOptions: Signal<ChartConfiguration<'line'>['options']> = computed(() => {
     return {
       //set bars horizontally
       indexAxis: 'x',
@@ -131,7 +134,7 @@ export default class ChartVerticalBarComponent {
       }
     };
   });
-  public barChartType = 'bar' as const;
+  public chartType = 'line' as const;
 
 
   public chartClicked({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
@@ -143,9 +146,9 @@ export default class ChartVerticalBarComponent {
   }
 
 
-  protected onSortChange($event: MatButtonToggleChange) {
-    this.sortDirection.set($event.value);
-  }
+  // protected onSortChange($event: MatButtonToggleChange) {
+  //   this.sortDirection.set($event.value);
+  // }
 
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));

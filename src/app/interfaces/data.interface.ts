@@ -4,7 +4,7 @@ export declare interface DataInterface {
   unione: string,
   anno: number,
   indicatore: string,
-  valore: string | number,
+  valore: number,
   udm: string,
   note: string,
 }
