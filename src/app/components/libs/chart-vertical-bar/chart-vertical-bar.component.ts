@@ -137,7 +137,7 @@ export default class ChartVerticaleBarComponent {
   }
 
   protected onFilterChange($event: FilterOptionInterface[]) {
-    this.appliedFilters.set($event)
+    this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
   }
 
 
