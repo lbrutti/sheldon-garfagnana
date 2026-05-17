@@ -65,6 +65,18 @@ export default class KpiComponent {
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
 
+  aggregatedValue: Signal<number> = computed(() => {
+    const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
+    const filteredData = filterSet ? this.data().filter(d => {
+      const guard = filterSet ? (this.appliedFilters().every(filter => {
+        return filter.value.length && (filter.value === (d as any)[filter.key]);
+      })) : true;
+      return guard;
+    }) : this.data();
+    return filteredData.map(d => d.valore).reduce((acc: number, val: number) => acc + val);
+
+  });
+
 
   private getReducedValue(grouped: Partial<Record<any, any[]>>, label: string) {
     switch (this.reduceBy()) {

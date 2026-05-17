@@ -18,13 +18,14 @@
       [dataset]="this.data()"
       [masterField]="this.masterField()"
       (filterChange)="onFilterChange($event)"/>
-    <canvas
-      baseChart
-      [data]="chartData()"
-      [options]="barChartOptions()"
-      [type]="barChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)">
-    </canvas>
+    {{ aggregatedValue() }}
+<!--    <canvas-->
+<!--      baseChart-->
+<!--      [data]="chartData()"-->
+<!--      [options]="barChartOptions()"-->
+<!--      [type]="barChartType"-->
+<!--      (chartHover)="chartHovered($event)"-->
+<!--      (chartClick)="chartClicked($event)">-->
+<!--    </canvas>-->
   </ng-container>
 </sheldon-card>
