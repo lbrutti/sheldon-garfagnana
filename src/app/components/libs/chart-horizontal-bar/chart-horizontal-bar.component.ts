@@ -1,4 +1,4 @@
-import {Component, computed, input, signal, Signal, ViewChild} from '@angular/core';
+import {Component, computed, input, signal, Signal, ViewChild, WritableSignal} from '@angular/core';
 import {Chart, ChartConfiguration} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -7,9 +7,11 @@ Chart.register(annotationPlugin);
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MatIcon} from '@angular/material/icon';
-import {DataInterface, ProjectInterface} from '../../../interfaces';
+import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
+
+import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -19,6 +21,7 @@ import {ChartData, ChartEvent} from 'chart.js';
     MatButtonToggle,
     MatIcon,
     BaseChartDirective,
+    DynamicFilterComponent
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',
@@ -27,26 +30,42 @@ export default class ChartHorizontalBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
-  sortDirection = signal<string>('desc');
+  filterBy = input<string>('nome_comune');
+  filtersFields = computed<string[]>((): string[] => {
+    return this.filterBy().split('|');
+  });
+  private appliedFilters = signal<FilterOptionInterface[]>([]);
+
+  masterField = input<string | null>(null);
+  limit = input<number>(15);
   groupBy = input<string>('nome_comune');
+  sortDirection = signal<string>('desc');
   data = input<DataInterface[]>([]);
-  dataSeries: Signal<ChartData<'bar'>> = computed(() => {
-    const grouped = Object.groupBy(this.data(), (p: any) => p[this.groupBy()]);
-    const groupKeys = Object.keys(grouped);
-    groupKeys.sort((a, b) => {
-      const comparison = grouped[a].length - grouped[b].length;
+  chartData: Signal<ChartData<'bar'>> = computed(() => {
+    const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
+    // CONTROLLARE QUI
+    const filteredData = filterSet ? this.data().filter(d => {
+      const guard = filterSet ? (this.appliedFilters().every(filter => {
+        return filter.value.length && (filter.value === (d as any)[filter.key]);
+      })) : true;
+      return guard;
+    }) : this.data();
+    const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
+    let groupKeys = Object.keys(grouped).sort((a, b) => {
+      const comparison = grouped[a].reduce((acc, d) => acc += d.valore, 0) - grouped[b].reduce((acc, d) => acc += d.valore, 0);
       return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
-    })
+    }).slice(0, this.limit())
     let dataset: any = [];
     groupKeys.map(label => {
-      dataset.push(grouped[label].length);
+      dataset.push(grouped[label].reduce((acc, d) => acc += d.valore, 0));
     });
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
 
+
   annotationsSignal: Signal<any> = computed(() => {
     const annotations: any = {};
-    this.dataSeries().labels.forEach((label, i) => {
+    this.chartData().labels.forEach((label, i) => {
       annotations[`label_${i}`] = {
         type: 'label',
         yValue: label,
@@ -58,7 +77,7 @@ export default class ChartHorizontalBarComponent {
         color: 'red',
         position: {x: 'start', y: 'center'}, // anchor box from its left edge
       };
-      const value = this.dataSeries().datasets[0].data[i];
+      const value = this.chartData().datasets[0].data[i];
       annotations[`count_${i}`] = {
         type: 'label',
         yValue: label,
@@ -79,11 +98,11 @@ export default class ChartHorizontalBarComponent {
   public barChartOptions: Signal<ChartConfiguration<'bar'>['options']> = computed(() => {
     return {
       //set bars horizontally
-      indexAxis: "y",
+      indexAxis: 'y',
       // We use these empty structures as placeholders for dynamic theming.
       scales: {
         x: {
-          display: false,
+          display: true,
 
         },
         y: {
@@ -104,17 +123,22 @@ export default class ChartHorizontalBarComponent {
   public barChartType = 'bar' as const;
 
 
-  // events
   public chartClicked({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 
   public chartHovered({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    console.log(event, active);
+    // console.log(event, active);
   }
 
 
   protected onSortChange($event: MatButtonToggleChange) {
     this.sortDirection.set($event.value);
   }
+
+  protected onFilterChange($event: FilterOptionInterface[]) {
+    this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
+  }
+
+
 }

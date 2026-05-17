@@ -26,7 +26,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
   templateUrl: './chart-vertical-bar.component.html',
   styleUrl: './chart-vertical-bar.component.scss',
 })
-export default class ChartVerticaleBarComponent {
+export default class ChartVerticalBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
@@ -98,7 +98,7 @@ export default class ChartVerticaleBarComponent {
   public barChartOptions: Signal<ChartConfiguration<'bar'>['options']> = computed(() => {
     return {
       //set bars horizontally
-      indexAxis: "x",
+      indexAxis: 'x',
       // We use these empty structures as placeholders for dynamic theming.
       scales: {
         x: {
