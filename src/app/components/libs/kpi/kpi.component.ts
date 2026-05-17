@@ -1,4 +1,4 @@
-import {Component, computed, input, signal, Signal, ViewChild} from '@angular/core';
+import {Component, computed, effect, input, signal, Signal, ViewChild} from '@angular/core';
 
 
 import CardComponent from '../card/card.component';
@@ -49,5 +49,20 @@ export default class KpiComponent {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
   }
 
+
+
+  // Track the "from" value for animation
+  protected animFrom = signal(0);
+  protected animTo = signal(0);
+  protected animKey = signal(0); // bump to re-trigger animation
+
+  constructor() {
+    effect(() => {
+      const next = this.aggregatedValue();
+      this.animFrom.set(this.animTo()); // previous becomes the start
+      this.animTo.set(next);
+      this.animKey.update(k => k + 1); // forces re-render / re-animation
+    });
+  }
 
 }

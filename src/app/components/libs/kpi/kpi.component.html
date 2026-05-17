@@ -1,20 +1,22 @@
+<!-- sheldon-kpi-card.component.html -->
 <sheldon-card>
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container content>
-    <!--    FILTERING -->
     <sheldon-dynamic-filter
       [filterBy]="this.filtersFields()"
       [dataset]="this.data()"
       [masterField]="this.masterField()"
-      (filterChange)="onFilterChange($event)"/>
-    {{ this.aggregatedValue() }}
-    <!--    <canvas-->
-    <!--      baseChart-->
-    <!--      [data]="chartData()"-->
-    <!--      [options]="barChartOptions()"-->
-    <!--      [type]="barChartType"-->
-    <!--      (chartHover)="chartHovered($event)"-->
-    <!--      (chartClick)="chartClicked($event)">-->
-    <!--    </canvas>-->
+      (filterChange)="onFilterChange($event)" />
+
+    <div class="kpi-value-wrapper">
+      <h1
+        class="kpi-value"
+        [attr.data-anim-key]="this.animKey()"
+        [style.--from]="this.animFrom()"
+        [style.--to]="this.animTo()"
+      >
+        <span class="kpi-counter"></span>
+      </h1>
+    </div>
   </ng-container>
 </sheldon-card>
