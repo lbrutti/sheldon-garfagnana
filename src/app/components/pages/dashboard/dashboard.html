@@ -36,3 +36,12 @@
   reduceBy="sum"
   [data]="popolazioneLastYear()"
   [limit]="-1"/>
+
+<sheldon-js-kpi
+  groupBy="nome_comune"
+  title="Popolazione totale dell'area"
+  filterBy="unione|nome_comune"
+  masterField="unione"
+  reduceBy="sum"
+  [data]="popolazioneLastYear()"
+  [limit]="-1"/>

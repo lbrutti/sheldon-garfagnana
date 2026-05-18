@@ -1,5 +1,3 @@
-//:host { // sheldon-kpi-card.component.scss
-
 // Register the animatable integer property
 @property --displayed-value {
   syntax: "<integer>";
@@ -7,43 +5,45 @@
   initial-value: 0;
 }
 
-.kpi-value-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+:host { // sheldon-kpi-card.component.scss
 
-.kpi-value {
-  // No direct text — the counter does the rendering
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0;
 
-  // Animate the registered property from --from to --to
-  --from: 0;
-  --to: 0;
+  .kpi-value-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-  .kpi-counter {
-    counter-reset: value var(--displayed-value);
-    --displayed-value: var(--from);
+  .kpi-value {
+    // No direct text — the counter does the rendering
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0;
 
-    &::before {
-      content: counter(value);
+    // Animate the registered property from --from to --to
+    --from: 0;
+    --to: 0;
+
+    .kpi-counter {
+      counter-reset: value var(--displayed-value);
+      --displayed-value: var(--from);
+
+      &::before {
+        content: counter(value);
+      }
+
+      &.animate {
+        animation: count-up 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      }
     }
+  }
 
-    &.animate {
-      animation: count-up 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  @keyframes count-up {
+    from {
+      --displayed-value: var(--from);
+    }
+    to {
+      --displayed-value: var(--to);
     }
   }
 }
-
-@keyframes count-up {
-  from {
-    --displayed-value: var(--from);
-  }
-  to {
-    --displayed-value: var(--to);
-  }
-}
-
-//}
