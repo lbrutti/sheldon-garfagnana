@@ -1,4 +1,4 @@
-// sheldon-kpi-card.component.scss
+//:host { // sheldon-kpi-card.component.scss
 
 // Register the animatable integer property
 @property --displayed-value {
@@ -24,16 +24,16 @@
   --to: 0;
 
   .kpi-counter {
-    // CSS counter trick: use counter() to display --displayed-value as text
     counter-reset: value var(--displayed-value);
+    --displayed-value: var(--from);
 
     &::before {
       content: counter(value);
     }
 
-    // Animate --displayed-value between --from and --to
-    --displayed-value: var(--from);
-    animation: count-up 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    &.animate {
+      animation: count-up 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
   }
 }
 
@@ -45,3 +45,5 @@
     --displayed-value: var(--to);
   }
 }
+
+//}

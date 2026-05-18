@@ -1,4 +1,15 @@
-import {Component, computed, effect, input, signal, Signal, ViewChild} from '@angular/core';
+import {
+  afterNextRender,
+  Component,
+  computed,
+  effect, ElementRef,
+  Injector,
+  input,
+  signal,
+  Signal,
+  untracked,
+  ViewChild
+} from '@angular/core';
 
 
 import CardComponent from '../card/card.component';
@@ -33,14 +44,15 @@ export default class KpiComponent {
   reduceBy = input<string>('sum');
 
   aggregatedValue: Signal<number> = computed(() => {
-    const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
+    const filters = this.appliedFilters();
+    const filterSet = filters.length && filters.some(d => d.value);
     const filteredData = filterSet ? this.data().filter(d => {
-      const guard = filterSet ? (this.appliedFilters().every(filter => {
+      const guard = filterSet ? (filters.every(filter => {
         return filter.value.length && (filter.value === (d as any)[filter.key]);
       })) : true;
       return guard;
     }) : this.data();
-    return filteredData.map(d => d.valore).reduce((acc: number, val: number) => acc + val);
+    return filteredData.map(d => d.valore).reduce((acc: number, val: number) => acc + val, 0);
 
   });
 
@@ -50,18 +62,32 @@ export default class KpiComponent {
   }
 
 
-
   // Track the "from" value for animation
   protected animFrom = signal(0);
   protected animTo = signal(0);
   protected animKey = signal(0); // bump to re-trigger animation
 
-  constructor() {
+  @ViewChild('counter') counterEl!: ElementRef<HTMLElement>;
+
+  constructor(private injector: Injector) {
     effect(() => {
-      const next = this.aggregatedValue();
-      this.animFrom.set(this.animTo()); // previous becomes the start
-      this.animTo.set(next);
-      this.animKey.update(k => k + 1); // forces re-render / re-animation
+      const value = this.aggregatedValue();
+      const prev = untracked(() => this.animTo());
+
+      untracked(() => {
+        this.animFrom.set(prev);
+        this.animTo.set(value);
+      });
+
+      afterNextRender({
+        read: () => {
+          const el = this.counterEl?.nativeElement;
+          if (!el) return;
+          el.classList.remove('animate');
+          void el.offsetWidth; // reflow break
+          el.classList.add('animate');
+        }
+      }, {injector: this.injector});
     });
   }
 
