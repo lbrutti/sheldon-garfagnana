@@ -1,17 +1,17 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import JsKpiComponent from './js-kpi.component';
+import KpiComponent from './kpi.component';
 
-describe(JsKpiComponent, () => {
-  let component: JsKpiComponent;
-  let fixture: ComponentFixture<JsKpiComponent>;
+describe(KpiComponent, () => {
+  let component: KpiComponent;
+  let fixture: ComponentFixture<KpiComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [JsKpiComponent],
+      imports: [KpiComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(JsKpiComponent);
+    fixture = TestBed.createComponent(KpiComponent);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

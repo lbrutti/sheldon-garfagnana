@@ -14,12 +14,12 @@ import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 
 @Component({
-  selector: 'sheldon-js-kpi',
+  selector: 'sheldon-kpi',
   imports: [CardComponent, DynamicFilterComponent],
-  templateUrl: './js-kpi.component.html',
-  styleUrl: './js-kpi.component.scss',
+  templateUrl: './kpi.component.html',
+  styleUrl: './kpi.component.scss',
 })
-export default class JsKpiComponent {
+export default class KpiComponent {
   @ViewChild('counter') counterEl!: ElementRef<HTMLElement>;
 
   title = input<string>('Numero di progetti per comune');
@@ -69,7 +69,7 @@ export default class JsKpiComponent {
           this.animateCounter(el, from, to);
           this.animFrom = to;
         }
-      }, { injector: this.injector });
+      }, {injector: this.injector});
     });
   }
 
