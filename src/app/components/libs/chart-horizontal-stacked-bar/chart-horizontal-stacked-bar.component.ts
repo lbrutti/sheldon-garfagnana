@@ -1,20 +1,19 @@
-import {Component, computed, input, signal, Signal, ViewChild, WritableSignal} from '@angular/core';
-import {Chart, ChartConfiguration} from 'chart.js';
+import {Component, computed, Signal,} from '@angular/core';
+import {Chart, ChartConfiguration, ChartData} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
 Chart.register(annotationPlugin);
 
 import CardComponent from '../card/card.component';
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MatIcon} from '@angular/material/icon';
-import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
-import {ChartData, ChartEvent} from 'chart.js';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
+import ChartVerticalBarComponent from '../chart-vertical-bar/chart-vertical-bar.component';
 
 @Component({
-  selector: 'sheldon-chart-v-bars',
+  selector: 'sheldon-chart-h-stacked-bars',
   imports: [
     CardComponent,
     MatButtonToggleGroup,
@@ -23,27 +22,13 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
     BaseChartDirective,
     DynamicFilterComponent
   ],
-  templateUrl: './chart-vertical-bar.component.html',
-  styleUrl: './chart-vertical-bar.component.scss',
+  templateUrl: './chart-horizontal-stacked-bar.component.html',
+  styleUrl: './chart-horizontal-stacked-bar.component.scss',
 })
-export default class ChartVerticalBarComponent {
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+export default class ChartHorizontalStackedBarComponent extends ChartVerticalBarComponent {
 
-  title = input<string>('Numero di progetti per comune');
-  filterBy = input<string>('nome_comune');
-  filtersFields = computed<string[]>((): string[] => {
-    return this.filterBy().split('|');
-  });
-  protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
-  masterField = input<string | null>(null);
-  limit = input<number>(15);
-  groupBy = input<string>('nome_comune');
-  sortDirection = signal<string>('desc');
-  data = input<DataInterface[]>([]);
-  reduceBy = input<string>('sum');
-
-  chartData: Signal<ChartData<'bar'>> = computed(() => {
+  override chartData: Signal<ChartData<'bar'>> = computed(() => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     const filteredData = filterSet ? this.data().filter(d => {
       const guard = filterSet ? (this.appliedFilters().every(filter => {
@@ -63,18 +48,8 @@ export default class ChartVerticalBarComponent {
     });
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
-  protected getReducedValue(grouped: Partial<Record<any, any[]>>, label: string) {
-    switch (this.reduceBy()) {
-      case 'sum':
-        return grouped[label].reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
-      case 'max':
-        return grouped[label].reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
-      default:
-        return 0;
-    }
-  }
 
-  annotationsSignal: Signal<any> = computed(() => {
+  override annotationsSignal: Signal<any> = computed(() => {
     const annotations: any = {};
     this.chartData().labels.forEach((label, i) => {
       annotations[`label_${i}`] = {
@@ -105,51 +80,32 @@ export default class ChartVerticalBarComponent {
     return annotations;
   });
 
-
-  public barChartOptions: Signal<ChartConfiguration<'bar'>['options']> = computed(() => {
+  public override barChartOptions: Signal<ChartConfiguration<'bar'>['options']> = computed(() => {
     return {
       //set bars horizontally
-      indexAxis: 'x',
+      indexAxis: 'y',
       // We use these empty structures as placeholders for dynamic theming.
       scales: {
         x: {
           display: true,
+          stacked: true
 
         },
         y: {
           display: false,
+          stacked: true
         },
       },
       plugins: {
         legend: {
           display: false,
         },
-        // annotation: {
-        //   clip: true, // <-- critical: clips annotations to the chart area
-        //   annotations: this.annotationsSignal()
-        // },
+        annotation: {
+          clip: true, // <-- critical: clips annotations to the chart area
+          annotations: this.annotationsSignal()
+        },
       }
     };
   });
-  public barChartType = 'bar' as const;
-
-
-  public chartClicked({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    // console.log(event, active);
-  }
-
-  public chartHovered({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    // console.log(event, active);
-  }
-
-
-  protected onSortChange($event: MatButtonToggleChange) {
-    this.sortDirection.set($event.value);
-  }
-
-  protected onFilterChange($event: FilterOptionInterface[]) {
-    this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
-  }
-
 
 }
