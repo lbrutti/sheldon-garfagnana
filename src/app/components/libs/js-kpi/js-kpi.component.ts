@@ -42,7 +42,7 @@ export default class JsKpiComponent {
     const filteredData = filterSet
       ? this.data().filter(d =>
         filters.every(filter =>
-          filter.value.length && filter.value === (d as any)[filter.key]
+          filter.value.length && filter.value === `${(d as any)[filter.key]}`
         )
       )
       : this.data();

@@ -47,7 +47,7 @@ export default class ChartVerticalBarComponent {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     const filteredData = filterSet ? this.data().filter(d => {
       const guard = filterSet ? (this.appliedFilters().every(filter => {
-        return filter.value.length && (filter.value === (d as any)[filter.key]);
+        return filter.value.length && (filter.value === `${(d as any)[filter.key]}`);
       })) : true;
       return guard;
     }) : this.data();

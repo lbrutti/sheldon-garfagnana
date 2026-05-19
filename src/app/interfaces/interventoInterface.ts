@@ -1,0 +1,27 @@
+// noinspection SpellCheckingInspection
+
+export declare interface InterventoInterface {
+  ambitoStrategico: string,
+  ambitoStrategicoDettaglio: string,
+  categoria: string,
+  comune: string,
+  descrizione: string,
+  fine: number,
+  id: string,
+  importoFonteDettaglio: string,
+  importoFonti: string,
+  importoPubblico: number,
+  importoTotale: number,
+  indirizzo: string,
+  inizio: number,
+  lat: number,
+  link: string,
+  long: number,
+  nome: string,
+  partecipazione: string,
+  stato: string,
+  target: string,
+  tema: string,
+  tipologia: string,
+  unioneComuni: string,
+}

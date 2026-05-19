@@ -5,7 +5,7 @@ import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocom
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {FilterOptionInterface, ProjectInterface} from '../../../interfaces';
+import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 
 
 @Component({
@@ -34,23 +34,23 @@ export default class GlobalSearchComponent {
   chipSetSignal = toSignal(this.chipSet.valueChanges);
 
 
-  projects = input<ProjectInterface[]>([]);
+  projects = input<InterventoInterface[]>([]);
   filter = output<(string | FilterOptionInterface)[]>();
 
   suggestions: Signal<FilterOptionInterface[]> = computed(() => {
     let municipalitySuggestions: { [key: string]: FilterOptionInterface } = {};
     let categorySuggestions: { [key: string]: FilterOptionInterface } = {};
-    this.projects().map((p: ProjectInterface) => {
-      if (!municipalitySuggestions[`${p.municipality.toUpperCase()}}`]) {
-        municipalitySuggestions[`${p.municipality.toUpperCase()}`] = {
-          value: p.municipality,
+    this.projects().map((p: InterventoInterface) => {
+      if (!municipalitySuggestions[`${p.comune.toUpperCase()}}`]) {
+        municipalitySuggestions[`${p.comune.toUpperCase()}`] = {
+          value: p.comune,
           key: 'municipality'
         };
       }
 
-      if (!categorySuggestions[`${p.category.toUpperCase()}}`]) {
-        categorySuggestions[`${p.category.toUpperCase()}`] = {
-          value: p.category,
+      if (!categorySuggestions[`${p.categoria.toUpperCase()}}`]) {
+        categorySuggestions[`${p.categoria.toUpperCase()}`] = {
+          value: p.categoria,
           key: 'category'
         };
       }
@@ -60,10 +60,10 @@ export default class GlobalSearchComponent {
 
   chips: Signal<FilterOptionInterface[]> = computed(() => {
     let categorySuggestions: { [key: string]: FilterOptionInterface } = {};
-    this.projects().map((p: ProjectInterface) => {
-      if (!categorySuggestions[`${p.category.toUpperCase()}}`]) {
-        categorySuggestions[`${p.category.toUpperCase()}`] = {
-          value: p.category,
+    this.projects().map((p: InterventoInterface) => {
+      if (!categorySuggestions[`${p.categoria.toUpperCase()}}`]) {
+        categorySuggestions[`${p.categoria.toUpperCase()}`] = {
+          value: p.categoria,
           key: 'category'
         };
       }

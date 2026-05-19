@@ -1,6 +1,6 @@
 export declare interface DataInterface {
-  pro_com_t: string,
-  nome_comune: string,
+  proComT: string,
+  nomeComune: string,
   unione: string,
   anno: number,
   indicatore: string,

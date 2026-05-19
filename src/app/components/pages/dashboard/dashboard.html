@@ -8,47 +8,37 @@
 <!--  [data]="popolazioneLastYear()"-->
 <!--  [limit]="10"/>-->
 <sheldon-chart-v-bars
-  groupBy="nome_comune"
+  groupBy="nomeComune"
   title="Popolazione per comune"
-  filterBy="unione"
-  masterField="unione"
+  filterBy="unione|anno"
   reduceBy="sum"
-  [data]="popolazioneLastYear()"
+  [data]="popolazione()"
   [limit]="10"/>
 <sheldon-chart-h-bars
-  groupBy="nome_comune"
+  groupBy="nomeComune"
   title="Popolazione per comune (stacked bars)"
-  filterBy="unione"
+  filterBy="unione|anno"
   masterField="unione"
   reduceBy="sum"
-  [data]="popolazioneLastYear()"
+  [data]="popolazione()"
   [limit]="10"/>
 
 
 <sheldon-chart-line
   groupBy="anno"
   title="Andamento popolazione per comune"
-  filterBy="unione|nome_comune"
+  filterBy="unione|nomeComune|anno"
   masterField="unione"
   reduceBy="sum"
   [data]="popolazione()"
   [limit]="-1"/>
 
 
-<sheldon-kpi
-  groupBy="nome_comune"
-  title="Popolazione totale dell'area"
-  filterBy="unione|nome_comune"
-  masterField="unione"
-  reduceBy="sum"
-  [data]="popolazioneLastYear()"
-  [limit]="-1"/>
-
 <sheldon-js-kpi
-  groupBy="nome_comune"
+  groupBy="nomeComune"
   title="Popolazione totale dell'area"
-  filterBy="unione|nome_comune"
+  filterBy="unione|nomeComune|anno"
   masterField="unione"
   reduceBy="sum"
-  [data]="popolazioneLastYear()"
+  [data]="popolazione()"
   [limit]="-1"/>
