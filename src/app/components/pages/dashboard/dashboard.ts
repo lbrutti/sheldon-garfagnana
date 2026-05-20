@@ -1,11 +1,11 @@
 import {Component, computed, effect, OnInit, signal, Signal, untracked} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
-import GlobalSearchComponent from '../../libs/global-search/global-search.component';
+//import GlobalSearchComponent from '../../libs/global-search/global-search.component';
 import {DataInterface, FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import ChartHorizontalBarComponent from '../../libs/chart-horizontal-bar/chart-horizontal-bar.component';
 import {components} from '../../libs';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {Data} from '@angular/router';
+import {parseInterventiToDataCollection} from '../../../adapters';
 
 @Component({
   selector: 'sheldon-dashboard',
@@ -32,10 +32,14 @@ export default class Dashboard implements OnInit {
 
   constructor(protected apiService: ProjectsApiService) {
     effect(() => {
-      const progettiAsData: DataInterface[] = this.parseProgettiToData(this.interventi(), 'importoTotale');
+      const interventiAsData: DataInterface[] = parseInterventiToDataCollection(this.interventi(), {
+        comune: 'nomeComune',
+        importoTotale: 'valore',
+        inizio: 'anno',
+        unione: 'unione',
+      });
       untracked(() => {
-        this.progettiPerComune.set(progettiAsData);
-        console.log(this.progettiPerComune())
+        this.progettiPerComune.set(interventiAsData);
       });
     });
   }
@@ -51,18 +55,4 @@ export default class Dashboard implements OnInit {
     this.filters.set($event);
   }
 
-  private parseProgettiToData(interventi: InterventoInterface[], valueKey: string): DataInterface[] {
-    return interventi.map((i: InterventoInterface) => {
-      return {
-        nomeComune: i.comune,
-        unione: i.unione,
-        anno: i.inizio,
-        indicatore: valueKey,
-        valore: (i as any)[valueKey],
-        proComT: '',
-        udm: '',
-        note: '',
-      };
-    });
-  }
 }
