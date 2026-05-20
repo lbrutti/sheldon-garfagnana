@@ -23,5 +23,5 @@ export declare interface InterventoInterface {
   target: string,
   tema: string,
   tipologia: string,
-  unioneComuni: string,
+  unione: string,
 }

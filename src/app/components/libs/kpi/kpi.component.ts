@@ -46,10 +46,22 @@ export default class KpiComponent {
         )
       )
       : this.data();
-    return filteredData
-      .map(d => d.valore)
-      .reduce((acc: number, val: number) => acc + val, 0);
+    return this.getReducedValue(filteredData);
+
   });
+
+  protected getReducedValue(data: DataInterface[]) {
+    switch (this.reduceBy()) {
+      case 'sum':
+        return data.reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
+      case 'max':
+        return data.reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
+      case 'count':
+        return data.length;
+      default:
+        return 0;
+    }
+  }
 
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));

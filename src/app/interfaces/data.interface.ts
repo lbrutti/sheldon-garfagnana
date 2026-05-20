@@ -1,5 +1,5 @@
 export declare interface DataInterface {
-  proComT: string,
+  proComT?: string,
   nomeComune: string,
   unione: string,
   anno: number,
