@@ -3,7 +3,8 @@
     <mat-label>Unione</mat-label>
     <mat-select
       [formControl]="selectUnione"
-      (change)="(applyFilter())">
+      (selectionChange)="(applyFilter())"
+    >
       <mat-option [value]="''">Tutte</mat-option>
       @for (option of suggestions(); track option) {
         <mat-option [value]="option">{{ option.value }}</mat-option>

@@ -13,12 +13,20 @@ import {parseInterventiToDataCollection,} from '../../../adapters';
 })
 export default class Dashboard implements OnInit {
   protected interventi: Signal<InterventoInterface[]> = signal([]);
-  protected filters = signal<(string | FilterOptionInterface)[]>([]);
+  protected filters = signal<(FilterOptionInterface)[]>([]);
+
   interventiFiltrati = computed(() => {
-    return this.interventi().filter((project: InterventoInterface) => {
-      return this.filters().length === 0 || this.filters().some((f: string | FilterOptionInterface) => {
-        return (project as any)[(f as FilterOptionInterface).key].indexOf((f as FilterOptionInterface).value) >= 0;
-      })
+    return this.interventi().filter((intervento: InterventoInterface) => {
+      if (this.filters().length === 0) {
+        return true;
+      }
+      const filtroUnione = this.filters().find(f => f.key === 'unione');
+      const matchUnione = filtroUnione ? intervento.unione === filtroUnione.value : true;
+      const altriFiltri = this.filters().filter(f => f.key !== 'unione');
+      const matchAltriFiltri = altriFiltri.length ? altriFiltri.some((f: FilterOptionInterface) => {
+        return (intervento as any)[(f as FilterOptionInterface).key].indexOf((f as FilterOptionInterface).value) >= 0;
+      }) : true;
+      return matchUnione && matchAltriFiltri
     });
   });
 
@@ -44,7 +52,7 @@ export default class Dashboard implements OnInit {
     this.interventi = this.apiService.interventi;
   }
 
-  protected applyFilters($event: (string | FilterOptionInterface)[]) {
+  protected applyFilters($event: FilterOptionInterface[]) {
     this.filters.set($event);
   }
 

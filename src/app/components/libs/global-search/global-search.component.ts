@@ -1,7 +1,6 @@
 import {Component, computed, input, output, Signal} from '@angular/core';
 import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
-import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
@@ -15,8 +14,6 @@ import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
     MatFormField,
     MatLabel,
     MatOption,
-    MatAutocomplete,
-    MatAutocompleteTrigger,
     FormsModule,
     ReactiveFormsModule,
     MatButtonToggle,
@@ -28,7 +25,7 @@ import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 })
 
 export default class GlobalSearchComponent {
-  selectUnione = new FormControl<string | FilterOptionInterface>({key: '', value: ''});
+  selectUnione = new FormControl<FilterOptionInterface>({key: '', value: ''});
   selectUnioneSignal = toSignal(this.selectUnione.valueChanges);
 
   chipSet = new FormControl<FilterOptionInterface[]>([]);
@@ -36,7 +33,7 @@ export default class GlobalSearchComponent {
 
 
   interventi = input<InterventoInterface[]>([]);
-  filter = output<(string | FilterOptionInterface)[]>();
+  filter = output<(FilterOptionInterface)[]>();
 
   suggestions: Signal<FilterOptionInterface[]> = computed(() => {
 
@@ -62,22 +59,6 @@ export default class GlobalSearchComponent {
     return chips;
   });
 
-  filteredSuggestions: Signal<FilterOptionInterface[]> = computed(() => {
-    let term: string = '';
-    if (typeof this.selectUnioneSignal() === 'string') {
-      term = (this.selectUnioneSignal() as string);
-    } else {
-      term = (this.selectUnioneSignal() as FilterOptionInterface)?.value;
-    }
-
-    return term ? this.suggestions().filter(suggestion => {
-      return suggestion.value.toUpperCase().startsWith(term.toUpperCase())
-    }) : this.suggestions();
-  });
-
-  displayFn(tokenName: { key: string, value: string }): string {
-    return tokenName?.value ?? '';
-  }
 
   protected applyFilter() {
     this.filter.emit([this.selectUnioneSignal(), ...(this.chipSetSignal() || [])].filter(f => f));
