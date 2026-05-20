@@ -1,5 +1,7 @@
 import {DataInterface, InterventoInterface} from '../interfaces';
 import {Feature, FeatureCollection} from 'geojson';
+import {csv2json} from 'json-2-csv';
+import camelcase from 'camelcase';
 
 export type InterventoToDataMapping = { [key in keyof InterventoInterface]?: keyof DataInterface };
 export type DataToInterventoMapping = { [key in keyof DataInterface]?: keyof InterventoInterface };
@@ -61,4 +63,18 @@ export function parseDataToIntervento(
     intervento[(mapping as any)[key]] = (data as any)[key];
   });
   return intervento as InterventoInterface;
+}
+
+export function csvToJson(csv: any): any {
+  return csv2json(csv, {
+    trimHeaderFields: true,
+    trimFieldValues: true,
+  }).map((d: any) => {
+    const keys = Object.keys(d);
+    const parsed: any = {};
+    keys.forEach((key: string) => {
+      parsed[camelcase(key)] = d[key];
+    })
+    return parsed;
+  })
 }

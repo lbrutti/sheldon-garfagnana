@@ -1,60 +1,11 @@
-<!--<sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>-->
-<!--<sheldon-chart-h-stacked-bars-->
-<!--  groupBy="unione"-->
-<!--  title="Popolazione per comune (stacked bars)"-->
-<!--  filterBy="unione"-->
-<!--  masterField="unione"-->
-<!--  reduceBy="sum"-->
-<!--  [data]="popolazioneLastYear()"-->
-<!--  [limit]="10"/>-->
-<mat-grid-list cols="2">
-  <mat-grid-tile>
-    <sheldon-chart-v-bars
-      groupBy="nomeComune"
-      title="Popolazione per comune"
-      filterBy="unione|anno"
-      reduceBy="sum"
-      [data]="popolazione()"
-      [limit]="10"/>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <sheldon-chart-h-bars
-      groupBy="nomeComune"
-      title="Popolazione per comune (stacked bars)"
-      filterBy="unione|anno"
-      masterField="unione"
-      reduceBy="sum"
-      [data]="popolazione()"
-      [limit]="10"/>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <sheldon-chart-line
-      groupBy="anno"
-      title="Andamento popolazione per comune"
-      filterBy="unione|nomeComune"
-      masterField="unione"
-      reduceBy="sum"
-      [data]="popolazione()"
-      [limit]="-1"/>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <sheldon-kpi
-      groupBy="nomeComune"
-      title="Popolazione totale dell'area"
-      filterBy="unione|nomeComune|anno"
-      masterField="unione"
-      reduceBy="sum"
-      [data]="popolazione()"
-      [limit]="-1"/>
-  </mat-grid-tile>
+<sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
 
+<mat-grid-list cols="2">
 
   <mat-grid-tile>
     <sheldon-kpi
       groupBy="nomeComune"
       title="Numero interventi per comune"
-      filterBy="unione|nomeComune|anno"
-      masterField="unione"
       reduceBy="count"
       [data]="progettiPerComune()"
       [limit]="-1"/>

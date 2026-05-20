@@ -1,38 +1,32 @@
 import {Component, computed, effect, OnInit, signal, Signal, untracked} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
-//import GlobalSearchComponent from '../../libs/global-search/global-search.component';
 import {DataInterface, FilterOptionInterface, InterventoInterface} from '../../../interfaces';
-import ChartHorizontalBarComponent from '../../libs/chart-horizontal-bar/chart-horizontal-bar.component';
 import {components} from '../../libs';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {parseInterventiToDataCollection} from '../../../adapters';
+import {parseInterventiToDataCollection,} from '../../../adapters';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [ChartHorizontalBarComponent, ...components, MatGridList, MatGridTile],
+  imports: [...components, MatGridList, MatGridTile],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export default class Dashboard implements OnInit {
   protected interventi: Signal<InterventoInterface[]> = signal([]);
-  protected popolazione: Signal<DataInterface[]> = signal([]);
   protected filters = signal<(string | FilterOptionInterface)[]>([]);
-  filteredProjects = computed(() => {
+  interventiFiltrati = computed(() => {
     return this.interventi().filter((project: InterventoInterface) => {
-      return this.filters().length === 0 || this.filters().every((f: string | FilterOptionInterface) => {
-        return (project as any)[(f as FilterOptionInterface).key] === (f as FilterOptionInterface).value;
+      return this.filters().length === 0 || this.filters().some((f: string | FilterOptionInterface) => {
+        return (project as any)[(f as FilterOptionInterface).key].indexOf((f as FilterOptionInterface).value) >= 0;
       })
     });
   });
-  popolazioneLastYear = computed(() => {
-    const lastYear = Math.max(...this.popolazione().map(p => p.anno));
-    return this.popolazione().filter(d => d.anno === lastYear);
-  });
+
   progettiPerComune = signal<DataInterface[]>([]);
 
   constructor(protected apiService: ProjectsApiService) {
     effect(() => {
-      const interventiAsData: DataInterface[] = parseInterventiToDataCollection(this.interventi(), {
+      const interventiAsData: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
         comune: 'nomeComune',
         importoTotale: 'valore',
         inizio: 'anno',
@@ -44,11 +38,10 @@ export default class Dashboard implements OnInit {
     });
   }
 
+
   ngOnInit(): void {
-    this.apiService.getProjects();
-    this.apiService.getPopolazione();
-    this.interventi = this.apiService.progetti;
-    this.popolazione = this.apiService.popolazione;
+    this.apiService.getInterventi();
+    this.interventi = this.apiService.interventi;
   }
 
   protected applyFilters($event: (string | FilterOptionInterface)[]) {

@@ -35,7 +35,6 @@
     "@angular/build": "^21.2.10",
     "@angular/cli": "^21.2.10",
     "@angular/compiler-cli": "^21.2.0",
-    "@types/google.visualization": "^0.0.74",
     "jsdom": "^28.0.0",
     "ng2-charts-schematics": "^0.1.7",
     "prettier": "^3.8.1",

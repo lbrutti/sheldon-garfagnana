@@ -23,7 +23,7 @@ export default class KpiComponent {
   @ViewChild('counter') counterEl!: ElementRef<HTMLElement>;
 
   title = input<string>('Numero di progetti per comune');
-  filterBy = input<string>('nome_comune');
+  filterBy = input<string>('');
   filtersFields = computed<string[]>(() => this.filterBy().split('|'));
   private appliedFilters = signal<FilterOptionInterface[]>([]);
 
@@ -78,7 +78,7 @@ export default class KpiComponent {
         read: () => {
           const el = this.counterEl?.nativeElement;
           if (!el) return;
-          this.animateCounter(el, from, to);
+          this.animateCounter(el, from, to, 500);
           this.animFrom = to;
         }
       }, {injector: this.injector});

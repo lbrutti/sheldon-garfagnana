@@ -1,6 +1,6 @@
 import {Component, computed, input, output, Signal} from '@angular/core';
 import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
-import {MatOption} from '@angular/material/select';
+import {MatOption, MatSelect} from '@angular/material/select';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
@@ -21,63 +21,53 @@ import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
     ReactiveFormsModule,
     MatButtonToggle,
     MatButtonToggleGroup,
+    MatSelect,
   ],
   templateUrl: './global-search.component.html',
   styleUrl: './global-search.component.scss',
 })
 
 export default class GlobalSearchComponent {
-  textBox = new FormControl<string | FilterOptionInterface>({key: '', value: ''});
-  textBoxSignal = toSignal(this.textBox.valueChanges);
+  selectUnione = new FormControl<string | FilterOptionInterface>({key: '', value: ''});
+  selectUnioneSignal = toSignal(this.selectUnione.valueChanges);
 
   chipSet = new FormControl<FilterOptionInterface[]>([]);
   chipSetSignal = toSignal(this.chipSet.valueChanges);
 
 
-  projects = input<InterventoInterface[]>([]);
+  interventi = input<InterventoInterface[]>([]);
   filter = output<(string | FilterOptionInterface)[]>();
 
   suggestions: Signal<FilterOptionInterface[]> = computed(() => {
-    let municipalitySuggestions: { [key: string]: FilterOptionInterface } = {};
-    let categorySuggestions: { [key: string]: FilterOptionInterface } = {};
-    this.projects().map((p: InterventoInterface) => {
-      if (!municipalitySuggestions[`${p.comune.toUpperCase()}}`]) {
-        municipalitySuggestions[`${p.comune.toUpperCase()}`] = {
-          value: p.comune,
-          key: 'municipality'
-        };
-      }
 
-      if (!categorySuggestions[`${p.categoria.toUpperCase()}}`]) {
-        categorySuggestions[`${p.categoria.toUpperCase()}`] = {
-          value: p.categoria,
-          key: 'category'
-        };
-      }
-    });
-    return [...Object.values(categorySuggestions), ...Object.values(municipalitySuggestions)].sort((a, b) => a.value.localeCompare(b.value));
+    const unioni = Array.from(new Set(this.interventi()
+      .map(i => i.unione.trim())))
+      .map(c => ({
+        value: c.trim(),
+        key: 'unione'
+      }))
+      .sort((a, b) => a.value.localeCompare(b.value));
+
+    return unioni;
   });
 
   chips: Signal<FilterOptionInterface[]> = computed(() => {
-    let categorySuggestions: { [key: string]: FilterOptionInterface } = {};
-    this.projects().map((p: InterventoInterface) => {
-      if (!categorySuggestions[`${p.categoria.toUpperCase()}}`]) {
-        categorySuggestions[`${p.categoria.toUpperCase()}`] = {
-          value: p.categoria,
-          key: 'category'
-        };
-      }
-    });
-    return Object.values(categorySuggestions).sort((a, b) => a.value.localeCompare(b.value));
-
+    const chips = Array.from(new Set(this.interventi()
+      .flatMap(i => i.categoria.split('|')).map(c => c.trim())))
+      .map(c => ({
+        value: c.trim(),
+        key: 'categoria'
+      }))
+      .sort((a, b) => a.value.localeCompare(b.value));
+    return chips;
   });
 
   filteredSuggestions: Signal<FilterOptionInterface[]> = computed(() => {
     let term: string = '';
-    if (typeof this.textBoxSignal() === 'string') {
-      term = (this.textBoxSignal() as string);
+    if (typeof this.selectUnioneSignal() === 'string') {
+      term = (this.selectUnioneSignal() as string);
     } else {
-      term = (this.textBoxSignal() as FilterOptionInterface)?.value;
+      term = (this.selectUnioneSignal() as FilterOptionInterface)?.value;
     }
 
     return term ? this.suggestions().filter(suggestion => {
@@ -90,7 +80,7 @@ export default class GlobalSearchComponent {
   }
 
   protected applyFilter() {
-    this.filter.emit([this.textBoxSignal(), ...(this.chipSetSignal() || [])].filter(f => f));
+    this.filter.emit([this.selectUnioneSignal(), ...(this.chipSetSignal() || [])].filter(f => f));
   }
 
 }
