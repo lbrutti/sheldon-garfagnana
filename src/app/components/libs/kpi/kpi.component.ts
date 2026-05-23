@@ -30,7 +30,7 @@ export default class KpiComponent {
 
   masterField = input<string | null>(null);
   limit = input<number>(15);
-  groupBy = input<string>('nome_comune');
+  groupBy = input<keyof DataInterface>('comune');
   data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
 
@@ -56,6 +56,7 @@ export default class KpiComponent {
   }
 
   private animFrom = 0;
+  udm = input<string | null>(null);
 
   constructor(private injector: Injector) {
     effect(() => {

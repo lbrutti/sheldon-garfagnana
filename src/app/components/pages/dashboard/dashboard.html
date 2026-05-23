@@ -2,13 +2,8 @@
 
 <div class="grid">
 
-  <sheldon-kpi
-    groupBy="nomeComune"
-    title="Numero interventi per comune"
-    reduceBy="count"
-    [data]="interventiPerComune()"
-    [limit]="0"/>
 
+  <!-- ISTOGRAMMI -->
   <sheldon-chart-v-bars
     #bar_end
     groupBy="anno"
@@ -49,6 +44,32 @@
     [limit]="0"
     [data]="interventiPerComune()"
   ></sheldon-chart-h-bars>
+
+  <!-- KPIS -->
+
+  <sheldon-kpi
+    #kpi_comuni
+    groupBy="comune"
+    title="Comuni con almeno un intervento"
+    reduceBy="count"
+    [data]="comuniConInterventi()"
+    [limit]="0"/>
+
+  <sheldon-kpi
+    #kpi_importo
+    groupBy="valore"
+    title="Importo finanziato"
+    reduceBy="sum"
+    udm="  €"
+    [data]="interventiPerComune()"
+    [limit]="0"/>
+  <sheldon-kpi
+    #kpi_interventi
+    groupBy="comune"
+    title="Interventi programmati"
+    reduceBy="count"
+    [data]="interventiPerComune()"
+    [limit]="0"/>
 </div>
 
 

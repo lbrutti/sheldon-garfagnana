@@ -4,10 +4,11 @@ import {DataInterface, FilterOptionInterface, InterventoInterface} from '../../.
 import {components} from '../../libs';
 import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {parseInterventiToDataCollection,} from '../../../adapters';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, MatGridList, MatGridTile],
+  imports: [...components, MatGridList, MatGridTile, JsonPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -31,17 +32,25 @@ export default class Dashboard implements OnInit {
   });
 
   interventiPerComune = signal<DataInterface[]>([]);
+  comuniConInterventi = signal<DataInterface[]>([]);
   interventiPerFine = signal<DataInterface[]>([]);
   interventiPerInizio = signal<DataInterface[]>([]);
 
   constructor(protected apiService: ProjectsApiService) {
     effect(() => {
-      const dataPerComune: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
+      const dataInterventiPerComune: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
         comune: 'comune',
         importoTotale: 'valore',
         inizio: 'anno',
         unione: 'unione',
       });
+      const dataComuniConInterventi: DataInterface[] = Array.from(new Set(this.interventiFiltrati().map(i=>i.comune)))
+        .map((comune:string):DataInterface=>({
+          comune:comune,
+          valore:1,
+          anno:0,
+          unione:'_'
+        }));
       const dataPerFine: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
         comune: 'comune',
         importoTotale: 'valore',
@@ -55,9 +64,10 @@ export default class Dashboard implements OnInit {
         unione: 'unione',
       });
       untracked(() => {
-        this.interventiPerComune.set(dataPerComune);
+        this.interventiPerComune.set(dataInterventiPerComune);
         this.interventiPerFine.set(dataPerFine);
         this.interventiPerInizio.set(dataPerInizio);
+        this.comuniConInterventi.set(dataComuniConInterventi);
       });
     });
   }

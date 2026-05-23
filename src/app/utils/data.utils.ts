@@ -22,6 +22,8 @@ export function getReducedValueByLabel(grouped: Partial<Record<any, any[]>>, lab
       return grouped[label].reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
     case 'count':
       return grouped[label].length;
+    case 'countunique':
+      return grouped[label].length;
     default:
       return 0;
   }
