@@ -1,13 +1,15 @@
 // noinspection SpellCheckingInspection
 
 export declare interface InterventoInterface {
+  id: string,
+  proComT: any,
+  comune: string,
+  unione: string,
   ambitoStrategico: string,
   ambitoStrategicoDettaglio: string,
   categoria: string,
-  comune: string,
   descrizione: string,
   fine: number,
-  id: string,
   importoFonteDettaglio: string,
   importoFonti: string,
   importoPubblico: number,
@@ -23,5 +25,4 @@ export declare interface InterventoInterface {
   target: string,
   tema: string,
   tipologia: string,
-  unione: string,
 }

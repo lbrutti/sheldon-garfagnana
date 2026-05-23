@@ -1,16 +1,55 @@
 <sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
 
-<mat-grid-list cols="2">
+<div class="grid">
 
-  <mat-grid-tile>
-    <sheldon-kpi
-      groupBy="nomeComune"
-      title="Numero interventi per comune"
-      reduceBy="count"
-      [data]="progettiPerComune()"
-      [limit]="-1"/>
-  </mat-grid-tile>
-</mat-grid-list>
+  <sheldon-kpi
+    groupBy="nomeComune"
+    title="Numero interventi per comune"
+    reduceBy="count"
+    [data]="interventiPerComune()"
+    [limit]="0"/>
+
+  <sheldon-chart-v-bars
+    #bar_end
+    groupBy="anno"
+    title="Interventi per anno di conclusione"
+    reduceBy="count"
+    filterBy="comune"
+    sortBy="category"
+    defaultSortDirection="asc"
+    [showSorting]="false"
+    [limit]="0"
+    [data]="interventiPerFine()"
+  ></sheldon-chart-v-bars>
+
+
+  <sheldon-chart-v-bars
+    #bar_start
+    groupBy="anno"
+    title="Interventi per anno di avvio"
+    reduceBy="count"
+    filterBy="comune"
+    sortBy="category"
+    defaultSortDirection="asc"
+    [showSorting]="false"
+    [limit]="0"
+    [data]="interventiPerInizio()"
+  ></sheldon-chart-v-bars>
+
+
+  <sheldon-chart-h-bars
+    #bar_comuni
+    groupBy="comune"
+    title="Numero interventi per comune"
+    [filterBy]="null"
+    reduceBy="count"
+    sortBy="value"
+    defaultSortDirection="desc"
+    [showSorting]="true"
+    [limit]="0"
+    [data]="interventiPerComune()"
+  ></sheldon-chart-h-bars>
+</div>
 
 
 

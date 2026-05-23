@@ -12,6 +12,7 @@ import {
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
+import {getReducedValue} from '../../../utils';
 
 @Component({
   selector: 'sheldon-kpi',
@@ -46,22 +47,9 @@ export default class KpiComponent {
         )
       )
       : this.data();
-    return this.getReducedValue(filteredData);
-
+    return getReducedValue(filteredData, this.reduceBy());
   });
 
-  protected getReducedValue(data: DataInterface[]) {
-    switch (this.reduceBy()) {
-      case 'sum':
-        return data.reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
-      case 'max':
-        return data.reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
-      case 'count':
-        return data.length;
-      default:
-        return 0;
-    }
-  }
 
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));

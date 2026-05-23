@@ -1,10 +1,12 @@
 export declare interface DataInterface {
   proComT?: string,
-  nomeComune: string,
-  unione: string,
+  comune: string,
+  unione?: string,
   anno: number,
+  tipoGeo: string,
   indicatore: string,
   valore: number,
   udm: string,
   note: string,
+  fonte?: string,
 }

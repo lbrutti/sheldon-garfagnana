@@ -2,16 +2,18 @@
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container content>
     <!--    SORTING -->
-    <mat-button-toggle-group
-      (change)="onSortChange($event)"
-      value="desc">
-      <mat-button-toggle value="desc">
-        <mat-icon>arrow_downward</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="asc">
-        <mat-icon>arrow_upward</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+    @if (this.showSorting()) {
+      <mat-button-toggle-group
+        [value]="this.defaultSortDirection()"
+        (change)="onSortChange($event)">
+        <mat-button-toggle value="desc">
+          <mat-icon>arrow_downward</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="asc">
+          <mat-icon>arrow_upward</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    }
     <!--    FILTERING -->
     <sheldon-dynamic-filter
       [filterBy]="this.filtersFields()"

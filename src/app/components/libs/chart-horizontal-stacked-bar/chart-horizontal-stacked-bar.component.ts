@@ -11,6 +11,7 @@ import {BaseChartDirective} from 'ng2-charts';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import ChartVerticalBarComponent from '../chart-vertical-bar/chart-vertical-bar.component';
+import {getReducedValueByLabel} from '../../../utils';
 
 @Component({
   selector: 'sheldon-chart-h-stacked-bars',
@@ -37,13 +38,10 @@ export default class ChartHorizontalStackedBarComponent extends ChartVerticalBar
       return guard;
     }) : this.data();
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
-    let groupKeys = Object.keys(grouped).sort((a, b) => {
-      const comparison = this.getReducedValue(grouped, a) - this.getReducedValue(grouped, b);
-      return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
-    }).slice(0, this.limit())
+    let groupKeys = this.getGroupedKeys(grouped);
     let dataset: any = [];
     groupKeys.map(label => {
-      const reducedValue = this.getReducedValue(grouped, label);
+      const reducedValue = getReducedValueByLabel(grouped, label, this.reduceBy());
       dataset.push(reducedValue);
     });
     return {labels: groupKeys, datasets: [{data: dataset}]};

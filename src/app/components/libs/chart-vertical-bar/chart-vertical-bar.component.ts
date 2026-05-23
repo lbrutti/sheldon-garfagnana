@@ -1,4 +1,4 @@
-import {Component, computed, input, signal, Signal, ViewChild, WritableSignal} from '@angular/core';
+import {Component, computed, input, InputSignal, signal, Signal, ViewChild, WritableSignal} from '@angular/core';
 import {Chart, ChartConfiguration} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -12,6 +12,7 @@ import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
+import {getReducedValue, getReducedValueByLabel} from '../../../utils';
 
 @Component({
   selector: 'sheldon-chart-v-bars',
@@ -30,16 +31,23 @@ export default class ChartVerticalBarComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
-  filterBy = input<string>('nome_comune');
+
+  showSorting = input<boolean>(true);
+  sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
+  sortDirection = signal<string>('desc');
+  defaultSortDirection = input<'asc' | 'desc'>('desc');
+
+  masterField = input<string | null>(null);
+  filterBy = input<keyof DataInterface | null>('comune');
   filtersFields = computed<string[]>((): string[] => {
-    return this.filterBy().split('|');
+    return this.filterBy() !== null ? this.filterBy().split('|') : [];
   });
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
-  masterField = input<string | null>(null);
   limit = input<number>(15);
-  groupBy = input<string>('nome_comune');
-  sortDirection = signal<string>('desc');
+  groupBy = input<keyof DataInterface>('comune');
+
+
   data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
 
@@ -52,26 +60,23 @@ export default class ChartVerticalBarComponent {
       return guard;
     }) : this.data();
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
-    let groupKeys = Object.keys(grouped).sort((a, b) => {
-      const comparison = this.getReducedValue(grouped, a) - this.getReducedValue(grouped, b);
-      return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
-    }).slice(0, this.limit())
+    let groupKeys = this.getGroupedKeys(grouped);
     let dataset: any = [];
     groupKeys.map(label => {
-      const reducedValue = this.getReducedValue(grouped, label);
+      const reducedValue = getReducedValueByLabel(grouped, label, this.reduceBy());
       dataset.push(reducedValue);
     });
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
-  protected getReducedValue(grouped: Partial<Record<any, any[]>>, label: string) {
-    switch (this.reduceBy()) {
-      case 'sum':
-        return grouped[label].reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
-      case 'max':
-        return grouped[label].reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
-      default:
-        return 0;
+
+  getGroupedKeys(grouped: any): string[] {
+    const groupKeys = this.sortBy() === 'category' ? Object.keys(grouped).sort((a, b) => `${a}`.localeCompare(`${b}`)) : Object.keys(grouped).sort((a, b) => {
+      return getReducedValueByLabel(grouped, a, this.reduceBy()) - getReducedValueByLabel(grouped, b, this.reduceBy());
+    });
+    if ((!this.showSorting() && (this.defaultSortDirection() === 'desc')) || (this.showSorting() && this.sortDirection() === 'desc')) {
+      groupKeys.reverse();
     }
+    return this.limit() ? groupKeys.slice(0, this.limit()) : groupKeys;
   }
 
   annotationsSignal: Signal<any> = computed(() => {

@@ -5,6 +5,7 @@
 // custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
 @import 'maplibre-gl/dist/maplibre-gl.css';
+
 html {
   height: 100%;
   @include mat.theme(
@@ -38,3 +39,17 @@ body {
 }
 
 /* You can add global styles to this file, and also import other style files */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 16px;
+  padding: 0 32px 32px;
+}
+
+.grid-bottom {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  padding: 0 32px 32px;
+}

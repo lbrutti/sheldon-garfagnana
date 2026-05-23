@@ -30,18 +30,34 @@ export default class Dashboard implements OnInit {
     });
   });
 
-  progettiPerComune = signal<DataInterface[]>([]);
+  interventiPerComune = signal<DataInterface[]>([]);
+  interventiPerFine = signal<DataInterface[]>([]);
+  interventiPerInizio = signal<DataInterface[]>([]);
 
   constructor(protected apiService: ProjectsApiService) {
     effect(() => {
-      const interventiAsData: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
-        comune: 'nomeComune',
+      const dataPerComune: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
+        comune: 'comune',
+        importoTotale: 'valore',
+        inizio: 'anno',
+        unione: 'unione',
+      });
+      const dataPerFine: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
+        comune: 'comune',
+        importoTotale: 'valore',
+        fine: 'anno',
+        unione: 'unione',
+      });
+      const dataPerInizio: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
+        comune: 'comune',
         importoTotale: 'valore',
         inizio: 'anno',
         unione: 'unione',
       });
       untracked(() => {
-        this.progettiPerComune.set(interventiAsData);
+        this.interventiPerComune.set(dataPerComune);
+        this.interventiPerFine.set(dataPerFine);
+        this.interventiPerInizio.set(dataPerInizio);
       });
     });
   }
