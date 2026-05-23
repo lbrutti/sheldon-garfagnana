@@ -2,13 +2,11 @@ import {Component, computed, effect, OnInit, signal, Signal, untracked} from '@a
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {DataInterface, FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {components} from '../../libs';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 import {parseInterventiToDataCollection,} from '../../../adapters';
-import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, MatGridList, MatGridTile, JsonPipe],
+  imports: [...components],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
@@ -44,12 +42,12 @@ export default class Dashboard implements OnInit {
         inizio: 'anno',
         unione: 'unione',
       });
-      const dataComuniConInterventi: DataInterface[] = Array.from(new Set(this.interventiFiltrati().map(i=>i.comune)))
-        .map((comune:string):DataInterface=>({
-          comune:comune,
-          valore:1,
-          anno:0,
-          unione:'_'
+      const dataComuniConInterventi: DataInterface[] = Array.from(new Set(this.interventiFiltrati().map(i => i.comune)))
+        .map((comune: string): DataInterface => ({
+          comune: comune,
+          valore: 1,
+          anno: 0,
+          unione: '_'
         }));
       const dataPerFine: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
         comune: 'comune',
