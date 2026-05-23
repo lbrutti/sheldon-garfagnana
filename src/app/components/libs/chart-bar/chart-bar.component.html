@@ -26,8 +26,12 @@
     <!--    AUX REDUCE SWITCHES-->
     @if (this.auxReduce().length) {
       <mat-button-toggle-group
-        [value]="this.auxReduce()[0]"
+        [value]="{campo:this.groupBy(), reduceBy:this.reduceBy()}"
         (change)="onReduceChange($event)">
+        <mat-button-toggle [value]="{campo:this.groupBy(), reduceBy:this.reduceBy()}">
+          <!--          placeholder, trovare icona-->
+          <span>{{ this.groupBy() }}</span>
+        </mat-button-toggle>
         @for (aux of this.auxReduce(); track aux) {
           <mat-button-toggle [value]="aux">
             <span>{{ aux.campo }}</span>

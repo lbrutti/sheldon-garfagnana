@@ -1,4 +1,14 @@
-import {Component, computed, input, InputSignal, signal, Signal, ViewChild, WritableSignal} from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  InputSignal,
+  OnInit,
+  signal,
+  Signal,
+  ViewChild,
+  WritableSignal
+} from '@angular/core';
 import {Chart, ChartConfiguration} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
 
@@ -13,21 +23,23 @@ import {ChartData, ChartEvent} from 'chart.js';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValue, getReducedValueByLabel} from '../../../utils';
+import {JsonPipe} from '@angular/common';
 
 @Component({
-  selector: 'sheldon-chart-v-bars',
+  selector: 'sheldon-chart-bars',
   imports: [
     CardComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
     MatIcon,
     BaseChartDirective,
-    DynamicFilterComponent
+    DynamicFilterComponent,
   ],
-  templateUrl: './chart-vertical-bar.component.html',
-  styleUrl: './chart-vertical-bar.component.scss',
+  templateUrl: './chart-bar.component.html',
+  styleUrl: './chart-bar.component.scss',
 })
-export default class ChartVerticalBarComponent {
+export default class ChartBarComponent implements OnInit {
+
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
@@ -38,7 +50,7 @@ export default class ChartVerticalBarComponent {
   defaultSortDirection = input<'asc' | 'desc'>('desc');
 
   masterField = input<string | null>(null);
-  filterBy = input<keyof DataInterface | null>('comune');
+  filterBy = input<string | null>(null);
   filtersFields = computed<string[]>((): string[] => {
     return this.filterBy() !== null ? this.filterBy().split('|') : [];
   });
@@ -50,7 +62,7 @@ export default class ChartVerticalBarComponent {
 
   data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
-
+  auxReduce = input<{ campo: keyof DataInterface, reduceBy: string }[]>([]);
   chartData: Signal<ChartData<'bar'>> = computed(() => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     const filteredData = filterSet ? this.data().filter(d => {
@@ -59,19 +71,28 @@ export default class ChartVerticalBarComponent {
       })) : true;
       return guard;
     }) : this.data();
+
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
     let groupKeys = this.getGroupedKeys(grouped);
     let dataset: any = [];
     groupKeys.map(label => {
-      const reducedValue = getReducedValueByLabel(grouped, label, this.reduceBy());
+      const reducedValue = getReducedValueByLabel(grouped, label, this.currentReduce().reduceBy);
       dataset.push(reducedValue);
     });
+
+
     return {labels: groupKeys, datasets: [{data: dataset}]};
   });
 
+  ngOnInit(): void {
+    this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()})
+  }
+
+  currentReduce = signal<{ campo: string, reduceBy: string } | null>(null);
+
   getGroupedKeys(grouped: any): string[] {
     const groupKeys = this.sortBy() === 'category' ? Object.keys(grouped).sort((a, b) => `${a}`.localeCompare(`${b}`)) : Object.keys(grouped).sort((a, b) => {
-      return getReducedValueByLabel(grouped, a, this.reduceBy()) - getReducedValueByLabel(grouped, b, this.reduceBy());
+      return getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy) - getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy);
     });
     if ((!this.showSorting() && (this.defaultSortDirection() === 'desc')) || (this.showSorting() && this.sortDirection() === 'desc')) {
       groupKeys.reverse();
@@ -119,6 +140,7 @@ export default class ChartVerticalBarComponent {
       scales: {
         x: {
           display: true,
+          grid: {display: false}
 
         },
         y: {
@@ -157,4 +179,7 @@ export default class ChartVerticalBarComponent {
   }
 
 
+  protected onReduceChange($event: MatButtonToggleChange) {
+    this.currentReduce.set($event.value);
+  }
 }

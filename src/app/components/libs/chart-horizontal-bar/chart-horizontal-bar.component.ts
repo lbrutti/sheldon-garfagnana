@@ -10,7 +10,7 @@ import {MatIcon} from '@angular/material/icon';
 import {BaseChartDirective} from 'ng2-charts';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import ChartVerticalBarComponent from '../chart-vertical-bar/chart-vertical-bar.component';
+import ChartBarComponent from '../chart-bar/chart-bar.component';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -25,7 +25,7 @@ import ChartVerticalBarComponent from '../chart-vertical-bar/chart-vertical-bar.
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',
 })
-export default class ChartHorizontalBarComponent extends ChartVerticalBarComponent {
+export default class ChartHorizontalBarComponent extends ChartBarComponent {
 
   override annotationsSignal: Signal<any> = computed(() => {
     const annotations: any = {};
@@ -65,7 +65,7 @@ export default class ChartHorizontalBarComponent extends ChartVerticalBarCompone
       // We use these empty structures as placeholders for dynamic theming.
       scales: {
         x: {
-          display: true,
+          display: false,
 
         },
         y: {

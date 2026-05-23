@@ -4,10 +4,10 @@
 
 
   <!-- ISTOGRAMMI -->
-  <sheldon-chart-v-bars
+  <sheldon-chart-bars
     #bar_end
-    groupBy="anno"
     title="Interventi per anno di conclusione"
+    groupBy="anno"
     reduceBy="count"
     filterBy="comune"
     sortBy="category"
@@ -15,13 +15,13 @@
     [showSorting]="false"
     [limit]="0"
     [data]="interventiPerFine()"
-  ></sheldon-chart-v-bars>
+  ></sheldon-chart-bars>
 
 
-  <sheldon-chart-v-bars
+  <sheldon-chart-bars
     #bar_start
-    groupBy="anno"
     title="Interventi per anno di avvio"
+    groupBy="anno"
     reduceBy="count"
     filterBy="comune"
     sortBy="category"
@@ -29,14 +29,15 @@
     [showSorting]="false"
     [limit]="0"
     [data]="interventiPerInizio()"
-  ></sheldon-chart-v-bars>
+  ></sheldon-chart-bars>
 
 
   <sheldon-chart-h-bars
     #bar_comuni
-    groupBy="comune"
     title="Numero interventi per comune"
+    groupBy="comune"
     [filterBy]="null"
+    [auxReduce]="[{campo:'comune', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"
     reduceBy="count"
     sortBy="value"
     defaultSortDirection="desc"
@@ -49,26 +50,26 @@
 
   <sheldon-kpi
     #kpi_comuni
-    groupBy="comune"
     title="Comuni con almeno un intervento"
+    groupBy="comune"
     reduceBy="count"
     [data]="comuniConInterventi()"
     [limit]="0"/>
 
   <sheldon-kpi
     #kpi_importo
+    title="Importo finanziato"
     filterBy="comune"
     groupBy="valore"
-    title="Importo finanziato"
     reduceBy="sum"
     udm="  €"
     [data]="interventiPerComune()"
     [limit]="0"/>
   <sheldon-kpi
     #kpi_interventi
+    title="Interventi programmati"
     filterBy="comune"
     groupBy="comune"
-    title="Interventi programmati"
     reduceBy="count"
     [data]="interventiPerComune()"
     [limit]="0"/>

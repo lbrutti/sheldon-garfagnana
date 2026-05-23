@@ -1,7 +1,7 @@
 import {Component, signal, Signal} from '@angular/core';
 import ChartHorizontalBarComponent from "../../libs/chart-horizontal-bar/chart-horizontal-bar.component";
 import ChartLineComponent from "../../libs/chart-line/chart-line.component";
-import ChartVerticalBarComponent from "../../libs/chart-vertical-bar/chart-vertical-bar.component";
+import ChartBarComponent from "../../libs/chart-bar/chart-bar.component";
 import KpiComponent from "../../libs/kpi/kpi.component";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {DataInterface,} from '../../../interfaces';
@@ -12,7 +12,7 @@ import {ProjectsApiService} from '../../../services/projects-api.service';
   imports: [
     ChartHorizontalBarComponent,
     ChartLineComponent,
-    ChartVerticalBarComponent,
+    ChartBarComponent,
     KpiComponent,
     MatGridList,
     MatGridTile

@@ -10,7 +10,7 @@ import {MatIcon} from '@angular/material/icon';
 import {BaseChartDirective} from 'ng2-charts';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import ChartVerticalBarComponent from '../chart-vertical-bar/chart-vertical-bar.component';
+import ChartBarComponent from '../chart-bar/chart-bar.component';
 import {getReducedValueByLabel} from '../../../utils';
 
 @Component({
@@ -26,7 +26,7 @@ import {getReducedValueByLabel} from '../../../utils';
   templateUrl: './chart-horizontal-stacked-bar.component.html',
   styleUrl: './chart-horizontal-stacked-bar.component.scss',
 })
-export default class ChartHorizontalStackedBarComponent extends ChartVerticalBarComponent {
+export default class ChartHorizontalStackedBarComponent extends ChartBarComponent {
 
 
   override chartData: Signal<ChartData<'bar'>> = computed(() => {

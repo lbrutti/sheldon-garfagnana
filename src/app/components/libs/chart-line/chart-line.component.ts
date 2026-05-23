@@ -53,10 +53,7 @@ export default class ChartLineComponent {
     }) : this.data();
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
     let groupKeys = Object.keys(grouped);
-    // .sort((a, b) => {
-    //   const comparison = this.getReducedValue(grouped, a) - this.getReducedValue(grouped, b);
-    //   return this.sortDirection() === 'asc' ? comparison : -1 * comparison;
-    // }).slice(0, this.limit())
+
     let dataset: any = [];
     groupKeys.map(label => {
       const reducedValue = this.getReducedValue(grouped, label);
