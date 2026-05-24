@@ -10,3 +10,10 @@ export declare interface DataInterface {
   note?: string,
   fonte?: string,
 }
+
+export declare interface TreemapDataInterface extends DataInterface {
+  gruppi?: {
+    nome: string,
+    valore: string | number
+  }[],
+}

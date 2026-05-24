@@ -1,9 +1,13 @@
-import {DataInterface, InterventoInterface} from '../interfaces';
+import {DataInterface, InterventoInterface, TreemapDataInterface} from '../interfaces';
 import {Feature, FeatureCollection} from 'geojson';
 import {csv2json} from 'json-2-csv';
 import camelcase from 'camelcase';
 
 export type InterventoToDataMapping = { [key in keyof InterventoInterface]?: keyof DataInterface };
+export type InterventoToTreeDataMapping = { [key in keyof InterventoInterface]?: keyof DataInterface } & {
+  'gruppi': (string & keyof InterventoInterface)[]
+};
+
 export type DataToInterventoMapping = { [key in keyof DataInterface]?: keyof InterventoInterface };
 
 export function parseInterventiToDataCollection(
@@ -20,6 +24,34 @@ export function parseInterventoToData(
   let data: any = {};
   interventoKeys.forEach(key => {
     data[(mapping as any)[key]] = (intervento as any)[key];
+  });
+  return data as DataInterface;
+}
+
+
+export function parseInterventiToTreeDataCollection(
+  interventi: InterventoInterface[],
+  mapping: InterventoToTreeDataMapping): TreemapDataInterface[] {
+  return interventi.map(intervento => parseInterventoToTreeData(intervento, mapping));
+}
+
+export function parseInterventoToTreeData(
+  intervento: InterventoInterface,
+  mapping: InterventoToTreeDataMapping): TreemapDataInterface {
+  const interventoKeys = Object.keys(mapping);
+
+  let data: any = {};
+  interventoKeys.forEach(key => {
+    if (key !== 'gruppi') {
+      data[(mapping as any)[key]] = (intervento as any)[key];
+    } else {
+      data[key] = [];
+      const gruppi = (mapping as any)[key];
+      gruppi.map((g: string) => {
+        const gruppo = {nome: g, valore: (intervento as any)[g]};
+        data[key].push(gruppo);
+      });
+    }
   });
   return data as DataInterface;
 }

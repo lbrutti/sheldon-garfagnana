@@ -1,8 +1,8 @@
 import {Component, computed, effect, OnInit, signal, Signal, untracked} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
-import {DataInterface, FilterOptionInterface, InterventoInterface} from '../../../interfaces';
+import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
 import {components} from '../../libs';
-import {parseInterventiToDataCollection,} from '../../../adapters';
+import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
 
 @Component({
   selector: 'sheldon-dashboard',
@@ -29,43 +29,91 @@ export default class Dashboard implements OnInit {
     });
   });
 
+  //kpi, barre
   interventiPerComune = signal<DataInterface[]>([]);
   comuniConInterventi = signal<DataInterface[]>([]);
   interventiPerFine = signal<DataInterface[]>([]);
   interventiPerInizio = signal<DataInterface[]>([]);
 
+  //per treemap
+  interventiPerCategoria = signal<TreemapDataInterface[]>([]);
+  interventiPerTarget = signal<TreemapDataInterface[]>([]);
+  interventiPerTema = signal<TreemapDataInterface[]>([]);
+  interventiPerTipologia = signal<TreemapDataInterface[]>([]);
+
+
   constructor(protected apiService: ProjectsApiService) {
     effect(() => {
-      const dataInterventiPerComune: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
-        comune: 'comune',
-        importoTotale: 'valore',
-        inizio: 'anno',
-        unione: 'unione',
-      });
-      const dataComuniConInterventi: DataInterface[] = Array.from(new Set(this.interventiFiltrati().map(i => i.comune)))
-        .map((comune: string): DataInterface => ({
-          comune: comune,
-          valore: 1,
-          anno: 0,
-          unione: '_'
-        }));
-      const dataPerFine: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
-        comune: 'comune',
-        importoTotale: 'valore',
-        fine: 'anno',
-        unione: 'unione',
-      });
-      const dataPerInizio: DataInterface[] = parseInterventiToDataCollection(this.interventiFiltrati(), {
-        comune: 'comune',
-        importoTotale: 'valore',
-        inizio: 'anno',
-        unione: 'unione',
-      });
+      const interventi = this.interventiFiltrati();
+
       untracked(() => {
+        const dataInterventiPerComune: DataInterface[] = parseInterventiToDataCollection(interventi, {
+          comune: 'comune',
+          importoTotale: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+        });
+        const dataComuniConInterventi: DataInterface[] = Array.from(new Set(interventi.map(i => i.comune)))
+          .map((comune: string): DataInterface => ({
+            comune: comune,
+            valore: 1,
+            anno: 0,
+            unione: '_'
+          }));
+        const dataPerFine: DataInterface[] = parseInterventiToDataCollection(interventi, {
+          comune: 'comune',
+          importoTotale: 'valore',
+          fine: 'anno',
+          unione: 'unione',
+        });
+        const dataPerInizio: DataInterface[] = parseInterventiToDataCollection(interventi, {
+          comune: 'comune',
+          importoTotale: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+        });
+        // preprocessing per treemaps
+        const treeMapInterventiPerCategoria: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
+          comune: 'comune',
+          importoTotale: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+          gruppi: ['categoria']
+        });
+
+        const treeMapInterventiPerTarget: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
+          comune: 'comune',
+          importoTotale: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+          gruppi: ['target']
+        });
+        const treeMapInterventiPerTema: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
+          comune: 'comune',
+          importoTotale: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+          gruppi: ['tema']
+        });
+        const treeMapInterventiPerTipologia: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
+          comune: 'comune',
+          importoTotale: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+          gruppi: ['tipologia']
+        });
+
         this.interventiPerComune.set(dataInterventiPerComune);
         this.interventiPerFine.set(dataPerFine);
         this.interventiPerInizio.set(dataPerInizio);
         this.comuniConInterventi.set(dataComuniConInterventi);
+
+        //treemaps signals
+        this.interventiPerCategoria.set(treeMapInterventiPerCategoria);
+        this.interventiPerTarget.set(treeMapInterventiPerTarget);
+        this.interventiPerTema.set(treeMapInterventiPerTema);
+        this.interventiPerTipologia.set(treeMapInterventiPerTipologia);
+        console.log('interventiPerTipologia : ', this.interventiPerTipologia());
       });
     });
   }

@@ -1,45 +1,40 @@
-import {
-  Component,
-  computed,
-  input,
-  InputSignal,
-  OnInit,
-  signal,
-  Signal,
-  ViewChild,
-} from '@angular/core';
+import {Component, computed, input, InputSignal, signal, Signal, ViewChild} from '@angular/core';
 import {Chart, ChartConfiguration} from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
+import {TreemapController, TreemapElement,} from 'chartjs-chart-treemap';
 
 Chart.register(annotationPlugin);
+Chart.register(TreemapController, TreemapElement);
 
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MatIcon} from '@angular/material/icon';
-import {DataInterface, FilterOptionInterface} from '../../../interfaces';
+import {DataInterface, FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {getReducedValue, getReducedValueByLabel} from '../../../utils';
-import {JsonPipe} from '@angular/common';
+import {getReducedValueByLabel} from '../../../utils';
 
 @Component({
-  selector: 'sheldon-chart-bars',
+  selector: 'sheldon-chart-treemap',
   imports: [
     CardComponent,
-    MatButtonToggleGroup,
-    MatButtonToggle,
-    MatIcon,
     BaseChartDirective,
     DynamicFilterComponent,
+    MatButtonToggle,
+    MatButtonToggleGroup,
+    MatIcon
   ],
-  templateUrl: './chart-bar.component.html',
-  styleUrl: './chart-bar.component.scss',
+  templateUrl: './chart-treemap.component.html',
+  styleUrl: './chart-treemap.component.scss',
 })
-export default class ChartBarComponent implements OnInit {
+export default class ChartTreemapComponent {
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'bar'> | undefined;
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'treemap'> | undefined;
+
+  data = input<(TreemapDataInterface)[]>([]);
+
 
   title = input<string>('Numero di progetti per comune');
 
@@ -59,10 +54,9 @@ export default class ChartBarComponent implements OnInit {
   groupBy = input<keyof DataInterface>('comune');
 
 
-  data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
   auxReduce = input<{ campo: keyof DataInterface, reduceBy: string }[]>([]);
-  chartData: Signal<ChartData<'bar'>> = computed(() => {
+  chartData: Signal<ChartData<'treemap'>> = computed(() => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     const filteredData = filterSet ? this.data().filter(d => {
       const guard = filterSet ? (this.appliedFilters().every(filter => {
@@ -131,7 +125,7 @@ export default class ChartBarComponent implements OnInit {
   });
 
 
-  public barChartOptions: Signal<ChartConfiguration<'bar'>['options']> = computed(() => {
+  public chartOptions: Signal<ChartConfiguration['options']> = computed(() => {
     return {
       //set bars horizontally
       indexAxis: 'x',
@@ -157,7 +151,7 @@ export default class ChartBarComponent implements OnInit {
       }
     };
   });
-  public barChartType = 'bar' as const;
+  public chartType = 'treemap' as const;
 
 
   public chartClicked({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
@@ -181,4 +175,5 @@ export default class ChartBarComponent implements OnInit {
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value);
   }
+
 }

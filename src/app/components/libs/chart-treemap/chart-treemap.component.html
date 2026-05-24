@@ -1,0 +1,52 @@
+<sheldon-card>
+  <ng-container title>{{ this.title() }}</ng-container>
+  <ng-container content>
+    <!--    SORTING -->
+    @if (this.showSorting()) {
+      <mat-button-toggle-group
+        [value]="this.defaultSortDirection()"
+        (change)="onSortChange($event)">
+        <mat-button-toggle value="desc">
+          <mat-icon>arrow_downward</mat-icon>
+        </mat-button-toggle>
+        <mat-button-toggle value="asc">
+          <mat-icon>arrow_upward</mat-icon>
+        </mat-button-toggle>
+      </mat-button-toggle-group>
+    }
+
+    <!--    FILTERING -->
+    @if (this.filterBy() !== null) {
+      <sheldon-dynamic-filter
+        [filterBy]="this.filtersFields()"
+        [dataset]="this.data()"
+        [masterField]="this.masterField()"
+        (filterChange)="onFilterChange($event)"/>
+    }
+    <!--    AUX REDUCE SWITCHES-->
+    @if (this.auxReduce().length) {
+      <mat-button-toggle-group
+        [value]="{campo:this.groupBy(), reduceBy:this.reduceBy()}"
+        (change)="onReduceChange($event)">
+        <mat-button-toggle [value]="{campo:this.groupBy(), reduceBy:this.reduceBy()}">
+          <!--          placeholder, trovare icona-->
+          <span>{{ this.groupBy() }}</span>
+        </mat-button-toggle>
+        @for (aux of this.auxReduce(); track aux) {
+          <mat-button-toggle [value]="aux">
+            <span>{{ aux.campo }}</span>
+          </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    }
+    <!--    CHART -->
+    <canvas
+      baseChart
+      [data]="chartData()"
+      [options]="chartOptions()"
+      [type]="'treemap'"
+      (chartHover)="chartHovered($event)"
+      (chartClick)="chartClicked($event)">
+    </canvas>
+  </ng-container>
+</sheldon-card>
