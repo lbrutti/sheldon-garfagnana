@@ -99,7 +99,8 @@
 <sheldon-segmented-chart
   title="Stato di avanzamento degli interventi"
   filterBy="comune"
-  groupBy="valore"
+  [auxReduce]="[{campo:'nome', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"
+  groupBy="nome"
   reduceBy="count"
   [data]="interventiPerStato()"></sheldon-segmented-chart>
 

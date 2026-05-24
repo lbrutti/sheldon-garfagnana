@@ -139,10 +139,10 @@ export default class Dashboard implements OnInit {
         const iterventiDemuxPerStato: InterventoInterface[] = getExplodedData(interventi, 'stato');
         const dataInterventiPerStato = parseInterventiToDataCollection(iterventiDemuxPerStato, {
           comune: 'comune',
-          stato: 'valore',
+          stato: 'nome',
+          importoTotale: 'valore',
           inizio: 'anno',
           unione: 'unione',
-          nome: 'nome'
         });
         const iterventiDemuxPerUnione: InterventoInterface[] = getExplodedData(interventi, 'unione');
         const dataInterventiPerUnione = parseInterventiToDataCollection(iterventiDemuxPerUnione, {

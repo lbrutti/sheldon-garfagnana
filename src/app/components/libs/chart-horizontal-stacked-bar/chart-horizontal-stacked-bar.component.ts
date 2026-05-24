@@ -7,11 +7,11 @@ import {
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {components, DynamicFilterComponent} from '../index';
-import {MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {ChartData} from 'chart.js';
-import {getReducedValueByLabel} from '../../../utils';
+import {getReducedValue, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 
 export interface SegmentInterface {
@@ -33,6 +33,8 @@ export interface SegmentInterface {
     CardComponent,
     DynamicFilterComponent,
     SortToggle,
+    MatButtonToggle,
+    MatButtonToggleGroup,
 
   ],
   templateUrl: './chart-horizontal-stacked-bar.component.html',
@@ -76,6 +78,8 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
     }) : this.data();
 
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
+    const groupedForPercentage = Object.groupBy(filteredData, (p: any) => p[this.currentReduce().campo]);
+    const totalForPercentage = getReducedValueByLabel(groupedForPercentage, this.currentReduce().campo, this.currentReduce().reduceBy) || 1;
     let groupKeys = this.getGroupedKeys(grouped);
     const segments: SegmentInterface[] = [];
     groupKeys.map(label => {
@@ -83,6 +87,7 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
       segments.push({
         label: label,
         shortLabel: label,
+        //TODO: CHECK PERCENTUALI CON IMPORTI
         percentage: grouped[label].length/filteredData.length *100,
         count: reducedValue,
         color: 'red',
@@ -134,5 +139,9 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
 
   protected onSortChange($event: MatButtonToggleChange) {
     this.sortDirection.set($event.value);
+  }
+
+  protected onReduceChange($event: MatButtonToggleChange) {
+    this.currentReduce.set($event.value);
   }
 }

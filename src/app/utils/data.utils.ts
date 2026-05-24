@@ -15,6 +15,9 @@ export function getReducedValue(data: DataInterface[], reduceBy: string) {
 
 
 export function getReducedValueByLabel(grouped: Partial<Record<any, any[]>>, label: string, reduceBy: string) {
+  if (!!grouped) {
+    return 0
+  }
   switch (reduceBy) {
     case 'sum':
       return grouped[label].reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
