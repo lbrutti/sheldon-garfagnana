@@ -30,5 +30,5 @@ export const components = [
   NavigationComponent,
   DynamicFilterComponent,
   KpiComponent,
-  ListaComponent
+  ListaComponent,
 ];

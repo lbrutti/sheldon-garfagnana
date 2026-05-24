@@ -1,4 +1,4 @@
-import {DataInterface} from '../interfaces';
+import {DataInterface, InterventoInterface} from '../interfaces';
 
 export function getReducedValue(data: DataInterface[], reduceBy: string) {
   switch (reduceBy) {
@@ -27,4 +27,11 @@ export function getReducedValueByLabel(grouped: Partial<Record<any, any[]>>, lab
     default:
       return 0;
   }
+}
+
+
+export function getExplodedData(data: any, explodeBy: string): any {
+  return data.flatMap((d: any) => {
+    return d[explodeBy].split('|').map((f: any) => ({...d, [explodeBy]: f.trim()}));
+  });
 }

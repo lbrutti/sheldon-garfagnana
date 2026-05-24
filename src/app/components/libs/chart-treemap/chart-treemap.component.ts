@@ -9,7 +9,7 @@ Chart.register(TreemapController, TreemapElement);
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MatIcon} from '@angular/material/icon';
-import {DataInterface, FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
+import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
 
@@ -51,11 +51,11 @@ export default class ChartTreemapComponent {
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
   limit = input<number>(15);
-  groupBy = input<keyof DataInterface>('comune');
+  groupBy = input<string & keyof TreemapDataInterface>('comune');
 
 
   reduceBy = input<string>('sum');
-  auxReduce = input<{ campo: keyof DataInterface, reduceBy: string }[]>([]);
+  auxReduce = input<{ campo: keyof TreemapDataInterface, reduceBy: string }[]>([]);
   chartData: Signal<ChartData<'treemap'>> = computed(() => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     const filteredData = filterSet ? this.data().filter(d => {

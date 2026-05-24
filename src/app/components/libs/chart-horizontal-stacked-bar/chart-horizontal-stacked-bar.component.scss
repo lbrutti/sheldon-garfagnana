@@ -1,0 +1,229 @@
+:host {
+
+  // ── Design tokens ────────────────────────────────────────────────────────────
+  $green-dark: #2d7a5a;
+  $green-mid: #6ab892;
+  $green-light: #c8e6d4;
+  $green-pale: #e8f5ee;
+  $text-dark: #1a1a1a;
+  $text-muted: #888;
+  $border: #d0e8da;
+  $font-main: 'Roboto Condensed', 'Arial Narrow', Arial, sans-serif;
+
+  // ── Card shell ───────────────────────────────────────────────────────────────
+  .pop-card {
+    font-family: $font-main;
+    background: #fff;
+    border: 1px solid $border;
+    border-radius: 2px;
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  // ── Header ───────────────────────────────────────────────────────────────────
+  .pop-header {
+    display: flex;
+    align-items: stretch;
+    background: $green-pale;
+
+    &__left {
+      flex: 1;
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    &__right {
+      background: $green-dark;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      min-width: 110px;
+    }
+  }
+
+  .pop-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+    color: $text-dark;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+
+  .pop-badges {
+    display: flex;
+    gap: 6px;
+  }
+
+  .pop-badge {
+    border: 1px solid $green-dark;
+    color: $green-dark;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 2px 7px;
+    border-radius: 2px;
+    background: transparent;
+  }
+
+  .pop-highlight {
+    color: #fff;
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  // ── Total label ──────────────────────────────────────────────────────────────
+  .pop-total {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px 4px;
+    background: #fff;
+
+    &__line {
+      flex: 1;
+      height: 1px;
+      background: $border;
+    }
+
+    &__value {
+      font-size: 13px;
+      font-weight: 700;
+      color: $text-dark;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+  }
+
+  // ── Segmented bar ────────────────────────────────────────────────────────────
+  .pop-bar-container {
+    padding: 0 14px 14px;
+    background: #fff;
+  }
+
+  .pop-bar {
+    display: flex;
+    height: 120px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 1px;
+    border: 1px solid $border;
+  }
+
+  // Each segment
+  .pop-segment {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding: 8px 6px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: flex 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.25s ease,
+    box-shadow 0.25s ease;
+    position: relative;
+    min-width: 0;
+
+    &__content {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    &__label {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+      white-space: normal; // allow wrap when expanded
+      word-break: break-word;
+      transition: none;
+    }
+
+    &__pct {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-top: 2px;
+    }
+
+    &__count {
+      font-size: 10px;
+      font-weight: 400;
+      opacity: 0.85;
+    }
+
+    // ── Hovered state ──────────────────────────────────────────────────────────
+    // flex value is set inline via [style.flex] binding in the template
+    &--hovered {
+      box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.15);
+      z-index: 1;
+
+      .pop-segment__label {
+        white-space: normal;
+      }
+    }
+
+    // ── Dimmed siblings ────────────────────────────────────────────────────────
+    &--dimmed {
+      filter: brightness(0.92) saturate(0.8);
+    }
+  }
+
+  // ── Footer ───────────────────────────────────────────────────────────────────
+  .pop-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px;
+    border-top: 1px solid $border;
+    background: #fff;
+
+    &__source {
+      font-size: 9px;
+      color: $text-muted;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    &__actions {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    &__btn {
+      font-size: 9px !important;
+      font-weight: 600 !important;
+      letter-spacing: 0.06em !important;
+      color: $text-muted !important;
+      min-width: unset !important;
+      padding: 0 4px !important;
+      line-height: 1 !important;
+      height: auto !important;
+
+      &:hover {
+        color: $green-dark !important;
+      }
+    }
+
+    &__sep {
+      font-size: 9px;
+      color: $text-muted;
+      user-select: none;
+    }
+  }
+}

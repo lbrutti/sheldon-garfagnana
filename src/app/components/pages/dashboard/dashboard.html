@@ -80,7 +80,15 @@
     filterBy="comune"
 
     [data]="interventiPerComune()"></sheldon-list>
+
 </div>
+<!--  STACKS -->
+<sheldon-segmented-chart
+  title="Interventi per fonte di finanziamento"
+  filterBy="comune"
+  groupBy="valore"
+  reduceBy="count"
+  [data]="interventiPerFonte()"></sheldon-segmented-chart>
 
 
 

@@ -13,8 +13,5 @@ export declare interface DataInterface {
 }
 
 export declare interface TreemapDataInterface extends DataInterface {
-  gruppi?: {
-    nome: string,
-    valore: string | number
-  }[],
+  [k: string]:any,
 }

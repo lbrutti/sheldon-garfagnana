@@ -2,29 +2,51 @@
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container content>
     <!--    SORTING -->
-    <mat-button-toggle-group
-      (change)="onSortChange($event)"
-      value="desc">
-      <mat-button-toggle value="desc">
-        <mat-icon>arrow_downward</mat-icon>
-      </mat-button-toggle>
-      <mat-button-toggle value="asc">
-        <mat-icon>arrow_upward</mat-icon>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+<!--    <mat-button-toggle-group-->
+<!--      (change)="onSortChange($event)"-->
+<!--      value="desc">-->
+<!--      <mat-button-toggle value="desc">-->
+<!--        <mat-icon>arrow_downward</mat-icon>-->
+<!--      </mat-button-toggle>-->
+<!--      <mat-button-toggle value="asc">-->
+<!--        <mat-icon>arrow_upward</mat-icon>-->
+<!--      </mat-button-toggle>-->
+<!--    </mat-button-toggle-group>-->
     <!--    FILTERING -->
     <sheldon-dynamic-filter
       [filterBy]="this.filtersFields()"
       [dataset]="this.data()"
       [masterField]="this.masterField()"
       (filterChange)="onFilterChange($event)" )/>
-    <canvas
-      baseChart
-      [data]="chartData()"
-      [options]="barChartOptions()"
-      [type]="barChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)">
-    </canvas>
+    <!-- ── CUSTOM SEGMENTED BAR ───────────────────────── -->
+    <div class="pop-bar-container">
+      <div
+        class="pop-bar"
+        role="img"
+        [attr.aria-label]="'Distribuzione popolazione: ' + title()"
+      >
+        @for (seg of segments(); track seg; let i = $index) {
+          <div
+            class="pop-segment"
+            [class.pop-segment--hovered]="hoveredIndex() === i"
+            [class.pop-segment--dimmed]="hoveredIndex() !== null && hoveredIndex() !== i"
+            [style.flex]="hoveredIndex() === i ? seg.percentage * 2.2 : seg.percentage"
+            [style.background-color]="hoveredIndex() === i ? seg.hoverColor : seg.color"
+            (mouseenter)="onSegmentHover(i)"
+            (mouseleave)="onSegmentLeave()"
+            [attr.aria-label]="seg.label + ': ' + formatPercentage(seg.percentage)"
+          >
+            <div class="pop-segment__content" [style.color]="seg.textColor">
+            <span class="pop-segment__label">
+              {{ hoveredIndex() === i ? seg.label : seg.shortLabel }}
+            </span>
+              <span class="pop-segment__pct">{{ formatPercentage(seg.percentage) }}</span>
+              <span class="pop-segment__count">{{ formatCount(seg.count) }}</span>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+
   </ng-container>
 </sheldon-card>

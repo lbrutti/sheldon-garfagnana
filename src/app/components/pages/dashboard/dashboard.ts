@@ -3,6 +3,7 @@ import {ProjectsApiService} from '../../../services/projects-api.service';
 import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
 import {components} from '../../libs';
 import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
+import {getExplodedData} from '../../../utils';
 
 @Component({
   selector: 'sheldon-dashboard',
@@ -41,6 +42,9 @@ export default class Dashboard implements OnInit {
   interventiPerTema = signal<TreemapDataInterface[]>([]);
   interventiPerTipologia = signal<TreemapDataInterface[]>([]);
 
+  //per stack
+  interventiPerFonte = signal<DataInterface[]>([]);
+
 
   constructor(protected apiService: ProjectsApiService) {
     effect(() => {
@@ -74,34 +78,51 @@ export default class Dashboard implements OnInit {
           unione: 'unione',
         });
         // preprocessing per treemaps
-        const treeMapInterventiPerCategoria: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
-          comune: 'comune',
-          importoTotale: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-          gruppi: ['categoria']
-        });
+        const interventiDemuxPerCategoria: InterventoInterface[] = getExplodedData(interventi, 'categoria');
+        const treeMapInterventiPerCategoria: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
+          interventiDemuxPerCategoria, {
+            comune: 'comune',
+            importoTotale: 'valore',
+            inizio: 'anno',
+            unione: 'unione',
+            gruppi: ['categoria']
+          });
+        const interventiDemuxPerTarget: InterventoInterface[] = getExplodedData(interventi, 'target');
+        const treeMapInterventiPerTarget: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
+          interventiDemuxPerTarget, {
+            comune: 'comune',
+            importoTotale: 'valore',
+            inizio: 'anno',
+            unione: 'unione',
+            gruppi: ['target']
+          });
+        const interventiDemuxPerTema: InterventoInterface[] = getExplodedData(interventi, 'tema');
+        const treeMapInterventiPerTema: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
+          interventiDemuxPerTema, {
+            comune: 'comune',
+            importoTotale: 'valore',
+            inizio: 'anno',
+            unione: 'unione',
+            gruppi: ['tema']
+          });
+        const interventiDemuxPerTipologia: InterventoInterface[] = getExplodedData(interventi, 'tipologia');
+        const treeMapInterventiPerTipologia: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
+          interventiDemuxPerTipologia, {
+            comune: 'comune',
+            importoTotale: 'valore',
+            inizio: 'anno',
+            unione: 'unione',
+            gruppi: ['tipologia']
+          });
 
-        const treeMapInterventiPerTarget: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
+        //vanno spacchettati per fonte
+        const interventiDemuxPerFonte: InterventoInterface[] = getExplodedData(interventi, 'importoFonti');
+        const dataInterventiPerFonte: DataInterface[] = parseInterventiToDataCollection(interventiDemuxPerFonte, {
           comune: 'comune',
-          importoTotale: 'valore',
+          importoFonti: 'valore',
           inizio: 'anno',
           unione: 'unione',
-          gruppi: ['target']
-        });
-        const treeMapInterventiPerTema: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
-          comune: 'comune',
-          importoTotale: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-          gruppi: ['tema']
-        });
-        const treeMapInterventiPerTipologia: TreemapDataInterface[] = parseInterventiToTreeDataCollection(interventi, {
-          comune: 'comune',
-          importoTotale: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-          gruppi: ['tipologia']
+          nome: 'nome'
         });
 
         this.interventiPerComune.set(dataInterventiPerComune);
@@ -114,7 +135,9 @@ export default class Dashboard implements OnInit {
         this.interventiPerTarget.set(treeMapInterventiPerTarget);
         this.interventiPerTema.set(treeMapInterventiPerTema);
         this.interventiPerTipologia.set(treeMapInterventiPerTipologia);
-        console.log('interventiPerTipologia : ', this.interventiPerTipologia());
+
+        // stacks
+        this.interventiPerFonte.set(dataInterventiPerFonte);
       });
     });
   }

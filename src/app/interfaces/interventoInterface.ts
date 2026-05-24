@@ -6,11 +6,9 @@ export declare interface InterventoInterface {
   comune: string,
   unione: string,
   ambitoStrategico: string,
-  ambitoStrategicoDettaglio: string,
   categoria: string,
   descrizione: string,
   fine: number,
-  importoFonteDettaglio: string,
   importoFonti: string,
   importoPubblico: number,
   importoTotale: number,
@@ -25,4 +23,7 @@ export declare interface InterventoInterface {
   target: string,
   tema: string,
   tipologia: string,
+
+  ambitoStrategicoDettaglio: string, //non utilizzati
+  importoFontiDettaglio: string, //non utilizzati
 }

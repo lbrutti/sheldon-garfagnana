@@ -45,11 +45,9 @@ export function parseInterventoToTreeData(
     if (key !== 'gruppi') {
       data[(mapping as any)[key]] = (intervento as any)[key];
     } else {
-      data[key] = [];
       const gruppi = (mapping as any)[key];
       gruppi.map((g: string) => {
-        const gruppo = {nome: g, valore: (intervento as any)[g]};
-        data[key].push(gruppo);
+        data[g] = (intervento as any)[g];
       });
     }
   });

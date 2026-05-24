@@ -1,24 +1,19 @@
 import {
-  afterNextRender,
   Component, computed,
-  effect,
-  ElementRef, Injector,
   input,
   signal,
   Signal,
-  untracked,
-  ViewChild
+
 } from '@angular/core';
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {getReducedValue} from '../../../utils';
 import {MatList, MatListItem} from '@angular/material/list';
-import {CurrencyPipe, DecimalPipe} from '@angular/common';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'sheldon-list',
-  imports: [CardComponent, DynamicFilterComponent, MatList, MatListItem, CurrencyPipe, DecimalPipe],
+  imports: [CardComponent, DynamicFilterComponent, MatList, MatListItem, DecimalPipe],
   templateUrl: './lista.component.html',
   styleUrl: './lista.component.scss',
 })
@@ -52,7 +47,11 @@ export default class ListaComponent {
   }
 
   udm = input<string | null>('€');
-  totaleValore = computed<number>(() => this.filteredData().map(d => d.valore).reduce((a, b) => a + b, 0));
+  totaleValore = computed<number>(() => {
+    return this.filteredData()
+      .map(d => d.valore)
+      .reduce((a, b) => a + b, 0);
+  });
 
 
 }
