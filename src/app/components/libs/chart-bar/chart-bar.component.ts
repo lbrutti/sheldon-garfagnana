@@ -15,15 +15,13 @@ Chart.register(annotationPlugin);
 
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {MatIcon} from '@angular/material/icon';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {getReducedValue, getReducedValueByLabel} from '../../../utils';
-import {JsonPipe} from '@angular/common';
-import {SortToggle} from './sort-toggle/sort-toggle';
+import {getReducedValueByLabel} from '../../../utils';
+import {SortToggle} from '../sort-toggle/sort-toggle';
 
 @Component({
   selector: 'sheldon-chart-bars',
@@ -31,7 +29,6 @@ import {SortToggle} from './sort-toggle/sort-toggle';
     CardComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
-    MatIcon,
     BaseChartDirective,
     DynamicFilterComponent,
     SortToggle,

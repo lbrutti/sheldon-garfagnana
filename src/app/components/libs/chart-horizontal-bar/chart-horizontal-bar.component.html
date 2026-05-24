@@ -3,16 +3,12 @@
   <ng-container content>
     <!--    SORTING -->
     @if (this.showSorting()) {
-      <mat-button-toggle-group
-        [value]="this.defaultSortDirection()"
-        (change)="onSortChange($event)">
-        <mat-button-toggle value="desc">
-          <mat-icon>arrow_downward</mat-icon>
-        </mat-button-toggle>
-        <mat-button-toggle value="asc">
-          <mat-icon>arrow_upward</mat-icon>
-        </mat-button-toggle>
-      </mat-button-toggle-group>
+
+      @if (this.showSorting()) {
+        <sheldon-sort-toggle
+          [defaultSortDirection]="this.defaultSortDirection()"
+          (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
+      }
     }
 
     <!--    FILTERING -->

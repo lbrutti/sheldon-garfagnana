@@ -6,11 +6,11 @@ Chart.register(annotationPlugin);
 
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {MatIcon} from '@angular/material/icon';
 import {BaseChartDirective} from 'ng2-charts';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import ChartBarComponent from '../chart-bar/chart-bar.component';
+import {SortToggle} from '../sort-toggle/sort-toggle';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -18,9 +18,9 @@ import ChartBarComponent from '../chart-bar/chart-bar.component';
     CardComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
-    MatIcon,
     BaseChartDirective,
-    DynamicFilterComponent
+    DynamicFilterComponent,
+    SortToggle
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',

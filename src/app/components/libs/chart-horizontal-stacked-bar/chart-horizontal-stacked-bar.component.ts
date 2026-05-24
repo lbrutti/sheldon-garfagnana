@@ -7,11 +7,12 @@ import {
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {components, DynamicFilterComponent} from '../index';
-import {MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {ChartData} from 'chart.js';
 import {getReducedValueByLabel} from '../../../utils';
+import {SortToggle} from '../sort-toggle/sort-toggle';
 
 export interface SegmentInterface {
   label: string;
@@ -31,6 +32,7 @@ export interface SegmentInterface {
     MatButtonModule,
     CardComponent,
     DynamicFilterComponent,
+    SortToggle,
 
   ],
   templateUrl: './chart-horizontal-stacked-bar.component.html',
@@ -128,6 +130,10 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
 
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
+  }
+
+  protected onSortChange($event: MatButtonToggleChange) {
+    this.sortDirection.set($event.value);
   }
 
 }

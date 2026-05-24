@@ -3,8 +3,9 @@
   <ng-container content>
     <!--    SORTING -->
     @if (this.showSorting()) {
-      <sheldon-sort-toggle [defaultSortDirection]="this.defaultSortDirection()"
-                           (onSortChange)="onSortChange($event)"></sheldon-sort-toggle>
+      <sheldon-sort-toggle
+        [defaultSortDirection]="this.defaultSortDirection()"
+        (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
     }
 
     <!--    FILTERING -->

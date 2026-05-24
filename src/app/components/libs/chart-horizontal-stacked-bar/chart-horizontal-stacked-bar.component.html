@@ -2,16 +2,9 @@
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container content>
     <!--    SORTING -->
-<!--    <mat-button-toggle-group-->
-<!--      (change)="onSortChange($event)"-->
-<!--      value="desc">-->
-<!--      <mat-button-toggle value="desc">-->
-<!--        <mat-icon>arrow_downward</mat-icon>-->
-<!--      </mat-button-toggle>-->
-<!--      <mat-button-toggle value="asc">-->
-<!--        <mat-icon>arrow_upward</mat-icon>-->
-<!--      </mat-button-toggle>-->
-<!--    </mat-button-toggle-group>-->
+    <sheldon-sort-toggle
+      [defaultSortDirection]="this.defaultSortDirection()"
+      (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
     <!--    FILTERING -->
     <sheldon-dynamic-filter
       [filterBy]="this.filtersFields()"
