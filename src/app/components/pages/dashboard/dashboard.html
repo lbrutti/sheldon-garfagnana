@@ -73,6 +73,13 @@
     reduceBy="count"
     [data]="interventiPerComune()"
     [limit]="0"/>
+
+  <!--  TABELLA -->
+  <sheldon-list
+    title="Interventi programmati"
+    filterBy="comune"
+
+    [data]="interventiPerComune()"></sheldon-list>
 </div>
 
 

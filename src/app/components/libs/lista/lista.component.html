@@ -1,0 +1,25 @@
+<sheldon-card>
+  <ng-container title>{{ title() }}</ng-container>
+  <ng-container content>
+    <sheldon-dynamic-filter
+      [filterBy]="filtersFields()"
+      [dataset]="data()"
+      [masterField]="masterField()"
+      (filterChange)="onFilterChange($event)"/>
+
+    <mat-list>
+      @for (dato of filteredData(); track dato) {
+        <mat-list-item>
+          <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">
+          <span [style]="{display:'inline-block'}">
+            {{ dato.nome }}
+          </span>
+            <span [style]="{display:'inline-block'}">
+            {{ dato.valore | currency:udm() }}
+          </span>
+          </div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </ng-container>
+</sheldon-card>

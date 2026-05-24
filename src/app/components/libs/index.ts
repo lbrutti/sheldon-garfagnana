@@ -7,6 +7,7 @@ import {DynamicFilterComponent} from './dynamic-filter/dynamic-filter.component'
 import ChartLineComponent from './chart-line/chart-line.component';
 import KpiComponent from './kpi/kpi.component';
 import ChartHorizontalStackedBarComponent from './chart-horizontal-stacked-bar/chart-horizontal-stacked-bar.component';
+import ListaComponent from './lista/lista.component';
 
 export * from './card/card.component';
 export * from './chart-horizontal-bar/chart-horizontal-bar.component';
@@ -17,6 +18,7 @@ export * from './global-search/global-search.component'
 export * from './dynamic-filter/dynamic-filter.component'
 export * from './chart-line/chart-line.component';
 export * from './kpi/kpi.component';
+export * from './lista/lista.component';
 
 export const components = [
   GlobalSearchComponent,
@@ -27,5 +29,6 @@ export const components = [
   ChartLineComponent,
   NavigationComponent,
   DynamicFilterComponent,
-  KpiComponent
+  KpiComponent,
+  ListaComponent
 ];

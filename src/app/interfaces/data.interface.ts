@@ -9,6 +9,7 @@ export declare interface DataInterface {
   udm?: string,
   note?: string,
   fonte?: string,
+  nome?: string
 }
 
 export declare interface TreemapDataInterface extends DataInterface {
