@@ -90,6 +90,25 @@
   reduceBy="count"
   [data]="interventiPerFonte()"></sheldon-segmented-chart>
 
+<sheldon-segmented-chart
+  title="Interventi con coinvolgimento dei cittadini"
+  groupBy="valore"
+  reduceBy="count"
+  [data]="interventiPerPartecipazione()"></sheldon-segmented-chart>
+
+<sheldon-segmented-chart
+  title="Stato di avanzamento degli interventi"
+  filterBy="comune"
+  groupBy="valore"
+  reduceBy="count"
+  [data]="interventiPerStato()"></sheldon-segmented-chart>
+
+<sheldon-segmented-chart
+  title="Distribuzione degli interventi per Unione"
+  groupBy="valore"
+  reduceBy="count"
+  [data]="interventiPerUnione()"></sheldon-segmented-chart>
+
 
 
 

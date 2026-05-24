@@ -135,5 +135,4 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
   protected onSortChange($event: MatButtonToggleChange) {
     this.sortDirection.set($event.value);
   }
-
 }

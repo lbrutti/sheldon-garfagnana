@@ -44,6 +44,9 @@ export default class Dashboard implements OnInit {
 
   //per stack
   interventiPerFonte = signal<DataInterface[]>([]);
+  interventiPerPartecipazione = signal<DataInterface[]>([]);
+  interventiPerStato = signal<DataInterface[]>([]);
+  interventiPerUnione = signal<DataInterface[]>([]);
 
 
   constructor(protected apiService: ProjectsApiService) {
@@ -125,6 +128,30 @@ export default class Dashboard implements OnInit {
           nome: 'nome'
         });
 
+        const iterventiDemuxPerPartecipazione: InterventoInterface[] = getExplodedData(interventi, 'partecipazione');
+        const dataInterventiPerPartecipazione = parseInterventiToDataCollection(iterventiDemuxPerPartecipazione, {
+          comune: 'comune',
+          partecipazione: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+          nome: 'nome'
+        });
+        const iterventiDemuxPerStato: InterventoInterface[] = getExplodedData(interventi, 'stato');
+        const dataInterventiPerStato = parseInterventiToDataCollection(iterventiDemuxPerStato, {
+          comune: 'comune',
+          stato: 'valore',
+          inizio: 'anno',
+          unione: 'unione',
+          nome: 'nome'
+        });
+        const iterventiDemuxPerUnione: InterventoInterface[] = getExplodedData(interventi, 'unione');
+        const dataInterventiPerUnione = parseInterventiToDataCollection(iterventiDemuxPerUnione, {
+          comune: 'comune',
+          unione: 'valore',
+          inizio: 'anno',
+          nome: 'nome'
+        });
+
         this.interventiPerComune.set(dataInterventiPerComune);
         this.interventiPerFine.set(dataPerFine);
         this.interventiPerInizio.set(dataPerInizio);
@@ -138,6 +165,9 @@ export default class Dashboard implements OnInit {
 
         // stacks
         this.interventiPerFonte.set(dataInterventiPerFonte);
+        this.interventiPerPartecipazione.set(dataInterventiPerPartecipazione);
+        this.interventiPerStato.set(dataInterventiPerStato);
+        this.interventiPerUnione.set(dataInterventiPerUnione);
       });
     });
   }
