@@ -23,6 +23,7 @@ import {ChartData, ChartEvent} from 'chart.js';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValue, getReducedValueByLabel} from '../../../utils';
 import {JsonPipe} from '@angular/common';
+import {SortToggle} from './sort-toggle/sort-toggle';
 
 @Component({
   selector: 'sheldon-chart-bars',
@@ -33,6 +34,7 @@ import {JsonPipe} from '@angular/common';
     MatIcon,
     BaseChartDirective,
     DynamicFilterComponent,
+    SortToggle,
   ],
   templateUrl: './chart-bar.component.html',
   styleUrl: './chart-bar.component.scss',
