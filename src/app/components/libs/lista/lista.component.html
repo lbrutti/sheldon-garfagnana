@@ -15,11 +15,21 @@
             {{ dato.nome }}
           </span>
             <span [style]="{display:'inline-block'}">
-            {{ dato.valore | currency:udm() }}
+            {{ dato.valore | number }} {{ udm() }}
           </span>
           </div>
         </mat-list-item>
       }
+      <mat-list-item>
+        <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">
+          <span [style]="{display:'inline-block'}">
+            Totale
+          </span>
+          <span [style]="{display:'inline-block'}">
+            {{ totaleValore() | number }} {{ udm() }}
+          </span>
+        </div>
+      </mat-list-item>
     </mat-list>
   </ng-container>
 </sheldon-card>
