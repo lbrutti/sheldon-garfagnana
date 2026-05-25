@@ -6,20 +6,25 @@ import {
   signal,
   Signal,
 } from '@angular/core';
-import { Chart, ChartConfiguration } from 'chart.js';
-import { TreemapController, TreemapElement } from 'chartjs-chart-treemap';
+import {Chart, ChartConfiguration} from 'chart.js';
+import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
 
 Chart.register(TreemapController, TreemapElement);
 
 import CardComponent from '../card/card.component';
-import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
-import { BaseChartDirective } from 'ng2-charts';
-import { ChartData } from 'chart.js';
-import { DynamicFilterComponent } from '../dynamic-filter/dynamic-filter.component';
+import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {BaseChartDirective} from 'ng2-charts';
+import {ChartData} from 'chart.js';
+import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
+import {getReducedValue} from '../../../utils';
 
+type ReduceMode = 'sum' | 'count' | 'max';
 
-type ReduceMode = 'count' | 'sum';
+export interface AuxReduceOption {
+  campo: string;
+  reduceBy: ReduceMode;
+}
 
 @Component({
   selector: 'sheldon-chart-treemap',
@@ -36,137 +41,151 @@ type ReduceMode = 'count' | 'sum';
 export default class ClaudeTreemapComponent implements OnInit {
 
   title = input<string>('Treemap');
-
   data = input<TreemapDataInterface[]>([]);
 
   /**
-   * Ordered list of fields to group by hierarchically.
-   * e.g. ['unione', 'comune'] → first level unione, second level comune
+   * Fields to group by hierarchically, in order.
+   * e.g. ['unione', 'comune'] → outer group unione, inner group comune.
    */
-  groups = input<(keyof TreemapDataInterface)[]>(['comune']);
+  groups = input<(keyof TreemapDataInterface & string)[]>(['comune']);
+
+  /** Default reduce field and function, mirroring ChartBarComponent. */
+  campo = input<string>('valore');
+  reduceBy = input<ReduceMode>('sum');
+
+  /**
+   * Additional reduce options rendered as toggle buttons, identical in shape
+   * to the auxReduce input of ChartBarComponent.
+   */
+  auxReduce = input<AuxReduceOption[]>([]);
 
   filterBy = input<string | null>(null);
-  filtersFields = computed<string[]>((): string[] => {
-    return this.filterBy() !== null ? this.filterBy()!.split('|') : [];
-  });
+  filtersFields = computed<string[]>((): string[] =>
+    this.filterBy() !== null ? this.filterBy()!.split('|') : []
+  );
   masterField = input<string | null>(null);
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
-  reduceMode = signal<ReduceMode>('count');
+  currentReduce = signal<AuxReduceOption | null>(null);
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
+  }
 
   protected filteredData = computed<TreemapDataInterface[]>(() => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     if (!filterSet) return this.data();
     return this.data().filter(d =>
-      this.appliedFilters().every(filter =>
-        filter.value.length && (filter.value === `${(d as any)[filter.key]}`)
-      )
+      this.appliedFilters().every(f => f.value.length && f.value === `${d[f.key]}`)
     );
   });
 
   /**
-   * Builds a flat list of leaf-level aggregated entries for the treemap dataset.
-   * Each entry carries the full group path for label rendering.
+   * Pre-aggregate the flat data into one record per unique group-key combination,
+   * using getReducedValue from utils. The library receives rows with a single
+   * numeric `_value` field and no further `groups` — grouping has already happened.
+   *
+   * This is necessary because chartjs-chart-treemap's internal aggregation is
+   * always `sum`; count and max must be computed before handing data to the chart.
    */
-  protected treeData = computed<{ g: string; v: number; label: string }[]>(() => {
+  protected aggregatedTree = computed<(Record<string, any> & { _value: number })[]>(() => {
     const raw = this.filteredData();
     const groupFields = this.groups();
-    const mode = this.reduceMode();
+    const {campo, reduceBy} = this.currentReduce()!;
 
-    // Group by the concatenated key path
-    const map = new Map<string, { items: TreemapDataInterface[]; label: string }>();
+    // Build a Map keyed by the joined group values, value = matching flat rows
+    const buckets = new Map<string, { meta: Record<string, any>; rows: TreemapDataInterface[] }>();
 
-    for (const item of raw) {
-      const keyParts = groupFields.map(f => `${item[f] ?? '—'}`);
-      const key = keyParts.join('||');
-      if (!map.has(key)) {
-        map.set(key, { items: [], label: keyParts[keyParts.length - 1] });
+    for (const row of raw) {
+      const key = groupFields.map(f => `${row[f] ?? '—'}`).join('||');
+      if (!buckets.has(key)) {
+        const meta: Record<string, any> = {};
+        groupFields.forEach(f => (meta[f] = row[f] ?? '—'));
+        buckets.set(key, {meta, rows: []});
       }
-      map.get(key)!.items.push(item);
+      buckets.get(key)!.rows.push(row);
     }
 
-    return Array.from(map.entries()).map(([key, { items, label }]) => {
-      const v = mode === 'count' ? items.length : items.reduce((acc, d) => acc + (d.valore ?? 0), 0);
-      // Use the first-level group as `g` for treemap grouping
-      const g = groupFields.length > 1 ? `${items[0][groupFields[0]] ?? '—'}` : 'all';
-      return { g, v, label };
-    });
+    return Array.from(buckets.values()).map(({meta, rows}) => ({
+      ...meta,
+      _value: getReducedValue(rows, reduceBy, campo),
+    }));
+  });
+
+  /** Colour palette keyed by unique values of the outermost group field. */
+  protected groupColors = computed<Map<string, string>>(() => {
+    const outerField = this.groups()[0];
+    const unique = [...new Set(this.aggregatedTree().map(d => `${d[outerField] ?? '—'}`))];
+    const palette = generatePalette(unique.length);
+    return new Map(unique.map((g, i) => [g, palette[i]]));
   });
 
   chartData: Signal<ChartData<'treemap'>> = computed(() => {
-    const entries = this.treeData();
-    const mode = this.reduceMode();
-
-    // Build a color palette indexed by unique `g` values
-    const groups = [...new Set(entries.map(e => e.g))];
-    const palette = generatePalette(groups.length);
-    const groupColorMap = new Map(groups.map((g, i) => [g, palette[i]]));
+    const outerField = this.groups()[0];
+    const innerField = this.groups()[this.groups().length - 1];
+    const colorMap = this.groupColors();
+    const {reduceBy} = this.currentReduce()!;
 
     return {
       datasets: [
         {
-          label: mode === 'count' ? 'Numero progetti' : 'Valore (€)',
-          tree: entries,
-          key: 'v',
-          groups: ['g'],
-          captions: {
-            display: true,
-            color: '#fff',
-            font: { weight: 'bold', size: 13 },
-            padding: 4,
+          label: this.title(),
+          tree: this.aggregatedTree(),
+          // All aggregation is already done; the library only needs to size tiles.
+          // With one row per group and no `groups` option, each row = one tile.
+          key: '_value',
+          borderWidth: 0,
+          borderRadius: 4,
+          spacing: 2,
+          backgroundColor: (ctx: any) => {
+            if (ctx.type !== 'data') return 'transparent';
+            const g = `${ctx.raw._data[outerField] ?? '—'}`;
+            return colorMap.get(g) ?? '#888';
           },
           labels: {
+            align: 'left',
             display: true,
-            formatter: (ctx: any) => {
-              const item = ctx.raw as any;
-              const label = item._data?.label ?? item.g ?? '';
-              const val = item.v;
-              return mode === 'count'
-                ? [`${label}`, `${val}`]
-                : [`${label}`, formatEuro(val)];
+            formatter: (ctx: any): string[] | null => {
+              if (ctx.type !== 'data') return null;
+              const d = ctx.raw._data;
+              const label = d[innerField] ?? d[outerField] ?? '';
+              const val: number = ctx.raw.v;
+              const formattedVal = reduceBy === 'sum'
+                ? formatEuro(val)
+                : `${val}`;
+              return [`${label}`, formattedVal];
             },
-            color: ['#fff', 'rgba(255,255,255,0.8)'],
-            font: [{ weight: 'bold', size: 12 }, { size: 10 }],
-            position: 'middle',
-            overflow: 'hidden',
-          } as any,
-          backgroundColor: (ctx: any) => {
-            const item = ctx.raw as any;
-            if (!item) return 'rgba(0,0,0,0)';
-            const g = item.g ?? 'all';
-            const base = groupColorMap.get(g) ?? '#888';
-            // Leaf vs group header: group header is slightly lighter
-            return item._data ? base : lighten(base, 0.15);
+            color: ['#fff', 'rgba(255,255,255,0.75)'],
+            font: [{size: 12, weight: 'bold'}, {size: 10}],
+            position: 'top',
           },
-          borderColor: 'rgba(255,255,255,0.3)',
-          borderWidth: 1,
-          spacing: 2,
         } as any,
       ],
     };
   });
 
   public treemapOptions: Signal<ChartConfiguration<'treemap'>['options']> = computed(() => {
-    const mode = this.reduceMode();
+    const outerField = this.groups()[0];
+    const innerField = this.groups()[this.groups().length - 1];
+    const {reduceBy} = this.currentReduce()!;
+
     return {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false },
+        legend: {display: false},
         tooltip: {
+          enable: false,
           callbacks: {
             title: (items: any[]) => {
-              const raw = items[0]?.raw as any;
-              return raw?._data?.label ?? raw?.g ?? '';
+              const d = items[0]?.raw?._data;
+              return d?.[innerField] ?? d?.[outerField] ?? '';
             },
             label: (item: any) => {
-              const raw = item.raw as any;
-              const val = raw?.v ?? 0;
-              return mode === 'count'
-                ? `Progetti: ${val}`
-                : `Valore: ${formatEuro(val)}`;
+              const val: number = item.raw?.v ?? 0;
+              return reduceBy === 'sum'
+                ? `Valore: ${formatEuro(val)}`
+                : `${reduceBy === 'count' ? 'Progetti' : 'Max'}: ${val}`;
             },
           },
         },
@@ -176,8 +195,8 @@ export default class ClaudeTreemapComponent implements OnInit {
 
   public treemapType = 'treemap' as const;
 
-  protected onReduceModeChange($event: MatButtonToggleChange) {
-    this.reduceMode.set($event.value as ReduceMode);
+  protected onReduceChange($event: MatButtonToggleChange) {
+    this.currentReduce.set($event.value as AuxReduceOption);
   }
 
   protected onFilterChange($event: FilterOptionInterface[]) {
@@ -188,19 +207,16 @@ export default class ClaudeTreemapComponent implements OnInit {
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function formatEuro(v: number): string {
-  return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
+  return new Intl.NumberFormat('it-IT', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0,
+  }).format(v);
 }
 
-/** Generate a set of visually distinct HSL colours */
 function generatePalette(n: number): string[] {
-  return Array.from({ length: n }, (_, i) => {
-    const hue = Math.round((360 / n) * i + 200) % 360; // start from blue-ish
+  return Array.from({length: n}, (_, i) => {
+    const hue = Math.round((360 / Math.max(n, 1)) * i + 200) % 360;
     return `hsl(${hue}, 55%, 42%)`;
   });
-}
-
-/** Lighten an hsl() string by mixing with white */
-function lighten(color: string, amount: number): string {
-  // Quick-and-dirty: bump the lightness for hsl strings
-  return color.replace(/(\d+)%\)$/, (_, l) => `${Math.min(100, Number(l) + Math.round(amount * 100))}%)`);
 }

@@ -11,17 +11,22 @@
         (filterChange)="onFilterChange($event)"/>
     }
 
-    <!--  REDUCE MODE TOGGLE: count vs sum -->
-    <mat-button-toggle-group
-      [value]="this.reduceMode()"
-      (change)="onReduceModeChange($event)">
-      <mat-button-toggle value="count">
-        <span>Numero progetti</span>
-      </mat-button-toggle>
-      <mat-button-toggle value="sum">
-        <span>Valore totale (€)</span>
-      </mat-button-toggle>
-    </mat-button-toggle-group>
+    <!--  AUX REDUCE SWITCHES (mirrors ChartBarComponent) -->
+    @if (this.auxReduce().length) {
+      <mat-button-toggle-group
+        [value]="this.currentReduce()"
+        (change)="onReduceChange($event)">
+        <!--  Default reduce option -->
+        <mat-button-toggle [value]="{campo: this.campo(), reduceBy: this.reduceBy()}">
+          <span>{{ this.campo() }}</span>
+        </mat-button-toggle>
+        @for (aux of this.auxReduce(); track aux) {
+          <mat-button-toggle [value]="aux">
+            <span>{{ aux.campo }}</span>
+          </mat-button-toggle>
+        }
+      </mat-button-toggle-group>
+    }
 
     <!--  CHART -->
     <div class="treemap-wrapper">

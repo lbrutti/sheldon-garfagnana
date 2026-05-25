@@ -114,8 +114,12 @@
   [data]="interventiPerUnione()"></sheldon-segmented-chart>
 
 
+<sheldon-chart-treemap
+  [data]="interventiPerTipologia()"
+  [groups]="['tipologia']"
+  campo="valore"
+  reduceBy="sum"
+  [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
+  filterBy="unione|anno"
+></sheldon-chart-treemap>
 
-
-
-
-{{interventiPerTipologia() | json}}

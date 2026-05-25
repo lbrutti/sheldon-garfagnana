@@ -5,10 +5,11 @@ import {components} from '../../libs';
 import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
 import {getExplodedData} from '../../../utils';
 import {JsonPipe} from '@angular/common';
+import ClaudeTreemapComponent from '../../libs/claude-treemap/claude-treemap.component';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, JsonPipe],
+  imports: [...components, JsonPipe, ClaudeTreemapComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
