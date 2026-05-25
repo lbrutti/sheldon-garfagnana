@@ -17,7 +17,7 @@ import {BaseChartDirective} from 'ng2-charts';
 import {ChartData} from 'chart.js';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
-import {getReducedValue} from '../../../utils';
+import {getReducedValue, createLinearGradient} from '../../../utils';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -38,7 +38,7 @@ export interface AuxReduceOption {
   templateUrl: './claude-treemap.component.html',
   styleUrl: './claude-treemap.component.scss',
 })
-export default class ClaudeTreemapComponent implements OnInit {
+export default class ChartTreemapComponent implements OnInit {
 
   title = input<string>('Treemap');
   data = input<TreemapDataInterface[]>([]);
@@ -93,7 +93,6 @@ export default class ClaudeTreemapComponent implements OnInit {
     const groupFields = this.groups();
     const {campo, reduceBy} = this.currentReduce()!;
 
-    // Build a Map keyed by the joined group values, value = matching flat rows
     const buckets = new Map<string, { meta: Record<string, any>; rows: TreemapDataInterface[] }>();
 
     for (const row of raw) {
@@ -112,18 +111,30 @@ export default class ClaudeTreemapComponent implements OnInit {
     }));
   });
 
-  /** Colour palette keyed by unique values of the outermost group field. */
-  protected groupColors = computed<Map<string, string>>(() => {
+  /**
+   * Maps each unique outer-group value to gradient step arrays (CSS var names).
+   * Clears the gradient cache whenever data changes so stale gradients are never reused.
+   */
+  protected groupGradientSteps = computed<Map<string, string[]>>(() => {
     const outerField = this.groups()[0];
     const unique = [...new Set(this.aggregatedTree().map(d => `${d[outerField] ?? '—'}`))];
-    const palette = generatePalette(unique.length);
-    return new Map(unique.map((g, i) => [g, palette[i]]));
+    this.gradientCache.clear();
+    return new Map(unique.map((g, i) => [g, buildGroupSteps(i)]));
   });
+
+  /**
+   * Runtime gradient cache keyed by group name.
+   * Gradients are per-tile objects tied to canvas coordinates, so they cannot
+   * be shared across tiles — the cache key is therefore `{group}:{x}:{y}` to
+   * guarantee each tile gets its own gradient while avoiding redundant redraws
+   * within a single render pass.
+   */
+  private gradientCache = new Map<string, CanvasGradient>();
 
   chartData: Signal<ChartData<'treemap'>> = computed(() => {
     const outerField = this.groups()[0];
     const innerField = this.groups()[this.groups().length - 1];
-    const colorMap = this.groupColors();
+    const stepsMap = this.groupGradientSteps();
     const {reduceBy} = this.currentReduce()!;
 
     return {
@@ -131,16 +142,33 @@ export default class ClaudeTreemapComponent implements OnInit {
         {
           label: this.title(),
           tree: this.aggregatedTree(),
-          // All aggregation is already done; the library only needs to size tiles.
-          // With one row per group and no `groups` option, each row = one tile.
           key: '_value',
           borderWidth: 0,
           borderRadius: 4,
           spacing: 2,
           backgroundColor: (ctx: any) => {
             if (ctx.type !== 'data') return 'transparent';
+
+            // Coordinates come from the rendered element, not ctx.raw, which
+            // holds logical data values and may contain NaN before layout runs.
+            const el: TreemapElement = ctx.element;
+            const {x, y, width, height} = el.getProps(['x', 'y', 'width', 'height'], true);
+
+            if (!isFinite(x) || !isFinite(y) || !isFinite(width) || !isFinite(height)) {
+              return 'transparent';
+            }
+
             const g = `${ctx.raw._data[outerField] ?? '—'}`;
-            return colorMap.get(g) ?? '#888';
+            // Cache key includes position so each tile gets its own gradient object
+            const cacheKey = `${g}:${Math.round(x)}:${Math.round(y)}`;
+            if (this.gradientCache.has(cacheKey)) return this.gradientCache.get(cacheKey)!;
+
+            const canvasCtx: CanvasRenderingContext2D = ctx.chart.ctx;
+            const steps = stepsMap.get(g) ?? ['#444', '#888'];
+            // Diagonal gradient from top-left to bottom-right of the tile
+            const gradient = createLinearGradient(canvasCtx, x, y, x + width, y + height, steps);
+            this.gradientCache.set(cacheKey, gradient);
+            return gradient;
           },
           labels: {
             align: 'left',
@@ -150,48 +178,30 @@ export default class ClaudeTreemapComponent implements OnInit {
               const d = ctx.raw._data;
               const label = d[innerField] ?? d[outerField] ?? '';
               const val: number = ctx.raw.v;
-              const formattedVal = reduceBy === 'sum'
-                ? formatEuro(val)
-                : `${val}`;
-              return [`${label}`, formattedVal];
+              return [
+                `${label}`,
+                reduceBy === 'sum' ? formatEuro(val) : `${val}`,
+              ];
             },
-            color: ['#fff', 'rgba(255,255,255,0.75)'],
+            color: ['#fff', 'rgba(255,255,255,0.9)'],
+            backgroundColor: ['rgba(0,0,0,0.45)', 'rgba(0,0,0,0.3)'],
             font: [{size: 12, weight: 'bold'}, {size: 10}],
             position: 'top',
+            padding: 4,
           },
         } as any,
       ],
     };
   });
 
-  public treemapOptions: Signal<ChartConfiguration<'treemap'>['options']> = computed(() => {
-    const outerField = this.groups()[0];
-    const innerField = this.groups()[this.groups().length - 1];
-    const {reduceBy} = this.currentReduce()!;
-
-    return {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {display: false},
-        tooltip: {
-          enable: false,
-          callbacks: {
-            title: (items: any[]) => {
-              const d = items[0]?.raw?._data;
-              return d?.[innerField] ?? d?.[outerField] ?? '';
-            },
-            label: (item: any) => {
-              const val: number = item.raw?.v ?? 0;
-              return reduceBy === 'sum'
-                ? `Valore: ${formatEuro(val)}`
-                : `${reduceBy === 'count' ? 'Progetti' : 'Max'}: ${val}`;
-            },
-          },
-        },
-      },
-    } as any;
-  });
+  public treemapOptions: Signal<ChartConfiguration<'treemap'>['options']> = computed(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {display: false},
+      tooltip: {enabled: false},
+    },
+  } as any));
 
   public treemapType = 'treemap' as const;
 
@@ -214,9 +224,14 @@ function formatEuro(v: number): string {
   }).format(v);
 }
 
-function generatePalette(n: number): string[] {
-  return Array.from({length: n}, (_, i) => {
-    const hue = Math.round((360 / Math.max(n, 1)) * i + 200) % 360;
-    return `hsl(${hue}, 55%, 42%)`;
-  });
+const STEP_PRESETS: string[][] = [
+  ['--color-gradient-a-start', '--color-gradient-a-mid', '--color-gradient-a-end'],
+  ['--color-gradient-b-start', '--color-gradient-b-mid', '--color-gradient-b-end'],
+  ['--color-gradient-c-start', '--color-gradient-c-mid', '--color-gradient-c-end'],
+  ['--color-gradient-d-start', '--color-gradient-d-end'],
+  ['--color-gradient-e-start', '--color-gradient-e-end'],
+];
+
+function buildGroupSteps(index: number): string[] {
+  return STEP_PRESETS[index % STEP_PRESETS.length];
 }
