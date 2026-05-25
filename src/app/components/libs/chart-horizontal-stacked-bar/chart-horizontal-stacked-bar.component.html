@@ -30,7 +30,7 @@
         role="img"
         [attr.aria-label]="'Distribuzione popolazione: ' + title()"
       >
-        @for (seg of segments(); track seg; let i = $index) {
+        @for (seg of segments(); track seg.label; let i = $index) {
           <div
             class="pop-segment"
             [class.pop-segment--hovered]="hoveredIndex() === i"

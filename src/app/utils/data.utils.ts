@@ -1,4 +1,4 @@
-import {DataInterface, InterventoInterface} from '../interfaces';
+import {DataInterface} from '../interfaces';
 
 export function getReducedValue(data: DataInterface[], reduceBy: string) {
   switch (reduceBy) {
@@ -15,18 +15,15 @@ export function getReducedValue(data: DataInterface[], reduceBy: string) {
 
 
 export function getReducedValueByLabel(grouped: Partial<Record<any, any[]>>, label: string, reduceBy: string) {
-  if (!!grouped) {
-    return 0
-  }
+  const data = grouped[label] ?? [];
   switch (reduceBy) {
     case 'sum':
-      return grouped[label].reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
+      return data.reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
     case 'max':
-      return grouped[label].reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
+      return data.reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
     case 'count':
-      return grouped[label].length;
     case 'countunique':
-      return grouped[label].length;
+      return data.length;
     default:
       return 0;
   }

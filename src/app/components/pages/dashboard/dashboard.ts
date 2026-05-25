@@ -4,10 +4,11 @@ import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataIn
 import {components} from '../../libs';
 import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
 import {getExplodedData} from '../../../utils';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components],
+  imports: [...components, JsonPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
