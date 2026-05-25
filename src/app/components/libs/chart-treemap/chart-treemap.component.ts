@@ -17,7 +17,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {getReducedValueByLabel} from '../../../utils';
 
 @Component({
-  selector: 'sheldon-chart-treemap',
+  selector: 'sheldon-chart-treemap-old',
   imports: [
     CardComponent,
     BaseChartDirective,

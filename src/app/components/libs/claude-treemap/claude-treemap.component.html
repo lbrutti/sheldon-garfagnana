@@ -1,0 +1,37 @@
+<sheldon-card>
+  <ng-container title>{{ this.title() }}</ng-container>
+  <ng-container content>
+
+    <!--  FILTERING -->
+    @if (this.filterBy() !== null) {
+      <sheldon-dynamic-filter
+        [filterBy]="this.filtersFields()"
+        [dataset]="this.data()"
+        [masterField]="this.masterField()"
+        (filterChange)="onFilterChange($event)"/>
+    }
+
+    <!--  REDUCE MODE TOGGLE: count vs sum -->
+    <mat-button-toggle-group
+      [value]="this.reduceMode()"
+      (change)="onReduceModeChange($event)">
+      <mat-button-toggle value="count">
+        <span>Numero progetti</span>
+      </mat-button-toggle>
+      <mat-button-toggle value="sum">
+        <span>Valore totale (€)</span>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+
+    <!--  CHART -->
+    <div class="treemap-wrapper">
+      <canvas
+        baseChart
+        [data]="chartData()"
+        [options]="treemapOptions()"
+        [type]="treemapType">
+      </canvas>
+    </div>
+
+  </ng-container>
+</sheldon-card>

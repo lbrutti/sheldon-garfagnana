@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+
+.treemap-wrapper {
+  position: relative;
+  width: 100%;
+  height: 480px; // fixed height so the treemap has room to breathe
+}
