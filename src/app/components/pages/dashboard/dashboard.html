@@ -85,18 +85,21 @@
 <sheldon-segmented-chart
   title="Interventi per fonte di finanziamento"
   filterBy="comune"
+  defaultSortDirection="asc"
   groupBy="valore"
   reduceBy="count"
   [data]="interventiPerFonte()"></sheldon-segmented-chart>
 
 <sheldon-segmented-chart
   title="Interventi con coinvolgimento dei cittadini"
+  defaultSortDirection="asc"
   groupBy="valore"
   reduceBy="count"
   [data]="interventiPerPartecipazione()"></sheldon-segmented-chart>
 
 <sheldon-segmented-chart
   title="Stato di avanzamento degli interventi"
+  defaultSortDirection="asc"
   filterBy="comune"
   [auxReduce]="[{campo:'nome', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"
   groupBy="nome"
@@ -105,6 +108,7 @@
 
 <sheldon-segmented-chart
   title="Distribuzione degli interventi per Unione"
+  defaultSortDirection="asc"
   groupBy="valore"
   reduceBy="count"
   [data]="interventiPerUnione()"></sheldon-segmented-chart>

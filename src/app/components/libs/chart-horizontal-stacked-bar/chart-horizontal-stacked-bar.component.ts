@@ -43,12 +43,9 @@ export interface SegmentInterface {
 })
 export default class ChartHorizontalStackedBarComponent implements OnInit {
   readonly title = input<string>('Popolazione');
-  readonly country = signal('ITALIA');
-  readonly year = signal('2019');
-  readonly highlightedPercentage = signal('5,2%');
-  readonly total = signal(60_119);
-  readonly hoveredIndex = signal<number | null>(null);
 
+  readonly hoveredIndex = signal<number | null>(null);
+  labelField = input<string>('nome');
   data = input<DataInterface[]>([]);
   currentReduce = signal<{ campo: string, reduceBy: string } | null>(null);
   reduceBy = input<string>('sum');
@@ -78,17 +75,16 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
     }) : this.data();
 
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
-    const groupedForPercentage = Object.groupBy(filteredData, (p: any) => p[this.currentReduce().campo]);
-    const totalForPercentage = getReducedValueByLabel(groupedForPercentage, this.currentReduce().campo, this.currentReduce().reduceBy) || 1;
+
     let groupKeys = this.getGroupedKeys(grouped);
     const segments: SegmentInterface[] = [];
-    groupKeys.map(label => {
-      const reducedValue = getReducedValueByLabel(grouped, label, this.currentReduce().reduceBy);
+    const reducedTotal = getReducedValue(filteredData, this.currentReduce().reduceBy, this.currentReduce().campo);
+    groupKeys.map(dataKey => {
+      const reducedValue = getReducedValueByLabel(grouped, dataKey, this.currentReduce().reduceBy);
       segments.push({
-        label: label,
-        shortLabel: label,
-        //TODO: CHECK PERCENTUALI CON IMPORTI
-        percentage: grouped[label].length/filteredData.length *100,
+        label: dataKey,
+        shortLabel: dataKey,
+        percentage: reducedValue / reducedTotal * 100,
         count: reducedValue,
         color: 'red',
         hoverColor: 'gold',
@@ -101,6 +97,7 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()})
+    this.sortDirection.set(this.defaultSortDirection());
   }
 
   getGroupedKeys(grouped: any): string[] {
@@ -112,10 +109,6 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
     }
     return this.limit() ? groupKeys.slice(0, this.limit()) : groupKeys;
   }
-
-  readonly formattedTotal = computed(() =>
-    this.total().toLocaleString('it-IT')
-  );
 
   onSegmentHover(index: number): void {
     this.hoveredIndex.set(index);

@@ -1,11 +1,11 @@
 import {DataInterface} from '../interfaces';
 
-export function getReducedValue(data: DataInterface[], reduceBy: string) {
+export function getReducedValue(data: DataInterface[], reduceBy: string, campo: string = 'valore') {
   switch (reduceBy) {
     case 'sum':
-      return data.reduce((acc: number, d: DataInterface) => (acc + d.valore), 0);
+      return data.reduce((acc: number, d: DataInterface) => (acc + (d as any)[campo]), 0);
     case 'max':
-      return data.reduce((acc: number, d: DataInterface) => Math.max(acc, d.valore), -Infinity);
+      return data.reduce((acc: number, d: DataInterface) => Math.max(acc, (d as any)[campo]), -Infinity);
     case 'count':
       return data.length;
     default:
