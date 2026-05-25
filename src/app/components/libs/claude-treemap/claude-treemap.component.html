@@ -34,6 +34,7 @@
         baseChart
         [data]="chartData()"
         [options]="treemapOptions()"
+        [plugins]="[afterFirstRenderPlugin]"
         [type]="treemapType">
       </canvas>
     </div>

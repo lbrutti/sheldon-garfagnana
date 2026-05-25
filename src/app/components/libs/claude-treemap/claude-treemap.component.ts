@@ -6,18 +6,19 @@ import {
   signal,
   Signal,
 } from '@angular/core';
-import {Chart, ChartConfiguration} from 'chart.js';
-import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
+import { Chart, ChartConfiguration } from 'chart.js';
+import { TreemapController, TreemapElement } from 'chartjs-chart-treemap';
 
 Chart.register(TreemapController, TreemapElement);
 
 import CardComponent from '../card/card.component';
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {BaseChartDirective} from 'ng2-charts';
-import {ChartData} from 'chart.js';
-import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
-import {getReducedValue, createLinearGradient} from '../../../utils';
+import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { BaseChartDirective } from 'ng2-charts';
+import { ChartData } from 'chart.js';
+import { DynamicFilterComponent } from '../dynamic-filter/dynamic-filter.component';
+import { FilterOptionInterface, TreemapDataInterface } from '../../../interfaces';
+import { getReducedValue } from '../../../utils';
+import { applyGradient, GradientDescriptor, resolveGradientDescriptor } from '../../../utils/color.utils';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -25,6 +26,14 @@ export interface AuxReduceOption {
   campo: string;
   reduceBy: ReduceMode;
 }
+
+const STEP_PRESETS: string[][] = [
+  ['--color-gradient-a-start', '--color-gradient-a-mid', '--color-gradient-a-end'],
+  ['--color-gradient-b-start', '--color-gradient-b-mid', '--color-gradient-b-end'],
+  ['--color-gradient-c-start', '--color-gradient-c-mid', '--color-gradient-c-end'],
+  ['--color-gradient-d-start', '--color-gradient-d-end'],
+  ['--color-gradient-e-start', '--color-gradient-e-end'],
+];
 
 @Component({
   selector: 'sheldon-chart-treemap',
@@ -42,21 +51,10 @@ export default class ChartTreemapComponent implements OnInit {
 
   title = input<string>('Treemap');
   data = input<TreemapDataInterface[]>([]);
-
-  /**
-   * Fields to group by hierarchically, in order.
-   * e.g. ['unione', 'comune'] → outer group unione, inner group comune.
-   */
   groups = input<(keyof TreemapDataInterface & string)[]>(['comune']);
 
-  /** Default reduce field and function, mirroring ChartBarComponent. */
   campo = input<string>('valore');
   reduceBy = input<ReduceMode>('sum');
-
-  /**
-   * Additional reduce options rendered as toggle buttons, identical in shape
-   * to the auxReduce input of ChartBarComponent.
-   */
   auxReduce = input<AuxReduceOption[]>([]);
 
   filterBy = input<string | null>(null);
@@ -68,9 +66,30 @@ export default class ChartTreemapComponent implements OnInit {
 
   currentReduce = signal<AuxReduceOption | null>(null);
 
+  /**
+   * GradientDescriptors resolved once from CSS variables at init time.
+   * Indexed by STEP_PRESETS position, cycled via modulo for any number of groups.
+   * Stable across repaints and window resizes — no randomness after init.
+   */
+  private gradientDescriptors: GradientDescriptor[] = [];
+
   ngOnInit(): void {
-    this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
+    this.currentReduce.set({ campo: this.campo(), reduceBy: this.reduceBy() });
+    this.gradientDescriptors = STEP_PRESETS.map(steps => resolveGradientDescriptor(steps));
   }
+
+  /**
+   * Forces one extra update after the first render so backgroundColor callbacks
+   * receive finalised element coordinates. The flag prevents an infinite loop.
+   */
+  readonly afterFirstRenderPlugin = {
+    id: 'afterFirstRender',
+    afterRender(chart: any) {
+      if (chart.__gradientReady) return;
+      chart.__gradientReady = true;
+      chart.update('none');
+    },
+  };
 
   protected filteredData = computed<TreemapDataInterface[]>(() => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
@@ -80,62 +99,40 @@ export default class ChartTreemapComponent implements OnInit {
     );
   });
 
-  /**
-   * Pre-aggregate the flat data into one record per unique group-key combination,
-   * using getReducedValue from utils. The library receives rows with a single
-   * numeric `_value` field and no further `groups` — grouping has already happened.
-   *
-   * This is necessary because chartjs-chart-treemap's internal aggregation is
-   * always `sum`; count and max must be computed before handing data to the chart.
-   */
   protected aggregatedTree = computed<(Record<string, any> & { _value: number })[]>(() => {
     const raw = this.filteredData();
     const groupFields = this.groups();
-    const {campo, reduceBy} = this.currentReduce()!;
+    const { campo, reduceBy } = this.currentReduce()!;
 
     const buckets = new Map<string, { meta: Record<string, any>; rows: TreemapDataInterface[] }>();
-
     for (const row of raw) {
       const key = groupFields.map(f => `${row[f] ?? '—'}`).join('||');
       if (!buckets.has(key)) {
         const meta: Record<string, any> = {};
         groupFields.forEach(f => (meta[f] = row[f] ?? '—'));
-        buckets.set(key, {meta, rows: []});
+        buckets.set(key, { meta, rows: [] });
       }
       buckets.get(key)!.rows.push(row);
     }
 
-    return Array.from(buckets.values()).map(({meta, rows}) => ({
+    return Array.from(buckets.values()).map(({ meta, rows }) => ({
       ...meta,
       _value: getReducedValue(rows, reduceBy, campo),
     }));
   });
 
-  /**
-   * Maps each unique outer-group value to gradient step arrays (CSS var names).
-   * Clears the gradient cache whenever data changes so stale gradients are never reused.
-   */
-  protected groupGradientSteps = computed<Map<string, string[]>>(() => {
+  /** Maps each unique outer-group value to a stable preset index. */
+  protected groupIndexMap = computed<Map<string, number>>(() => {
     const outerField = this.groups()[0];
     const unique = [...new Set(this.aggregatedTree().map(d => `${d[outerField] ?? '—'}`))];
-    this.gradientCache.clear();
-    return new Map(unique.map((g, i) => [g, buildGroupSteps(i)]));
+    return new Map(unique.map((g, i) => [g, i % STEP_PRESETS.length]));
   });
-
-  /**
-   * Runtime gradient cache keyed by group name.
-   * Gradients are per-tile objects tied to canvas coordinates, so they cannot
-   * be shared across tiles — the cache key is therefore `{group}:{x}:{y}` to
-   * guarantee each tile gets its own gradient while avoiding redundant redraws
-   * within a single render pass.
-   */
-  private gradientCache = new Map<string, CanvasGradient>();
 
   chartData: Signal<ChartData<'treemap'>> = computed(() => {
     const outerField = this.groups()[0];
     const innerField = this.groups()[this.groups().length - 1];
-    const stepsMap = this.groupGradientSteps();
-    const {reduceBy} = this.currentReduce()!;
+    const indexMap = this.groupIndexMap();
+    const { reduceBy } = this.currentReduce()!;
 
     return {
       datasets: [
@@ -148,32 +145,22 @@ export default class ChartTreemapComponent implements OnInit {
           spacing: 2,
           backgroundColor: (ctx: any) => {
             if (ctx.type !== 'data') return 'transparent';
-
-            // Coordinates come from the rendered element, not ctx.raw, which
-            // holds logical data values and may contain NaN before layout runs.
-            const el: TreemapElement = ctx.element;
-            const {x, y, width, height} = el.getProps(['x', 'y', 'width', 'height'], true);
-
-            if (!isFinite(x) || !isFinite(y) || !isFinite(width) || !isFinite(height)) {
+            const el = ctx.element;
+            const x: number = el.x - el.width / 2;
+            const y: number = el.y - el.height / 2;
+            const w: number = el.width;
+            const h: number = el.height;
+            if (!isFinite(x) || !isFinite(y) || !isFinite(w) || !isFinite(h) || w <= 0 || h <= 0) {
               return 'transparent';
             }
-
             const g = `${ctx.raw._data[outerField] ?? '—'}`;
-            // Cache key includes position so each tile gets its own gradient object
-            const cacheKey = `${g}:${Math.round(x)}:${Math.round(y)}`;
-            if (this.gradientCache.has(cacheKey)) return this.gradientCache.get(cacheKey)!;
-
-            const canvasCtx: CanvasRenderingContext2D = ctx.chart.ctx;
-            const steps = stepsMap.get(g) ?? ['#444', '#888'];
-            // Diagonal gradient from top-left to bottom-right of the tile
-            const gradient = createLinearGradient(canvasCtx, x, y, x + width, y + height, steps);
-            this.gradientCache.set(cacheKey, gradient);
-            return gradient;
+            const descriptor = this.gradientDescriptors[indexMap.get(g) ?? 0];
+            return applyGradient(ctx.chart.ctx, x, y, x + w, y + h, descriptor);
           },
           labels: {
             align: 'left',
             display: true,
-            formatter: (ctx: any): string[] | null => {
+            formatter: (ctx: any) => {
               if (ctx.type !== 'data') return null;
               const d = ctx.raw._data;
               const label = d[innerField] ?? d[outerField] ?? '';
@@ -185,7 +172,7 @@ export default class ChartTreemapComponent implements OnInit {
             },
             color: ['#fff', 'rgba(255,255,255,0.9)'],
             backgroundColor: ['rgba(0,0,0,0.45)', 'rgba(0,0,0,0.3)'],
-            font: [{size: 12, weight: 'bold'}, {size: 10}],
+            font: [{ size: 12, weight: 'bold' }, { size: 10 }],
             position: 'top',
             padding: 4,
           },
@@ -197,9 +184,10 @@ export default class ChartTreemapComponent implements OnInit {
   public treemapOptions: Signal<ChartConfiguration<'treemap'>['options']> = computed(() => ({
     responsive: true,
     maintainAspectRatio: false,
+    events: [],
     plugins: {
-      legend: {display: false},
-      tooltip: {enabled: false},
+      legend: { display: false },
+      tooltip: { enabled: false },
     },
   } as any));
 
@@ -222,16 +210,4 @@ function formatEuro(v: number): string {
     currency: 'EUR',
     maximumFractionDigits: 0,
   }).format(v);
-}
-
-const STEP_PRESETS: string[][] = [
-  ['--color-gradient-a-start', '--color-gradient-a-mid', '--color-gradient-a-end'],
-  ['--color-gradient-b-start', '--color-gradient-b-mid', '--color-gradient-b-end'],
-  ['--color-gradient-c-start', '--color-gradient-c-mid', '--color-gradient-c-end'],
-  ['--color-gradient-d-start', '--color-gradient-d-end'],
-  ['--color-gradient-e-start', '--color-gradient-e-end'],
-];
-
-function buildGroupSteps(index: number): string[] {
-  return STEP_PRESETS[index % STEP_PRESETS.length];
 }
