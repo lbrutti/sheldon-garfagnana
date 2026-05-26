@@ -11,12 +11,11 @@
         (filterChange)="onFilterChange($event)"/>
     }
 
-    <!--  AUX REDUCE SWITCHES (mirrors ChartBarComponent) -->
+    <!--  AUX REDUCE SWITCHES -->
     @if (this.auxReduce().length) {
       <mat-button-toggle-group
         [value]="this.currentReduce()"
         (change)="onReduceChange($event)">
-        <!--  Default reduce option -->
         <mat-button-toggle [value]="{campo: this.campo(), reduceBy: this.reduceBy()}">
           <span>{{ this.campo() }}</span>
         </mat-button-toggle>
@@ -28,15 +27,20 @@
       </mat-button-toggle-group>
     }
 
-    <!--  CHART -->
+    <!--  TREEMAP -->
     <div class="treemap-wrapper">
-      <canvas
-        baseChart
-        [data]="chartData()"
-        [options]="treemapOptions()"
-        [plugins]="[gradientInitPlugin]"
-        [type]="treemapType">
-      </canvas>
+      @for (tile of tiles(); track tile.label) {
+        <div
+          class="treemap-tile"
+          [style.left.%]="tile.x"
+          [style.top.%]="tile.y"
+          [style.width.%]="tile.w"
+          [style.height.%]="tile.h"
+          [style.background]="tile.gradient">
+          <div class="treemap-tile__label">{{ tile.label }}</div>
+          <div class="treemap-tile__value">{{ tile.formattedValue }}</div>
+        </div>
+      }
     </div>
 
   </ng-container>

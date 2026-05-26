@@ -6,19 +6,11 @@ import {
   signal,
   Signal,
 } from '@angular/core';
-import {Chart, ChartConfiguration} from 'chart.js';
-import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
-
-Chart.register(TreemapController, TreemapElement);
-
+import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { DynamicFilterComponent } from '../dynamic-filter/dynamic-filter.component';
+import { FilterOptionInterface, TreemapDataInterface } from '../../../interfaces';
+import { getReducedValue } from '../../../utils';
 import CardComponent from '../card/card.component';
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {BaseChartDirective} from 'ng2-charts';
-import {ChartData} from 'chart.js';
-import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
-import {getReducedValue} from '../../../utils';
-import {applyGradient, GradientDescriptor, resolveGradientDescriptor} from '../../../utils/color.utils';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -27,12 +19,23 @@ export interface AuxReduceOption {
   reduceBy: ReduceMode;
 }
 
-const STEP_PRESETS: string[][] = [
-  ['--color-gradient-a-start', '--color-gradient-a-mid', '--color-gradient-a-end'],
-  ['--color-gradient-b-start', '--color-gradient-b-mid', '--color-gradient-b-end'],
-  ['--color-gradient-c-start', '--color-gradient-c-mid', '--color-gradient-c-end'],
-  ['--color-gradient-d-start', '--color-gradient-d-end'],
-  ['--color-gradient-e-start', '--color-gradient-e-end'],
+export interface TreemapTile {
+  label: string;
+  value: number;
+  formattedValue: string;
+  gradient: string;
+  x: number; // percentage
+  y: number;
+  w: number;
+  h: number;
+}
+
+const GRADIENT_PRESETS: string[] = [
+  'linear-gradient(135deg, var(--color-gradient-a-start), var(--color-gradient-a-mid, var(--color-gradient-a-end)), var(--color-gradient-a-end))',
+  'linear-gradient(135deg, var(--color-gradient-b-start), var(--color-gradient-b-mid, var(--color-gradient-b-end)), var(--color-gradient-b-end))',
+  'linear-gradient(135deg, var(--color-gradient-c-start), var(--color-gradient-c-mid, var(--color-gradient-c-end)), var(--color-gradient-c-end))',
+  'linear-gradient(135deg, var(--color-gradient-d-start), var(--color-gradient-d-end))',
+  'linear-gradient(135deg, var(--color-gradient-e-start), var(--color-gradient-e-end))',
 ];
 
 @Component({
@@ -41,7 +44,6 @@ const STEP_PRESETS: string[][] = [
     CardComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
-    BaseChartDirective,
     DynamicFilterComponent,
   ],
   templateUrl: './chart-treemap.component.html',
@@ -66,25 +68,8 @@ export default class ChartTreemapComponent implements OnInit {
 
   currentReduce = signal<AuxReduceOption | null>(null);
 
-  private gradientDescriptors: GradientDescriptor[] = [];
-
-  /**
-   * Inline plugin that triggers one extra update immediately after the treemap
-   * layout algorithm has run (afterLayout), ensuring element coordinates are
-   * finalised before backgroundColor is called. The flag prevents a loop.
-   */
-  readonly gradientInitPlugin = {
-    id: 'gradientInit',
-    afterLayout(chart: any) {
-      if (chart.__gradientInit) return;
-      chart.__gradientInit = true;
-      chart.update();
-    },
-  };
-
   ngOnInit(): void {
-    this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
-    this.gradientDescriptors = STEP_PRESETS.map(steps => resolveGradientDescriptor(steps));
+    this.currentReduce.set({ campo: this.campo(), reduceBy: this.reduceBy() });
   }
 
   protected filteredData = computed<TreemapDataInterface[]>(() => {
@@ -95,104 +80,61 @@ export default class ChartTreemapComponent implements OnInit {
     );
   });
 
-  protected aggregatedTree = computed<(Record<string, any> & { _value: number })[]>(() => {
+  protected aggregatedTree = computed<{ label: string; value: number; groupKey: string }[]>(() => {
     const raw = this.filteredData();
     const groupFields = this.groups();
-    const {campo, reduceBy} = this.currentReduce()!;
+    const { campo, reduceBy } = this.currentReduce()!;
+    const outerField = groupFields[0];
+    const innerField = groupFields[groupFields.length - 1];
 
-    const buckets = new Map<string, { meta: Record<string, any>; rows: TreemapDataInterface[] }>();
+    const buckets = new Map<string, { groupKey: string; label: string; rows: TreemapDataInterface[] }>();
     for (const row of raw) {
       const key = groupFields.map(f => `${row[f] ?? '—'}`).join('||');
       if (!buckets.has(key)) {
-        const meta: Record<string, any> = {};
-        groupFields.forEach(f => (meta[f] = row[f] ?? '—'));
-        buckets.set(key, {meta, rows: []});
+        buckets.set(key, {
+          groupKey: `${row[outerField] ?? '—'}`,
+          label: `${row[innerField] ?? '—'}`,
+          rows: [],
+        });
       }
       buckets.get(key)!.rows.push(row);
     }
 
-    return Array.from(buckets.values()).map(({meta, rows}) => ({
-      ...meta,
-      _value: getReducedValue(rows, reduceBy, campo),
+    return Array.from(buckets.values())
+      .map(({ groupKey, label, rows }) => ({
+        groupKey,
+        label,
+        value: getReducedValue(rows, reduceBy, campo),
+      }))
+      .filter(d => d.value > 0)
+      .sort((a, b) => b.value - a.value);
+  });
+
+  /** Assign a stable gradient index per unique outer-group value. */
+  protected groupGradientMap = computed<Map<string, string>>(() => {
+    const unique = [...new Set(this.aggregatedTree().map(d => d.groupKey))];
+    return new Map(unique.map((g, i) => [g, GRADIENT_PRESETS[i % GRADIENT_PRESETS.length]]));
+  });
+
+  tiles: Signal<TreemapTile[]> = computed(() => {
+    const items = this.aggregatedTree();
+    const gradientMap = this.groupGradientMap();
+    const { reduceBy } = this.currentReduce()!;
+    if (!items.length) return [];
+
+    const layout = squarify(items, { x: 0, y: 0, w: 100, h: 100 });
+
+    return layout.map(tile => ({
+      label: tile.label,
+      value: tile.value,
+      formattedValue: reduceBy === 'sum' ? formatEuro(tile.value) : `${tile.value}`,
+      gradient: gradientMap.get(tile.groupKey) ?? GRADIENT_PRESETS[0],
+      x: tile.x,
+      y: tile.y,
+      w: tile.w,
+      h: tile.h,
     }));
   });
-
-  /** Maps each unique outer-group value to a stable preset index. */
-  protected groupIndexMap = computed<Map<string, number>>(() => {
-    const outerField = this.groups()[0];
-    const unique = [...new Set(this.aggregatedTree().map(d => `${d[outerField] ?? '—'}`))];
-    return new Map(unique.map((g, i) => [g, i % STEP_PRESETS.length]));
-  });
-
-  chartData: Signal<ChartData<'treemap'>> = computed(() => {
-    const outerField = this.groups()[0];
-    const innerField = this.groups()[this.groups().length - 1];
-    const indexMap = this.groupIndexMap();
-    const {reduceBy} = this.currentReduce()!;
-
-    return {
-      datasets: [
-        {
-          label: this.title(),
-          tree: this.aggregatedTree(),
-          key: '_value',
-          borderWidth: 0,
-          borderRadius: 4,
-          spacing: 2,
-          backgroundColor: (ctx: any) => {
-            if (ctx.type !== 'data') return 'transparent';
-            // Guard: chartArea is undefined on the very first layout pass.
-            // Returning undefined here causes Chart.js to retry on the next pass
-            // when coordinates are finalised — same pattern as the official sample.
-            const {ctx: canvasCtx, chartArea} = ctx.chart;
-            if (!chartArea) return undefined;
-            const el = ctx.element;
-            const x: number = el.x - el.width / 2;
-            const y: number = el.y - el.height / 2;
-            const w: number = el.width;
-            const h: number = el.height;
-            if (!isFinite(x) || !isFinite(y) || !isFinite(w) || !isFinite(h) || w <= 0 || h <= 0) {
-              return 'transparent';
-            }
-            const g = `${ctx.raw._data[outerField] ?? '—'}`;
-            const descriptor = this.gradientDescriptors[indexMap.get(g) ?? 0];
-            return applyGradient(canvasCtx, x, y, x + w, y + h, descriptor);
-          },
-          labels: {
-            align: 'left',
-            display: true,
-            formatter: (ctx: any) => {
-              if (ctx.type !== 'data') return 'transparent';
-              const d = ctx.raw._data;
-              const label = d[innerField] ?? d[outerField] ?? '';
-              const val: number = ctx.raw.v;
-              return [
-                `${label}`,
-                reduceBy === 'sum' ? formatEuro(val) : `${val}`,
-              ];
-            },
-            color: ['#fff', 'rgba(255,255,255,0.9)'],
-            backgroundColor: ['rgba(0,0,0,0.45)', 'rgba(0,0,0,0.3)'],
-            font: [{size: 12, weight: 'bold'}, {size: 10}],
-            position: 'top',
-            padding: 4,
-          },
-        } as any,
-      ],
-    };
-  });
-
-  public treemapOptions: Signal<ChartConfiguration<'treemap'>['options']> = computed(() => ({
-    responsive: true,
-    maintainAspectRatio: false,
-    events: [],
-    plugins: {
-      legend: {display: false},
-      tooltip: {enabled: false, events: []},
-    },
-  } as any));
-
-  public treemapType = 'treemap' as const;
 
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value as AuxReduceOption);
@@ -203,12 +145,77 @@ export default class ChartTreemapComponent implements OnInit {
   }
 }
 
-// ── Helpers ──────────────────────────────────────────────────────────────────
+// ── Squarify layout ───────────────────────────────────────────────────────────
+
+interface Rect { x: number; y: number; w: number; h: number; }
+interface Item { label: string; value: number; groupKey: string; }
+interface LayoutItem extends Item { area: number; }
+interface LayoutTile extends Item { x: number; y: number; w: number; h: number; }
+
+function squarify(items: Item[], rect: Rect): LayoutTile[] {
+  const total = items.reduce((s, d) => s + d.value, 0);
+  const area = rect.w * rect.h;
+  const withArea: LayoutItem[] = items.map(d => ({ ...d, area: (d.value / total) * area }));
+  return layout(withArea, rect);
+}
+
+function layout(items: LayoutItem[], rect: Rect): LayoutTile[] {
+  if (!items.length) return [];
+  if (items.length === 1) return [{ ...items[0], x: rect.x, y: rect.y, w: rect.w, h: rect.h }];
+
+  const [row, rest] = bestRow(items, rect);
+  const rowArea = row.reduce((s, i) => s + i.area, 0);
+  const tiles: LayoutTile[] = [];
+
+  if (rect.w >= rect.h) {
+    const stripW = rowArea / rect.h;
+    let y = rect.y;
+    for (const item of row) {
+      const h = item.area / stripW;
+      tiles.push({ ...item, x: rect.x, y, w: stripW, h });
+      y += h;
+    }
+    return tiles.concat(layout(rest, { x: rect.x + stripW, y: rect.y, w: rect.w - stripW, h: rect.h }));
+  } else {
+    const stripH = rowArea / rect.w;
+    let x = rect.x;
+    for (const item of row) {
+      const w = item.area / stripH;
+      tiles.push({ ...item, x, y: rect.y, w, h: stripH });
+      x += w;
+    }
+    return tiles.concat(layout(rest, { x: rect.x, y: rect.y + stripH, w: rect.w, h: rect.h - stripH }));
+  }
+}
+
+function bestRow(items: LayoutItem[], rect: Rect): [LayoutItem[], LayoutItem[]] {
+  const short = Math.min(rect.w, rect.h);
+  let best: LayoutItem[] = [];
+  let bestRatio = Infinity;
+
+  for (let i = 0; i < items.length; i++) {
+    const candidate = items.slice(0, i + 1);
+    const ratio = worstRatio(candidate, short);
+    if (ratio <= bestRatio) {
+      bestRatio = ratio;
+      best = candidate;
+    } else {
+      break;
+    }
+  }
+
+  return [best, items.slice(best.length)];
+}
+
+function worstRatio(row: LayoutItem[], short: number): number {
+  const total = row.reduce((s, i) => s + i.area, 0);
+  return Math.max(...row.map(i => {
+    const w = (i.area / total) * short;
+    const h = total / short;
+    return Math.max(w / h, h / w);
+  }));
+}
 
 function formatEuro(v: number): string {
-  return new Intl.NumberFormat('it-IT', {
-    style: 'currency',
-    currency: 'EUR',
-    maximumFractionDigits: 0,
-  }).format(v);
+  return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
 }
