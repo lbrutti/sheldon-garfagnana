@@ -1,179 +1,214 @@
-import {Component, computed, input, InputSignal, signal, Signal, ViewChild} from '@angular/core';
+import {
+  Component,
+  computed,
+  input,
+  OnInit,
+  signal,
+  Signal,
+} from '@angular/core';
 import {Chart, ChartConfiguration} from 'chart.js';
-import annotationPlugin from 'chartjs-plugin-annotation';
-import {TreemapController, TreemapElement,} from 'chartjs-chart-treemap';
+import {TreemapController, TreemapElement} from 'chartjs-chart-treemap';
 
-Chart.register(annotationPlugin);
 Chart.register(TreemapController, TreemapElement);
 
 import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {MatIcon} from '@angular/material/icon';
-import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
 import {BaseChartDirective} from 'ng2-charts';
-import {ChartData, ChartEvent} from 'chart.js';
-
+import {ChartData} from 'chart.js';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {getReducedValueByLabel} from '../../../utils';
+import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
+import {getReducedValue} from '../../../utils';
+import {applyGradient, GradientDescriptor, resolveGradientDescriptor} from '../../../utils/color.utils';
+
+type ReduceMode = 'sum' | 'count' | 'max';
+
+export interface AuxReduceOption {
+  campo: string;
+  reduceBy: ReduceMode;
+}
+
+const STEP_PRESETS: string[][] = [
+  ['--color-gradient-a-start', '--color-gradient-a-mid', '--color-gradient-a-end'],
+  ['--color-gradient-b-start', '--color-gradient-b-mid', '--color-gradient-b-end'],
+  ['--color-gradient-c-start', '--color-gradient-c-mid', '--color-gradient-c-end'],
+  ['--color-gradient-d-start', '--color-gradient-d-end'],
+  ['--color-gradient-e-start', '--color-gradient-e-end'],
+];
 
 @Component({
-  selector: 'sheldon-chart-treemap-old',
+  selector: 'sheldon-chart-treemap',
   imports: [
     CardComponent,
+    MatButtonToggleGroup,
+    MatButtonToggle,
     BaseChartDirective,
     DynamicFilterComponent,
-    MatButtonToggle,
-    MatButtonToggleGroup,
-    MatIcon
   ],
   templateUrl: './chart-treemap.component.html',
   styleUrl: './chart-treemap.component.scss',
 })
-export default class ChartTreemapComponent {
+export default class ChartTreemapComponent implements OnInit {
 
-  @ViewChild(BaseChartDirective) chart: BaseChartDirective<'treemap'> | undefined;
+  title = input<string>('Treemap');
+  data = input<TreemapDataInterface[]>([]);
+  groups = input<(keyof TreemapDataInterface & string)[]>(['comune']);
 
-  data = input<(TreemapDataInterface)[]>([]);
+  campo = input<string>('valore');
+  reduceBy = input<ReduceMode>('sum');
+  auxReduce = input<AuxReduceOption[]>([]);
 
-
-  title = input<string>('Numero di progetti per comune');
-
-  showSorting = input<boolean>(true);
-  sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
-  sortDirection = signal<string>('desc');
-  defaultSortDirection = input<'asc' | 'desc'>('desc');
-
-  masterField = input<string | null>(null);
   filterBy = input<string | null>(null);
-  filtersFields = computed<string[]>((): string[] => {
-    return this.filterBy() !== null ? this.filterBy().split('|') : [];
-  });
+  filtersFields = computed<string[]>((): string[] =>
+    this.filterBy() !== null ? this.filterBy()!.split('|') : []
+  );
+  masterField = input<string | null>(null);
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
-  limit = input<number>(15);
-  groupBy = input<string & keyof TreemapDataInterface>('comune');
+  currentReduce = signal<AuxReduceOption | null>(null);
 
+  private gradientDescriptors: GradientDescriptor[] = [];
 
-  reduceBy = input<string>('sum');
-  auxReduce = input<{ campo: keyof TreemapDataInterface, reduceBy: string }[]>([]);
-  chartData: Signal<ChartData<'treemap'>> = computed(() => {
-    const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
-    const filteredData = filterSet ? this.data().filter(d => {
-      const guard = filterSet ? (this.appliedFilters().every(filter => {
-        return filter.value.length && (filter.value === `${(d as any)[filter.key]}`);
-      })) : true;
-      return guard;
-    }) : this.data();
-
-    const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
-    let groupKeys = this.getGroupedKeys(grouped);
-    let dataset: any = [];
-    groupKeys.map(label => {
-      const reducedValue = getReducedValueByLabel(grouped, label, this.currentReduce().reduceBy);
-      dataset.push(reducedValue);
-    });
-
-
-    return {labels: groupKeys, datasets: [{data: dataset}]};
-  });
+  /**
+   * Inline plugin that triggers one extra update immediately after the treemap
+   * layout algorithm has run (afterLayout), ensuring element coordinates are
+   * finalised before backgroundColor is called. The flag prevents a loop.
+   */
+  readonly gradientInitPlugin = {
+    id: 'gradientInit',
+    afterLayout(chart: any) {
+      if (chart.__gradientInit) return;
+      chart.__gradientInit = true;
+      chart.update();
+    },
+  };
 
   ngOnInit(): void {
-    this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()})
+    this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
+    this.gradientDescriptors = STEP_PRESETS.map(steps => resolveGradientDescriptor(steps));
   }
 
-  currentReduce = signal<{ campo: string, reduceBy: string } | null>(null);
-
-  getGroupedKeys(grouped: any): string[] {
-    const groupKeys = this.sortBy() === 'category' ? Object.keys(grouped).sort((a, b) => `${a}`.localeCompare(`${b}`)) : Object.keys(grouped).sort((a, b) => {
-      return getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy) - getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy);
-    });
-    if ((!this.showSorting() && (this.defaultSortDirection() === 'desc')) || (this.showSorting() && this.sortDirection() === 'desc')) {
-      groupKeys.reverse();
-    }
-    return this.limit() ? groupKeys.slice(0, this.limit()) : groupKeys;
-  }
-
-  annotationsSignal: Signal<any> = computed(() => {
-    const annotations: any = {};
-    this.chartData().labels.forEach((label, i) => {
-      annotations[`label_${i}`] = {
-        type: 'label',
-        yValue: label,
-        textAlign: 'left',   // text grows rightward from the anchor point
-        xValue: 0,
-        xAdjust: 8,
-        content: label,
-        backgroundColor: 'transparent',
-        color: 'red',
-        position: {x: 'start', y: 'center'}, // anchor box from its left edge
-      };
-      const value = this.chartData().datasets[0].data[i];
-      annotations[`count_${i}`] = {
-        type: 'label',
-        yValue: label,
-        xValue: (ctx: any) => ctx.chart.scales.x.max,
-        xAdjust: -10,
-        content: value,
-        backgroundColor: 'transparent',
-        color: 'red',
-        textAlign: 'right',
-        position: {x: 'end', y: 'center'}, // anchor box from its left edge
-      };
-    });
-
-    return annotations;
+  protected filteredData = computed<TreemapDataInterface[]>(() => {
+    const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
+    if (!filterSet) return this.data();
+    return this.data().filter(d =>
+      this.appliedFilters().every(f => f.value.length && f.value === `${d[f.key]}`)
+    );
   });
 
+  protected aggregatedTree = computed<(Record<string, any> & { _value: number })[]>(() => {
+    const raw = this.filteredData();
+    const groupFields = this.groups();
+    const {campo, reduceBy} = this.currentReduce()!;
 
-  public chartOptions: Signal<ChartConfiguration['options']> = computed(() => {
-    return {
-      //set bars horizontally
-      indexAxis: 'x',
-      // We use these empty structures as placeholders for dynamic theming.
-      scales: {
-        x: {
-          display: true,
-          grid: {display: false}
-
-        },
-        y: {
-          display: false,
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-        // annotation: {
-        //   clip: true, // <-- critical: clips annotations to the chart area
-        //   annotations: this.annotationsSignal()
-        // },
+    const buckets = new Map<string, { meta: Record<string, any>; rows: TreemapDataInterface[] }>();
+    for (const row of raw) {
+      const key = groupFields.map(f => `${row[f] ?? '—'}`).join('||');
+      if (!buckets.has(key)) {
+        const meta: Record<string, any> = {};
+        groupFields.forEach(f => (meta[f] = row[f] ?? '—'));
+        buckets.set(key, {meta, rows: []});
       }
+      buckets.get(key)!.rows.push(row);
+    }
+
+    return Array.from(buckets.values()).map(({meta, rows}) => ({
+      ...meta,
+      _value: getReducedValue(rows, reduceBy, campo),
+    }));
+  });
+
+  /** Maps each unique outer-group value to a stable preset index. */
+  protected groupIndexMap = computed<Map<string, number>>(() => {
+    const outerField = this.groups()[0];
+    const unique = [...new Set(this.aggregatedTree().map(d => `${d[outerField] ?? '—'}`))];
+    return new Map(unique.map((g, i) => [g, i % STEP_PRESETS.length]));
+  });
+
+  chartData: Signal<ChartData<'treemap'>> = computed(() => {
+    const outerField = this.groups()[0];
+    const innerField = this.groups()[this.groups().length - 1];
+    const indexMap = this.groupIndexMap();
+    const {reduceBy} = this.currentReduce()!;
+
+    return {
+      datasets: [
+        {
+          label: this.title(),
+          tree: this.aggregatedTree(),
+          key: '_value',
+          borderWidth: 0,
+          borderRadius: 4,
+          spacing: 2,
+          backgroundColor: (ctx: any) => {
+            if (ctx.type !== 'data') return 'transparent';
+            // Guard: chartArea is undefined on the very first layout pass.
+            // Returning undefined here causes Chart.js to retry on the next pass
+            // when coordinates are finalised — same pattern as the official sample.
+            const {ctx: canvasCtx, chartArea} = ctx.chart;
+            if (!chartArea) return undefined;
+            const el = ctx.element;
+            const x: number = el.x - el.width / 2;
+            const y: number = el.y - el.height / 2;
+            const w: number = el.width;
+            const h: number = el.height;
+            if (!isFinite(x) || !isFinite(y) || !isFinite(w) || !isFinite(h) || w <= 0 || h <= 0) {
+              return 'transparent';
+            }
+            const g = `${ctx.raw._data[outerField] ?? '—'}`;
+            const descriptor = this.gradientDescriptors[indexMap.get(g) ?? 0];
+            return applyGradient(canvasCtx, x, y, x + w, y + h, descriptor);
+          },
+          labels: {
+            align: 'left',
+            display: true,
+            formatter: (ctx: any) => {
+              if (ctx.type !== 'data') return 'transparent';
+              const d = ctx.raw._data;
+              const label = d[innerField] ?? d[outerField] ?? '';
+              const val: number = ctx.raw.v;
+              return [
+                `${label}`,
+                reduceBy === 'sum' ? formatEuro(val) : `${val}`,
+              ];
+            },
+            color: ['#fff', 'rgba(255,255,255,0.9)'],
+            backgroundColor: ['rgba(0,0,0,0.45)', 'rgba(0,0,0,0.3)'],
+            font: [{size: 12, weight: 'bold'}, {size: 10}],
+            position: 'top',
+            padding: 4,
+          },
+        } as any,
+      ],
     };
   });
-  public chartType = 'treemap' as const;
 
+  public treemapOptions: Signal<ChartConfiguration<'treemap'>['options']> = computed(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    events: [],
+    plugins: {
+      legend: {display: false},
+      tooltip: {enabled: false, events: []},
+    },
+  } as any));
 
-  public chartClicked({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    // console.log(event, active);
-  }
+  public treemapType = 'treemap' as const;
 
-  public chartHovered({event, active,}: { event?: ChartEvent; active?: object[]; }): void {
-    // console.log(event, active);
-  }
-
-
-  protected onSortChange($event: MatButtonToggleChange) {
-    this.sortDirection.set($event.value);
+  protected onReduceChange($event: MatButtonToggleChange) {
+    this.currentReduce.set($event.value as AuxReduceOption);
   }
 
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
   }
+}
 
+// ── Helpers ──────────────────────────────────────────────────────────────────
 
-  protected onReduceChange($event: MatButtonToggleChange) {
-    this.currentReduce.set($event.value);
-  }
-
+function formatEuro(v: number): string {
+  return new Intl.NumberFormat('it-IT', {
+    style: 'currency',
+    currency: 'EUR',
+    maximumFractionDigits: 0,
+  }).format(v);
 }
