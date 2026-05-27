@@ -1,0 +1,16 @@
+<sheldon-card>
+  <ng-container title>{{ title() }}</ng-container>
+  <ng-container content>
+    <sheldon-dynamic-filter
+      [filterBy]="filtersFields()"
+      [dataset]="data()"
+      [masterField]="masterField()"
+      (filterChange)="onFilterChange($event)"/>
+
+    <div class="kpi-value-wrapper">
+      <h1 class="kpi-value">
+        <span #counter></span> <span>{{ udm() }}</span>
+      </h1>
+    </div>
+  </ng-container>
+</sheldon-card>

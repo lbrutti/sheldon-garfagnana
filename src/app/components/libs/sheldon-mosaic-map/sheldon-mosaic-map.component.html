@@ -1,0 +1,114 @@
+<sheldon-card>
+  <ng-container title>{{ title() }}</ng-container>
+  <ng-container content>
+
+    <!-- Controls row -->
+    <div class="map-controls">
+      <sheldon-dynamic-filter
+        [filterBy]="['comune']"
+        [dataset]="comuniDataset()"
+        (filterChange)="onFilterChange($event)" />
+
+      @if (auxReduce().length > 1) {
+        <mat-button-toggle-group
+          [value]="activeAuxReduce()"
+          (change)="onReduceChange($event)">
+          @for (opt of auxReduce(); track opt.campo) {
+            <mat-button-toggle [value]="opt">{{ opt.campo }}</mat-button-toggle>
+          }
+        </mat-button-toggle-group>
+      }
+    </div>
+
+    <!-- Map wrapper -->
+    <div class="map-wrapper">
+      <mgl-map
+        [style]="mapStyle"
+        [center]="[10.37, 44.15]"
+        [zoom]="9.5"
+        [minZoom]="7"
+        [maxZoom]="14"
+        (mapLoad)="onMapLoad($event)">
+
+        @if (mapReady()) {
+          <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
+          <mgl-geojson-source
+            id="comuni"
+            [data]="polygons() ?? emptyCollection"
+            [promoteId]="'comune'">
+          </mgl-geojson-source>
+
+          <!-- Invisible fill layer — drives hover detection and highlight opacity -->
+          <mgl-layer
+            id="comuni-fill"
+            source="comuni"
+            type="fill"
+            [paint]="comuniFillPaint()"
+            (layerMouseEnter)="onPolygonEnter($event)"
+            (layerMouseMove)="onPolygonMove($event)"
+            (layerMouseLeave)="onPolygonLeave()">
+          </mgl-layer>
+
+          <!-- Default boundary outlines -->
+          <mgl-layer
+            id="comuni-line"
+            source="comuni"
+            type="line"
+            [paint]="{
+              'line-color': '#0a0f1e',
+              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.8, 12, 2]
+            }">
+          </mgl-layer>
+
+          <!-- Thicker outline for selected comune -->
+          <mgl-layer
+            id="comuni-selected"
+            source="comuni"
+            type="line"
+            [filter]="selectedFilter()"
+            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">
+          </mgl-layer>
+
+          <!-- Mosaic squares source -->
+          <mgl-geojson-source
+            id="mosaic"
+            [data]="derivedPoints()">
+          </mgl-geojson-source>
+
+          <!-- SDF square symbol layer — colored via choropleth expression -->
+          <mgl-layer
+            id="mosaic-squares"
+            source="mosaic"
+            type="symbol"
+            [layout]="squareLayout"
+            [paint]="squarePaint()">
+          </mgl-layer>
+        }
+      </mgl-map>
+
+      <!-- Hover tooltip -->
+      @if (hoveredFeature() && tooltipPos()) {
+        <div
+          class="map-tooltip"
+          [style.left.px]="tooltipPos()!.x + 14"
+          [style.top.px]="tooltipPos()!.y + 14">
+          <strong>{{ hoveredFeature()?.properties?.['comune'] }}</strong>
+          @if (hoveredValue() !== null && activeAuxReduce()) {
+            <span>{{ activeAuxReduce()!.campo }}: {{ hoveredValue() | number: '1.0-2' }}</span>
+          }
+        </div>
+      }
+
+      <!-- Legend -->
+      <div class="map-legend">
+        <span class="legend-label">{{ activeAuxReduce()?.campo }}</span>
+        <canvas #legendCanvas width="160" height="8"></canvas>
+        <div class="legend-bounds">
+          <span>{{ legendMin() | number: '1.0-1' }}</span>
+          <span>{{ legendMax() | number: '1.0-1' }}</span>
+        </div>
+      </div>
+    </div>
+
+  </ng-container>
+</sheldon-card>

@@ -1,0 +1,81 @@
+:host {
+  display: block;
+
+  .map-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 12px;
+  }
+
+  .map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 480px;
+
+    mgl-map {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .map-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(22, 33, 62, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+    padding: 6px 10px;
+    font-family: monospace;
+    font-size: 12px;
+    color: #ccc;
+    white-space: nowrap;
+    z-index: 10;
+
+    strong {
+      display: block;
+      color: #eee;
+      margin-bottom: 2px;
+    }
+
+    span {
+      font-size: 11px;
+    }
+  }
+
+  .map-legend {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    background: rgba(22, 33, 62, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 10px 14px;
+    border-radius: 4px;
+    pointer-events: none;
+
+    .legend-label {
+      display: block;
+      font-family: monospace;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #aaa;
+      margin-bottom: 6px;
+    }
+
+    canvas {
+      display: block;
+      border-radius: 2px;
+    }
+
+    .legend-bounds {
+      display: flex;
+      justify-content: space-between;
+      font-family: monospace;
+      font-size: 10px;
+      color: #666;
+      margin-top: 3px;
+    }
+  }
+}
