@@ -58,10 +58,8 @@ function createSquareSdf(
   canvas.width = size;
   canvas.height = size;
   const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = '#000';
-  ctx.fillRect(0, 0, size, size);
   ctx.fillStyle = '#fff';
-  ctx.fillRect(1, 1, size - 2, size - 2);
+  ctx.fillRect(0, 0, size, size);
   return {data: ctx.getImageData(0, 0, size, size).data, width: size, height: size};
 }
 
@@ -118,11 +116,16 @@ export default class SheldonMosaicMapComponent implements OnInit {
   // ── Public constants for template ─────────────────────────────────────────
   readonly mapStyle = MAP_STYLE;
   readonly emptyCollection = EMPTY_COLLECTION;
+  // icon-size scales the 16 px SDF icon to match the grid cell size at each zoom.
+  // Formula for 1:1 coverage: icon-size = (lon_deg_spacing × 256 × 2^zoom) / (360 × 16)
+  // For the 0.006° grid: exact values are 0.034, 0.068, 0.137 … doubling each zoom level.
+  // Increase all values uniformly to make squares chunkier (slight overlap hides sub-pixel gaps);
+  // decrease to open up visible gaps between cells.
   readonly squareLayout: any = {
     'icon-image': 'sq',
     'icon-size': [
       'interpolate', ['exponential', 2], ['zoom'],
-      7, 0.068, 8, 0.137, 9, 0.273, 10, 0.547, 11, 1.093, 12, 2.187, 13, 4.374, 14, 8.748,
+      7, 0.037, 8, 0.075, 9, 0.150, 10, 0.300, 11, 0.600, 12, 1.200, 13, 2.400, 14, 4.800,
     ],
     'icon-allow-overlap': true,
     'icon-ignore-placement': true,
