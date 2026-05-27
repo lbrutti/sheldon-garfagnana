@@ -123,3 +123,10 @@
   filterBy="unione|anno"
 ></sheldon-chart-treemap>
 
+
+<sheldon-mosaic-map
+  [points]="comuniPoints()"
+  [polygons]="comuniPolygons()"
+  [auxReduce]="[{campo:'value', reduceBy:'sum'}]"
+  municipalityKey="name"
+></sheldon-mosaic-map>

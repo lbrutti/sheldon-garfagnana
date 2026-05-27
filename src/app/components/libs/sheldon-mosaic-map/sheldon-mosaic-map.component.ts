@@ -9,28 +9,27 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
-import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
-import { GeoJSONSourceComponent, LayerComponent, MapComponent } from '@maplibre/ngx-maplibre-gl';
-import type { Feature, FeatureCollection, Point, Polygon } from 'geojson';
-import type { Map, MapLayerMouseEvent, StyleSpecification } from 'maplibre-gl';
+import {DecimalPipe} from '@angular/common';
+import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
+import type {Feature, FeatureCollection, Point, Polygon} from 'geojson';
+import type {Map, MapLayerMouseEvent, StyleSpecification} from 'maplibre-gl';
 
 import CardComponent from '../card/card.component';
-import { DynamicFilterComponent } from '../dynamic-filter/dynamic-filter.component';
-import { FilterOptionInterface } from '../../../interfaces';
-import { AuxReduceOption, ColorStop } from '../../../interfaces/mosaic-map.interface';
+import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
+import {AuxReduceOption, ColorStop, FilterOptionInterface} from '../../../interfaces';
 
 const DEFAULT_COLOR_STOPS: ColorStop[] = [
-  { value: 0, color: '#1a3a6b' },
-  { value: 20, color: '#1a6b8a' },
-  { value: 35, color: '#2196b4' },
-  { value: 50, color: '#48c898' },
-  { value: 65, color: '#c8a840' },
-  { value: 80, color: '#e07040' },
-  { value: 100, color: '#e04848' },
+  {value: 0, color: '#1a3a6b'},
+  {value: 20, color: '#1a6b8a'},
+  {value: 35, color: '#2196b4'},
+  {value: 50, color: '#48c898'},
+  {value: 65, color: '#c8a840'},
+  {value: 80, color: '#e07040'},
+  {value: 100, color: '#e04848'},
 ];
 
-const EMPTY_COLLECTION: FeatureCollection = { type: 'FeatureCollection', features: [] };
+const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
 const MAP_STYLE: StyleSpecification = {
   version: 8,
@@ -47,7 +46,7 @@ const MAP_STYLE: StyleSpecification = {
       id: 'osm',
       type: 'raster',
       source: 'osm',
-      paint: { 'raster-opacity': 0.25, 'raster-saturation': -1, 'raster-brightness-max': 0.28 },
+      paint: {'raster-opacity': 0.25, 'raster-saturation': -1, 'raster-brightness-max': 0.28},
     },
   ],
 };
@@ -63,7 +62,7 @@ function createSquareSdf(
   ctx.fillRect(0, 0, size, size);
   ctx.fillStyle = '#fff';
   ctx.fillRect(1, 1, size - 2, size - 2);
-  return { data: ctx.getImageData(0, 0, size, size).data, width: size, height: size };
+  return {data: ctx.getImageData(0, 0, size, size).data, width: size, height: size};
 }
 
 function reduceValues(values: number[], mode: AuxReduceOption['reduceBy']): number {
@@ -111,6 +110,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   points = input<FeatureCollection<Point> | null>(null);
   auxReduce = input<AuxReduceOption[]>([]);
   colorSetting = input<ColorStop[]>(DEFAULT_COLOR_STOPS);
+  municipalityKey = input<string>('comune');
 
   // ── Outputs ────────────────────────────────────────────────────────────────
   polygonHover = output<Feature<Polygon>>();
@@ -143,20 +143,22 @@ export default class SheldonMosaicMapComponent implements OnInit {
   // ── Computed ───────────────────────────────────────────────────────────────
 
   /** Dataset shaped for sheldon-dynamic-filter (needs DataInterface-compatible objects). */
-  comuniDataset = computed(() =>
-    (this.polygons()?.features ?? []).map((f) => ({
-      comune: String(f.properties?.['comune'] ?? ''),
+  comuniDataset = computed(() => {
+    const key = this.municipalityKey();
+    return (this.polygons()?.features ?? []).map((f) => ({
+      comune: String(f.properties?.[key] ?? ''),
       valore: 0 as number,
-    }))
-  );
+    }));
+  });
 
   /** Per-comune aggregated value from polygon properties. */
   private comuneValues = computed<Record<string, number>>(() => {
     const opt = this.activeAuxReduce();
     if (!opt) return {};
+    const key = this.municipalityKey();
     const grouped: Record<string, number[]> = {};
     for (const f of this.polygons()?.features ?? []) {
-      const comune = String(f.properties?.['comune'] ?? '');
+      const comune = String(f.properties?.[key] ?? '');
       if (!comune) continue;
       (grouped[comune] ??= []).push(Number(f.properties?.[opt.campo] ?? 0));
     }
@@ -184,13 +186,14 @@ export default class SheldonMosaicMapComponent implements OnInit {
     const pts = this.points();
     if (!pts) return EMPTY_COLLECTION;
     const norm = this.normalizedValues();
+    const key = this.municipalityKey();
     return {
       ...pts,
       features: pts.features.map((f) => ({
         ...f,
         properties: {
           ...f.properties,
-          _colorValue: norm[String(f.properties?.['comune'] ?? '')] ?? 0,
+          _colorValue: norm[String(f.properties?.[key] ?? '')] ?? 0,
         },
       })),
     };
@@ -211,9 +214,10 @@ export default class SheldonMosaicMapComponent implements OnInit {
   /** Fill layer paint — reactive to selectedComune for highlight. */
   comuniFillPaint = computed(() => {
     const sel = this.selectedComune();
+    const key = this.municipalityKey();
     const conditions: any[] = ['case'];
     if (sel) {
-      conditions.push(['==', ['get', 'comune'], sel], 0.35);
+      conditions.push(['==', ['get', key], sel], 0.35);
     }
     conditions.push(['boolean', ['feature-state', 'hover'], false], 0.15, 0);
     return {
@@ -223,11 +227,12 @@ export default class SheldonMosaicMapComponent implements OnInit {
   });
 
   /** Filter for the selected-comune highlight line layer. */
-  selectedFilter = computed<any>(() =>
-    this.selectedComune()
-      ? ['==', ['get', 'comune'], this.selectedComune()]
-      : ['==', ['get', 'comune'], '__none__']
-  );
+  selectedFilter = computed<any>(() => {
+    const key = this.municipalityKey();
+    return this.selectedComune()
+      ? ['==', ['get', key], this.selectedComune()]
+      : ['==', ['get', key], '__none__'];
+  });
 
   /** Min/max labels for the legend. */
   legendMin = computed(() => {
@@ -243,7 +248,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   hoveredValue = computed(() => {
     const f = this.hoveredFeature();
     if (!f) return null;
-    const comune = String(f.properties?.['comune'] ?? '');
+    const comune = String(f.properties?.[this.municipalityKey()] ?? '');
     return this.comuneValues()[comune] ?? null;
   });
 
@@ -270,7 +275,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   onMapLoad(map: Map): void {
     this.mapInstance = map;
-    map.addImage('sq', createSquareSdf(16), { sdf: true });
+    map.addImage('sq', createSquareSdf(16), {sdf: true});
     this.mapReady.set(true);
   }
 
@@ -282,28 +287,28 @@ export default class SheldonMosaicMapComponent implements OnInit {
     const feature = event.features[0] as unknown as Feature<Polygon>;
 
     if (this.hoveredFeatureId !== null) {
-      map.setFeatureState({ source: 'comuni', id: this.hoveredFeatureId }, { hover: false });
+      map.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
     }
     this.hoveredFeatureId = (event.features[0].id as string | number) ?? null;
     if (this.hoveredFeatureId !== null) {
-      map.setFeatureState({ source: 'comuni', id: this.hoveredFeatureId }, { hover: true });
+      map.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: true});
     }
 
     this.hoveredFeature.set(feature);
-    this.tooltipPos.set({ x: event.point.x, y: event.point.y });
+    this.tooltipPos.set({x: event.point.x, y: event.point.y});
     map.getCanvas().style.cursor = 'pointer';
     this.polygonHover.emit(feature);
   }
 
   onPolygonMove(event: MapLayerMouseEvent): void {
-    this.tooltipPos.set({ x: event.point.x, y: event.point.y });
+    this.tooltipPos.set({x: event.point.x, y: event.point.y});
   }
 
   onPolygonLeave(): void {
     const map = this.mapInstance;
     if (!map) return;
     if (this.hoveredFeatureId !== null) {
-      map.setFeatureState({ source: 'comuni', id: this.hoveredFeatureId }, { hover: false });
+      map.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
       this.hoveredFeatureId = null;
     }
     this.hoveredFeature.set(null);
@@ -320,10 +325,10 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
     if (value && this.mapInstance) {
       const feature = this.polygons()?.features.find(
-        (f) => String(f.properties?.['comune']) === value
+        (f) => String(f.properties?.[this.municipalityKey()]) === value
       );
       if (feature) {
-        this.mapInstance.fitBounds(polygonBbox(feature), { padding: 40, maxZoom: 13 });
+        this.mapInstance.fitBounds(polygonBbox(feature), {padding: 40, maxZoom: 13});
       }
     }
   }

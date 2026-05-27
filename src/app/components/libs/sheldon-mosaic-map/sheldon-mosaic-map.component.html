@@ -23,9 +23,9 @@
     <!-- Map wrapper -->
     <div class="map-wrapper">
       <mgl-map
-        [style]="mapStyle"
+        [mapStyle]="mapStyle"
         [center]="[10.37, 44.15]"
-        [zoom]="9.5"
+        [zoom]="[9.5]"
         [minZoom]="7"
         [maxZoom]="14"
         (mapLoad)="onMapLoad($event)">
@@ -35,7 +35,7 @@
           <mgl-geojson-source
             id="comuni"
             [data]="polygons() ?? emptyCollection"
-            [promoteId]="'comune'">
+            [promoteId]="municipalityKey()">
           </mgl-geojson-source>
 
           <!-- Invisible fill layer — drives hover detection and highlight opacity -->
@@ -92,7 +92,7 @@
           class="map-tooltip"
           [style.left.px]="tooltipPos()!.x + 14"
           [style.top.px]="tooltipPos()!.y + 14">
-          <strong>{{ hoveredFeature()?.properties?.['comune'] }}</strong>
+          <strong>{{ hoveredFeature()?.properties?.[municipalityKey()] }}</strong>
           @if (hoveredValue() !== null && activeAuxReduce()) {
             <span>{{ activeAuxReduce()!.campo }}: {{ hoveredValue() | number: '1.0-2' }}</span>
           }
