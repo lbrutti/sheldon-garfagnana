@@ -13,11 +13,12 @@ import {DecimalPipe} from '@angular/common';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Point, Polygon} from 'geojson';
-import type {Map, MapLayerMouseEvent, StyleSpecification} from 'maplibre-gl';
+import type {Map, MapLayerMouseEvent, MapLibreEvent, MapLibreZoomEvent, StyleSpecification} from 'maplibre-gl';
 
 import CardComponent from '../card/card.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {AuxReduceOption, ColorStop, FilterOptionInterface} from '../../../interfaces';
+import {EventData} from '@angular/cdk/testing';
 
 const DEFAULT_COLOR_STOPS: ColorStop[] = [
   {value: 0, color: '#1a3a6b'},
@@ -54,13 +55,8 @@ const MAP_STYLE: StyleSpecification = {
 function createSquareSdf(
   size: number,
 ): { data: Uint8ClampedArray; width: number; height: number } {
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const ctx = canvas.getContext('2d')!;
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(0, 0, size, size);
-  return {data: ctx.getImageData(0, 0, size, size).data, width: size, height: size};
+  const data = new Uint8ClampedArray(size * size * 4).fill(255);
+  return {data, width: size, height: size};
 }
 
 function reduceValues(values: number[], mode: AuxReduceOption['reduceBy']): number {
@@ -116,16 +112,16 @@ export default class SheldonMosaicMapComponent implements OnInit {
   // ── Public constants for template ─────────────────────────────────────────
   readonly mapStyle = MAP_STYLE;
   readonly emptyCollection = EMPTY_COLLECTION;
-  // icon-size scales the 16 px SDF icon to match the grid cell size at each zoom.
-  // Formula for 1:1 coverage: icon-size = (lon_deg_spacing × 256 × 2^zoom) / (360 × 16)
-  // For the 0.006° grid: exact values are 0.034, 0.068, 0.137 … doubling each zoom level.
-  // Increase all values uniformly to make squares chunkier (slight overlap hides sub-pixel gaps);
-  // decrease to open up visible gaps between cells.
+  // icon-size scales a 64 px SDF icon to match the grid cell size at each zoom.
+  // Formula: icon-size = (lon_deg_spacing × 256 × 2^zoom) / (360 × 64)
+  // For the 0.006° grid exact values are 0.0085, 0.0171 … doubling each zoom; stops here add ~17%
+  // to cover sub-pixel rasterisation gaps. Using 64 px (vs 16 px) shrinks the 1-texel transparent
+  // rim from MapLibre's sprite-atlas padding from ~0.2 px to ~0.05 px at zoom 9–10.
   readonly squareLayout: any = {
     'icon-image': 'sq',
     'icon-size': [
       'interpolate', ['exponential', 2], ['zoom'],
-      7, 0.037, 8, 0.075, 9, 0.150, 10, 0.300, 11, 0.600, 12, 1.200, 13, 2.400, 14, 4.800,
+      7, 0.010, 8, 0.020, 9, 0.040, 10, 0.080, 11, 0.160, 12, 0.320, 13, 0.640, 14, 1.280,
     ],
     'icon-allow-overlap': true,
     'icon-ignore-placement': true,
@@ -278,7 +274,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   onMapLoad(map: Map): void {
     this.mapInstance = map;
-    map.addImage('sq', createSquareSdf(16), {sdf: true});
+    map.addImage('sq', createSquareSdf(64), {sdf: true});
     this.mapReady.set(true);
   }
 
@@ -338,5 +334,9 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   onReduceChange(event: MatButtonToggleChange): void {
     this.activeAuxReduce.set(event.value as AuxReduceOption);
+  }
+
+  logZoomLevel($event: MapLibreEvent<MouseEvent | TouchEvent | WheelEvent> & EventData): void {
+    console.log(`current zoom : ${$event.target.getZoom()}`);
   }
 }

@@ -7,7 +7,7 @@
       <sheldon-dynamic-filter
         [filterBy]="['comune']"
         [dataset]="comuniDataset()"
-        (filterChange)="onFilterChange($event)" />
+        (filterChange)="onFilterChange($event)"/>
 
       @if (auxReduce().length > 1) {
         <mat-button-toggle-group
@@ -25,10 +25,11 @@
       <mgl-map
         [mapStyle]="mapStyle"
         [center]="[10.37, 44.15]"
-        [zoom]="[9.5]"
-        [minZoom]="7"
+        [zoom]="[8.5]"
+        [minZoom]="8"
         [maxZoom]="14"
-        (mapLoad)="onMapLoad($event)">
+        (mapLoad)="onMapLoad($event)"
+        (zoomEnd)="logZoomLevel($event)">
 
         @if (mapReady()) {
           <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
@@ -49,27 +50,27 @@
             (layerMouseLeave)="onPolygonLeave()">
           </mgl-layer>
 
-          <!-- Default boundary outlines -->
-          <mgl-layer
-            id="comuni-line"
-            source="comuni"
-            type="line"
-            [paint]="{
-              'line-color': '#0a0f1e',
-              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.8, 12, 2]
-            }">
-          </mgl-layer>
+          <!--          &lt;!&ndash; Default boundary outlines &ndash;&gt;-->
+            <!--          <mgl-layer-->
+            <!--            id="comuni-line"-->
+            <!--            source="comuni"-->
+            <!--            type="line"-->
+            <!--            [paint]="{-->
+            <!--              'line-color': '#0a0f1e',-->
+            <!--              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.8, 12, 2]-->
+            <!--            }">-->
+            <!--          </mgl-layer>-->
 
-          <!-- Thicker outline for selected comune -->
-          <mgl-layer
-            id="comuni-selected"
-            source="comuni"
-            type="line"
-            [filter]="selectedFilter()"
-            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">
-          </mgl-layer>
+            <!--          &lt;!&ndash; Thicker outline for selected comune &ndash;&gt;-->
+            <!--          <mgl-layer-->
+            <!--            id="comuni-selected"-->
+            <!--            source="comuni"-->
+            <!--            type="line"-->
+            <!--            [filter]="selectedFilter()"-->
+            <!--            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">-->
+            <!--          </mgl-layer>-->
 
-          <!-- Mosaic squares source -->
+            <!-- Mosaic squares source -->
           <mgl-geojson-source
             id="mosaic"
             [data]="derivedPoints()">
