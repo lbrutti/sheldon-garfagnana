@@ -15,7 +15,10 @@ import {DecimalPipe} from '@angular/common';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Point, Polygon} from 'geojson';
-import type {Map, MapLayerMouseEvent, StyleSpecification} from 'maplibre-gl';
+//aliased to avoid type collision with ES Map constructor
+import type {Map as MglMap} from 'maplibre-gl';
+
+import type {MapLayerMouseEvent, StyleSpecification} from 'maplibre-gl';
 import {MercatorCoordinate} from 'maplibre-gl';
 
 import CardComponent from '../card/card.component';
@@ -27,7 +30,9 @@ import {EventData} from '@angular/cdk/testing';
 
 const DLON = 0.006; // grid longitude step (degrees)
 const DLAT = 0.004; // grid latitude step (degrees)
-const CELL_OVERLAP = 1.06; // scale factor applied to each cell to prevent sub-pixel gaps
+// Each rect fills CELL_FILL of its grid cell — the remainder (1−CELL_FILL)/2 per side
+// becomes visible "grout" between mosaic tiles.
+const CELL_FILL = 0.75;
 
 const DEFAULT_COLOR_STOPS: ColorStop[] = [
   {value: 0, color: '#1a3a6b'},
@@ -88,10 +93,14 @@ function interpolateColor(value: number, stops: ColorStop[]): string {
 
 function reduceValues(values: number[], mode: AuxReduceOption['reduceBy']): number {
   switch (mode) {
-    case 'sum': return values.reduce((a, b) => a + b, 0);
-    case 'max': return values.length ? Math.max(...values) : 0;
-    case 'count': return values.length;
-    case 'countunique': return new Set(values).size;
+    case 'sum':
+      return values.reduce((a, b) => a + b, 0);
+    case 'max':
+      return values.length ? Math.max(...values) : 0;
+    case 'count':
+      return values.length;
+    case 'countunique':
+      return new Set(values).size;
   }
 }
 
@@ -102,7 +111,7 @@ function polygonBbox(feature: Feature<Polygon>): [number, number, number, number
   return [Math.min(...lngs), Math.min(...lats), Math.max(...lngs), Math.max(...lats)];
 }
 
-// ── SVG rect record ───────────────────────────────────────────────────────────
+// ── SVG data model ────────────────────────────────────────────────────────────
 
 interface SvgRect {
   id: string;
@@ -111,6 +120,12 @@ interface SvgRect {
   mw: number; // width in Mercator coords
   mh: number; // height in Mercator coords
   fill: string;
+}
+
+interface SvgGroup {
+  comune: string;
+  unione: string;
+  rects: SvgRect[];
 }
 
 // ── Component ─────────────────────────────────────────────────────────────────
@@ -151,12 +166,12 @@ export default class SheldonMosaicMapSvgComponent implements OnInit {
   readonly emptyCollection = EMPTY_COLLECTION;
   mapReady = signal(false);
   activeAuxReduce = signal<AuxReduceOption | null>(null);
-  svgRects = signal<SvgRect[]>([]);
+  svgGroups = signal<SvgGroup[]>([]);
   hoveredFeature = signal<Feature<Polygon> | null>(null);
-  tooltipPos = signal<{x: number; y: number} | null>(null);
+  tooltipPos = signal<{ x: number; y: number } | null>(null);
 
   private selectedComune = signal<string | null>(null);
-  private mapInstance: Map | null = null;
+  private mapInstance: MglMap | null = null;
   private hoveredFeatureId: string | number | null = null;
 
   // ── Computed ─────────────────────────────────────────────────────────────────
@@ -245,12 +260,12 @@ export default class SheldonMosaicMapSvgComponent implements OnInit {
   });
 
   constructor(private zone: NgZone) {
-    // Recompute SVG rects whenever point data or colour stops change.
+    // Recompute SVG groups whenever point data, colour stops, or key changes.
     effect(() => {
       const pts = this.derivedPoints();
       const stops = this.colorSetting();
-      const rects = untracked(() => this.buildRects(pts.features as Feature<Point>[], stops));
-      this.svgRects.set(rects);
+      const key = this.municipalityKey();
+      this.svgGroups.set(this.buildGroups(pts.features as Feature<Point>[], stops, key));
     });
 
     effect(() => {
@@ -271,7 +286,7 @@ export default class SheldonMosaicMapSvgComponent implements OnInit {
 
   // ── Map lifecycle ────────────────────────────────────────────────────────────
 
-  onMapLoad(map: Map): void {
+  onMapLoad(map: MglMap): void {
     this.mapInstance = map;
     this.mapReady.set(true);
     // Update SVG transform on every frame — runs outside Angular zone (direct DOM write).
@@ -280,16 +295,27 @@ export default class SheldonMosaicMapSvgComponent implements OnInit {
 
   // ── SVG helpers ──────────────────────────────────────────────────────────────
 
-  private buildRects(features: Feature<Point>[], stops: ColorStop[]): SvgRect[] {
-    return features.map((f) => {
+  // Groups points by comune, computing padded Mercator rects for each.
+  private buildGroups(features: Feature<Point>[], stops: ColorStop[], municipalityKey: string): SvgGroup[] {
+    const map = new Map<string, SvgGroup>();
+
+    for (const f of features) {
       const [lng, lat] = f.geometry.coordinates;
       const mc = MercatorCoordinate.fromLngLat({lng, lat});
-      // Cell size in Mercator units.  x is linear; y is latitude-dependent.
-      const mw = (DLON / 360) * CELL_OVERLAP;
-      const mh = (DLAT / (360 * Math.cos((lat * Math.PI) / 180))) * CELL_OVERLAP;
+      // Cell size in Mercator units (x linear, y latitude-dependent), shrunk by CELL_FILL
+      // so each rect is visually inset from its grid boundary.
+      const mw = (DLON / 360) * CELL_FILL;
+      const mh = (DLAT / (360 * Math.cos((lat * Math.PI) / 180))) * CELL_FILL;
       const fill = interpolateColor((f.properties as any)['_colorValue'] ?? 0, stops);
-      return {id: `${lng},${lat}`, mx: mc.x - mw / 2, my: mc.y - mh / 2, mw, mh, fill};
-    });
+
+      const comune = String(f.properties?.[municipalityKey] ?? '');
+      const unione = String(f.properties?.['unione'] ?? '');
+
+      if (!map.has(comune)) map.set(comune, {comune, unione, rects: []});
+      map.get(comune)!.rects.push({id: `${lng},${lat}`, mx: mc.x - mw / 2, my: mc.y - mh / 2, mw, mh, fill});
+    }
+
+    return Array.from(map.values());
   }
 
   // Maps Mercator space → screen pixels via an affine matrix and writes it onto

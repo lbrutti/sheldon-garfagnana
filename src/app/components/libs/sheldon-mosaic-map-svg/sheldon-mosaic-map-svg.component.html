@@ -57,14 +57,20 @@
            to map Mercator → screen pixels.  shape-rendering crispEdges removes
            anti-aliased fringing so adjacent rects share clean edges. -->
       <svg class="mosaic-overlay" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer <g> receives the Mercator→screen matrix on every map frame. -->
         <g #svgGroup shape-rendering="crispEdges">
-          @for (r of svgRects(); track r.id) {
-            <rect
-              [attr.x]="r.mx"
-              [attr.y]="r.my"
-              [attr.width]="r.mw"
-              [attr.height]="r.mh"
-              [attr.fill]="r.fill"/>
+          <!-- One <g> per comune — carries data attributes for DOM queries / interactions. -->
+          @for (group of svgGroups(); track group.comune) {
+            <g [attr.data-comune]="group.comune" [attr.data-unione]="group.unione">
+              @for (r of group.rects; track r.id) {
+                <rect
+                  [attr.x]="r.mx"
+                  [attr.y]="r.my"
+                  [attr.width]="r.mw"
+                  [attr.height]="r.mh"
+                  [attr.fill]="r.fill"/>
+              }
+            </g>
           }
         </g>
       </svg>
