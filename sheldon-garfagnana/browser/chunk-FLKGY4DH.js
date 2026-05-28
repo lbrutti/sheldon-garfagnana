@@ -1,0 +1,1 @@
+import{Bb as o,Cb as n,_b as i,eb as s}from"./chunk-3VMBRLUZ.js";var t=class a{static \u0275fac=function(e){return new(e||a)};static \u0275cmp=s({type:a,selectors:[["sheldon-public-stories"]],decls:2,vars:0,template:function(e,m){e&1&&(o(0,"p"),i(1,"data-stories works!"),n())},encapsulation:2})};export{t as default};

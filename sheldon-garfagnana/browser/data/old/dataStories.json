@@ -1,0 +1,789 @@
+[
+  {
+    "id": 1,
+    "title": "Garfagnana Verde: la sfida della riforestazione",
+    "body": "I versanti dell'Appennino tosco-emiliano stanno tornando a vivere. Attraverso una serie di interventi coordinati di riforestazione e recupero ambientale, la Garfagnana punta a diventare un modello nazionale di resilienza ecologica. Dal rimboschimento con specie autoctone alla creazione di corridoi ecologici, questi progetti ridisegnano il rapporto tra comunità e territorio.",
+    "projects": [
+      7,
+      53,
+      68,
+      92,
+      99,
+      119,
+      126,
+      128,
+      132,
+      141,
+      153,
+      161,
+      190
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Acqua pulita per tutti: il piano di depurazione della vallata",
+    "body": "La qualità delle acque del Serchio e dei suoi affluenti è una priorità per le comunità garfagnine. Una rete di interventi coordinati sui depuratori comunali garantirà standard europei di trattamento delle acque reflue, proteggendo gli ecosistemi fluviali e la salute dei cittadini. Un investimento che guarda al futuro del territorio.",
+    "projects": [
+      5,
+      30,
+      36,
+      51,
+      65,
+      87,
+      156,
+      163,
+      192,
+      198
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Energia dal sole: la transizione fotovoltaica dei comuni",
+    "body": "I tetti degli edifici pubblici della Garfagnana diventano centrali elettriche. Scuole, municipi e palestre si trasformano in produttori di energia pulita grazie a una campagna coordinata di installazione di impianti fotovoltaici. Meno bollette, meno emissioni, più risorse per i servizi ai cittadini.",
+    "projects": [
+      15,
+      20,
+      41,
+      52,
+      57,
+      69,
+      101,
+      110,
+      131,
+      162,
+      165,
+      186
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Rifiuti zero: la rivoluzione della raccolta differenziata",
+    "body": "La Garfagnana accelera verso un modello di economia circolare. Nuove isole ecologiche intelligenti, campagne di sensibilizzazione capillari e sistemi di compostaggio collettivo stanno trasformando le abitudini dei cittadini. I dati mostrano un aumento progressivo della percentuale di raccolta differenziata in tutti i comuni coinvolti.",
+    "projects": [
+      4,
+      35,
+      81,
+      87,
+      156,
+      163,
+      192,
+      198
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Parchi fluviali: il Serchio come risorsa condivisa",
+    "body": "Il fiume Serchio non è solo una via d'acqua: è l'asse verde attorno a cui si organizza la vita della Garfagnana. Una serie di parchi fluviali lungo le sue sponde crea un sistema continuo di aree naturali fruibili, con percorsi naturalistici, aree didattiche e punti di osservazione della fauna selvatica.",
+    "projects": [
+      11,
+      33,
+      70,
+      98,
+      106,
+      116,
+      150,
+      155
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Terre contaminate, terre ritrovate: le bonifiche in corso",
+    "body": "Alcune aree della Garfagnana portano ancora i segni di attività industriali del passato. I progetti di bonifica in corso restituiscono questi spazi alla comunità, trasformando aree degradate in terreni sicuri pronti per nuovi usi: parchi, orti sociali, spazi di aggregazione. Una riparazione ambientale che è anche riparazione sociale.",
+    "projects": [
+      13,
+      28,
+      38,
+      86,
+      102,
+      113,
+      140
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Aria che si respira: il monitoraggio ambientale in tempo reale",
+    "body": "Sapere cosa si respira è un diritto dei cittadini. Una rete di sensori distribuiti sul territorio garfagnino monitora in tempo reale la qualità dell'aria, trasmettendo dati su una piattaforma pubblica accessibile a tutti. Un sistema di trasparenza ambientale che rafforza la fiducia tra amministrazioni e comunità.",
+    "projects": [
+      42,
+      54,
+      111,
+      122,
+      142,
+      158,
+      167
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Orti sociali: coltivare comunità",
+    "body": "Un appezzamento di terra, semi, attrezzi e vicini di parcella: gli orti sociali comunali della Garfagnana sono molto più che spazi di produzione agricola. Sono luoghi di incontro intergenerazionale, di trasmissione delle tradizioni contadine e di sperimentazione di pratiche agricole sostenibili. Ogni comune ha il suo, ognuno con la sua storia.",
+    "projects": [
+      89,
+      104,
+      119,
+      126,
+      141,
+      153,
+      161
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Efficienza energetica: il grande cantiere degli edifici pubblici",
+    "body": "Cappotti termici, serramenti a risparmio energetico, pompe di calore: gli edifici pubblici della Garfagnana sono al centro di un piano straordinario di riqualificazione. I consumi si abbassano, il comfort migliora, le emissioni calano. Un investimento che si ripaga nel tempo e che dà l'esempio ai privati.",
+    "projects": [
+      20,
+      41,
+      52,
+      57,
+      69,
+      101,
+      110,
+      131,
+      162,
+      165,
+      186
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Corridoi ecologici: ricucire il paesaggio frammentato",
+    "body": "La frammentazione degli habitat è una delle principali minacce alla biodiversità montana. I corridoi ecologici in via di realizzazione nella Garfagnana connettono boschi, zone umide e praterie alpine, permettendo agli animali selvatici di spostarsi liberamente. Un progetto silenzioso ma fondamentale per la salute dell'ecosistema appenninico.",
+    "projects": [
+      36,
+      65,
+      92,
+      128,
+      132,
+      150,
+      190
+    ],
+    "categories": [
+      3
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Pedali e passi: la rete ciclabile e pedonale della Garfagnana",
+    "body": "Un territorio di montagna che punta sulla mobilità dolce. La pista ciclabile di fondovalle si allunga, i sentieri escursionistici vengono recuperati, i marciapiedi si allargano. La Garfagnana costruisce una rete di percorsi sicuri per chi vuole muoversi a piedi o in bicicletta, tra borghi, natura e storia.",
+    "projects": [
+      2,
+      14,
+      27,
+      31,
+      73,
+      83,
+      94,
+      107,
+      120,
+      135,
+      171,
+      182,
+      193,
+      194
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Bus elettrici e nuove linee: la rivoluzione del trasporto pubblico",
+    "body": "In un territorio dove le distanze contano e le auto private dominano, il trasporto pubblico locale rinasce. Nuove linee, orari potenziati e minibus elettrici silenziosi collegano i comuni della valle. Per i giovani senza patente, per gli anziani senza auto, per chi sceglie di non inquinare: il bus torna a essere un'opzione.",
+    "projects": [
+      12,
+      22,
+      34,
+      46,
+      85,
+      108,
+      109,
+      129,
+      148,
+      159,
+      187
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 13,
+    "title": "ZTL e Zone 30: i centri storici riprendono fiato",
+    "body": "Meno auto, più vita. Le zone a traffico limitato e le aree 30 km/h stanno trasformando i centri storici dei borghi garfagnini in luoghi più sicuri, silenziosi e vivibili. I bambini tornano a giocare per strada, i bar aprono i dehors, i pedoni camminano senza paura. Una scelta coraggiosa che sta dando i suoi frutti.",
+    "projects": [
+      48,
+      66,
+      118,
+      146,
+      147,
+      152,
+      172,
+      185,
+      200
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 14,
+    "title": "Parcheggi intelligenti: risolvere il nodo della sosta",
+    "body": "Nei centri urbani della Garfagnana la sosta è un problema antico. I nuovi parcheggi multipiano in costruzione aumentano i posti disponibili senza consumare suolo, grazie a strutture compatte e sistemi di indicazione in tempo reale. Un tassello necessario per accompagnare la trasformazione dei centri storici in zone pedonali.",
+    "projects": [
+      39,
+      44,
+      61,
+      63,
+      64,
+      77,
+      154,
+      181,
+      196
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 15,
+    "title": "Strade sicure: il grande piano di manutenzione",
+    "body": "Buche, dissesti, segnaletica sbiadita: la manutenzione delle strade è la prima voce nelle segnalazioni dei cittadini. Un piano straordinario di interventi sistematici sulle strade comunali restituisce sicurezza agli automobilisti, ai ciclisti e ai pedoni. Piccoli interventi diffusi che fanno la differenza nella vita quotidiana.",
+    "projects": [
+      67,
+      91,
+      93,
+      97,
+      145,
+      166,
+      168,
+      183
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 16,
+    "title": "Mobilità elettrica: colonnine e incentivi per il futuro",
+    "body": "La transizione alla mobilità elettrica passa anche per i piccoli comuni. Le colonnine di ricarica si moltiplicano nei parcheggi pubblici, i car sharing elettrici partono dai centri maggiori, gli incentivi comunali sostengono la sostituzione dei vecchi veicoli. La Garfagnana non resta indietro nella sfida della mobilità sostenibile.",
+    "projects": [
+      9,
+      49,
+      80,
+      151,
+      159,
+      172,
+      185,
+      194
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 17,
+    "title": "Ponti che uniscono: nuovi attraversamenti sul Serchio",
+    "body": "Il Serchio divide e unisce allo stesso tempo. I nuovi ponti pedonali e ciclabili in costruzione accorciano le distanze tra le sponde, riducono i percorsi in auto e creano connessioni dirette tra borghi fino ad ora separati dall'acqua. Opere di ingegneria leggera che cambiano la geografia quotidiana degli abitanti.",
+    "projects": [
+      34,
+      46,
+      85,
+      108,
+      123,
+      129,
+      182
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 18,
+    "title": "Sentieri ritrovati: la rete escursionistica si rinnova",
+    "body": "I sentieri della Garfagnana sono un patrimonio immenso, spesso dimenticato. Il programma di recupero e valorizzazione della rete sentieristica restituisce alla comunità e ai visitatori centinaia di chilometri di percorsi tra boschi, borghi e creste appenniniche. Segnaletica nuova, app mobile, aree di sosta: camminare non è mai stato così semplice.",
+    "projects": [
+      2,
+      107,
+      120,
+      148,
+      193,
+      194
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 19,
+    "title": "Accessibilità per tutti: abbattere le barriere architettoniche",
+    "body": "Ogni marciapiede sconnesso, ogni gradino senza rampa, ogni attraversamento senza segnale acustico è un ostacolo per qualcuno. I progetti di abbattimento delle barriere architettoniche nei comuni garfagnini costruiscono spazi urbani veramente inclusivi, dove anziani, persone con disabilità e genitori con passeggino possono muoversi in piena autonomia.",
+    "projects": [
+      14,
+      27,
+      31,
+      73,
+      83,
+      94,
+      120,
+      135,
+      171
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 20,
+    "title": "Intermodalità: un territorio connesso dal primo all'ultimo miglio",
+    "body": "Il viaggio perfetto inizia a casa e finisce a destinazione senza interruzioni. Gli hub intermodali in via di realizzazione nella Garfagnana integrano autobus, biciclette, car sharing e percorsi pedonali in un sistema fluido, con informazioni in tempo reale e bigliettazione integrata. La mobilità del futuro si sperimenta già oggi.",
+    "projects": [
+      63,
+      109,
+      129,
+      147,
+      159,
+      187,
+      196
+    ],
+    "categories": [
+      2
+    ]
+  },
+  {
+    "id": 21,
+    "title": "Pietre vive: il restauro dei castelli della Garfagnana",
+    "body": "Torri merlate, fossati e sale affrescate: i castelli della Garfagnana custodiscono secoli di storia. I cantieri di restauro in corso restituiscono questi edifici alla loro bellezza originaria e li aprono al pubblico con percorsi museali, eventi culturali e residenze d'artista. Il patrimonio medievale diventa motore di sviluppo turistico e identità territoriale.",
+    "projects": [
+      18,
+      26,
+      32,
+      71,
+      72,
+      78,
+      79,
+      125,
+      139,
+      143,
+      149,
+      177,
+      188,
+      189,
+      195,
+      199
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 22,
+    "title": "Chiese e affreschi: salvare l'arte sacra del territorio",
+    "body": "Nelle navate delle chiese romaniche della Garfagnana si nascondono capolavori sconosciuti: affreschi del Quattrocento, polittici lignei, sculture in terracotta invetriata. I restauri in corso salvano questo patrimonio dalla lenta erosione del tempo e lo rendono accessibile a fedeli, turisti e studiosi.",
+    "projects": [
+      17,
+      62,
+      74,
+      112,
+      127,
+      130
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 23,
+    "title": "Borghi ritrovati: rivitalizzare i centri storici abbandonati",
+    "body": "Lo spopolamento ha svuotato molti borghi della Garfagnana, lasciando dietro di sé case chiuse e strade silenziose. I progetti di recupero e rivitalizzazione attirano nuovi abitanti, artisti e imprenditori, trasformando il declino in opportunità. Ogni borgo recuperato è una vittoria contro l'abbandono e una scommessa sul futuro.",
+    "projects": [
+      3,
+      25,
+      84,
+      103,
+      115,
+      178
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 24,
+    "title": "Memoria digitale: gli archivi storici nell'era dell'accesso aperto",
+    "body": "Migliaia di documenti, mappe, fotografie e registri storici dormono negli archivi comunali della Garfagnana. I progetti di digitalizzazione li portano online, rendendoli accessibili a tutti gratuitamente. Genealogisti, ricercatori, studenti e semplici curiosi possono ora esplorare secoli di storia locale dal proprio schermo.",
+    "projects": [
+      8,
+      50,
+      58,
+      75,
+      95,
+      96,
+      133,
+      136,
+      157
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 25,
+    "title": "Musei del territorio: raccontare la Garfagnana con nuovi linguaggi",
+    "body": "Non solo vetrine con oggetti antichi: i nuovi musei locali della Garfagnana sono esperienze immersive che raccontano la vita contadina, l'arte della lavorazione del marmo, le tradizioni gastronomiche e le storie di emigrazione. Allestimenti multimediali e guide digitali rendono la visita coinvolgente per ogni fascia d'età.",
+    "projects": [
+      6,
+      23,
+      96,
+      121,
+      136,
+      157,
+      177,
+      189,
+      191,
+      199
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 26,
+    "title": "Percorsi culturali: camminare nella storia",
+    "body": "Un cammino che attraversa borghi medievali, pievi romaniche, mulini abbandonati e panorami mozzafiato: i percorsi storico-culturali della Garfagnana connettono i siti del patrimonio in itinerari tematici fruibili a piedi o in bicicletta. Pannelli illustrativi, QR code e app guidano il visitatore in un viaggio nel tempo.",
+    "projects": [
+      16,
+      32,
+      50,
+      58,
+      75,
+      82,
+      95,
+      103,
+      115,
+      125,
+      133,
+      139,
+      149
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 27,
+    "title": "Festival e tradizioni: la cultura viva della montagna",
+    "body": "La Garfagnana non è solo paesaggio: è un sistema vitale di feste, tradizioni e saperi tramandati di generazione in generazione. I festival locali celebrano la musica popolare, la gastronomia d'eccellenza e le rievocazioni storiche, attirando visitatori e rafforzando l'identità delle comunità. Cultura come coesione sociale.",
+    "projects": [
+      1,
+      79,
+      143,
+      177,
+      188,
+      195
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 28,
+    "title": "Torri civiche: simboli di comunità da recuperare",
+    "body": "La torre campanaria, il palazzo comunale, la loggia del mercato: ogni borgo garfagnino ha i suoi simboli architettonici, spesso in stato di degrado. I restauri delle torri civiche e degli edifici storici centrali restituiscono bellezza agli spazi pubblici e rafforzano il senso di appartenenza dei cittadini.",
+    "projects": [
+      71,
+      72,
+      78,
+      125,
+      149,
+      188,
+      199
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 29,
+    "title": "Centri storici rinati: la sfida della valorizzazione integrata",
+    "body": "Riqualificare un centro storico significa molto più che ristrutturare le facciate. I piani di valorizzazione integrata in corso nella Garfagnana combinano restauro architettonico, nuova pavimentazione, illuminazione artistica, commercio di vicinato e animazione culturale. Il risultato è un centro storico che torna a essere il cuore pulsante della comunità.",
+    "projects": [
+      26,
+      62,
+      71,
+      78,
+      82,
+      112,
+      121,
+      127,
+      130,
+      191
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 30,
+    "title": "Mulini e opifici: l'archeologia industriale della Garfagnana",
+    "body": "Lungo i torrenti della Garfagnana sopravvivono i resti di un'economia pre-industriale fatta di mulini da grano, frantoi, segherie e cartiere. Il recupero di questi opifici storici li trasforma in centri didattici e culturali dove comprendere come si viveva e lavorava prima della modernità.",
+    "projects": [
+      23,
+      58,
+      75,
+      103,
+      115,
+      136,
+      178
+    ],
+    "categories": [
+      4
+    ]
+  },
+  {
+    "id": 31,
+    "title": "Anziani al centro: i servizi per una comunità che invecchia",
+    "body": "La Garfagnana ha una delle popolazioni più anziane della Toscana. I progetti in corso rafforzano la rete di servizi per gli over 65: case di riposo rinnovate, assistenza domiciliare potenziata, centri diurni e trasporti dedicati. Una risposta concreta alle sfide demografiche che ridisegnano il territorio.",
+    "projects": [
+      10,
+      29,
+      37,
+      43,
+      55,
+      56,
+      60,
+      104,
+      117,
+      137,
+      160,
+      164,
+      169,
+      174,
+      176
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 32,
+    "title": "Prima infanzia: investire sui più piccoli",
+    "body": "Ogni bambino merita il miglior inizio possibile. I nuovi asili nido e i servizi per la prima infanzia in costruzione nella Garfagnana garantiscono accesso all'educazione precoce anche nei comuni più piccoli, sostengono le famiglie che lavorano e contribuiscono a rendere il territorio più attrattivo per le giovani coppie.",
+    "projects": [
+      45,
+      76,
+      88,
+      100,
+      124,
+      138,
+      144,
+      169,
+      173,
+      184
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 33,
+    "title": "Scuole del futuro: ambienti educativi per il XXI secolo",
+    "body": "Palestre nuove, mense riqualificate, aule luminose con attrezzature digitali: le scuole della Garfagnana si trasformano in ambienti educativi all'altezza del terzo millennio. Investire nell'edilizia scolastica significa investire nel futuro dei bambini e delle famiglie che scelgono di restare nella valle.",
+    "projects": [
+      19,
+      40,
+      47,
+      59,
+      90,
+      105,
+      134,
+      138,
+      173,
+      180,
+      197
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 34,
+    "title": "Biblioteche vive: presidi culturali nei borghi",
+    "body": "La biblioteca non è solo un luogo dove prendere libri in prestito. È uno spazio di incontro, formazione, inclusione digitale e promozione della lettura. Le biblioteche comunali della Garfagnana si rinnovano con nuovi arredi, dotazioni digitali, sale studio e programmi di animazione per tutte le età.",
+    "projects": [
+      21,
+      24,
+      55,
+      170,
+      179
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 35,
+    "title": "Sport per tutti: infrastrutture sportive di qualità",
+    "body": "Lo sport è benessere, integrazione e coesione sociale. Le nuove palestre e i campi sportivi in costruzione nella Garfagnana rendono accessibili a tutti le attività fisiche, dalle discipline scolastiche allo sport amatoriale delle associazioni locali. Strutture moderne che diventano punti di riferimento per l'intera comunità.",
+    "projects": [
+      40,
+      100,
+      134,
+      144,
+      173,
+      180,
+      184
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 36,
+    "title": "Welfare di comunità: reti di supporto per le famiglie fragili",
+    "body": "Povertà educativa, isolamento degli anziani, disagio giovanile: i servizi sociali della Garfagnana affrontano sfide complesse con risorse limitate. I piani di zona in corso costruiscono reti di welfare comunitario che coinvolgono Comuni, terzo settore e cittadini attivi in un sistema di supporto capillare e solidale.",
+    "projects": [
+      10,
+      19,
+      43,
+      56,
+      60,
+      104,
+      124,
+      160,
+      164,
+      176
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 37,
+    "title": "Giovani protagonisti: spazi e opportunità per le nuove generazioni",
+    "body": "I giovani della Garfagnana non vogliono solo restare: vogliono avere motivi per farlo. I centri di aggregazione giovanile, i programmi di formazione e i progetti culturali dedicati alle nuove generazioni costruiscono opportunità concrete, spazi di espressione e reti di relazioni che rendono il territorio più vivibile per chi ha meno di trent'anni.",
+    "projects": [
+      76,
+      88,
+      105,
+      117,
+      138,
+      144,
+      170,
+      179,
+      197
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 38,
+    "title": "Mense scolastiche e km zero: educazione alimentare a tavola",
+    "body": "Cosa mangiano i bambini a scuola dice molto di una comunità. Le mense scolastiche rinnovate della Garfagnana adottano menù a km zero, con prodotti dei coltivatori locali, e menù pensati da nutrizionisti. Un progetto che educa al gusto, sostiene l'agricoltura locale e riduce l'impatto ambientale della ristorazione pubblica.",
+    "projects": [
+      59,
+      90,
+      105,
+      134,
+      160,
+      169,
+      174,
+      180
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 39,
+    "title": "Sportelli al cittadino: la PA sempre più vicina",
+    "body": "Fare una domanda all'ufficio anagrafe, rinnovare un documento, accedere a un contributo: per molti cittadini garfagnini questi atti quotidiani richiedono spostamenti lunghi e code interminabili. I nuovi sportelli informativi multicanale portano i servizi pubblici più vicini, con accesso fisico, telefonico e digitale integrati.",
+    "projects": [
+      47,
+      55,
+      114,
+      124,
+      137,
+      175,
+      197
+    ],
+    "categories": [
+      1
+    ]
+  },
+  {
+    "id": 40,
+    "title": "Una Garfagnana per tutti: progettare l'inclusione",
+    "body": "Un territorio è davvero inclusivo quando nessuno si sente escluso. I progetti in corso nella Garfagnana affrontano l'inclusione su più fronti: servizi sociali per le famiglie in difficoltà, spazi pubblici accessibili a persone con disabilità, attività culturali aperte a tutti, trasporti per chi non ha l'auto. Una visione integrata di comunità che non lascia indietro nessuno.",
+    "projects": [
+      10,
+      19,
+      21,
+      24,
+      29,
+      37,
+      43,
+      45,
+      47,
+      55,
+      56,
+      59,
+      60,
+      76,
+      88,
+      100,
+      104,
+      105,
+      114,
+      117,
+      124,
+      134,
+      137,
+      138,
+      144,
+      160,
+      164,
+      169,
+      170,
+      173,
+      174,
+      175,
+      176,
+      179,
+      180,
+      184,
+      197
+    ],
+    "categories": [
+      1
+    ]
+  }
+]

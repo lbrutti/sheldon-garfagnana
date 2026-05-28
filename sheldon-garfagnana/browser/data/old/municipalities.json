@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Bagni di Lucca",
+    "lat": 44.01,
+    "lng": 10.59
+  },
+  {
+    "id": 2,
+    "name": "Barga",
+    "lat": 44.0731,
+    "lng": 10.4853
+  },
+  {
+    "id": 3,
+    "name": "Borgo a Mozzano",
+    "lat": 43.9667,
+    "lng": 10.55
+  },
+  {
+    "id": 4,
+    "name": "Camporgiano",
+    "lat": 44.1833,
+    "lng": 10.3333
+  },
+  {
+    "id": 5,
+    "name": "Careggine",
+    "lat": 44.165,
+    "lng": 10.315
+  },
+  {
+    "id": 6,
+    "name": "Castelnuovo di Garfagnana",
+    "lat": 44.1081,
+    "lng": 10.4096
+  },
+  {
+    "id": 7,
+    "name": "Castiglione di Garfagnana",
+    "lat": 44.15,
+    "lng": 10.4
+  },
+  {
+    "id": 8,
+    "name": "Coreglia Antelminelli",
+    "lat": 44.0667,
+    "lng": 10.5333
+  },
+  {
+    "id": 9,
+    "name": "Fosciandora",
+    "lat": 44.1167,
+    "lng": 10.45
+  },
+  {
+    "id": 10,
+    "name": "Gallicano",
+    "lat": 44.0567,
+    "lng": 10.4433
+  },
+  {
+    "id": 11,
+    "name": "Giuncugnano",
+    "lat": 44.2333,
+    "lng": 10.2833
+  },
+  {
+    "id": 12,
+    "name": "Minucciano",
+    "lat": 44.2167,
+    "lng": 10.2167
+  },
+  {
+    "id": 13,
+    "name": "Molazzana",
+    "lat": 44.0833,
+    "lng": 10.3667
+  },
+  {
+    "id": 14,
+    "name": "Piazza al Serchio",
+    "lat": 44.1833,
+    "lng": 10.2667
+  },
+  {
+    "id": 15,
+    "name": "Pieve Fosciana",
+    "lat": 44.1333,
+    "lng": 10.4167
+  },
+  {
+    "id": 16,
+    "name": "San Romano in Garfagnana",
+    "lat": 44.1667,
+    "lng": 10.3667
+  },
+  {
+    "id": 17,
+    "name": "Sillano Giuncugnano",
+    "lat": 44.2167,
+    "lng": 10.2833
+  },
+  {
+    "id": 18,
+    "name": "Vagli Sotto",
+    "lat": 44.1667,
+    "lng": 10.2833
+  },
+  {
+    "id": 19,
+    "name": "Vergemoli",
+    "lat": 44.0833,
+    "lng": 10.3833
+  },
+  {
+    "id": 20,
+    "name": "Villa Collemandina",
+    "lat": 44.1833,
+    "lng": 10.3833
+  }
+]

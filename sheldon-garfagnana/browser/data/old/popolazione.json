@@ -1,0 +1,2452 @@
+[
+  {
+    "pro_com_t": 45001,
+    "nome_comune": "Aulla",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 10855,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45001,
+    "nome_comune": "Aulla",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 10739,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45001,
+    "nome_comune": "Aulla",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 10781,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45001,
+    "nome_comune": "Aulla",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 10719,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45001,
+    "nome_comune": "Aulla",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 10690,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45001,
+    "nome_comune": "Aulla",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 10671,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45001,
+    "nome_comune": "Aulla",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 10838,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45002,
+    "nome_comune": "Bagnone",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1808,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45002,
+    "nome_comune": "Bagnone",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1786,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45002,
+    "nome_comune": "Bagnone",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1735,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45002,
+    "nome_comune": "Bagnone",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1722,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45002,
+    "nome_comune": "Bagnone",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1677,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45002,
+    "nome_comune": "Bagnone",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1658,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45002,
+    "nome_comune": "Bagnone",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1676,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45004,
+    "nome_comune": "Casola in Lunigiana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 999,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45004,
+    "nome_comune": "Casola in Lunigiana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 990,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45004,
+    "nome_comune": "Casola in Lunigiana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 988,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45004,
+    "nome_comune": "Casola in Lunigiana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 969,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45004,
+    "nome_comune": "Casola in Lunigiana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 947,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45004,
+    "nome_comune": "Casola in Lunigiana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 931,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45004,
+    "nome_comune": "Casola in Lunigiana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 912,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45005,
+    "nome_comune": "Comano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 695,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45005,
+    "nome_comune": "Comano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 689,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45005,
+    "nome_comune": "Comano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 672,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45005,
+    "nome_comune": "Comano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 662,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45005,
+    "nome_comune": "Comano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 667,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45005,
+    "nome_comune": "Comano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 666,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45005,
+    "nome_comune": "Comano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 631,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45006,
+    "nome_comune": "Filattiera",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 2243,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45006,
+    "nome_comune": "Filattiera",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 2239,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45006,
+    "nome_comune": "Filattiera",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 2209,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45006,
+    "nome_comune": "Filattiera",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 2210,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45006,
+    "nome_comune": "Filattiera",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 2190,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45006,
+    "nome_comune": "Filattiera",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 2164,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45006,
+    "nome_comune": "Filattiera",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 2165,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45007,
+    "nome_comune": "Fivizzano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 7622,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45007,
+    "nome_comune": "Fivizzano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 7502,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45007,
+    "nome_comune": "Fivizzano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 7300,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45007,
+    "nome_comune": "Fivizzano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 7190,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45007,
+    "nome_comune": "Fivizzano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 7060,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45007,
+    "nome_comune": "Fivizzano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 7034,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45007,
+    "nome_comune": "Fivizzano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 6907,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45008,
+    "nome_comune": "Fosdinovo",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 4629,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45008,
+    "nome_comune": "Fosdinovo",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 4668,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45008,
+    "nome_comune": "Fosdinovo",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 4629,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45008,
+    "nome_comune": "Fosdinovo",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 4597,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45008,
+    "nome_comune": "Fosdinovo",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 4586,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45008,
+    "nome_comune": "Fosdinovo",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 4601,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45008,
+    "nome_comune": "Fosdinovo",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 4592,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45009,
+    "nome_comune": "Licciana Nardi",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 4847,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45009,
+    "nome_comune": "Licciana Nardi",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 4838,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45009,
+    "nome_comune": "Licciana Nardi",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 4804,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45009,
+    "nome_comune": "Licciana Nardi",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 4739,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45009,
+    "nome_comune": "Licciana Nardi",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 4722,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45009,
+    "nome_comune": "Licciana Nardi",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 4729,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45009,
+    "nome_comune": "Licciana Nardi",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 4728,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45012,
+    "nome_comune": "Mulazzo",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 2371,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45012,
+    "nome_comune": "Mulazzo",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 2309,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45012,
+    "nome_comune": "Mulazzo",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 2293,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45012,
+    "nome_comune": "Mulazzo",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 2288,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45012,
+    "nome_comune": "Mulazzo",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 2289,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45012,
+    "nome_comune": "Mulazzo",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 2293,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45012,
+    "nome_comune": "Mulazzo",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 2309,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45013,
+    "nome_comune": "Podenzana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 2115,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45013,
+    "nome_comune": "Podenzana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 2123,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45013,
+    "nome_comune": "Podenzana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 2106,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45013,
+    "nome_comune": "Podenzana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 2118,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45013,
+    "nome_comune": "Podenzana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 2101,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45013,
+    "nome_comune": "Podenzana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 2104,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45013,
+    "nome_comune": "Podenzana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 2100,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45015,
+    "nome_comune": "Tresana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1947,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45015,
+    "nome_comune": "Tresana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1920,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45015,
+    "nome_comune": "Tresana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1925,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45015,
+    "nome_comune": "Tresana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1952,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45015,
+    "nome_comune": "Tresana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1956,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45015,
+    "nome_comune": "Tresana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1912,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45015,
+    "nome_comune": "Tresana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1892,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45016,
+    "nome_comune": "Villafranca in Lunigiana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 4688,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45016,
+    "nome_comune": "Villafranca in Lunigiana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 4649,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45016,
+    "nome_comune": "Villafranca in Lunigiana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 4592,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45016,
+    "nome_comune": "Villafranca in Lunigiana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 4611,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45016,
+    "nome_comune": "Villafranca in Lunigiana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 4557,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45016,
+    "nome_comune": "Villafranca in Lunigiana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 4651,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45016,
+    "nome_comune": "Villafranca in Lunigiana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 4729,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45017,
+    "nome_comune": "Zeri",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1019,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45017,
+    "nome_comune": "Zeri",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1009,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45017,
+    "nome_comune": "Zeri",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 992,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45017,
+    "nome_comune": "Zeri",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 970,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45017,
+    "nome_comune": "Zeri",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 940,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45017,
+    "nome_comune": "Zeri",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 919,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 45017,
+    "nome_comune": "Zeri",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 892,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Lunigiana"
+  },
+  {
+    "pro_com_t": 46002,
+    "nome_comune": "Bagni di Lucca",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 5899,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46002,
+    "nome_comune": "Bagni di Lucca",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 5801,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46002,
+    "nome_comune": "Bagni di Lucca",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 5629,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46002,
+    "nome_comune": "Bagni di Lucca",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 5593,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46002,
+    "nome_comune": "Bagni di Lucca",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 5606,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46002,
+    "nome_comune": "Bagni di Lucca",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 5576,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46002,
+    "nome_comune": "Bagni di Lucca",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 5560,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46003,
+    "nome_comune": "Barga",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 9747,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46003,
+    "nome_comune": "Barga",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 9694,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46003,
+    "nome_comune": "Barga",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 9574,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46003,
+    "nome_comune": "Barga",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 9491,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46003,
+    "nome_comune": "Barga",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 9449,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46003,
+    "nome_comune": "Barga",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 9462,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46003,
+    "nome_comune": "Barga",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 9461,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46004,
+    "nome_comune": "Borgo a Mozzano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 7070,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46004,
+    "nome_comune": "Borgo a Mozzano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 6974,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46004,
+    "nome_comune": "Borgo a Mozzano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 6719,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46004,
+    "nome_comune": "Borgo a Mozzano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 6667,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46004,
+    "nome_comune": "Borgo a Mozzano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 6690,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46004,
+    "nome_comune": "Borgo a Mozzano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 6677,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46004,
+    "nome_comune": "Borgo a Mozzano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 6668,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46006,
+    "nome_comune": "Camporgiano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 2123,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46006,
+    "nome_comune": "Camporgiano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 2107,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46006,
+    "nome_comune": "Camporgiano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 2062,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46006,
+    "nome_comune": "Camporgiano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 2041,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46006,
+    "nome_comune": "Camporgiano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 2005,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46006,
+    "nome_comune": "Camporgiano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 2005,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46006,
+    "nome_comune": "Camporgiano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1988,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46008,
+    "nome_comune": "Careggine",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 536,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46008,
+    "nome_comune": "Careggine",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 533,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46008,
+    "nome_comune": "Careggine",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 522,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46008,
+    "nome_comune": "Careggine",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 509,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46008,
+    "nome_comune": "Careggine",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 510,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46008,
+    "nome_comune": "Careggine",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 503,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46008,
+    "nome_comune": "Careggine",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 500,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46009,
+    "nome_comune": "Castelnuovo di Garfagnana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 5867,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46009,
+    "nome_comune": "Castelnuovo di Garfagnana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 5843,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46009,
+    "nome_comune": "Castelnuovo di Garfagnana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 5685,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46009,
+    "nome_comune": "Castelnuovo di Garfagnana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 5650,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46009,
+    "nome_comune": "Castelnuovo di Garfagnana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 5646,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46009,
+    "nome_comune": "Castelnuovo di Garfagnana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 5622,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46009,
+    "nome_comune": "Castelnuovo di Garfagnana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 5653,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46010,
+    "nome_comune": "Castiglione di Garfagnana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1758,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46010,
+    "nome_comune": "Castiglione di Garfagnana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1751,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46010,
+    "nome_comune": "Castiglione di Garfagnana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1700,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46010,
+    "nome_comune": "Castiglione di Garfagnana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1707,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46010,
+    "nome_comune": "Castiglione di Garfagnana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1708,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46010,
+    "nome_comune": "Castiglione di Garfagnana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1705,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46010,
+    "nome_comune": "Castiglione di Garfagnana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1701,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46011,
+    "nome_comune": "Coreglia Antelminelli",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 5167,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46011,
+    "nome_comune": "Coreglia Antelminelli",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 5185,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46011,
+    "nome_comune": "Coreglia Antelminelli",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 5161,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46011,
+    "nome_comune": "Coreglia Antelminelli",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 5096,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46011,
+    "nome_comune": "Coreglia Antelminelli",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 5070,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46011,
+    "nome_comune": "Coreglia Antelminelli",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 5053,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46011,
+    "nome_comune": "Coreglia Antelminelli",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 5080,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46014,
+    "nome_comune": "Fosciandora",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 583,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46014,
+    "nome_comune": "Fosciandora",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 564,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46014,
+    "nome_comune": "Fosciandora",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 567,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46014,
+    "nome_comune": "Fosciandora",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 559,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46014,
+    "nome_comune": "Fosciandora",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 559,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46014,
+    "nome_comune": "Fosciandora",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 551,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46014,
+    "nome_comune": "Fosciandora",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 554,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46015,
+    "nome_comune": "Gallicano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 3702,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46015,
+    "nome_comune": "Gallicano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 3620,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46015,
+    "nome_comune": "Gallicano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 3580,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46015,
+    "nome_comune": "Gallicano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 3613,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46015,
+    "nome_comune": "Gallicano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 3630,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46015,
+    "nome_comune": "Gallicano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 3608,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46015,
+    "nome_comune": "Gallicano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 3606,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46019,
+    "nome_comune": "Minucciano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1999,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46019,
+    "nome_comune": "Minucciano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1937,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46019,
+    "nome_comune": "Minucciano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1853,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46019,
+    "nome_comune": "Minucciano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1826,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46019,
+    "nome_comune": "Minucciano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1805,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46019,
+    "nome_comune": "Minucciano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1778,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46019,
+    "nome_comune": "Minucciano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1757,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46020,
+    "nome_comune": "Molazzana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1038,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46020,
+    "nome_comune": "Molazzana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1040,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46020,
+    "nome_comune": "Molazzana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1018,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46020,
+    "nome_comune": "Molazzana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1010,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46020,
+    "nome_comune": "Molazzana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 994,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46020,
+    "nome_comune": "Molazzana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 988,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46020,
+    "nome_comune": "Molazzana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 976,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46022,
+    "nome_comune": "Pescaglia",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 3448,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46022,
+    "nome_comune": "Pescaglia",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 3389,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46022,
+    "nome_comune": "Pescaglia",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 3342,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46022,
+    "nome_comune": "Pescaglia",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 3306,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46022,
+    "nome_comune": "Pescaglia",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 3297,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46022,
+    "nome_comune": "Pescaglia",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 3282,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46022,
+    "nome_comune": "Pescaglia",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 3251,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Media Valle del Serchio"
+  },
+  {
+    "pro_com_t": 46023,
+    "nome_comune": "Piazza al Serchio",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 2278,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46023,
+    "nome_comune": "Piazza al Serchio",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 2248,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46023,
+    "nome_comune": "Piazza al Serchio",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 2178,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46023,
+    "nome_comune": "Piazza al Serchio",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 2144,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46023,
+    "nome_comune": "Piazza al Serchio",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 2106,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46023,
+    "nome_comune": "Piazza al Serchio",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 2084,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46023,
+    "nome_comune": "Piazza al Serchio",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 2056,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46025,
+    "nome_comune": "Pieve Fosciana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 2482,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46025,
+    "nome_comune": "Pieve Fosciana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 2413,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46025,
+    "nome_comune": "Pieve Fosciana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 2318,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46025,
+    "nome_comune": "Pieve Fosciana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 2263,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46025,
+    "nome_comune": "Pieve Fosciana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 2236,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46025,
+    "nome_comune": "Pieve Fosciana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 2221,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46025,
+    "nome_comune": "Pieve Fosciana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 2216,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46027,
+    "nome_comune": "San Romano in Garfagnana",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1407,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46027,
+    "nome_comune": "San Romano in Garfagnana",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1379,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46027,
+    "nome_comune": "San Romano in Garfagnana",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1368,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46027,
+    "nome_comune": "San Romano in Garfagnana",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1352,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46027,
+    "nome_comune": "San Romano in Garfagnana",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1339,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46027,
+    "nome_comune": "San Romano in Garfagnana",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1328,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46027,
+    "nome_comune": "San Romano in Garfagnana",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1309,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46035,
+    "nome_comune": "Villa Collemandina",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1295,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46035,
+    "nome_comune": "Villa Collemandina",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1262,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46035,
+    "nome_comune": "Villa Collemandina",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1241,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46035,
+    "nome_comune": "Villa Collemandina",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1215,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46035,
+    "nome_comune": "Villa Collemandina",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1202,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46035,
+    "nome_comune": "Villa Collemandina",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1170,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46035,
+    "nome_comune": "Villa Collemandina",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1168,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46036,
+    "nome_comune": "Fabbriche di Vergemoli",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 815,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46036,
+    "nome_comune": "Fabbriche di Vergemoli",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 794,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46036,
+    "nome_comune": "Fabbriche di Vergemoli",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 751,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46036,
+    "nome_comune": "Fabbriche di Vergemoli",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 715,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46036,
+    "nome_comune": "Fabbriche di Vergemoli",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 721,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46036,
+    "nome_comune": "Fabbriche di Vergemoli",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 705,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46036,
+    "nome_comune": "Fabbriche di Vergemoli",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 698,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46037,
+    "nome_comune": "Sillano Giuncugnano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1039,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46037,
+    "nome_comune": "Sillano Giuncugnano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1022,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46037,
+    "nome_comune": "Sillano Giuncugnano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1006,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46037,
+    "nome_comune": "Sillano Giuncugnano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 999,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46037,
+    "nome_comune": "Sillano Giuncugnano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 990,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46037,
+    "nome_comune": "Sillano Giuncugnano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1001,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 46037,
+    "nome_comune": "Sillano Giuncugnano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 998,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Garfagnana"
+  },
+  {
+    "pro_com_t": 47018,
+    "nome_comune": "Sambuca Pistoiese",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 1539,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47018,
+    "nome_comune": "Sambuca Pistoiese",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 1514,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47018,
+    "nome_comune": "Sambuca Pistoiese",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1444,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47018,
+    "nome_comune": "Sambuca Pistoiese",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1446,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47018,
+    "nome_comune": "Sambuca Pistoiese",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1446,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47018,
+    "nome_comune": "Sambuca Pistoiese",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1426,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47018,
+    "nome_comune": "Sambuca Pistoiese",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1404,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47023,
+    "nome_comune": "Abetone Cutigliano",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 2019,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47023,
+    "nome_comune": "Abetone Cutigliano",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 2037,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47023,
+    "nome_comune": "Abetone Cutigliano",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 1973,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47023,
+    "nome_comune": "Abetone Cutigliano",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 1902,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47023,
+    "nome_comune": "Abetone Cutigliano",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 1836,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47023,
+    "nome_comune": "Abetone Cutigliano",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 1814,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47023,
+    "nome_comune": "Abetone Cutigliano",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 1829,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47024,
+    "nome_comune": "San Marcello Piteglio",
+    "anno": 2019,
+    "indicatore": "totale",
+    "valore": 7951,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47024,
+    "nome_comune": "San Marcello Piteglio",
+    "anno": 2020,
+    "indicatore": "totale",
+    "valore": 7867,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47024,
+    "nome_comune": "San Marcello Piteglio",
+    "anno": 2021,
+    "indicatore": "totale",
+    "valore": 7709,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47024,
+    "nome_comune": "San Marcello Piteglio",
+    "anno": 2022,
+    "indicatore": "totale",
+    "valore": 7671,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47024,
+    "nome_comune": "San Marcello Piteglio",
+    "anno": 2023,
+    "indicatore": "totale",
+    "valore": 7626,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47024,
+    "nome_comune": "San Marcello Piteglio",
+    "anno": 2024,
+    "indicatore": "totale",
+    "valore": 7585,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  },
+  {
+    "pro_com_t": 47024,
+    "nome_comune": "San Marcello Piteglio",
+    "anno": 2025,
+    "indicatore": "totale",
+    "valore": 7493,
+    "udm": "popolazione",
+    "note": "",
+    "unione": "Appennino Pistoiese"
+  }
+]

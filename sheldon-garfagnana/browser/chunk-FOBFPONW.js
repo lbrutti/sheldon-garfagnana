@@ -1,0 +1,1 @@
+import{Bb as i,Cb as o,_b as p,eb as n}from"./chunk-3VMBRLUZ.js";var t=class a{static \u0275fac=function(e){return new(e||a)};static \u0275cmp=n({type:a,selectors:[["sheldon-map-view"]],decls:2,vars:0,template:function(e,s){e&1&&(i(0,"p"),p(1,"map-view works!"),o())},encapsulation:2})};export{t as default};
