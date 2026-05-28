@@ -10,6 +10,7 @@ import ChartHorizontalStackedBarComponent from './chart-horizontal-stacked-bar/c
 import ListaComponent from './lista/lista.component';
 import ChartTreemapComponent from './chart-treemap/chart-treemap.component';
 import SheldonMosaicMapComponent from './sheldon-mosaic-map/sheldon-mosaic-map.component';
+import SheldonMosaicMapSvgComponent from './sheldon-mosaic-map-svg/sheldon-mosaic-map-svg.component';
 
 export * from './card/card.component';
 export * from './chart-horizontal-bar/chart-horizontal-bar.component';
@@ -23,6 +24,7 @@ export * from './kpi/kpi.component';
 export * from './lista/lista.component';
 export * from './chart-treemap/chart-treemap.component';
 export { default as SheldonMosaicMapComponent } from './sheldon-mosaic-map/sheldon-mosaic-map.component';
+export { default as SheldonMosaicMapSvgComponent } from './sheldon-mosaic-map-svg/sheldon-mosaic-map-svg.component';
 
 export const components = [
   GlobalSearchComponent,
@@ -36,5 +38,6 @@ export const components = [
   DynamicFilterComponent,
   KpiComponent,
   ListaComponent,
-  SheldonMosaicMapComponent
+  SheldonMosaicMapComponent,
+  SheldonMosaicMapSvgComponent,
 ];
