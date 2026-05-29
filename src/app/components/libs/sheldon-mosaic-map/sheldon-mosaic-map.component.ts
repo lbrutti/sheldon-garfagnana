@@ -7,6 +7,7 @@ import {
   OnInit,
   output,
   signal,
+  untracked,
   ViewChild,
 } from '@angular/core';
 import {DecimalPipe} from '@angular/common';
@@ -35,20 +36,20 @@ const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features
 const MAP_STYLE: StyleSpecification = {
   version: 8,
   sources: {
-    osm: {
-      type: 'raster',
-      tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-      tileSize: 256,
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    },
+    // osm: {
+    //   type: 'raster',
+    //   tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
+    //   tileSize: 256,
+    //  // attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    // },
   },
   layers: [
-    {
-      id: 'osm',
-      type: 'raster',
-      source: 'osm',
-      paint: {'raster-opacity': 0.25, 'raster-saturation': -1, 'raster-brightness-max': 0.28},
-    },
+    // {
+    //   id: 'osm',
+    //   type: 'raster',
+    //   source: 'osm',
+    //   // paint: {'raster-opacity': 0.25, 'raster-saturation': -1, 'raster-brightness-max': 0.28},
+    // },
   ],
 };
 
@@ -220,6 +221,27 @@ export default class SheldonMosaicMapComponent implements OnInit {
     return this.comuneValues()[comune] ?? null;
   });
 
+  /** Bounding box of the full FeatureCollection expanded by 5% on each side. */
+  private collectionBbox = computed<[[number, number], [number, number]] | null>(() => {
+    const fc = this.polygons();
+    if (!fc?.features.length) return null;
+    let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
+    for (const f of fc.features) {
+      const rings: [number, number][][] = [f.geometry.coordinates.flat(1)] as [number, number][][];
+      for (const ring of rings) {
+        for (const [x, y] of ring) {
+          if (x < minX) minX = x;
+          if (y < minY) minY = y;
+          if (x > maxX) maxX = x;
+          if (y > maxY) maxY = y;
+        }
+      }
+    }
+    const px = (maxX - minX) * 0.30;
+    const py = (maxY - minY) * 0.30;
+    return [[minX - px, minY - py], [maxX + px, maxY + py]];
+  });
+
   constructor() {
     effect(() => {
       const canvas = this.legendCanvas?.nativeElement;
@@ -230,6 +252,15 @@ export default class SheldonMosaicMapComponent implements OnInit {
       settings.forEach((s) => grad.addColorStop(s.value / 100, s.color));
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, 160, 8);
+    });
+
+    effect(() => {
+      const bb = this.collectionBbox();
+      if (!bb || !this.mapReady()) return;
+      const map = untracked(() => this.mapInstance);
+      if (!map) return;
+      map.setMaxBounds(bb);
+      map.fitBounds(bb, {padding: 24, duration: 0});
     });
   }
 

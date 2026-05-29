@@ -24,9 +24,6 @@
     <div class="map-wrapper">
       <mgl-map
         [mapStyle]="mapStyle"
-        [center]="[10.37, 44.15]"
-        [zoom]="[8.5]"
-        [minZoom]="8"
         [maxZoom]="14"
         (mapLoad)="onMapLoad($event)"
         (zoomEnd)="logZoomLevel($event)">

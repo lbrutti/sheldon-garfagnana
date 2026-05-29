@@ -109,6 +109,49 @@
     .btn:disabled { opacity: 0.3; cursor: default; }
     .btn-load     { background: #1e3050; color: #6699cc; }
     .btn-download { background: #1a4030; color: #44cc88; }
+    .btn-mosaic   { background: #1e3020; color: #88cc44; }
+    .btn-svg      { background: #2a1e40; color: #aa88ff; }
+
+    /* ── Toggle switch ── */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 11px;
+      color: #7a99bb;
+      user-select: none;
+    }
+    .toggle-row input[type="checkbox"] {
+      width: 32px; height: 18px;
+      appearance: none;
+      background: #1e2a40;
+      border-radius: 9px;
+      border: 1px solid #2a3a50;
+      cursor: pointer;
+      position: relative;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .toggle-row input[type="checkbox"]::after {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+      border-radius: 50%;
+      background: #3a4a60;
+      top: 2px; left: 2px;
+      transition: left 0.15s, background 0.15s;
+    }
+    .toggle-row input[type="checkbox"]:checked { background: #1a4028; border-color: #2a6040; }
+    .toggle-row input[type="checkbox"]:checked::after { left: 16px; background: #44cc88; }
+
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #445566;
+    }
 
     /* ── Stats ── */
     .stats {
@@ -183,10 +226,24 @@
       <div class="swatch" style="background:rgba(68,136,255,0.18);outline:1px solid rgba(68,136,255,0.6)"></div>
       Original
     </div>
-    <div class="legend">
+    <div class="legend" id="legendSimp">
       <div class="swatch" style="background:rgba(255,136,68,0.35);outline:1px solid rgba(255,136,68,0.9)"></div>
       Simplified
     </div>
+    <div class="legend" id="legendMosaic" style="display:none">
+      <div class="swatch" style="background:linear-gradient(90deg,#e05050,#50c050,#5080e0,#e0a030);outline:1px solid #555"></div>
+      Mosaic cells
+    </div>
+  </div>
+
+  <!-- Mosaic cartogram -->
+  <div class="sidebar-block">
+    <span class="section-label">Mosaic Cartogram</span>
+    <label class="toggle-row">
+      <input type="checkbox" id="mosaicToggle" />
+      Show mosaic layer
+    </label>
+    <div class="stats" id="mosaicStats" style="display:none">—</div>
   </div>
 
   <!-- Stats -->
@@ -198,8 +255,10 @@
   <div style="flex:1"></div>
 
   <!-- Download -->
-  <div class="sidebar-block">
-    <button class="btn btn-download" id="downloadBtn" disabled>⬇ Download simplified GeoJSON</button>
+  <div class="sidebar-block" style="gap:8px">
+    <button class="btn btn-download" id="downloadBtn"      disabled>⬇ Download simplified GeoJSON</button>
+    <button class="btn btn-mosaic"   id="downloadMosaicBtn" disabled>⬇ Download mosaic GeoJSON</button>
+    <button class="btn btn-svg"      id="exportSvgBtn"      disabled>⬇ Export SVG</button>
   </div>
 </div>
 
@@ -243,6 +302,15 @@ map.on('load', () => {
   map.addLayer({ id: 'simp-line', type: 'line', source: 'simplified',
     paint: { 'line-color': '#ff8844', 'line-width': 1.5, 'line-opacity': 0.95 } });
 
+  // Mosaic cartogram: per-feature colored cells on top
+  map.addSource('mosaic', { type: 'geojson', data: EMPTY });
+  map.addLayer({ id: 'mosaic-fill', type: 'fill', source: 'mosaic',
+    layout: { visibility: 'none' },
+    paint: { 'fill-color': ['get', '_color'], 'fill-opacity': 0.88 } });
+  map.addLayer({ id: 'mosaic-line', type: 'line', source: 'mosaic',
+    layout: { visibility: 'none' },
+    paint: { 'line-color': '#0d1117', 'line-width': 0.6, 'line-opacity': 0.55 } });
+
   if (pendingOriginal) {
     applyOriginal(pendingOriginal);
     pendingOriginal = null;
@@ -253,6 +321,8 @@ map.on('load', () => {
 
 let originalFC   = null;
 let simplifiedFC = null;
+let mosaicFC     = null;
+let mosaicOn     = false;
 let debounceTimer = null;
 
 // ─── Geometry helpers ────────────────────────────────────────────────────────
@@ -386,6 +456,93 @@ function processFC(fc, cols, rows, simpl) {
   return { type: 'FeatureCollection', features };
 }
 
+// ─── Mosaic cartogram ─────────────────────────────────────────────────────────
+
+// HSL → hex  (no external deps)
+function hslToHex(h, s, l) {
+  s /= 100; l /= 100;
+  const a = s * Math.min(l, 1 - l);
+  const f = n => {
+    const k = (n + h / 30) % 12;
+    return Math.round(255 * (l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1)))
+      .toString(16).padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+// Golden-angle hue spacing for maximum perceptual contrast between neighbours
+function featurePalette(n) {
+  const GOLDEN = 137.508;
+  return Array.from({ length: n }, (_, i) => hslToHex((i * GOLDEN) % 360, 62, 52));
+}
+
+function pointInRing(x, y, ring) {
+  let inside = false;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const xi = ring[i][0], yi = ring[i][1], xj = ring[j][0], yj = ring[j][1];
+    if ((yi > y) !== (yj > y) && x < (xj - xi) * (y - yi) / (yj - yi) + xi)
+      inside = !inside;
+  }
+  return inside;
+}
+
+function pointInGeom(x, y, geom) {
+  if (geom.type === 'Polygon') {
+    if (!pointInRing(x, y, geom.coordinates[0])) return false;
+    for (let i = 1; i < geom.coordinates.length; i++)
+      if (pointInRing(x, y, geom.coordinates[i])) return false;
+    return true;
+  }
+  if (geom.type === 'MultiPolygon') {
+    for (const poly of geom.coordinates) {
+      if (!pointInRing(x, y, poly[0])) continue;
+      let hole = false;
+      for (let i = 1; i < poly.length; i++) if (pointInRing(x, y, poly[i])) { hole = true; break; }
+      if (!hole) return true;
+    }
+    return false;
+  }
+  return false;
+}
+
+// Rasterise each simplified polygon into square cells.
+// Uses the same effective grid (eCols × eRows) as the simplification step so
+// cell edges perfectly align with the polygon boundaries.
+function buildMosaic(simplFC, bbox, cols, rows, simpl) {
+  const factor = 1 + (simpl / 100) * 3;
+  const eCols = Math.max(3, Math.round(cols / factor));
+  const eRows = Math.max(3, Math.round(rows / factor));
+
+  const [x0, y0, x1, y1] = bbox;
+  const cw = (x1 - x0) / eCols;
+  const ch = (y1 - y0) / eRows;
+
+  const palette = featurePalette(simplFC.features.length);
+  const cells   = [];
+
+  for (let row = 0; row < eRows; row++) {
+    const cy = y0 + (row + 0.5) * ch;
+    for (let col = 0; col < eCols; col++) {
+      const cx = x0 + (col + 0.5) * cw;
+      for (let fi = 0; fi < simplFC.features.length; fi++) {
+        if (pointInGeom(cx, cy, simplFC.features[fi].geometry)) {
+          const lx = x0 + col * cw, ly = y0 + row * ch;
+          cells.push({
+            type: 'Feature',
+            geometry: { type: 'Polygon', coordinates: [
+              [[lx,ly],[lx+cw,ly],[lx+cw,ly+ch],[lx,ly+ch],[lx,ly]]
+            ]},
+            properties: { ...simplFC.features[fi].properties, _featureIdx: fi, _color: palette[fi] },
+          });
+          break;
+        }
+      }
+    }
+  }
+
+  return { type: 'FeatureCollection', features: cells };
+}
+
 function countVerts(fc) {
   let n = 0;
   for (const f of fc.features) {
@@ -397,24 +554,154 @@ function countVerts(fc) {
   return n;
 }
 
+// ─── SVG export ──────────────────────────────────────────────────────────────
+
+// Web Mercator y for a latitude (degrees → Mercator degrees)
+function mercY(lat) {
+  return Math.log(Math.tan(Math.PI / 4 + lat * Math.PI / 360)) * 180 / Math.PI;
+}
+
+// Returns a function that maps [lon, lat] → [svgX, svgY]
+function makeProjFn(bbox, svgW, svgH, pad) {
+  const [x0, y0, x1, y1] = bbox;
+  const my0 = mercY(y0), my1 = mercY(y1);
+  const dataW = x1 - x0, dataH = my1 - my0;
+  const scale = Math.min((svgW - 2 * pad) / dataW, (svgH - 2 * pad) / dataH);
+  const ox = pad + ((svgW - 2 * pad) - dataW * scale) / 2;
+  const oy = pad + ((svgH - 2 * pad) - dataH * scale) / 2;
+  return ([lon, lat]) => [
+    ox + (lon - x0) * scale,
+    svgH - (oy + (mercY(lat) - my0) * scale),  // flip Y axis
+  ];
+}
+
+function ringToSvgPath(ring, proj) {
+  return ring.map(([lon, lat], i) => {
+    const [x, y] = proj([lon, lat]);
+    return `${i === 0 ? 'M' : 'L'}${x.toFixed(2)},${y.toFixed(2)}`;
+  }).join('') + 'Z';
+}
+
+function geomToSvgPath(geom, proj) {
+  const rings = geom.type === 'Polygon' ? geom.coordinates : geom.coordinates.flat();
+  return rings.map(r => ringToSvgPath(r, proj)).join('');
+}
+
+// Mosaic cells are grid-aligned rectangles; use <rect> for compact output
+function cellToSvgRect(cell, proj) {
+  const pts = cell.geometry.coordinates[0];
+  const [ax, ay] = proj(pts[0]); // bottom-left in data → upper-left in SVG after Y-flip
+  const [bx, by] = proj(pts[2]); // top-right in data
+  const x = Math.min(ax, bx), y = Math.min(ay, by);
+  return `<rect x="${x.toFixed(3)}" y="${y.toFixed(3)}" `
+       + `width="${Math.abs(bx - ax).toFixed(3)}" height="${Math.abs(by - ay).toFixed(3)}" `
+       + `fill="${cell.properties._color}"/>`;
+}
+
+function exportSVG() {
+  if (!simplifiedFC || !originalFC) return;
+
+  const bbox  = bboxOf(originalFC);
+  const SVG_W = 1200;
+  // Compute height to preserve Mercator aspect ratio
+  const [x0, y0, x1, y1] = bbox;
+  const SVG_H = Math.round(SVG_W * (mercY(y1) - mercY(y0)) / (x1 - x0));
+  const PAD   = 28;
+  const proj  = makeProjFn(bbox, SVG_W, SVG_H, PAD);
+
+  const lines = [
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${SVG_W} ${SVG_H}" width="${SVG_W}" height="${SVG_H}">`,
+    `<rect width="${SVG_W}" height="${SVG_H}" fill="#0d1117"/>`,
+    // Original: very faint fill, thin blue outline
+    `<g fill="#4488ff" fill-opacity="0.07" stroke="#4488ff" stroke-width="0.8" stroke-opacity="0.45" stroke-linejoin="round">`,
+    ...originalFC.features.map(f => `<path d="${geomToSvgPath(f.geometry, proj)}"/>`),
+    `</g>`,
+  ];
+
+  if (mosaicOn && mosaicFC && mosaicFC.features.length) {
+    // Mosaic cells — no cell borders; adjacent same-feature cells merge naturally
+    lines.push(`<g id="mosaic">`);
+    for (const cell of mosaicFC.features) lines.push(cellToSvgRect(cell, proj));
+    lines.push(`</g>`);
+    // Simplified outlines on top for shape reference
+    lines.push(
+      `<g fill="none" stroke="#ff8844" stroke-width="1.2" stroke-opacity="0.7" stroke-linejoin="round">`,
+      ...simplifiedFC.features.map(f => `<path d="${geomToSvgPath(f.geometry, proj)}"/>`),
+      `</g>`,
+    );
+  } else {
+    // Simplified fills + outlines
+    lines.push(
+      `<g fill="#ff8844" fill-opacity="0.28" stroke="#ff8844" stroke-width="1.2" stroke-linejoin="round">`,
+      ...simplifiedFC.features.map(f => `<path d="${geomToSvgPath(f.geometry, proj)}"/>`),
+      `</g>`,
+    );
+  }
+
+  lines.push(`</svg>`);
+
+  const blob = new Blob([lines.join('\n')], { type: 'image/svg+xml' });
+  const url  = URL.createObjectURL(blob);
+  const fname = (mosaicOn && mosaicFC?.features.length) ? 'mosaic.svg' : 'simplified.svg';
+  Object.assign(document.createElement('a'), { href: url, download: fname }).click();
+  URL.revokeObjectURL(url);
+}
+
 // ─── UI ──────────────────────────────────────────────────────────────────────
 
-const colsSlider  = document.getElementById('cols');
-const rowsSlider  = document.getElementById('rows');
-const simplSlider = document.getElementById('simpl');
-const colsVal     = document.getElementById('colsVal');
-const rowsVal     = document.getElementById('rowsVal');
-const simplVal    = document.getElementById('simplVal');
-const statsDiv    = document.getElementById('stats');
-const downloadBtn = document.getElementById('downloadBtn');
-const dropArea    = document.getElementById('dropArea');
-const fileInput   = document.getElementById('fileInput');
-const loadExBtn   = document.getElementById('loadExampleBtn');
+const colsSlider      = document.getElementById('cols');
+const rowsSlider      = document.getElementById('rows');
+const simplSlider     = document.getElementById('simpl');
+const colsVal         = document.getElementById('colsVal');
+const rowsVal         = document.getElementById('rowsVal');
+const simplVal        = document.getElementById('simplVal');
+const statsDiv        = document.getElementById('stats');
+const mosaicStatsDiv  = document.getElementById('mosaicStats');
+const downloadBtn       = document.getElementById('downloadBtn');
+const downloadMosaicBtn = document.getElementById('downloadMosaicBtn');
+const exportSvgBtn      = document.getElementById('exportSvgBtn');
+const mosaicToggle      = document.getElementById('mosaicToggle');
+const legendSimp      = document.getElementById('legendSimp');
+const legendMosaic    = document.getElementById('legendMosaic');
+const dropArea        = document.getElementById('dropArea');
+const fileInput       = document.getElementById('fileInput');
+const loadExBtn       = document.getElementById('loadExampleBtn');
 
 function syncLabels() {
   colsVal.textContent  = colsSlider.value;
   rowsVal.textContent  = rowsSlider.value;
   simplVal.textContent = simplSlider.value;
+}
+
+function setMosaicVisible(on) {
+  const vis = on ? 'visible' : 'none';
+  if (!mapReady) return;
+  map.setLayoutProperty('mosaic-fill', 'visibility', vis);
+  map.setLayoutProperty('mosaic-line', 'visibility', vis);
+  map.setLayoutProperty('simp-fill',   'visibility', on ? 'none' : 'visible');
+  map.setLayoutProperty('simp-line',   'visibility', on ? 'none' : 'visible');
+  legendSimp.style.display   = on ? 'none'  : '';
+  legendMosaic.style.display = on ? ''      : 'none';
+  mosaicStatsDiv.style.display = on ? '' : 'none';
+}
+
+function runMosaic() {
+  if (!simplifiedFC || !mapReady) return;
+  const cols  = +colsSlider.value;
+  const rows  = +rowsSlider.value;
+  const simpl = +simplSlider.value;
+  const bbox  = bboxOf(originalFC);
+
+  mosaicFC = buildMosaic(simplifiedFC, bbox, cols, rows, simpl);
+  map.getSource('mosaic').setData(mosaicFC);
+
+  const factor = 1 + (simpl / 100) * 3;
+  const eCols  = Math.max(3, Math.round(cols / factor));
+  const eRows  = Math.max(3, Math.round(rows / factor));
+  mosaicStatsDiv.innerHTML =
+    `<b>Grid:</b> ${eCols} × ${eRows}<br>` +
+    `<b>Cells:</b> ${mosaicFC.features.length.toLocaleString()}`;
+  downloadMosaicBtn.disabled = false;
 }
 
 function runSimplification() {
@@ -442,6 +729,9 @@ function runSimplification() {
     `<b>Reduction:</b> <span class="reduction">${pct}%</span>`;
 
   downloadBtn.disabled = false;
+  exportSvgBtn.disabled = false;
+
+  if (mosaicOn) runMosaic();
 }
 
 function scheduleSimplification() {
@@ -490,18 +780,38 @@ fileInput.addEventListener('change', e => { if (e.target.files[0]) readFile(e.ta
 
 // Load example
 loadExBtn.addEventListener('click', () => {
-  fetch('data/comuni.polygons.json')
+  fetch('../data/comuni.polygons.json')
     .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
     .then(loadFC)
     .catch(err => alert('Could not load example: ' + err.message));
 });
 
-// Download
+// Mosaic toggle
+mosaicToggle.addEventListener('change', () => {
+  mosaicOn = mosaicToggle.checked;
+  setMosaicVisible(mosaicOn);
+  if (mosaicOn && simplifiedFC && (!mosaicFC || mosaicFC.features.length === 0)) runMosaic();
+});
+
+// Download simplified
 downloadBtn.addEventListener('click', () => {
   if (!simplifiedFC) return;
   const blob = new Blob([JSON.stringify(simplifiedFC)], { type: 'application/json' });
   const url  = URL.createObjectURL(blob);
   const a    = Object.assign(document.createElement('a'), { href: url, download: 'comuni.polygons.grid.json' });
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+// Export SVG
+exportSvgBtn.addEventListener('click', exportSVG);
+
+// Download mosaic
+downloadMosaicBtn.addEventListener('click', () => {
+  if (!mosaicFC) return;
+  const blob = new Blob([JSON.stringify(mosaicFC)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href: url, download: 'comuni.mosaic.geojson' });
   a.click();
   URL.revokeObjectURL(url);
 });
