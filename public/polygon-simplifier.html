@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polygon Grid Simplifier</title>
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" />
+  <script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      display: flex;
+      height: 100vh;
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0d1117;
+      color: #cdd;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: 272px;
+      min-width: 272px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      background: #13192a;
+      border-right: 1px solid #1e2a40;
+      overflow-y: auto;
+    }
+
+    .sidebar-block {
+      padding: 14px 16px;
+      border-bottom: 1px solid #1e2a40;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    h1 {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #5588cc;
+      padding: 14px 16px 0;
+    }
+
+    /* ── Drop area ── */
+    .drop-area {
+      border: 1.5px dashed #1e3060;
+      border-radius: 6px;
+      padding: 16px 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      user-select: none;
+    }
+    .drop-area:hover { border-color: #3366aa; background: #0e1a30; }
+    .drop-area.drag-over { border-color: #5599ff; background: #0e1a38; }
+    .drop-area .drop-title { font-size: 12px; color: #7a9acc; font-weight: 500; }
+    .drop-area .drop-sub   { font-size: 11px; color: #445566; margin-top: 3px; }
+    .drop-area.loaded .drop-title { color: #44cc88; }
+
+    input[type="file"] { display: none; }
+
+    /* ── Params ── */
+    .param {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .param-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    .param-name { font-size: 11px; color: #8899bb; }
+    .param-value {
+      font-size: 12px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      color: #aaccff;
+      min-width: 32px;
+      text-align: right;
+    }
+    input[type="range"] {
+      width: 100%;
+      height: 3px;
+      accent-color: #4477dd;
+      cursor: pointer;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      border: none;
+      border-radius: 5px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover:not(:disabled) { opacity: 0.82; }
+    .btn:disabled { opacity: 0.3; cursor: default; }
+    .btn-load     { background: #1e3050; color: #6699cc; }
+    .btn-download { background: #1a4030; color: #44cc88; }
+
+    /* ── Stats ── */
+    .stats {
+      font-size: 11px;
+      line-height: 1.8;
+      color: #556677;
+    }
+    .stats b { color: #7a99bb; font-weight: 600; }
+    .stats .reduction { color: #44cc88; font-weight: 700; }
+
+    /* ── Legend ── */
+    .legend { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #6688aa; }
+    .swatch {
+      width: 24px;
+      height: 10px;
+      border-radius: 2px;
+      flex-shrink: 0;
+    }
+
+    /* ── Map ── */
+    #map { flex: 1; }
+
+    /* MapLibre attribution tweak */
+    .maplibregl-ctrl-attrib { font-size: 9px !important; }
+  </style>
+</head>
+<body>
+
+<div id="sidebar">
+  <h1 style="padding-bottom:14px">Grid Simplifier</h1>
+
+  <!-- File loader -->
+  <div class="sidebar-block" style="gap:8px">
+    <div class="drop-area" id="dropArea">
+      <div class="drop-title">Drop GeoJSON here</div>
+      <div class="drop-sub">or click to browse</div>
+    </div>
+    <input type="file" id="fileInput" accept=".json,.geojson" />
+    <button class="btn btn-load" id="loadExampleBtn">Load example (comuni.polygons.json)</button>
+  </div>
+
+  <!-- Parameters -->
+  <div class="sidebar-block">
+    <div class="param">
+      <div class="param-head">
+        <span class="param-name">Grid columns</span>
+        <span class="param-value" id="colsVal">80</span>
+      </div>
+      <input type="range" id="cols" min="5" max="500" value="80" step="1" />
+    </div>
+
+    <div class="param">
+      <div class="param-head">
+        <span class="param-name">Grid rows</span>
+        <span class="param-value" id="rowsVal">80</span>
+      </div>
+      <input type="range" id="rows" min="5" max="500" value="80" step="1" />
+    </div>
+
+    <div class="param">
+      <div class="param-head">
+        <span class="param-name">Simplification</span>
+        <span class="param-value" id="simplVal">0</span>
+      </div>
+      <input type="range" id="simpl" min="0" max="100" value="0" step="1" />
+    </div>
+  </div>
+
+  <!-- Legend -->
+  <div class="sidebar-block" style="gap:6px">
+    <div class="legend">
+      <div class="swatch" style="background:rgba(68,136,255,0.18);outline:1px solid rgba(68,136,255,0.6)"></div>
+      Original
+    </div>
+    <div class="legend">
+      <div class="swatch" style="background:rgba(255,136,68,0.35);outline:1px solid rgba(255,136,68,0.9)"></div>
+      Simplified
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="sidebar-block">
+    <div class="stats" id="stats">No file loaded.</div>
+  </div>
+
+  <!-- Spacer pushes download to bottom -->
+  <div style="flex:1"></div>
+
+  <!-- Download -->
+  <div class="sidebar-block">
+    <button class="btn btn-download" id="downloadBtn" disabled>⬇ Download simplified GeoJSON</button>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<script>
+// ─── MapLibre ────────────────────────────────────────────────────────────────
+
+const map = new maplibregl.Map({
+  container: 'map',
+  style: {
+    version: 8,
+    sources: {},
+    layers: [{ id: 'bg', type: 'background', paint: { 'background-color': '#0d1117' } }],
+  },
+  center: [10.5, 44.1],
+  zoom: 7,
+  attributionControl: { compact: true },
+});
+
+const EMPTY = { type: 'FeatureCollection', features: [] };
+
+let mapReady = false;
+let pendingOriginal = null;
+
+map.on('load', () => {
+  mapReady = true;
+
+  map.addSource('original',   { type: 'geojson', data: EMPTY });
+  map.addSource('simplified', { type: 'geojson', data: EMPTY });
+
+  // Original: faint blue fill + outline
+  map.addLayer({ id: 'orig-fill', type: 'fill', source: 'original',
+    paint: { 'fill-color': '#4488ff', 'fill-opacity': 0.07 } });
+  map.addLayer({ id: 'orig-line', type: 'line', source: 'original',
+    paint: { 'line-color': '#4488ff', 'line-width': 1, 'line-opacity': 0.5 } });
+
+  // Simplified: orange fill + bright outline
+  map.addLayer({ id: 'simp-fill', type: 'fill', source: 'simplified',
+    paint: { 'fill-color': '#ff8844', 'fill-opacity': 0.28 } });
+  map.addLayer({ id: 'simp-line', type: 'line', source: 'simplified',
+    paint: { 'line-color': '#ff8844', 'line-width': 1.5, 'line-opacity': 0.95 } });
+
+  if (pendingOriginal) {
+    applyOriginal(pendingOriginal);
+    pendingOriginal = null;
+  }
+});
+
+// ─── State ───────────────────────────────────────────────────────────────────
+
+let originalFC   = null;
+let simplifiedFC = null;
+let debounceTimer = null;
+
+// ─── Geometry helpers ────────────────────────────────────────────────────────
+
+function bboxOf(fc) {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const f of fc.features) {
+    const rings = f.geometry.type === 'Polygon'
+      ? f.geometry.coordinates
+      : f.geometry.coordinates.flat();
+    for (const ring of rings)
+      for (const [x, y] of ring) {
+        if (x < x0) x0 = x; if (y < y0) y0 = y;
+        if (x > x1) x1 = x; if (y > y1) y1 = y;
+      }
+  }
+  return [x0, y0, x1, y1];
+}
+
+function snapToGrid(ring, bbox, cols, rows) {
+  const [x0, y0, x1, y1] = bbox;
+  const dx = (x1 - x0) / cols, dy = (y1 - y0) / rows;
+  const R = 1e8; // rounding precision
+  return ring.map(([x, y]) => [
+    Math.round((x0 + Math.round((x - x0) / dx) * dx) * R) / R,
+    Math.round((y0 + Math.round((y - y0) / dy) * dy) * R) / R,
+  ]);
+}
+
+function removeDups(pts) {
+  const out = [pts[0]];
+  for (let i = 1; i < pts.length; i++) {
+    const p = pts[i], q = out[out.length - 1];
+    if (p[0] !== q[0] || p[1] !== q[1]) out.push(p);
+  }
+  return out;
+}
+
+function fixDiagonals(ring) {
+  const out = [];
+  for (let i = 0; i < ring.length - 1; i++) {
+    const [x1, y1] = ring[i], [x2, y2] = ring[i + 1];
+    out.push(ring[i]);
+    if (x1 !== x2 && y1 !== y2) {
+      // Canonical corner: use the x of the left-most endpoint and the y of the right-most.
+      //   x1 < x2 → (x1, y2)   x1 > x2 → (x2, y1)
+      // Direction-independent: reversing A→B to B→A gives the same physical corner,
+      // so adjacent polygons never diverge on shared boundary diagonals.
+      out.push(x1 < x2 ? [x1, y2] : [x2, y1]);
+    }
+  }
+  out.push(ring[ring.length - 1]);
+  // A second pass of removeDups cleans any vertex pairs that collapsed to the same
+  // grid point after intermediate insertion (e.g. two back-to-back canonical corners
+  // that resolve to the same coordinate).
+  return removeDups(out);
+}
+
+function removeCollinear(ring) {
+  // ring is closed (first === last); work on open set
+  const pts = ring.slice(0, -1);
+  const n = pts.length;
+  const out = [];
+  for (let i = 0; i < n; i++) {
+    const [ax, ay] = pts[(i - 1 + n) % n];
+    const [bx, by] = pts[i];
+    const [cx, cy] = pts[(i + 1) % n];
+    // 2D cross product of (B-A) × (C-B)
+    if ((bx-ax)*(cy-by) - (by-ay)*(cx-bx) !== 0) out.push(pts[i]);
+  }
+  if (out.length < 3) return null; // degenerate
+  out.push(out[0]);
+  return out;
+}
+
+function processRing(ring, bbox, cols, rows) {
+  // Snap to grid
+  let r = snapToGrid([...ring.slice(0, -1), ring[0]], bbox, cols, rows);
+
+  // Remove consecutive duplicates
+  r = removeDups(r);
+  while (r.length > 1 && r[r.length-1][0] === r[0][0] && r[r.length-1][1] === r[0][1])
+    r.pop();
+  if (r.length < 3) return null;
+  r.push(r[0]);
+
+  // Fix diagonal edges (canonical rule — no winding dependency)
+  r = fixDiagonals(r);
+
+  // Remove collinear vertices
+  r = removeCollinear(r);
+  return r; // null if degenerate
+}
+
+function processFC(fc, cols, rows, simpl) {
+  // Simplification coarsens the effective grid: simpl=0 → cols×rows as-is,
+  // simpl=100 → roughly cols/4 × rows/4. Both axes scale together so shared
+  // boundaries stay aligned across all polygons.
+  const factor = 1 + (simpl / 100) * 3;
+  const eCols = Math.max(3, Math.round(cols / factor));
+  const eRows = Math.max(3, Math.round(rows / factor));
+
+  const bbox = bboxOf(fc);
+  const features = [];
+
+  for (const f of fc.features) {
+    const type = f.geometry.type;
+
+    if (type === 'Polygon') {
+      const coords = [];
+      for (const ring of f.geometry.coordinates) {
+        const r = processRing(ring, bbox, eCols, eRows);
+        if (r) coords.push(r);
+      }
+      if (coords.length) features.push({ ...f, geometry: { type, coordinates: coords } });
+
+    } else if (type === 'MultiPolygon') {
+      const polys = [];
+      for (const poly of f.geometry.coordinates) {
+        const rings = [];
+        for (const ring of poly) {
+          const r = processRing(ring, bbox, eCols, eRows);
+          if (r) rings.push(r);
+        }
+        if (rings.length) polys.push(rings);
+      }
+      if (polys.length) features.push({ ...f, geometry: { type, coordinates: polys } });
+    }
+  }
+
+  return { type: 'FeatureCollection', features };
+}
+
+function countVerts(fc) {
+  let n = 0;
+  for (const f of fc.features) {
+    const rings = f.geometry.type === 'Polygon'
+      ? f.geometry.coordinates
+      : f.geometry.coordinates.flat();
+    for (const r of rings) n += r.length;
+  }
+  return n;
+}
+
+// ─── UI ──────────────────────────────────────────────────────────────────────
+
+const colsSlider  = document.getElementById('cols');
+const rowsSlider  = document.getElementById('rows');
+const simplSlider = document.getElementById('simpl');
+const colsVal     = document.getElementById('colsVal');
+const rowsVal     = document.getElementById('rowsVal');
+const simplVal    = document.getElementById('simplVal');
+const statsDiv    = document.getElementById('stats');
+const downloadBtn = document.getElementById('downloadBtn');
+const dropArea    = document.getElementById('dropArea');
+const fileInput   = document.getElementById('fileInput');
+const loadExBtn   = document.getElementById('loadExampleBtn');
+
+function syncLabels() {
+  colsVal.textContent  = colsSlider.value;
+  rowsVal.textContent  = rowsSlider.value;
+  simplVal.textContent = simplSlider.value;
+}
+
+function runSimplification() {
+  if (!originalFC || !mapReady) return;
+  const cols  = +colsSlider.value;
+  const rows  = +rowsSlider.value;
+  const simpl = +simplSlider.value;
+
+  simplifiedFC = processFC(originalFC, cols, rows, simpl);
+  map.getSource('simplified').setData(simplifiedFC);
+
+  const ov  = countVerts(originalFC);
+  const sv  = countVerts(simplifiedFC);
+  const pct = ov ? Math.round((1 - sv / ov) * 100) : 0;
+
+  const factor = 1 + (simpl / 100) * 3;
+  const eCols  = Math.max(3, Math.round(cols  / factor));
+  const eRows  = Math.max(3, Math.round(rows / factor));
+
+  statsDiv.innerHTML =
+    `<b>Features:</b> ${simplifiedFC.features.length} / ${originalFC.features.length}<br>` +
+    `<b>Effective grid:</b> ${eCols} × ${eRows}<br>` +
+    `<b>Vertices — original:</b> ${ov.toLocaleString()}<br>` +
+    `<b>Vertices — simplified:</b> ${sv.toLocaleString()}<br>` +
+    `<b>Reduction:</b> <span class="reduction">${pct}%</span>`;
+
+  downloadBtn.disabled = false;
+}
+
+function scheduleSimplification() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(runSimplification, 60);
+}
+
+function applyOriginal(fc) {
+  originalFC = fc;
+  map.getSource('original').setData(fc);
+  const bb = bboxOf(fc);
+  if (isFinite(bb[0]))
+    map.fitBounds([[bb[0], bb[1]], [bb[2], bb[3]]], { padding: 48, duration: 700 });
+  runSimplification();
+}
+
+function loadFC(fc) {
+  if (!fc || !fc.features) { alert('Not a valid GeoJSON FeatureCollection.'); return; }
+  dropArea.classList.add('loaded');
+  dropArea.querySelector('.drop-title').textContent = `✓ ${fc.features.length} features loaded`;
+  dropArea.querySelector('.drop-sub').textContent   = '';
+  if (mapReady) applyOriginal(fc);
+  else          pendingOriginal = fc;
+}
+
+function readFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => { try { loadFC(JSON.parse(e.target.result)); } catch(err) { alert('Parse error: ' + err.message); } };
+  reader.readAsText(file);
+}
+
+// Sliders
+[colsSlider, rowsSlider, simplSlider].forEach(s =>
+  s.addEventListener('input', () => { syncLabels(); scheduleSimplification(); }));
+
+// Drop area
+dropArea.addEventListener('click',     () => fileInput.click());
+dropArea.addEventListener('dragover',  e  => { e.preventDefault(); dropArea.classList.add('drag-over'); });
+dropArea.addEventListener('dragleave', ()  => dropArea.classList.remove('drag-over'));
+dropArea.addEventListener('drop', e => {
+  e.preventDefault();
+  dropArea.classList.remove('drag-over');
+  if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
+});
+fileInput.addEventListener('change', e => { if (e.target.files[0]) readFile(e.target.files[0]); });
+
+// Load example
+loadExBtn.addEventListener('click', () => {
+  fetch('data/comuni.polygons.json')
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(loadFC)
+    .catch(err => alert('Could not load example: ' + err.message));
+});
+
+// Download
+downloadBtn.addEventListener('click', () => {
+  if (!simplifiedFC) return;
+  const blob = new Blob([JSON.stringify(simplifiedFC)], { type: 'application/json' });
+  const url  = URL.createObjectURL(blob);
+  const a    = Object.assign(document.createElement('a'), { href: url, download: 'comuni.polygons.grid.json' });
+  a.click();
+  URL.revokeObjectURL(url);
+});
+
+syncLabels();
+</script>
+</body>
+</html>
