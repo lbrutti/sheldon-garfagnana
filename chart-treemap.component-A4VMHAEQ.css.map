@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/chart-treemap/chart-treemap.component.scss"],
+  "sourcesContent": ["\n:host {\n  display: block;\n}\n\n.treemap-wrapper {\n  position: relative;\n  width: 100%;\n  height: 480px;\n}\n\n.treemap-tile {\n  position: absolute;\n  box-sizing: border-box;\n  padding: 2px;\n  overflow: hidden;\n  cursor: default;\n\n  &__label {\n    display: inline-block;\n    margin: 4px;\n    padding: 2px 6px;\n    border-radius: 3px;\n    background: rgba(0, 0, 0, 0.45);\n    color: #fff;\n    font-size: 12px;\n    font-weight: 600;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: calc(100% - 16px);\n  }\n\n  &__value {\n    display: inline-block;\n    margin: 0 4px;\n    padding: 2px 6px;\n    border-radius: 3px;\n    background: rgba(0, 0, 0, 0.3);\n    color: rgba(255, 255, 255, 0.9);\n    font-size: 10px;\n    white-space: nowrap;\n    overflow: hidden;\n    text-overflow: ellipsis;\n    max-width: calc(100% - 16px);\n  }\n}\n"],
+  "mappings": "AACA,MACE,QAAA,MAGF,CAAA,gBACE,SAAA,SACA,MAAA,KACA,OAAA,MAGF,CAAA,aACE,SAAA,SACA,WAAA,WAZF,QAaE,IACA,SAAA,OACA,OAAA,QAEA,CAAA,oBACE,QAAA,aAlBJ,OAmBI,IAnBJ,QAoBI,IAAA,IApBJ,cAqBI,IACA,WAAA,UACA,MAAA,KACA,UAAA,KACA,YAAA,IACA,YAAA,OACA,SAAA,OACA,cAAA,SACA,UAAA,KAAA,KAAA,EAAA,MAGF,CAAA,oBACE,QAAA,aAjCJ,OAkCI,EAAA,IAlCJ,QAmCI,IAAA,IAnCJ,cAoCI,IACA,WAAA,UACA,MAAA,UACA,UAAA,KACA,YAAA,OACA,SAAA,OACA,cAAA,SACA,UAAA,KAAA,KAAA,EAAA",
+  "names": []
+}
