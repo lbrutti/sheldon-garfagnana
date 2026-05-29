@@ -35,11 +35,11 @@
           <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
           <mgl-geojson-source
             id="comuni"
-            [data]="polygons() ?? emptyCollection"
+            [data]="derivedPolygons()"
             [promoteId]="municipalityKey()">
           </mgl-geojson-source>
 
-          <!-- Invisible fill layer — drives hover detection and highlight opacity -->
+          <!-- Choropleth fill layer — colored by _colorValue property, hover/select via feature-state -->
           <mgl-layer
             id="comuni-fill"
             source="comuni"
@@ -50,40 +50,25 @@
             (layerMouseLeave)="onPolygonLeave()">
           </mgl-layer>
 
-          <!--          &lt;!&ndash; Default boundary outlines &ndash;&gt;-->
-            <!--          <mgl-layer-->
-            <!--            id="comuni-line"-->
-            <!--            source="comuni"-->
-            <!--            type="line"-->
-            <!--            [paint]="{-->
-            <!--              'line-color': '#0a0f1e',-->
-            <!--              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.8, 12, 2]-->
-            <!--            }">-->
-            <!--          </mgl-layer>-->
+<!--          &lt;!&ndash; Default boundary outlines &ndash;&gt;-->
+<!--          <mgl-layer-->
+<!--            id="comuni-line"-->
+<!--            source="comuni"-->
+<!--            type="line"-->
+<!--            [paint]="{-->
+<!--              'line-color': '#0a0f1e',-->
+<!--              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.8, 12, 2]-->
+<!--            }">-->
+<!--          </mgl-layer>-->
 
-            <!--          &lt;!&ndash; Thicker outline for selected comune &ndash;&gt;-->
-            <!--          <mgl-layer-->
-            <!--            id="comuni-selected"-->
-            <!--            source="comuni"-->
-            <!--            type="line"-->
-            <!--            [filter]="selectedFilter()"-->
-            <!--            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">-->
-            <!--          </mgl-layer>-->
-
-            <!-- Mosaic squares source -->
-          <mgl-geojson-source
-            id="mosaic"
-            [data]="derivedPoints()">
-          </mgl-geojson-source>
-
-          <!-- SDF square symbol layer — colored via choropleth expression -->
-          <mgl-layer
-            id="mosaic-squares"
-            source="mosaic"
-            type="symbol"
-            [layout]="squareLayout"
-            [paint]="squarePaint()">
-          </mgl-layer>
+<!--          &lt;!&ndash; Thicker outline for selected comune &ndash;&gt;-->
+<!--          <mgl-layer-->
+<!--            id="comuni-selected"-->
+<!--            source="comuni"-->
+<!--            type="line"-->
+<!--            [filter]="selectedFilter()"-->
+<!--            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">-->
+<!--          </mgl-layer>-->
         }
       </mgl-map>
 

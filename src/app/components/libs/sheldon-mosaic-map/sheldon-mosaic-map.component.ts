@@ -12,7 +12,7 @@ import {
 import {DecimalPipe} from '@angular/common';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
-import type {Feature, FeatureCollection, Point, Polygon} from 'geojson';
+import type {Feature, FeatureCollection, Polygon} from 'geojson';
 import type {Map, MapLayerMouseEvent, MapLibreEvent, MapLibreZoomEvent, StyleSpecification} from 'maplibre-gl';
 
 import CardComponent from '../card/card.component';
@@ -51,13 +51,6 @@ const MAP_STYLE: StyleSpecification = {
     },
   ],
 };
-
-function createSquareSdf(
-  size: number,
-): { data: Uint8ClampedArray; width: number; height: number } {
-  const data = new Uint8ClampedArray(size * size * 4).fill(255);
-  return {data, width: size, height: size};
-}
 
 function reduceValues(values: number[], mode: AuxReduceOption['reduceBy']): number {
   switch (mode) {
@@ -101,7 +94,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
   // ── Inputs ─────────────────────────────────────────────────────────────────
   title = input<string>('Mappa');
   polygons = input<FeatureCollection<Polygon> | null>(null);
-  points = input<FeatureCollection<Point> | null>(null);
   auxReduce = input<AuxReduceOption[]>([]);
   colorSetting = input<ColorStop[]>(DEFAULT_COLOR_STOPS);
   municipalityKey = input<string>('comune');
@@ -111,23 +103,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   // ── Public constants for template ─────────────────────────────────────────
   readonly mapStyle = MAP_STYLE;
-  readonly emptyCollection = EMPTY_COLLECTION;
-  // icon-size scales a 64 px SDF icon to match the grid cell size at each zoom.
-  // Formula: icon-size = (lon_deg_spacing × 256 × 2^zoom) / (360 × 64)
-  // For the 0.006° grid exact values are 0.0085, 0.0171 … doubling each zoom; stops here add ~17%
-  // to cover sub-pixel rasterisation gaps. Using 64 px (vs 16 px) shrinks the 1-texel transparent
-  // rim from MapLibre's sprite-atlas padding from ~0.2 px to ~0.05 px at zoom 9–10.
-  readonly squareLayout: any = {
-    'icon-image': 'sq',
-    'icon-size': [
-      'interpolate', ['exponential', 2], ['zoom'],
-      7, 0.010, 8, 0.020, 9, 0.040, 10, 0.080, 11, 0.160, 12, 0.320, 13, 0.640, 14, 1.280,
-    ],
-    'icon-allow-overlap': true,
-    'icon-ignore-placement': true,
-    'icon-rotation-alignment': 'map',
-    'icon-pitch-alignment': 'map',
-  };
 
   // ── State ──────────────────────────────────────────────────────────────────
   mapReady = signal(false);
@@ -180,15 +155,15 @@ export default class SheldonMosaicMapComponent implements OnInit {
     );
   });
 
-  /** Points with `_colorValue` (0-100) injected per comune. */
-  derivedPoints = computed<FeatureCollection>(() => {
-    const pts = this.points();
-    if (!pts) return EMPTY_COLLECTION;
+  /** Polygons with `_colorValue` (0-100) injected per comune for choropleth fill. */
+  derivedPolygons = computed<FeatureCollection<Polygon>>(() => {
+    const polys = this.polygons();
+    if (!polys) return EMPTY_COLLECTION as FeatureCollection<Polygon>;
     const norm = this.normalizedValues();
     const key = this.municipalityKey();
     return {
-      ...pts,
-      features: pts.features.map((f) => ({
+      ...polys,
+      features: polys.features.map((f) => ({
         ...f,
         properties: {
           ...f.properties,
@@ -204,23 +179,17 @@ export default class SheldonMosaicMapComponent implements OnInit {
     return ['interpolate', ['linear'], ['get', '_colorValue'], ...stops];
   });
 
-  /** Symbol layer paint — reactive to colorSetting changes. */
-  squarePaint = computed(() => ({
-    'icon-color': this.colorExpression() as any,
-    'icon-opacity': 0.93,
-  }));
-
-  /** Fill layer paint — reactive to selectedComune for highlight. */
+  /** Fill layer paint — choropleth color with hover/select opacity. */
   comuniFillPaint = computed(() => {
     const sel = this.selectedComune();
     const key = this.municipalityKey();
     const conditions: any[] = ['case'];
     if (sel) {
-      conditions.push(['==', ['get', key], sel], 0.35);
+      conditions.push(['==', ['get', key], sel], 1.0);
     }
-    conditions.push(['boolean', ['feature-state', 'hover'], false], 0.15, 0);
+    conditions.push(['boolean', ['feature-state', 'hover'], false], 0.7, 0.88);
     return {
-      'fill-color': '#4a9eff',
+      'fill-color': this.colorExpression() as any,
       'fill-opacity': conditions as any,
     };
   });
@@ -274,7 +243,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   onMapLoad(map: Map): void {
     this.mapInstance = map;
-    map.addImage('sq', createSquareSdf(64), {sdf: true});
     this.mapReady.set(true);
   }
 
