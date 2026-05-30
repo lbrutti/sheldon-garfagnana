@@ -16,15 +16,12 @@ export default class Dashboard implements OnInit {
 
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
-  protected comuniPoints: Signal<FeatureCollection<Point>> = signal<FeatureCollection<Point>>({
-    type: "FeatureCollection",
-    features: []
-  });
+
   protected comuniPolygons: Signal<FeatureCollection<Polygon>> = signal<FeatureCollection<Polygon>>({
     type: "FeatureCollection",
     features: []
   });
-
+  protected categoriaCorrente = signal<string>('');
 
   interventiFiltrati = computed(() => {
     return this.interventi().filter((intervento: InterventoInterface) => {
@@ -186,15 +183,15 @@ export default class Dashboard implements OnInit {
 
   ngOnInit(): void {
     this.apiService.getInterventi();
-    this.apiService.getComuniPoints();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;
-    this.comuniPoints = this.apiService.comuniPoints;
     this.comuniPolygons = this.apiService.comuniPolygons;
   }
 
   protected applyFilters($event: FilterOptionInterface[]) {
     this.filters.set($event);
+    const categoria = $event.find(f => f.key === 'categoria')?.value ?? '';
+    this.categoriaCorrente.set(categoria);
   }
 
 }
