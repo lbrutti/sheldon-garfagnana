@@ -12,7 +12,6 @@ import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
   imports: [
     MatInputModule,
     MatFormField,
-    MatLabel,
     MatOption,
     FormsModule,
     ReactiveFormsModule,

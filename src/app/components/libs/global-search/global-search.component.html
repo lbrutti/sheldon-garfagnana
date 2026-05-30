@@ -1,11 +1,11 @@
 <form class="example-form">
-  <mat-form-field>
-    <mat-label>Unione</mat-label>
+  <mat-form-field appearance="outline">
     <mat-select
       [formControl]="selectUnione"
+      value="all"
       (selectionChange)="(applyFilter())"
     >
-      <mat-option [value]="''">Tutte</mat-option>
+      <mat-option value="all">Tutte le unioni</mat-option>
       @for (option of suggestions(); track option) {
         <mat-option [value]="option">{{ option.value }}</mat-option>
       }
