@@ -1,9 +1,9 @@
 <sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
 
-<mat-grid-list [cols]="gridCols()" rowHeight="250px" gutterSize="16px">
+<div class="dashboard-grid">
 
   <!-- ISTOGRAMMI -->
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-chart-bars
       title="Interventi per anno di conclusione"
       groupBy="anno"
@@ -15,9 +15,9 @@
       [limit]="0"
       [data]="interventiPerFine()"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-chart-bars
       title="Interventi per anno di avvio"
       groupBy="anno"
@@ -29,9 +29,9 @@
       [limit]="0"
       [data]="interventiPerInizio()"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-chart-h-bars
       title="Numero interventi per comune"
       groupBy="comune"
@@ -44,10 +44,10 @@
       [limit]="10"
       [data]="interventiPerComune()"
     />
-  </mat-grid-tile>
+  </div>
 
   <!-- KPIS -->
-  <mat-grid-tile colspan="1" rowspan="1">
+  <div class="tile tile--narrow">
     <sheldon-kpi
       title="Comuni con almeno un intervento"
       groupBy="comune"
@@ -55,9 +55,9 @@
       [data]="comuniConInterventi()"
       [limit]="0"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="1" rowspan="1">
+  <div class="tile tile--narrow">
     <sheldon-kpi
       title="Importo finanziato"
       filterBy="comune" masterField="comune"
@@ -67,9 +67,9 @@
       [data]="interventiPerComune()"
       [limit]="0"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="1" rowspan="1">
+  <div class="tile tile--narrow">
     <sheldon-kpi
       title="Interventi programmati"
       filterBy="comune" masterField="comune"
@@ -78,19 +78,19 @@
       [data]="interventiPerComune()"
       [limit]="0"
     />
-  </mat-grid-tile>
+  </div>
 
   <!-- TABELLA -->
-  <mat-grid-tile colspan="2" rowspan="8">
+  <div class="tile tile--wide">
     <sheldon-list
       title="Interventi programmati"
       filterBy="comune" masterField="comune"
       [data]="interventiPerComune()"
     />
-  </mat-grid-tile>
+  </div>
 
   <!-- STACKS -->
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-segmented-chart
       title="Interventi per fonte di finanziamento"
       filterBy="comune" masterField="comune"
@@ -99,9 +99,9 @@
       reduceBy="count"
       [data]="interventiPerFonte()"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-segmented-chart
       title="Interventi con coinvolgimento dei cittadini"
       defaultSortDirection="asc"
@@ -109,9 +109,9 @@
       reduceBy="count"
       [data]="interventiPerPartecipazione()"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-segmented-chart
       title="Stato di avanzamento degli interventi"
       defaultSortDirection="asc"
@@ -121,9 +121,9 @@
       reduceBy="count"
       [data]="interventiPerStato()"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-segmented-chart
       title="Distribuzione degli interventi per Unione"
       defaultSortDirection="asc"
@@ -131,10 +131,10 @@
       reduceBy="count"
       [data]="interventiPerUnione()"
     />
-  </mat-grid-tile>
+  </div>
 
   <!-- TREE MAPS -->
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-chart-treemap
       title="Tipologia di intervento"
       filterBy="comune" masterField="comune"
@@ -144,9 +144,9 @@
       [groups]="['tipologia']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-chart-treemap
       title="Categorie principali degli interventi"
       campo="valore"
@@ -156,9 +156,9 @@
       [groups]="['categoria']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-chart-treemap
       title="Destinatari principali degli interventi"
       campo="valore"
@@ -169,9 +169,9 @@
       [groups]="['target']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-chart-treemap
       title="Ambiti di azione principali degli interventi"
       campo="valore"
@@ -181,14 +181,14 @@
       [groups]="['tema']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
     />
-  </mat-grid-tile>
+  </div>
 
-  <mat-grid-tile colspan="2" rowspan="2">
+  <div class="tile tile--wide">
     <sheldon-mosaic-map
       [polygons]="comuniPolygons()"
       [auxReduce]="[{campo:'value', reduceBy:'sum'}]"
       municipalityKey="name"
     />
-  </mat-grid-tile>
+  </div>
 
-</mat-grid-list>
+</div>

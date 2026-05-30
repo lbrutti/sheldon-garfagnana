@@ -5,32 +5,14 @@ import {components} from '../../libs';
 import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
 import {getExplodedData} from '../../../utils';
 import {FeatureCollection, Point, Polygon} from 'geojson';
-import {MatGridList, MatGridTile} from '@angular/material/grid-list';
-import {BreakpointObserver} from '@angular/cdk/layout';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {map} from 'rxjs';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, MatGridList, MatGridTile,],
+  imports: [...components],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export default class Dashboard implements OnInit {
-  private breakpointObserver = inject(BreakpointObserver);
-
-  protected gridCols = toSignal(
-    this.breakpointObserver
-      .observe(['(max-width: 599px)', '(max-width: 959px)'])
-      .pipe(
-        map(() => {
-          if (this.breakpointObserver.isMatched('(max-width: 599px)')) return 1;
-          if (this.breakpointObserver.isMatched('(max-width: 959px)')) return 2;
-          return 4;
-        })
-      ),
-    {initialValue: 4}
-  );
 
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
