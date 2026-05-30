@@ -1,44 +1,34 @@
 <sheldon-card>
-  <ng-container title>{{ this.title() }}</ng-container>
+  <ng-container title>{{ title() }}</ng-container>
   <ng-container content>
-    <!--    SORTING -->
-    @if (this.showSorting()) {
-
-      @if (this.showSorting()) {
-        <sheldon-sort-toggle
-          [defaultSortDirection]="this.defaultSortDirection()"
-          (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
-      }
+    @if (showSorting()) {
+      <sheldon-sort-toggle
+        [defaultSortDirection]="defaultSortDirection()"
+        (sortChange)="onSortChange($event)"
+      />
     }
-
-    <!--    FILTERING -->
-    @if (this.filterBy() !== null) {
+    @if (filterBy() !== null) {
       <sheldon-dynamic-filter
-        [filterBy]="this.filtersFields()"
-        [dataset]="this.data()"
-        [masterField]="this.masterField()"
-        (filterChange)="onFilterChange($event)"/>
+        [filterBy]="filtersFields()"
+        [dataset]="data()"
+        [masterField]="masterField()"
+        (filterChange)="onFilterChange($event)"
+      />
     }
-    <!--    AUX REDUCE SWITCHES-->
-    @if (this.auxReduce().length) {
-      <mat-button-toggle-group
-        [value]="this.auxReduce()[0]"
-        (change)="onReduceChange($event)">
-        @for (aux of this.auxReduce(); track aux) {
-          <mat-button-toggle [value]="aux">
-            <span>{{ aux.campo }}</span>
-          </mat-button-toggle>
+    @if (auxReduce().length) {
+      <mat-button-toggle-group [value]="auxReduce()[0]" (change)="onReduceChange($event)">
+        @for (aux of auxReduce(); track aux) {
+          <mat-button-toggle [value]="aux">{{ aux.campo }}</mat-button-toggle>
         }
       </mat-button-toggle-group>
     }
-    <!--    CHART -->
-    <canvas
-      baseChart
-      [data]="chartData()"
-      [options]="barChartOptions()"
-      [type]="barChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)">
-    </canvas>
+    <div class="h-bars-container">
+      @for (bar of bars(); track bar.label) {
+        <div class="h-bar" [style.width.%]="bar.pct">
+          <span class="h-bar-label">{{ bar.label }}</span>
+          <span class="h-bar-value">{{ bar.value }}</span>
+        </div>
+      }
+    </div>
   </ng-container>
 </sheldon-card>

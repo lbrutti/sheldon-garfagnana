@@ -1,0 +1,36 @@
+.h-bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.h-bar {
+  height: 28px;
+  background: var(--mat-sys-primary);
+  min-width: 40px;
+  border-radius: 0 3px 3px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: width 0.3s ease;
+}
+
+.h-bar-label,
+.h-bar-value {
+  font-size: 12px;
+  color: white;
+  white-space: nowrap;
+}
+
+.h-bar-value {
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.h-bar-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

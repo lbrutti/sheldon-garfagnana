@@ -1,45 +1,41 @@
 <sheldon-card>
-  <ng-container title>{{ this.title() }}</ng-container>
+  <ng-container title>{{ title() }}</ng-container>
   <ng-container content>
-    <!--    SORTING -->
-    @if (this.showSorting()) {
+    @if (showSorting()) {
       <sheldon-sort-toggle
-        [defaultSortDirection]="this.defaultSortDirection()"
-        (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
+        [defaultSortDirection]="defaultSortDirection()"
+        (sortChange)="onSortChange($event)"
+      />
     }
-
-    <!--    FILTERING -->
-    @if (this.filterBy() !== null) {
+    @if (filterBy() !== null) {
       <sheldon-dynamic-filter
-        [filterBy]="this.filtersFields()"
-        [dataset]="this.data()"
-        [masterField]="this.masterField()"
-        (filterChange)="onFilterChange($event)"/>
+        [filterBy]="filtersFields()"
+        [dataset]="data()"
+        [masterField]="masterField()"
+        (filterChange)="onFilterChange($event)"
+      />
     }
-    <!--    AUX REDUCE SWITCHES-->
-    @if (this.auxReduce().length) {
+    @if (auxReduce().length) {
       <mat-button-toggle-group
-        [value]="{campo:this.groupBy(), reduceBy:this.reduceBy()}"
+        [value]="{campo: groupBy(), reduceBy: reduceBy()}"
         (change)="onReduceChange($event)">
-        <mat-button-toggle [value]="{campo:this.groupBy(), reduceBy:this.reduceBy()}">
-          <!--          placeholder, trovare icona-->
-          <span>{{ this.groupBy() }}</span>
+        <mat-button-toggle [value]="{campo: groupBy(), reduceBy: reduceBy()}">
+          {{ groupBy() }}
         </mat-button-toggle>
-        @for (aux of this.auxReduce(); track aux) {
-          <mat-button-toggle [value]="aux">
-            <span>{{ aux.campo }}</span>
-          </mat-button-toggle>
+        @for (aux of auxReduce(); track aux) {
+          <mat-button-toggle [value]="aux">{{ aux.campo }}</mat-button-toggle>
         }
       </mat-button-toggle-group>
     }
-    <!--    CHART -->
-    <canvas
-      baseChart
-      [data]="chartData()"
-      [options]="barChartOptions()"
-      [type]="barChartType"
-      (chartHover)="chartHovered($event)"
-      (chartClick)="chartClicked($event)">
-    </canvas>
+    <div class="bars-container">
+      @for (bar of bars(); track bar.label) {
+        <div class="bar-col">
+          <span class="bar-value">{{ bar.value }}</span>
+          <div class="bar" [style.height.%]="bar.pct">
+            <span class="bar-label">{{ bar.label }}</span>
+          </div>
+        </div>
+      }
+    </div>
   </ng-container>
 </sheldon-card>
