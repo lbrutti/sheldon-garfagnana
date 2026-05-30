@@ -10,7 +10,7 @@ import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@a
 import { DynamicFilterComponent } from '../dynamic-filter/dynamic-filter.component';
 import { FilterOptionInterface, TreemapDataInterface } from '../../../interfaces';
 import { getReducedValue } from '../../../utils';
-import CardComponent from '../card/card.component';
+import TileComponent from '../tile/tile.component';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -41,7 +41,7 @@ const GRADIENT_PRESETS: string[] = [
 @Component({
   selector: 'sheldon-chart-treemap',
   imports: [
-    CardComponent,
+    TileComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
     DynamicFilterComponent,

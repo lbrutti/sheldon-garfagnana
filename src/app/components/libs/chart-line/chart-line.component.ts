@@ -4,7 +4,7 @@ import annotationPlugin from 'chartjs-plugin-annotation';
 
 Chart.register(annotationPlugin);
 
-import CardComponent from '../card/card.component';
+import TileComponent from '../tile/tile.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {MatIcon} from '@angular/material/icon';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
@@ -16,7 +16,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 @Component({
   selector: 'sheldon-chart-line',
   imports: [
-    CardComponent,
+    TileComponent,
     // MatButtonToggleGroup,
     // MatButtonToggle,
     // MatIcon,

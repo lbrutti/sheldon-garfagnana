@@ -5,20 +5,18 @@ import {components} from '../../libs';
 import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
 import {getExplodedData} from '../../../utils';
 import {FeatureCollection, Geometry, Point, Polygon} from 'geojson';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components,],
+  imports: [...components, MatGridList, MatGridTile,],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
 })
 export default class Dashboard implements OnInit {
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
-  protected comuniPoints: Signal<FeatureCollection<Point>> = signal<FeatureCollection<Point>>({
-    type: "FeatureCollection",
-    features: []
-  });
+
   protected comuniPolygons: Signal<FeatureCollection<Polygon>> = signal<FeatureCollection<Polygon>>({
     type: "FeatureCollection",
     features: []
@@ -185,10 +183,8 @@ export default class Dashboard implements OnInit {
 
   ngOnInit(): void {
     this.apiService.getInterventi();
-    this.apiService.getComuniPoints();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;
-    this.comuniPoints = this.apiService.comuniPoints;
     this.comuniPolygons = this.apiService.comuniPolygons;
   }
 

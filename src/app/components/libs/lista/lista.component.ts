@@ -5,7 +5,7 @@ import {
   Signal,
 
 } from '@angular/core';
-import CardComponent from '../card/card.component';
+import TileComponent from '../tile/tile.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {MatList, MatListItem} from '@angular/material/list';
@@ -13,7 +13,7 @@ import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'sheldon-list',
-  imports: [CardComponent, DynamicFilterComponent, MatList, MatListItem, DecimalPipe],
+  imports: [TileComponent, DynamicFilterComponent, MatList, MatListItem, DecimalPipe],
   templateUrl: './lista.component.html',
   styleUrl: './lista.component.scss',
 })

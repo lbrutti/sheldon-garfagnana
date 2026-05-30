@@ -9,14 +9,14 @@ import {
   untracked,
   ViewChild
 } from '@angular/core';
-import CardComponent from '../card/card.component';
+import TileComponent from '../tile/tile.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValue} from '../../../utils';
 
 @Component({
   selector: 'sheldon-kpi',
-  imports: [CardComponent, DynamicFilterComponent],
+  imports: [TileComponent, DynamicFilterComponent],
   templateUrl: './kpi.component.html',
   styleUrl: './kpi.component.scss',
 })

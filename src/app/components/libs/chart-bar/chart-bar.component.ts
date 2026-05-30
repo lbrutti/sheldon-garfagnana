@@ -7,12 +7,13 @@ import {
   signal,
   Signal,
 } from '@angular/core';
-import CardComponent from '../card/card.component';
+import TileComponent from '../tile/tile.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
+import {MatGridTile} from '@angular/material/grid-list';
 
 export interface BarItem {
   label: string;
@@ -23,7 +24,7 @@ export interface BarItem {
 @Component({
   selector: 'sheldon-chart-bars',
   imports: [
-    CardComponent,
+    TileComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
     DynamicFilterComponent,

@@ -16,7 +16,7 @@ import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ng
 import type {Feature, FeatureCollection, Polygon} from 'geojson';
 import type {Map, MapLayerMouseEvent, MapLibreEvent, MapLibreZoomEvent, StyleSpecification} from 'maplibre-gl';
 
-import CardComponent from '../card/card.component';
+import TileComponent from '../tile/tile.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {AuxReduceOption, ColorStop, FilterOptionInterface} from '../../../interfaces';
 import {EventData} from '@angular/cdk/testing';
@@ -77,7 +77,7 @@ function polygonBbox(feature: Feature<Polygon>): [number, number, number, number
   selector: 'sheldon-mosaic-map',
   standalone: true,
   imports: [
-    CardComponent,
+    TileComponent,
     DynamicFilterComponent,
     MapComponent,
     GeoJSONSourceComponent,
