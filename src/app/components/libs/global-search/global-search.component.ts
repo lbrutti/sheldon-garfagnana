@@ -3,7 +3,7 @@ import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
-import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 
 
@@ -63,4 +63,9 @@ export default class GlobalSearchComponent {
     this.filter.emit([this.selectUnioneSignal(), ...(this.chipSetSignal() || [])].filter(f => f));
   }
 
+  protected handleToggle($event: MatButtonToggleChange) {
+    // Keep multiple mode but enforce single-or-none: deselect all others when a new one is picked
+    this.chipSet.setValue($event.source.checked ? [$event.source.value] : []);
+    this.filter.emit([this.selectUnioneSignal(), ...(this.chipSet.value ?? [])].filter(f => f));
+  }
 }

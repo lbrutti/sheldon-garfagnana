@@ -16,7 +16,11 @@
       />
     }
     @if (auxReduce().length) {
-      <mat-button-toggle-group [value]="auxReduce()[0]" (change)="onReduceChange($event)">
+      <mat-button-toggle-group
+        [value]="auxReduce()[0]"
+        [hideSingleSelectionIndicator]="true"
+        [hideMultipleSelectionIndicator]="true"
+        (change)="onReduceChange($event)">
         @for (aux of auxReduce(); track aux) {
           <mat-button-toggle [value]="aux">{{ aux.campo }}</mat-button-toggle>
         }

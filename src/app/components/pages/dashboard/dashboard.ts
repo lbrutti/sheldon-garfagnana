@@ -70,7 +70,7 @@ export default class Dashboard implements OnInit {
           importoTotale: 'valore',
           inizio: 'anno',
           unione: 'unione',
-          nome: 'nome'
+          nome: 'nome',
         });
         const dataComuniConInterventi: DataInterface[] = Array.from(new Set(interventi.map(i => i.comune)))
           .map((comune: string): DataInterface => ({

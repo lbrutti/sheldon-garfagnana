@@ -14,13 +14,16 @@
   </mat-form-field>
   <mat-button-toggle-group
     [formControl]="chipSet"
+    [hideSingleSelectionIndicator]="true"
+    [hideMultipleSelectionIndicator]="true"
     name="ingredients"
     aria-label="Ingredients"
-    multiple>
+    multiple
+  >
     @for (option of chips(); track option) {
       <mat-button-toggle
         [value]="option"
-        (change)="(applyFilter())">{{ option.value }}
+        (change)="(handleToggle($event))">{{ option.value }}
       </mat-button-toggle>
     }
   </mat-button-toggle-group>

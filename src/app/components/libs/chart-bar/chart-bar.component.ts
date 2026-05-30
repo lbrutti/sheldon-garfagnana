@@ -116,4 +116,8 @@ export default class ChartBarComponent implements OnInit {
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value);
   }
+
+  protected getBarBackground():string{
+    return 'gold';
+  }
 }
