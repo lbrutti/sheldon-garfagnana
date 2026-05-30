@@ -1,6 +1,10 @@
-@use "@angular/material" as mat;
+//@use "@angular/material" as mat;
 
 :host {
+  display: block;
+  width: auto;
+  border: solid 1px black;
+  padding: 10px;
 
   mat-card-header {
     border-bottom: 1px solid black;

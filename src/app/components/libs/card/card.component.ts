@@ -9,6 +9,7 @@ import {
 } from '@angular/material/card';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {MatGridTile, MatGridTileText} from '@angular/material/grid-list';
 
 @Component({
   selector: 'sheldon-card',
@@ -19,7 +20,9 @@ import {MatIcon} from '@angular/material/icon';
     MatCardSubtitle,
     MatCardContent,
     MatIcon,
-    MatIconButton
+    MatIconButton,
+    MatGridTile,
+    MatGridTileText
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',

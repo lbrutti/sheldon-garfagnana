@@ -1,6 +1,6 @@
-<mat-card class="example-card" appearance="outlined">
-  <mat-card-header>
-    <mat-card-title [style]="{display:'flex', justifyContent:'space-between', flexDirection:'row'}">
+<!--<mat-card class="example-card" appearance="outlined">-->
+  <mat-grid-tile-header>
+    <div [style]="{display:'flex', justifyContent:'space-between', flexDirection:'row'}">
       <div>
         <ng-content select="[title]"></ng-content>
       </div>
@@ -15,18 +15,14 @@
       <!--      <button matIconButton>-->
       <!--        <mat-icon aria-hidden="false" aria-label="embed" fontIcon="code_xml"></mat-icon>-->
       <!--      </button>-->
-    </mat-card-title>
+    </div>
     <mat-card-subtitle>
       <ng-content select="[subtitle]"></ng-content>
 
     </mat-card-subtitle>
-  </mat-card-header>
+  </mat-grid-tile-header>
 
-  <mat-card-content>
+<!--  <mat-card-content>-->
     <ng-content select="[content]"></ng-content>
-  </mat-card-content>
-  <!--  <mat-card-actions>-->
-  <!--    <button matButton>LIKE</button>-->
-  <!--    <button matButton>SHARE</button>-->
-  <!--  </mat-card-actions>-->
-</mat-card>
+<!--  </mat-card-content>-->
+<!--</mat-card>-->
