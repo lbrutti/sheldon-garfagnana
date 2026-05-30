@@ -9,7 +9,7 @@
     title="Interventi per anno di conclusione"
     groupBy="anno"
     reduceBy="count"
-    filterBy="comune"
+    filterBy="comune" masterField="comune"
     sortBy="category"
     defaultSortDirection="asc"
     [showSorting]="false"
@@ -23,7 +23,7 @@
     title="Interventi per anno di avvio"
     groupBy="anno"
     reduceBy="count"
-    filterBy="comune"
+    filterBy="comune" masterField="comune"
     sortBy="category"
     defaultSortDirection="asc"
     [showSorting]="false"
@@ -58,7 +58,7 @@
   <sheldon-kpi
     #kpi_importo
     title="Importo finanziato"
-    filterBy="comune"
+    filterBy="comune" masterField="comune"
     groupBy="valore"
     reduceBy="sum"
     udm="  €"
@@ -67,7 +67,7 @@
   <sheldon-kpi
     #kpi_interventi
     title="Interventi programmati"
-    filterBy="comune"
+    filterBy="comune" masterField="comune"
     groupBy="comune"
     reduceBy="count"
     [data]="interventiPerComune()"
@@ -76,7 +76,7 @@
   <!--  TABELLA -->
   <sheldon-list
     title="Interventi programmati"
-    filterBy="comune"
+    filterBy="comune" masterField="comune"
 
     [data]="interventiPerComune()"></sheldon-list>
 
@@ -84,7 +84,7 @@
 <!--  STACKS -->
 <sheldon-segmented-chart
   title="Interventi per fonte di finanziamento"
-  filterBy="comune"
+  filterBy="comune" masterField="comune"
   defaultSortDirection="asc"
   groupBy="valore"
   reduceBy="count"
@@ -100,7 +100,7 @@
 <sheldon-segmented-chart
   title="Stato di avanzamento degli interventi"
   defaultSortDirection="asc"
-  filterBy="comune"
+  filterBy="comune" masterField="comune"
   [auxReduce]="[{campo:'nome', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"
   groupBy="nome"
   reduceBy="count"
@@ -116,7 +116,7 @@
 <!-- TREE MAPS -->
 <sheldon-chart-treemap
   title="Tipologia di intervento"
-  filterBy="comune"
+  filterBy="comune" masterField="comune"
   campo="valore"
   reduceBy="sum"
   [data]="interventiPerTipologia()"
@@ -127,7 +127,7 @@
   title="Categorie principali degli interventi"
   campo="valore"
   reduceBy="sum"
-  filterBy="comune"
+  filterBy="comune" masterField="comune"
   [data]="interventiPerCategoria()"
   [groups]="['categoria']"
   [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
@@ -137,6 +137,7 @@
   campo="valore"
   reduceBy="sum"
   filterBy="comune"
+  masterField="comune"
   [data]="interventiPerTarget()"
   [groups]="['target']"
   [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
@@ -145,7 +146,7 @@
   title="Ambiti di azione principali degli interventi"
   campo="valore"
   reduceBy="sum"
-  filterBy="comune"
+  filterBy="comune" masterField="comune"
   [data]="interventiPerTema()"
   [groups]="['tema']"
   [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"

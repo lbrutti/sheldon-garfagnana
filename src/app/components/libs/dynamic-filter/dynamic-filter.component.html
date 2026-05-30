@@ -3,14 +3,28 @@
 
     <mat-form-field appearance="outline" class="filter-field">
       <mat-label>{{ field | titlecase }}</mat-label>
-
+<!--<mat-select-->
+<!--  [id]="field"-->
+<!--  [formControlName]="field"-->
+<!--  [placeholder]="'Filter by ' + field">-->
+<!--  @for (opt of filteredOptions(field); track opt.key) {-->
+<!--    <mat-option [value]="opt.value">{{ opt.value }}</mat-option>-->
+<!--  }-->
+<!--</mat-select>-->
       <input
         matInput
         [id]="field"
         [formControlName]="field"
         [placeholder]="'Filter by ' + field"
         [matAutocomplete]="auto"
+        #trigger="matAutocompleteTrigger"
       />
+
+      @if (hasValue(field)) {
+        <button matSuffix mat-icon-button (click)="clearField(field, trigger)" type="button" aria-label="Clear">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
 
       <mat-autocomplete #auto="matAutocomplete">
         @for (opt of filteredOptions(field); track opt.key) {

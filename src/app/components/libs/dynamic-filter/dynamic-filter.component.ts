@@ -10,13 +10,16 @@ import {
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {TitleCasePipe} from '@angular/common';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
 import {
   MatAutocomplete,
   MatAutocompleteTrigger,
   MatOption,
 } from '@angular/material/autocomplete';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
+import {MatSelect} from '@angular/material/select';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'sheldon-dynamic-filter',
@@ -24,12 +27,16 @@ import {DataInterface, FilterOptionInterface} from '../../../interfaces';
   imports: [
     ReactiveFormsModule,
     TitleCasePipe,
-    MatInput,
-    MatAutocomplete,
     MatOption,
-    MatAutocompleteTrigger,
     MatLabel,
     MatFormField,
+    MatSelect,
+    MatInput,
+    MatSuffix,
+    MatIconButton,
+    MatIcon,
+    MatAutocompleteTrigger,
+    MatAutocomplete,
   ],
   templateUrl: './dynamic-filter.component.html',
   styleUrl: './dynamic-filter.component.scss',
@@ -117,8 +124,14 @@ export class DynamicFilterComponent<T extends Record<string, unknown>> {
     return matched.map((v) => ({key: v, value: v}));
   }
 
-  hasOptions(field: string): boolean {
-    return this.filteredOptions(field).length > 0;
+  hasValue(field: string): boolean {
+    return !!(this.formValue()[field] ?? '').trim();
+  }
+
+  clearField(field: string, trigger: MatAutocompleteTrigger): void {
+    this.filterForm.get(field)?.setValue('', {emitEvent: true});
+    trigger.autocomplete.options.filter(o => o.selected).map(o => o.deselect());
+    trigger.closePanel();
   }
 
   // ---------------------------------------------------------------------------
