@@ -24,9 +24,11 @@
     }
     <div class="h-bars-container">
       @for (bar of bars(); track bar.label) {
-        <div class="h-bar" [style.width.%]="bar.pct">
-          <span class="h-bar-label">{{ bar.label }}</span>
-          <span class="h-bar-value">{{ bar.value }}</span>
+        <div class="h-bar" [style.width.%]="bar.pct" [style.min-height]="'var(--min-bar-height, 96px)'">
+          <div class="h-bar-caption">
+            <span class="h-bar-label">{{ bar.label }}</span>
+            <span class="h-bar-value">{{ bar.value }}</span>
+          </div>
         </div>
       }
     </div>
