@@ -2,9 +2,14 @@
   width: 100%;
 
   .kpi-value-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    //display: flex;
+    //align-items: center;
+    //justify-content: center;
+    height: 100%;
+    width: 100%;
+    background: rebeccapurple;
+    align-self: end;
+    margin-top: auto;
   }
 
   .kpi-value {

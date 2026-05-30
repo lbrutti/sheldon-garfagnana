@@ -13,10 +13,11 @@ import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValue} from '../../../utils';
+import {FitTextDirective} from '../../../directives/fit-text.directive';
 
 @Component({
   selector: 'sheldon-kpi',
-  imports: [CardComponent, DynamicFilterComponent],
+  imports: [CardComponent, DynamicFilterComponent, FitTextDirective],
   templateUrl: './kpi.component.html',
   styleUrl: './kpi.component.scss',
 })

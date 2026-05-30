@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {
   MatCard,
   MatCardActions,
@@ -14,17 +14,13 @@ import {MatGridTile, MatGridTileText} from '@angular/material/grid-list';
 @Component({
   selector: 'sheldon-card',
   imports: [
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
     MatCardSubtitle,
-    MatCardContent,
     MatIcon,
     MatIconButton,
-    MatGridTile,
     MatGridTileText
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
 })
-export default class CardComponent {}
+export default class CardComponent {
+}
