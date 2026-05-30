@@ -22,6 +22,7 @@ html {
 }
 
 body {
+
   // Default the application to a light color theme. This can be changed to
   // `dark` to enable the dark color theme, or to `light dark` to defer to the
   // user's system settings.
@@ -39,22 +40,4 @@ body {
   height: 100%;
 }
 
-/* You can add global styles to this file, and also import other style files */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: auto auto;
-  gap: 16px;
-  padding: 0 32px 32px;
-}
-
-.grid-bottom {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  padding: 0 32px 32px;
-}
-
-.mat-mdc-card-header-text {
-  width: 100%
-}
+@import "theme/sheldon-base";
