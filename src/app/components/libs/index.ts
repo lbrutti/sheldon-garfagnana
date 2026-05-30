@@ -10,7 +10,6 @@ import ChartHorizontalStackedBarComponent from './chart-horizontal-stacked-bar/c
 import ListaComponent from './lista/lista.component';
 import ChartTreemapComponent from './chart-treemap/chart-treemap.component';
 import SheldonMosaicMapComponent from './sheldon-mosaic-map/sheldon-mosaic-map.component';
-import TileComponent from './tile/tile.component';
 
 export * from './card/card.component';
 export * from './chart-horizontal-bar/chart-horizontal-bar.component';
@@ -23,7 +22,6 @@ export * from './chart-line/chart-line.component';
 export * from './kpi/kpi.component';
 export * from './lista/lista.component';
 export * from './chart-treemap/chart-treemap.component';
-export * from './tile/tile.component';
 export { default as SheldonMosaicMapComponent } from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 
 export const components = [
@@ -39,5 +37,4 @@ export const components = [
   KpiComponent,
   ListaComponent,
   SheldonMosaicMapComponent,
-  TileComponent
 ];

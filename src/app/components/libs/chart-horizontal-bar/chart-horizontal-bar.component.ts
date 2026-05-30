@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import TileComponent from '../tile/tile.component';
+import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import ChartBarComponent from '../chart-bar/chart-bar.component';
@@ -8,7 +8,7 @@ import {SortToggle} from '../sort-toggle/sort-toggle';
 @Component({
   selector: 'sheldon-chart-h-bars',
   imports: [
-    TileComponent,
+    CardComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
     DynamicFilterComponent,

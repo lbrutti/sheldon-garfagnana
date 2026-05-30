@@ -8,7 +8,7 @@ import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {components, DynamicFilterComponent} from '../index';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import TileComponent from '../tile/tile.component';
+import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {ChartData} from 'chart.js';
 import {getReducedValue, getReducedValueByLabel} from '../../../utils';
@@ -30,7 +30,7 @@ export interface SegmentInterface {
   imports: [
     CommonModule,
     MatButtonModule,
-    TileComponent,
+    CardComponent,
     DynamicFilterComponent,
     SortToggle,
     MatButtonToggle,
