@@ -3,7 +3,7 @@
 <div class="sheldon-grid">
 
   <!-- ISTOGRAMMI -->
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-chart-bars
       title="Interventi per anno di conclusione"
       groupBy="anno"
@@ -17,7 +17,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-chart-bars
       title="Interventi per anno di avvio"
       groupBy="anno"
@@ -31,7 +31,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-chart-h-bars
       title="Numero interventi per comune"
       groupBy="comune"
@@ -47,7 +47,7 @@
   </div>
 
   <!-- KPIS -->
-  <div class="tile tile--narrow">
+  <div class="tile tile--3">
     <sheldon-kpi
       title="Comuni con almeno un intervento"
       groupBy="comune"
@@ -57,7 +57,7 @@
     />
   </div>
 
-  <div class="tile tile--narrow">
+  <div class="tile tile--3">
     <sheldon-kpi
       title="Importo finanziato"
       filterBy="comune" masterField="comune"
@@ -69,7 +69,7 @@
     />
   </div>
 
-  <div class="tile tile--narrow">
+  <div class="tile tile--3">
     <sheldon-kpi
       title="Interventi programmati"
       filterBy="comune" masterField="comune"
@@ -81,7 +81,7 @@
   </div>
 
   <!-- TABELLA -->
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-list
       title="Interventi programmati"
       filterBy="comune" masterField="comune"
@@ -90,7 +90,7 @@
   </div>
 
   <!-- STACKS -->
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-segmented-chart
       title="Interventi per fonte di finanziamento"
       filterBy="comune" masterField="comune"
@@ -101,7 +101,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-segmented-chart
       title="Interventi con coinvolgimento dei cittadini"
       defaultSortDirection="asc"
@@ -111,7 +111,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-segmented-chart
       title="Stato di avanzamento degli interventi"
       defaultSortDirection="asc"
@@ -123,7 +123,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-segmented-chart
       title="Distribuzione degli interventi per Unione"
       defaultSortDirection="asc"
@@ -134,7 +134,7 @@
   </div>
 
   <!-- TREE MAPS -->
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-chart-treemap
       title="Tipologia di intervento"
       filterBy="comune" masterField="comune"
@@ -146,7 +146,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-chart-treemap
       title="Categorie principali degli interventi"
       campo="valore"
@@ -158,7 +158,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-chart-treemap
       title="Destinatari principali degli interventi"
       campo="valore"
@@ -171,7 +171,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-chart-treemap
       title="Ambiti di azione principali degli interventi"
       campo="valore"
@@ -183,7 +183,7 @@
     />
   </div>
 
-  <div class="tile tile--wide">
+  <div class="tile tile--4">
     <sheldon-mosaic-map
       [polygons]="comuniPolygons()"
       [auxReduce]="[{campo:'value', reduceBy:'sum'}]"
