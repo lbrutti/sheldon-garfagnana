@@ -17,7 +17,6 @@ import {
   MatOption,
 } from '@angular/material/autocomplete';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
-import {MatSelect} from '@angular/material/select';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 
@@ -30,7 +29,6 @@ import {MatIcon} from '@angular/material/icon';
     MatOption,
     MatLabel,
     MatFormField,
-    MatSelect,
     MatInput,
     MatSuffix,
     MatIconButton,
