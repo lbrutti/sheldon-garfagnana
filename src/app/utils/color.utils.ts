@@ -18,7 +18,7 @@ export function resolveGradientDescriptor(steps: string[]): GradientDescriptor {
   const colors = steps.map(s =>
     s.startsWith('--') ? (style.getPropertyValue(s).trim() || s) : s
   );
-  return { stops: colors.map((color, i) => ({ color, position: stopPosition(i, colors.length) })) };
+  return {stops: colors.map((color, i) => ({color, position: stopPosition(i, colors.length)}))};
 }
 
 /**
@@ -32,7 +32,7 @@ export function applyGradient(
   descriptor: GradientDescriptor,
 ): CanvasGradient {
   const gradient = ctx.createLinearGradient(x0, y0, x1, y1);
-  descriptor.stops.forEach(({ color, position }) => gradient.addColorStop(position, color));
+  descriptor.stops.forEach(({color, position}) => gradient.addColorStop(position, color));
   return gradient;
 }
 
@@ -43,4 +43,30 @@ export function applyGradient(
 function stopPosition(index: number, total: number): number {
   if (total === 1) return 0;
   return index / (total - 1);
+}
+
+export function getRandomGradient(categoria: string, min?: number, max?: number) {
+  let colorCat = '';
+  switch (categoria) {
+    case 'Ambiente':
+      colorCat = 'ambiente';
+      break;
+    case 'Cultura':
+      colorCat = 'cultura';
+      break;
+    case 'Mobilità':
+      colorCat = 'mobilita';
+      break;
+    case 'Sicurezza':
+      colorCat = 'sicurezza';
+      break;
+    case 'Sociale':
+      colorCat = 'sociale';
+      break;
+    default:
+      colorCat = ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'sociale'][(Math.random() * 5) % 5];
+      break;
+  }
+  return `linear-gradient(90deg, var(--color-gradient-${colorCat}-start), var(--color-gradient-${colorCat}-end))`
+
 }

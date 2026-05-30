@@ -1,6 +1,6 @@
 import {
   Component,
-  computed,
+  computed, Input,
   input,
   InputSignal,
   OnInit,
@@ -11,7 +11,7 @@ import CardComponent from '../card/card.component';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {getReducedValueByLabel} from '../../../utils';
+import {getRandomGradient, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 
 export interface BarItem {
@@ -53,9 +53,9 @@ export default class ChartBarComponent implements OnInit {
 
   data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
-  auxReduce = input<{campo: keyof DataInterface; reduceBy: string}[]>([]);
+  auxReduce = input<{ campo: keyof DataInterface; reduceBy: string }[]>([]);
 
-  currentReduce = signal<{campo: string; reduceBy: string} | null>(null);
+  currentReduce = signal<{ campo: string; reduceBy: string } | null>(null);
 
   ngOnInit(): void {
     this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()});
@@ -68,10 +68,10 @@ export default class ChartBarComponent implements OnInit {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
     const filteredData = filterSet
       ? this.data().filter(d =>
-          this.appliedFilters().every(
-            filter => filter.value.length && filter.value === `${(d as any)[filter.key]}`
-          )
+        this.appliedFilters().every(
+          filter => filter.value.length && filter.value === `${(d as any)[filter.key]}`
         )
+      )
       : this.data();
 
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
@@ -85,6 +85,7 @@ export default class ChartBarComponent implements OnInit {
       pct: (values[i] / max) * 100,
     }));
   });
+  categoria = input<string>('');
 
   getGroupedKeys(grouped: any): string[] {
     const reduce = this.currentReduce();
@@ -92,10 +93,10 @@ export default class ChartBarComponent implements OnInit {
       this.sortBy() === 'category'
         ? Object.keys(grouped).sort((a, b) => `${a}`.localeCompare(`${b}`))
         : Object.keys(grouped).sort(
-            (a, b) =>
-              getReducedValueByLabel(grouped, a, reduce?.reduceBy ?? 'sum') -
-              getReducedValueByLabel(grouped, b, reduce?.reduceBy ?? 'sum')
-          );
+          (a, b) =>
+            getReducedValueByLabel(grouped, a, reduce?.reduceBy ?? 'sum') -
+            getReducedValueByLabel(grouped, b, reduce?.reduceBy ?? 'sum')
+        );
     if (
       (!this.showSorting() && this.defaultSortDirection() === 'desc') ||
       (this.showSorting() && this.sortDirection() === 'desc')
@@ -117,7 +118,7 @@ export default class ChartBarComponent implements OnInit {
     this.currentReduce.set($event.value);
   }
 
-  protected getBarBackground():string{
-    return 'gold';
+  protected getBarBackground(): string {
+    return getRandomGradient(this.categoria());
   }
 }
