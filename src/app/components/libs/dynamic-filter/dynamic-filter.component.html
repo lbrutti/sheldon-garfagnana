@@ -2,21 +2,12 @@
   @for (field of fields(); track field) {
 
     <mat-form-field appearance="outline" class="filter-field">
-      <mat-label>{{ field | titlecase }}</mat-label>
-      <!--<mat-select-->
-      <!--  [id]="field"-->
-      <!--  [formControlName]="field"-->
-      <!--  [placeholder]="'Filter by ' + field">-->
-      <!--  @for (opt of filteredOptions(field); track opt.key) {-->
-      <!--    <mat-option [value]="opt.value">{{ opt.value }}</mat-option>-->
-      <!--  }-->
-      <!--</mat-select>-->
       <input
         matInput
         #inputEl
         [id]="field"
         [formControlName]="field"
-        [placeholder]="field|titlecase"
+        [placeholder]="'Cerca un '+field"
         [matAutocomplete]="auto"
         #trigger="matAutocompleteTrigger"
       />

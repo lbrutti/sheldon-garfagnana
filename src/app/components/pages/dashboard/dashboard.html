@@ -50,6 +50,8 @@
   <div class="tile tile--3">
     <sheldon-kpi
       title="Comuni con almeno un intervento"
+      [minFontSize]="120"
+
       groupBy="comune"
       reduceBy="count"
       [data]="comuniConInterventi()"

@@ -1,12 +1,15 @@
 body {
   * {
     border-radius: 0 !important;
+    --mat-sys-surface-variant: transparent !important;
+    --mat-sys-surface: #EFE9E9 !important;
   }
 }
 
 .mat-mdc-card-header-text {
   width: 100%
 }
+
 
 .sheldon-grid {
   display: grid;
