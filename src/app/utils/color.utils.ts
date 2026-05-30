@@ -45,7 +45,7 @@ function stopPosition(index: number, total: number): number {
   return index / (total - 1);
 }
 
-export function getRandomGradient(categoria: string, min?: number, max?: number) {
+export function getRandomGradient(categoria: string, rotation: string = '0deg', stopPoint: string = '50%') {
   let colorCat = '';
   switch (categoria) {
     case 'Ambiente':
@@ -67,6 +67,6 @@ export function getRandomGradient(categoria: string, min?: number, max?: number)
       colorCat = ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'sociale'][(Math.random() * 5) % 5];
       break;
   }
-  return `linear-gradient(90deg, var(--color-gradient-${colorCat}-start), var(--color-gradient-${colorCat}-end))`
+  return `linear-gradient(${rotation}, var(--color-gradient-${colorCat}-start), var(--color-gradient-${colorCat}-end) ${stopPoint})`
 
 }

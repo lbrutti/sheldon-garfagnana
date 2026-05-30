@@ -118,7 +118,8 @@ export default class ChartBarComponent implements OnInit {
     this.currentReduce.set($event.value);
   }
 
-  protected getBarBackground(): string {
-    return getRandomGradient(this.categoria());
+  protected getBarBackground(rotation: string = '0deg'): string {
+    const stopPoint = Math.floor(Math.random() * (90 - 10 + 1) + 10)+'%';
+    return getRandomGradient(this.categoria(), rotation, stopPoint);
   }
 }
