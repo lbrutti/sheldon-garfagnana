@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/dynamic-filter/dynamic-filter.component.scss"],
-  "sourcesContent": [".filter-field {\n  display: flex;\n  flex-direction: column;\n  gap: 4px;\n  margin-bottom: 12px;\n}\n"],
-  "mappings": "AAAA,CAAA,aACE,QAAA,KACA,eAAA,OACA,IAAA,IACA,cAAA",
-  "names": []
-}
