@@ -13,21 +13,21 @@
       <!--</mat-select>-->
       <input
         matInput
+        #inputEl
         [id]="field"
         [formControlName]="field"
         [placeholder]="field|titlecase"
         [matAutocomplete]="auto"
-
         #trigger="matAutocompleteTrigger"
       />
 
       @if (hasValue(field)) {
-        <button matSuffix mat-icon-button (click)="clearField(field, trigger)" type="button" aria-label="Clear">
+        <button matSuffix mat-icon-button (click)="clearField(field, trigger, inputEl)" type="button" aria-label="Clear">
           <mat-icon>close</mat-icon>
         </button>
       }
 
-      <mat-autocomplete #auto="matAutocomplete">
+      <mat-autocomplete #auto="matAutocomplete" >
         @for (opt of filteredOptions(field); track opt.key) {
           <mat-option [value]="opt.value">{{ opt.value }}</mat-option>
         }

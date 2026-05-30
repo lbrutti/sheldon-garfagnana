@@ -12,7 +12,7 @@ import {TitleCasePipe} from '@angular/common';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
 import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
 import {
-  MatAutocomplete,
+  MatAutocomplete, MatAutocompleteOrigin,
   MatAutocompleteTrigger,
   MatOption,
 } from '@angular/material/autocomplete';
@@ -35,6 +35,7 @@ import {MatIcon} from '@angular/material/icon';
     MatIcon,
     MatAutocompleteTrigger,
     MatAutocomplete,
+    MatAutocompleteOrigin,
   ],
   templateUrl: './dynamic-filter.component.html',
   styleUrl: './dynamic-filter.component.scss',
@@ -126,10 +127,14 @@ export class DynamicFilterComponent<T extends Record<string, unknown>> {
     return !!(this.formValue()[field] ?? '').trim();
   }
 
-  clearField(field: string, trigger: MatAutocompleteTrigger): void {
+  clearField(field: string, trigger: MatAutocompleteTrigger, inputEl: HTMLInputElement): void {
     this.filterForm.get(field)?.setValue('', {emitEvent: true});
-    trigger.autocomplete.options.filter(o => o.selected).map(o => o.deselect());
-    trigger.closePanel();
+    trigger.autocomplete.options.filter(o => o.selected).forEach(o => o.deselect());
+
+    setTimeout(() => {
+      inputEl.blur();
+      trigger.closePanel();
+    }, 0);
   }
 
   // ---------------------------------------------------------------------------
