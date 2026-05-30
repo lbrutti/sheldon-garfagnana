@@ -1,15 +1,15 @@
 import {
   Component,
-  computed,
+  computed, Input,
   input,
   OnInit,
   signal,
   Signal,
 } from '@angular/core';
-import { MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup } from '@angular/material/button-toggle';
-import { DynamicFilterComponent } from '../dynamic-filter/dynamic-filter.component';
-import { FilterOptionInterface, TreemapDataInterface } from '../../../interfaces';
-import { getReducedValue } from '../../../utils';
+import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
+import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
+import {getRandomGradient, getReducedValue} from '../../../utils';
 import CardComponent from '../card/card.component';
 
 type ReduceMode = 'sum' | 'count' | 'max';
@@ -69,7 +69,7 @@ export default class ChartTreemapComponent implements OnInit {
   currentReduce = signal<AuxReduceOption | null>(null);
 
   ngOnInit(): void {
-    this.currentReduce.set({ campo: this.campo(), reduceBy: this.reduceBy() });
+    this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
   }
 
   protected filteredData = computed<TreemapDataInterface[]>(() => {
@@ -83,7 +83,7 @@ export default class ChartTreemapComponent implements OnInit {
   protected aggregatedTree = computed<{ label: string; value: number; groupKey: string }[]>(() => {
     const raw = this.filteredData();
     const groupFields = this.groups();
-    const { campo, reduceBy } = this.currentReduce()!;
+    const {campo, reduceBy} = this.currentReduce()!;
     const outerField = groupFields[0];
     const innerField = groupFields[groupFields.length - 1];
 
@@ -101,7 +101,7 @@ export default class ChartTreemapComponent implements OnInit {
     }
 
     return Array.from(buckets.values())
-      .map(({ groupKey, label, rows }) => ({
+      .map(({groupKey, label, rows}) => ({
         groupKey,
         label,
         value: getReducedValue(rows, reduceBy, campo),
@@ -119,10 +119,10 @@ export default class ChartTreemapComponent implements OnInit {
   tiles: Signal<TreemapTile[]> = computed(() => {
     const items = this.aggregatedTree();
     const gradientMap = this.groupGradientMap();
-    const { reduceBy } = this.currentReduce()!;
+    const {reduceBy} = this.currentReduce()!;
     if (!items.length) return [];
 
-    const layout = squarify(items, { x: 0, y: 0, w: 100, h: 100 });
+    const layout = squarify(items, {x: 0, y: 0, w: 100, h: 100});
 
     return layout.map(tile => ({
       label: tile.label,
@@ -135,6 +135,7 @@ export default class ChartTreemapComponent implements OnInit {
       h: tile.h,
     }));
   });
+  categoria = input<string>('');
 
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value as AuxReduceOption);
@@ -143,25 +144,49 @@ export default class ChartTreemapComponent implements OnInit {
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
   }
+
+  protected getBarBackground(rotation: string = '0deg'): string {
+    const stopPoint = Math.floor(Math.random() * (90 - 10 + 1) + 10)+'%';
+    return getRandomGradient(this.categoria(), rotation, stopPoint);
+  }
 }
 
 // ── Squarify layout ───────────────────────────────────────────────────────────
 
-interface Rect { x: number; y: number; w: number; h: number; }
-interface Item { label: string; value: number; groupKey: string; }
-interface LayoutItem extends Item { area: number; }
-interface LayoutTile extends Item { x: number; y: number; w: number; h: number; }
+interface Rect {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
+
+interface Item {
+  label: string;
+  value: number;
+  groupKey: string;
+}
+
+interface LayoutItem extends Item {
+  area: number;
+}
+
+interface LayoutTile extends Item {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
 
 function squarify(items: Item[], rect: Rect): LayoutTile[] {
   const total = items.reduce((s, d) => s + d.value, 0);
   const area = rect.w * rect.h;
-  const withArea: LayoutItem[] = items.map(d => ({ ...d, area: (d.value / total) * area }));
+  const withArea: LayoutItem[] = items.map(d => ({...d, area: (d.value / total) * area}));
   return layout(withArea, rect);
 }
 
 function layout(items: LayoutItem[], rect: Rect): LayoutTile[] {
   if (!items.length) return [];
-  if (items.length === 1) return [{ ...items[0], x: rect.x, y: rect.y, w: rect.w, h: rect.h }];
+  if (items.length === 1) return [{...items[0], x: rect.x, y: rect.y, w: rect.w, h: rect.h}];
 
   const [row, rest] = bestRow(items, rect);
   const rowArea = row.reduce((s, i) => s + i.area, 0);
@@ -172,19 +197,19 @@ function layout(items: LayoutItem[], rect: Rect): LayoutTile[] {
     let y = rect.y;
     for (const item of row) {
       const h = item.area / stripW;
-      tiles.push({ ...item, x: rect.x, y, w: stripW, h });
+      tiles.push({...item, x: rect.x, y, w: stripW, h});
       y += h;
     }
-    return tiles.concat(layout(rest, { x: rect.x + stripW, y: rect.y, w: rect.w - stripW, h: rect.h }));
+    return tiles.concat(layout(rest, {x: rect.x + stripW, y: rect.y, w: rect.w - stripW, h: rect.h}));
   } else {
     const stripH = rowArea / rect.w;
     let x = rect.x;
     for (const item of row) {
       const w = item.area / stripH;
-      tiles.push({ ...item, x, y: rect.y, w, h: stripH });
+      tiles.push({...item, x, y: rect.y, w, h: stripH});
       x += w;
     }
-    return tiles.concat(layout(rest, { x: rect.x, y: rect.y + stripH, w: rect.w, h: rect.h - stripH }));
+    return tiles.concat(layout(rest, {x: rect.x, y: rect.y + stripH, w: rect.w, h: rect.h - stripH}));
   }
 }
 
@@ -217,5 +242,5 @@ function worstRatio(row: LayoutItem[], short: number): number {
 }
 
 function formatEuro(v: number): string {
-  return new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(v);
+  return new Intl.NumberFormat('it-IT', {style: 'currency', currency: 'EUR', maximumFractionDigits: 0}).format(v);
 }

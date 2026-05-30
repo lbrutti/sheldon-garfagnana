@@ -146,6 +146,8 @@
       filterBy="comune" masterField="comune"
       campo="valore"
       reduceBy="sum"
+      [categoria]="categoriaCorrente()"
+
       [data]="interventiPerTipologia()"
       [groups]="['tipologia']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
@@ -158,6 +160,8 @@
       campo="valore"
       reduceBy="sum"
       filterBy="comune" masterField="comune"
+      [categoria]="categoriaCorrente()"
+
       [data]="interventiPerCategoria()"
       [groups]="['categoria']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
@@ -171,6 +175,8 @@
       reduceBy="sum"
       filterBy="comune"
       masterField="comune"
+      [categoria]="categoriaCorrente()"
+
       [data]="interventiPerTarget()"
       [groups]="['target']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
@@ -183,6 +189,8 @@
       campo="valore"
       reduceBy="sum"
       filterBy="comune" masterField="comune"
+      [categoria]="categoriaCorrente()"
+
       [data]="interventiPerTema()"
       [groups]="['tema']"
       [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"

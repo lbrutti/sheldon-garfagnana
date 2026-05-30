@@ -64,7 +64,7 @@ export function getRandomGradient(categoria: string, rotation: string = '0deg', 
       colorCat = 'sociale';
       break;
     default:
-      colorCat = ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'sociale'][(Math.random() * 5) % 5];
+      colorCat = ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'sociale'][Math.floor(Math.random() * 5)];
       break;
   }
   return `linear-gradient(${rotation}, var(--color-gradient-${colorCat}-start), var(--color-gradient-${colorCat}-end) ${stopPoint})`

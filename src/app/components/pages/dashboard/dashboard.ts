@@ -21,7 +21,7 @@ export default class Dashboard implements OnInit {
     type: "FeatureCollection",
     features: []
   });
-  protected categoriaCorrente = signal<string>('');
+  protected categoriaCorrente = signal<string>('none');
 
   interventiFiltrati = computed(() => {
     return this.interventi().filter((intervento: InterventoInterface) => {
