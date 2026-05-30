@@ -113,14 +113,42 @@
   reduceBy="count"
   [data]="interventiPerUnione()"></sheldon-segmented-chart>
 
-
+<!-- TREE MAPS -->
 <sheldon-chart-treemap
-  [data]="interventiPerTipologia()"
-  [groups]="['tipologia']"
+  title="Tipologia di intervento"
+  filterBy="comune"
   campo="valore"
   reduceBy="sum"
+  [data]="interventiPerTipologia()"
+  [groups]="['tipologia']"
   [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
-  filterBy="unione|anno"
+></sheldon-chart-treemap>
+<sheldon-chart-treemap
+  title="Categorie principali degli interventi"
+  campo="valore"
+  reduceBy="sum"
+  filterBy="comune"
+  [data]="interventiPerCategoria()"
+  [groups]="['categoria']"
+  [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
+></sheldon-chart-treemap>
+<sheldon-chart-treemap
+  title="Destinatari principali degli interventi"
+  campo="valore"
+  reduceBy="sum"
+  filterBy="comune"
+  [data]="interventiPerTarget()"
+  [groups]="['target']"
+  [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
+></sheldon-chart-treemap>
+<sheldon-chart-treemap
+  title="Ambiti di azione principali degli interventi"
+  campo="valore"
+  reduceBy="sum"
+  filterBy="comune"
+  [data]="interventiPerTema()"
+  [groups]="['tema']"
+  [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
 ></sheldon-chart-treemap>
 
 
