@@ -1,15 +1,18 @@
-<sheldon-card>
+<sheldon-card style="height: 256px">
   <ng-container title>{{ title() }}</ng-container>
   <ng-container content>
-    <sheldon-dynamic-filter
-      [filterBy]="filtersFields()"
-      [dataset]="data()"
-      [masterField]="masterField()"
-      (filterChange)="onFilterChange($event)"/>
+    <div class="sheldon-kpi-content" style="height: 128px">
 
-    <div class="kpi-value-wrapper">
-      <div class="kpi-value" sheldonFitText>
-        <span #counter></span><span>{{ udm() }}</span>
+      <div class="sheldon-kpi-filter">
+        <sheldon-dynamic-filter
+          [filterBy]="filtersFields()"
+          [dataset]="data()"
+          [masterField]="masterField()"
+          (filterChange)="onFilterChange($event)"/>
+      </div>
+
+      <div class="kpi-value-wrapper" sheldonFitText [minFontSize]="minFontSize()">
+          <span #counter ></span> <span>{{ udm() }}</span>
       </div>
     </div>
   </ng-container>

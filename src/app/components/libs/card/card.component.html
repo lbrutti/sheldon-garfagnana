@@ -1,28 +1,20 @@
-<!--<mat-card class="example-card" appearance="outlined">-->
-  <mat-grid-tile-header>
-    <div [style]="{display:'flex', justifyContent:'space-between', flexDirection:'row'}">
-      <div>
-        <ng-content select="[title]"></ng-content>
-      </div>
-      <div>
-        <button matIconButton>
-          <mat-icon aria-hidden="false" aria-label="info" fontIcon="info"></mat-icon>
-        </button>
-        <button matIconButton>
-          <mat-icon aria-hidden="false" aria-label="download" fontIcon="arrow_downward"></mat-icon>
-        </button>
-      </div>
-      <!--      <button matIconButton>-->
-      <!--        <mat-icon aria-hidden="false" aria-label="embed" fontIcon="code_xml"></mat-icon>-->
-      <!--      </button>-->
+<div>
+  <div class="sheldon-card-header" [style]="{display:'flex', justifyContent:'space-between', flexDirection:'row'}">
+    <div class="sheldon-card-title">
+      <ng-content select="[title]"></ng-content>
     </div>
-    <mat-card-subtitle>
-      <ng-content select="[subtitle]"></ng-content>
 
-    </mat-card-subtitle>
-  </mat-grid-tile-header>
+    <div class="sheldon-card-buttons">
+      <button matIconButton>
+        <mat-icon aria-hidden="false" aria-label="info" fontIcon="info"></mat-icon>
+      </button>
+      <button matIconButton>
+        <mat-icon aria-hidden="false" aria-label="download" fontIcon="arrow_downward"></mat-icon>
+      </button>
+    </div>
+  </div>
 
-<!--  <mat-card-content>-->
+  <div class="sheldon-card-content">
     <ng-content select="[content]"></ng-content>
-<!--  </mat-card-content>-->
-<!--</mat-card>-->
+  </div>
+</div>

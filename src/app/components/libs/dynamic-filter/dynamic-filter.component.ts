@@ -35,7 +35,6 @@ import {MatIcon} from '@angular/material/icon';
     MatIcon,
     MatAutocompleteTrigger,
     MatAutocomplete,
-    MatAutocompleteOrigin,
   ],
   templateUrl: './dynamic-filter.component.html',
   styleUrl: './dynamic-filter.component.scss',

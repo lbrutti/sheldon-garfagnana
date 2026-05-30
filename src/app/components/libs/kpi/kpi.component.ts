@@ -25,6 +25,8 @@ export default class KpiComponent {
   @ViewChild('counter') counterEl!: ElementRef<HTMLElement>;
 
   title = input<string>('Numero di progetti per comune');
+  minFontSize = input<number>(15);
+
   filterBy = input<string>('');
   filtersFields = computed<string[]>(() => this.filterBy().split('|'));
   private appliedFilters = signal<FilterOptionInterface[]>([]);

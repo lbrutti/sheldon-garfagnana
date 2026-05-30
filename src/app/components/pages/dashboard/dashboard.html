@@ -2,49 +2,49 @@
 
 <div class="sheldon-grid">
 
-<!--  &lt;!&ndash; ISTOGRAMMI &ndash;&gt;-->
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-chart-bars-->
-<!--      title="Interventi per anno di conclusione"-->
-<!--      groupBy="anno"-->
-<!--      reduceBy="count"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      sortBy="category"-->
-<!--      defaultSortDirection="asc"-->
-<!--      [showSorting]="false"-->
-<!--      [limit]="0"-->
-<!--      [data]="interventiPerFine()"-->
-<!--    />-->
-<!--  </div>-->
+  <!-- ISTOGRAMMI -->
+  <div class="tile tile--4">
+    <sheldon-chart-bars
+      title="Interventi per anno di conclusione"
+      groupBy="anno"
+      reduceBy="count"
+      filterBy="comune" masterField="comune"
+      sortBy="category"
+      defaultSortDirection="asc"
+      [showSorting]="false"
+      [limit]="0"
+      [data]="interventiPerFine()"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-chart-bars-->
-<!--      title="Interventi per anno di avvio"-->
-<!--      groupBy="anno"-->
-<!--      reduceBy="count"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      sortBy="category"-->
-<!--      defaultSortDirection="asc"-->
-<!--      [showSorting]="false"-->
-<!--      [limit]="0"-->
-<!--      [data]="interventiPerInizio()"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-chart-bars
+      title="Interventi per anno di avvio"
+      groupBy="anno"
+      reduceBy="count"
+      filterBy="comune" masterField="comune"
+      sortBy="category"
+      defaultSortDirection="asc"
+      [showSorting]="false"
+      [limit]="0"
+      [data]="interventiPerInizio()"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-chart-h-bars-->
-<!--      title="Numero interventi per comune"-->
-<!--      groupBy="comune"-->
-<!--      [filterBy]="null"-->
-<!--      [auxReduce]="[{campo:'comune', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"-->
-<!--      reduceBy="count"-->
-<!--      sortBy="value"-->
-<!--      defaultSortDirection="desc"-->
-<!--      [showSorting]="true"-->
-<!--      [limit]="10"-->
-<!--      [data]="interventiPerComune()"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-chart-h-bars
+      title="Numero interventi per comune"
+      groupBy="comune"
+      [filterBy]="null"
+      [auxReduce]="[{campo:'comune', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"
+      reduceBy="count"
+      sortBy="value"
+      defaultSortDirection="desc"
+      [showSorting]="true"
+      [limit]="10"
+      [data]="interventiPerComune()"
+    />
+  </div>
 
   <!-- KPIS -->
   <div class="tile tile--3">
@@ -60,6 +60,7 @@
   <div class="tile tile--3">
     <sheldon-kpi
       title="Importo finanziato"
+      [minFontSize]="45"
       filterBy="comune" masterField="comune"
       groupBy="valore"
       reduceBy="sum"
@@ -80,115 +81,115 @@
     />
   </div>
 
-<!--  &lt;!&ndash; TABELLA &ndash;&gt;-->
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-list-->
-<!--      title="Interventi programmati"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      [data]="interventiPerComune()"-->
-<!--    />-->
-<!--  </div>-->
+  <!-- TABELLA -->
+  <div class="tile tile--4">
+    <sheldon-list
+      title="Interventi programmati"
+      filterBy="comune" masterField="comune"
+      [data]="interventiPerComune()"
+    />
+  </div>
 
-<!--  &lt;!&ndash; STACKS &ndash;&gt;-->
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-segmented-chart-->
-<!--      title="Interventi per fonte di finanziamento"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      defaultSortDirection="asc"-->
-<!--      groupBy="valore"-->
-<!--      reduceBy="count"-->
-<!--      [data]="interventiPerFonte()"-->
-<!--    />-->
-<!--  </div>-->
+  <!-- STACKS -->
+  <div class="tile tile--4">
+    <sheldon-segmented-chart
+      title="Interventi per fonte di finanziamento"
+      filterBy="comune" masterField="comune"
+      defaultSortDirection="asc"
+      groupBy="valore"
+      reduceBy="count"
+      [data]="interventiPerFonte()"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-segmented-chart-->
-<!--      title="Interventi con coinvolgimento dei cittadini"-->
-<!--      defaultSortDirection="asc"-->
-<!--      groupBy="valore"-->
-<!--      reduceBy="count"-->
-<!--      [data]="interventiPerPartecipazione()"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-segmented-chart
+      title="Interventi con coinvolgimento dei cittadini"
+      defaultSortDirection="asc"
+      groupBy="valore"
+      reduceBy="count"
+      [data]="interventiPerPartecipazione()"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-segmented-chart-->
-<!--      title="Stato di avanzamento degli interventi"-->
-<!--      defaultSortDirection="asc"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      [auxReduce]="[{campo:'nome', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"-->
-<!--      groupBy="nome"-->
-<!--      reduceBy="count"-->
-<!--      [data]="interventiPerStato()"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-segmented-chart
+      title="Stato di avanzamento degli interventi"
+      defaultSortDirection="asc"
+      filterBy="comune" masterField="comune"
+      [auxReduce]="[{campo:'nome', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"
+      groupBy="nome"
+      reduceBy="count"
+      [data]="interventiPerStato()"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-segmented-chart-->
-<!--      title="Distribuzione degli interventi per Unione"-->
-<!--      defaultSortDirection="asc"-->
-<!--      groupBy="valore"-->
-<!--      reduceBy="count"-->
-<!--      [data]="interventiPerUnione()"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-segmented-chart
+      title="Distribuzione degli interventi per Unione"
+      defaultSortDirection="asc"
+      groupBy="valore"
+      reduceBy="count"
+      [data]="interventiPerUnione()"
+    />
+  </div>
 
-<!--  &lt;!&ndash; TREE MAPS &ndash;&gt;-->
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-chart-treemap-->
-<!--      title="Tipologia di intervento"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      campo="valore"-->
-<!--      reduceBy="sum"-->
-<!--      [data]="interventiPerTipologia()"-->
-<!--      [groups]="['tipologia']"-->
-<!--      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"-->
-<!--    />-->
-<!--  </div>-->
+  <!-- TREE MAPS -->
+  <div class="tile tile--4">
+    <sheldon-chart-treemap
+      title="Tipologia di intervento"
+      filterBy="comune" masterField="comune"
+      campo="valore"
+      reduceBy="sum"
+      [data]="interventiPerTipologia()"
+      [groups]="['tipologia']"
+      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-chart-treemap-->
-<!--      title="Categorie principali degli interventi"-->
-<!--      campo="valore"-->
-<!--      reduceBy="sum"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      [data]="interventiPerCategoria()"-->
-<!--      [groups]="['categoria']"-->
-<!--      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-chart-treemap
+      title="Categorie principali degli interventi"
+      campo="valore"
+      reduceBy="sum"
+      filterBy="comune" masterField="comune"
+      [data]="interventiPerCategoria()"
+      [groups]="['categoria']"
+      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-chart-treemap-->
-<!--      title="Destinatari principali degli interventi"-->
-<!--      campo="valore"-->
-<!--      reduceBy="sum"-->
-<!--      filterBy="comune"-->
-<!--      masterField="comune"-->
-<!--      [data]="interventiPerTarget()"-->
-<!--      [groups]="['target']"-->
-<!--      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-chart-treemap
+      title="Destinatari principali degli interventi"
+      campo="valore"
+      reduceBy="sum"
+      filterBy="comune"
+      masterField="comune"
+      [data]="interventiPerTarget()"
+      [groups]="['target']"
+      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-chart-treemap-->
-<!--      title="Ambiti di azione principali degli interventi"-->
-<!--      campo="valore"-->
-<!--      reduceBy="sum"-->
-<!--      filterBy="comune" masterField="comune"-->
-<!--      [data]="interventiPerTema()"-->
-<!--      [groups]="['tema']"-->
-<!--      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--4">
+    <sheldon-chart-treemap
+      title="Ambiti di azione principali degli interventi"
+      campo="valore"
+      reduceBy="sum"
+      filterBy="comune" masterField="comune"
+      [data]="interventiPerTema()"
+      [groups]="['tema']"
+      [auxReduce]="[{ campo: 'progetti', reduceBy: 'count' }]"
+    />
+  </div>
 
-<!--  <div class="tile tile&#45;&#45;4">-->
-<!--    <sheldon-mosaic-map-->
-<!--      [polygons]="comuniPolygons()"-->
-<!--      [auxReduce]="[{campo:'value', reduceBy:'sum'}]"-->
-<!--      municipalityKey="name"-->
-<!--    />-->
-<!--  </div>-->
+  <div class="tile tile--8">
+    <sheldon-mosaic-map
+      [polygons]="comuniPolygons()"
+      [auxReduce]="[{campo:'value', reduceBy:'sum'}]"
+      municipalityKey="name"
+    />
+  </div>
 
 </div>
