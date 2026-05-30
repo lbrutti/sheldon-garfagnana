@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/pages/dashboard/dashboard.scss"],
+  "sourcesContent": [":host {\n  display: block;\n}\n\n.dashboard-grid {\n  display: grid;\n  grid-template-columns: repeat(4, 1fr);\n  grid-auto-rows: auto;\n  gap: 16px;\n  padding: 16px;\n  align-items: start;\n\n  @media (max-width: 959px) {\n    grid-template-columns: repeat(2, 1fr);\n  }\n\n  @media (max-width: 599px) {\n    grid-template-columns: 1fr;\n  }\n}\n\n.tile {\n  min-width: 0;\n\n  > * {\n    display: block;\n    width: 100%;\n  }\n}\n\n.tile--wide {\n  grid-column: span 2;\n\n  @media (max-width: 599px) {\n    grid-column: span 1;\n  }\n}\n\n.tile--narrow {\n  grid-column: span 1;\n}\n"],
+  "mappings": "AAAA,MACE,QAAA,MAGF,CAAA,eACE,QAAA,KACA,sBAAA,OAAA,CAAA,CAAA,KACA,eAAA,KACA,IAAA,KARF,QASE,KACA,YAAA,MAEA,OAAA,UAAA,OARF,CAAA,eASI,sBAAA,OAAA,CAAA,CAAA,MAGF,OAAA,UAAA,OAZF,CAAA,eAaI,sBAAA,KAIJ,CAAA,KACE,UAAA,EAEA,CAHF,IAGE,CAAA,EACE,QAAA,MACA,MAAA,KAIJ,CAAA,WACE,YAAA,KAAA,EAEA,OAAA,UAAA,OAHF,CAAA,WAII,YAAA,KAAA,GAIJ,CAAA,aACE,YAAA,KAAA",
+  "names": []
+}

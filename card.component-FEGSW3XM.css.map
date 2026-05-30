@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/card/card.component.scss"],
-  "sourcesContent": ["@use \"@angular/material\" as mat;\n\n:host {\n\n  mat-card-header {\n    border-bottom: 1px solid black;\n  }\n}\n"],
-  "mappings": "AAIE,MAAA,gBACE,cAAA,IAAA,MAAA",
-  "names": []
-}
