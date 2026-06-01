@@ -94,7 +94,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   // ── Inputs ─────────────────────────────────────────────────────────────────
   title = input<string>('Mappa');
-  polygons = input<FeatureCollection<Polygon> | null>(null);
+  data = input<FeatureCollection<Polygon> | null>(null);
   auxReduce = input<AuxReduceOption[]>([]);
   colorSetting = input<ColorStop[]>(DEFAULT_COLOR_STOPS);
   municipalityKey = input<string>('comune');
@@ -120,7 +120,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   /** Dataset shaped for sheldon-dynamic-filter (needs DataInterface-compatible objects). */
   comuniDataset = computed(() => {
     const key = this.municipalityKey();
-    return (this.polygons()?.features ?? []).map((f) => ({
+    return (this.data()?.features ?? []).map((f) => ({
       comune: String(f.properties?.[key] ?? ''),
       valore: 0 as number,
     }));
@@ -132,7 +132,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
     if (!opt) return {};
     const key = this.municipalityKey();
     const grouped: Record<string, number[]> = {};
-    for (const f of this.polygons()?.features ?? []) {
+    for (const f of this.data()?.features ?? []) {
       const comune = String(f.properties?.[key] ?? '');
       if (!comune) continue;
       (grouped[comune] ??= []).push(Number(f.properties?.[opt.campo] ?? 0));
@@ -158,7 +158,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   /** Polygons with `_colorValue` (0-100) injected per comune for choropleth fill. */
   derivedPolygons = computed<FeatureCollection<Polygon>>(() => {
-    const polys = this.polygons();
+    const polys = this.data();
     if (!polys) return EMPTY_COLLECTION as FeatureCollection<Polygon>;
     const norm = this.normalizedValues();
     const key = this.municipalityKey();
@@ -223,7 +223,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   /** Bounding box of the full FeatureCollection expanded by 5% on each side. */
   private collectionBbox = computed<[[number, number], [number, number]] | null>(() => {
-    const fc = this.polygons();
+    const fc = this.data();
     if (!fc?.features.length) return null;
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     for (const f of fc.features) {
@@ -322,7 +322,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
     this.selectedComune.set(value);
 
     if (value && this.mapInstance) {
-      const feature = this.polygons()?.features.find(
+      const feature = this.data()?.features.find(
         (f) => String(f.properties?.[this.municipalityKey()]) === value
       );
       if (feature) {

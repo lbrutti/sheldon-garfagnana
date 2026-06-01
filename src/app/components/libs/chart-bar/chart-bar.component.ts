@@ -13,6 +13,7 @@ import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getRandomGradient, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
+import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.interface';
 
 export interface BarItem {
   label: string;
@@ -54,7 +55,7 @@ export default class ChartBarComponent implements OnInit {
 
   data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
-  auxReduce = input<{ campo: keyof DataInterface; reduceBy: string }[]>([]);
+  auxReduce = input<ReduceByDeclaration[]>([]);
 
   currentReduce = signal<{ campo: string; reduceBy: string } | null>(null);
 

@@ -1,0 +1,250 @@
+[
+  {
+    "id": "interventi_per_conclusione",
+    "tag": "sheldon-chart-bars",
+    "title": "Interventi per anno di conclusione",
+    "groupBy": "anno",
+    "reduceBy": "count",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "sortBy": "category",
+    "defaultSortDirection": "asc",
+    "showSorting": false,
+    "limit": 0,
+    "data": "interventiPerFine",
+    "tileWidth": 4
+  },
+  {
+    "id": "interventi_per_avvio",
+    "tag": "sheldon-chart-bars",
+    "title": "Interventi per anno di avvio",
+    "groupBy": "anno",
+    "reduceBy": "count",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "sortBy": "category",
+    "defaultSortDirection": "asc",
+    "showSorting": false,
+    "limit": 0,
+    "data": "interventiPerInizio",
+    "tileWidth": 4
+  },
+  {
+    "id": "interventi_per_comune",
+    "tag": "sheldon-chart-h-bars",
+    "title": "Numero interventi per comune",
+    "groupBy": "comune",
+    "reduceBy": "count",
+    "sortBy": "value",
+    "defaultSortDirection": "desc",
+    "filterBy": null,
+    "auxReduce": [
+      {
+        "campo": "comune",
+        "reduceBy": "count"
+      },
+      {
+        "campo": "valore",
+        "reduceBy": "sum"
+      }
+    ],
+    "showSorting": true,
+    "limit": 0,
+    "data": "interventiPerComune",
+    "tileWidth": 4
+  },
+  {
+    "id": "comuni_con_interventi",
+    "tag": "sheldon-kpi",
+    "title": "Comuni con almeno un intervento",
+    "groupBy": "comune",
+    "reduceBy": "count",
+    "minFontSize": 120,
+    "limit": 0,
+    "data": "comuniConInterventi",
+    "tileWidth": 3
+  },
+  {
+    "id": "importo_finanziato",
+    "tag": "sheldon-kpi",
+    "tileWidth": 3,
+    "title": "Importo finanziato",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "groupBy": "valore",
+    "reduceBy": "sum",
+    "limit": 0,
+    "udm": "€",
+    "data": "interventiPerComune"
+  },
+  {
+    "id": "interventi_finanziati",
+    "tag": "sheldon-kpi",
+    "tileWidth": 3,
+    "title": "Interventi programmati",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "groupBy": "comune",
+    "reduceBy": "count",
+    "limit": 0,
+    "udm": "€",
+    "data": "interventiPerComune"
+  },
+  {
+    "id": "interventi_programmati",
+    "tag": "sheldon-list",
+    "tileWidth": 4,
+    "title": "Interventi programmati",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "data": "interventiPerComune"
+  },
+  {
+    "id": "interventi_per_fonte",
+    "tag": "sheldon-segmented-chart",
+    "tileWidth": 4,
+    "title": "Interventi per fonte di finanziamento",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "defaultSortDirection": "asc",
+    "groupBy": "valore",
+    "reduceBy": "count",
+    "data": "interventiPerFonte"
+  },
+  {
+    "id": "interventi_per_partecipazione",
+    "tag": "sheldon-segmented-chart",
+    "tileWidth": 4,
+    "title": "Interventi con coinvolgimento dei cittadini",
+    "defaultSortDirection": "asc",
+    "groupBy": "valore",
+    "reduceBy": "count",
+    "data": "interventiPerPartecipazione"
+  },
+  {
+    "id": "interventi_per_stato",
+    "tag": "sheldon-segmented-chart",
+    "tileWidth": 4,
+    "title": "Stato di avanzamento degli interventi",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "auxReduce": [
+      {
+        "campo": "nome",
+        "reduceBy": "count"
+      },
+      {
+        "campo": "valore",
+        "reduceBy": "sum"
+      }
+    ],
+    "defaultSortDirection": "asc",
+    "groupBy": "nome",
+    "reduceBy": "count",
+    "data": "interventiPerStato"
+  },
+  {
+    "id": "interventi_per_unione",
+    "tag": "sheldon-segmented-chart",
+    "tileWidth": 4,
+    "title": "Distribuzione degli interventi per Unione",
+    "defaultSortDirection": "asc",
+    "groupBy": "valore",
+    "reduceBy": "count",
+    "data": "interventiPerUnione"
+  },
+  {
+    "id": "interventi_per_tipologia",
+    "tag": "sheldon-chart-treemap",
+    "tileWidth": 4,
+    "title": "Tipologia di intervento",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "campo": "valore",
+    "reduceBy": "sum",
+    "groups": [
+      "tipologia"
+    ],
+    "auxReduce": [
+      {
+        "campo": "progetti",
+        "reduceBy": "count"
+      }
+    ],
+    "data": "interventiPerTipologia"
+  },
+  {
+    "id": "interventi_per_categoria",
+    "tag": "sheldon-chart-treemap",
+    "tileWidth": 4,
+    "title": "Categorie principali degli interventi",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "campo": "valore",
+    "reduceBy": "sum",
+    "groups": [
+      "categoria"
+    ],
+    "auxReduce": [
+      {
+        "campo": "progetti",
+        "reduceBy": "count"
+      }
+    ],
+    "data": "interventiPerCategoria"
+  },
+  {
+    "id": "interventi_per_target",
+    "tag": "sheldon-chart-treemap",
+    "tileWidth": 4,
+    "title": "Destinatari principali degli interventi",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "campo": "valore",
+    "reduceBy": "sum",
+    "groups": [
+      "target"
+    ],
+    "auxReduce": [
+      {
+        "campo": "progetti",
+        "reduceBy": "count"
+      }
+    ],
+    "data": "interventiPerTarget"
+  },
+  {
+    "id": "interventi_per_tema",
+    "tag": "sheldon-chart-treemap",
+    "tileWidth": 4,
+    "title": "Ambiti di azione principali degli interventi",
+    "filterBy": "comune",
+    "masterField": "comune",
+    "campo": "valore",
+    "reduceBy": "sum",
+    "groups": [
+      "tema"
+    ],
+    "auxReduce": [
+      {
+        "campo": "progetti",
+        "reduceBy": "count"
+      }
+    ],
+    "data": "interventiPerTema"
+  },
+  {
+    "id": "mappa_dashboard",
+    "tag": "sheldon-mosaic-map",
+    "tileWidth": 8,
+    "title": "Distribuzione dei progetti per comune",
+    "municipalityKey": "name",
+    "auxReduce": [
+      {
+        "campo": "value",
+        "reduceBy": "count"
+      }
+    ],
+    "data": "comuniPolygons"
+  }
+]

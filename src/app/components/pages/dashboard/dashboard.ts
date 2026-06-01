@@ -1,10 +1,11 @@
-import {Component, computed, effect, inject, OnInit, signal, Signal, untracked} from '@angular/core';
+import {Component, computed, effect, OnInit, signal, Signal, untracked} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
 import {components} from '../../libs';
 import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
 import {getExplodedData} from '../../../utils';
-import {FeatureCollection, Point, Polygon} from 'geojson';
+import {FeatureCollection, Polygon} from 'geojson';
+import WidgetSetting from '../../../interfaces/widget-setting.interface';
 
 @Component({
   selector: 'sheldon-dashboard',
@@ -14,6 +15,7 @@ import {FeatureCollection, Point, Polygon} from 'geojson';
 })
 export default class Dashboard implements OnInit {
 
+  protected settings = signal<WidgetSetting[]>([]);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
 
@@ -63,6 +65,21 @@ export default class Dashboard implements OnInit {
   interventiPerStato = signal<DataInterface[]>([]);
   interventiPerUnione = signal<DataInterface[]>([]);
 
+  protected dataMap = computed<Record<string, unknown>>(() => ({
+    interventiPerComune: this.interventiPerComune(),
+    comuniConInterventi: this.comuniConInterventi(),
+    interventiPerFine: this.interventiPerFine(),
+    interventiPerInizio: this.interventiPerInizio(),
+    interventiPerCategoria: this.interventiPerCategoria(),
+    interventiPerTarget: this.interventiPerTarget(),
+    interventiPerTema: this.interventiPerTema(),
+    interventiPerTipologia: this.interventiPerTipologia(),
+    interventiPerFonte: this.interventiPerFonte(),
+    interventiPerPartecipazione: this.interventiPerPartecipazione(),
+    interventiPerStato: this.interventiPerStato(),
+    interventiPerUnione: this.interventiPerUnione(),
+    comuniPolygons: this.comuniPolygons(),
+  }));
 
   constructor(protected apiService: ProjectsApiService) {
     effect(() => {
@@ -193,6 +210,9 @@ export default class Dashboard implements OnInit {
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;
     this.comuniPolygons = this.apiService.comuniPolygons;
+    fetch('/settings/dashboardSettings.json')
+      .then(r => r.json())
+      .then((s: WidgetSetting[]) => this.settings.set(s));
   }
 
   protected applyFilters($event: FilterOptionInterface[]) {
