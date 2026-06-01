@@ -37,11 +37,11 @@ export interface SegmentInterface {
     MatButtonToggleGroup,
 
   ],
-  templateUrl: './chart-horizontal-stacked-bar.component.html',
-  styleUrls: ['./chart-horizontal-stacked-bar.component.scss'],
+  templateUrl: './chart-segmented-bar.component.html',
+  styleUrls: ['./chart-segmented-bar.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ChartHorizontalStackedBarComponent implements OnInit {
+export default class ChartSegmentedBarComponent implements OnInit {
   readonly title = input<string>('Popolazione');
 
   readonly hoveredIndex = signal<number | null>(null);
@@ -82,12 +82,13 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
     const reducedTotal = getReducedValue(filteredData, this.currentReduce().reduceBy, this.currentReduce().campo);
     groupKeys.map(dataKey => {
       const reducedValue = getReducedValueByLabel(grouped, dataKey, this.currentReduce().reduceBy);
+      const color = getRandomGradient(this.categoria(), '90deg');
       segments.push({
         label: dataKey,
         shortLabel: dataKey,
         percentage: reducedValue / reducedTotal * 100,
         count: reducedValue,
-        color: this.getBarBackground('90deg'),
+        color: color,
         hoverColor: 'gold',
         textColor: 'black',
       });
@@ -139,7 +140,4 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
     this.currentReduce.set($event.value);
   }
 
-  protected getBarBackground(rotation: string = '0deg'): string {
-    return getRandomGradient(this.categoria(), rotation);
-  }
 }

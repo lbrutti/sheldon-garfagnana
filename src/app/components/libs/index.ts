@@ -6,14 +6,14 @@ import ChartBarComponent from './chart-bar/chart-bar.component';
 import {DynamicFilterComponent} from './dynamic-filter/dynamic-filter.component';
 import ChartLineComponent from './chart-line/chart-line.component';
 import KpiComponent from './kpi/kpi.component';
-import ChartHorizontalStackedBarComponent from './chart-horizontal-stacked-bar/chart-horizontal-stacked-bar.component';
+import ChartSegmentedBarComponent from './chart-segmented-bar/chart-segmented-bar.component';
 import ListaComponent from './lista/lista.component';
 import ChartTreemapComponent from './chart-treemap/chart-treemap.component';
 import SheldonMosaicMapComponent from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 
 export * from './card/card.component';
 export * from './chart-horizontal-bar/chart-horizontal-bar.component';
-export * from './chart-horizontal-stacked-bar/chart-horizontal-stacked-bar.component';
+export * from './chart-segmented-bar/chart-segmented-bar.component';
 export * from './chart-bar/chart-bar.component';
 export * from './navigation/navigation.component';
 export * from './global-search/global-search.component'
@@ -29,7 +29,7 @@ export const components = [
   CardComponent,
   ChartHorizontalBarComponent,
   ChartTreemapComponent,
-  ChartHorizontalStackedBarComponent,
+  ChartSegmentedBarComponent,
   ChartBarComponent,
   ChartLineComponent,
   NavigationComponent,

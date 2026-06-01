@@ -32,8 +32,8 @@
     <div class="bars-container">
       @for (bar of bars(); track bar.label) {
         <div class="bar-col">
-<!--          <span class="bar-value">{{ bar.value }}</span>-->
-          <div class="bar" [style.height.%]="bar.pct" [style.background]="getBarBackground()">
+          <!--          <span class="bar-value">{{ bar.value }}</span>-->
+          <div class="bar" [style.height.%]="bar.pct" [style.background]="bar.background">
             <span class="bar-label">{{ bar.label }}</span>
           </div>
         </div>

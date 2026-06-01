@@ -1,7 +1,7 @@
 <sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
 
 <div class="sheldon-grid">
-  @for (setting of settings(); track setting.id) {
+  @for (setting of settings(); track setting.id; let idx = $index) {
     <div [class]="'tile tile--' + setting.tileWidth">
 
       @switch (setting.tag) {
@@ -17,11 +17,10 @@
             [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
             [showSorting]="setting.showSorting ?? false"
             [limit]="setting.limit ?? 0"
-            [categoria]="categoriaCorrente() || getCategoriaRandom()"
+            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
             [data]="$any(dataMap()[setting.data])"
           />
         }
-
         @case ('sheldon-chart-h-bars') {
           <sheldon-chart-h-bars
             [title]="setting.title"
@@ -34,11 +33,10 @@
             [showSorting]="setting.showSorting ?? false"
             [limit]="setting.limit ?? 0"
             [auxReduce]="setting.auxReduce ?? []"
-            [categoria]="categoriaCorrente() || getCategoriaRandom()"
+            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
             [data]="$any(dataMap()[setting.data])"
           />
         }
-
         @case ('sheldon-kpi') {
           <sheldon-kpi
             [title]="setting.title"
@@ -52,7 +50,6 @@
             [data]="$any(dataMap()[setting.data])"
           />
         }
-
         @case ('sheldon-list') {
           <sheldon-list
             [title]="setting.title"
@@ -61,7 +58,6 @@
             [data]="$any(dataMap()[setting.data])"
           />
         }
-
         @case ('sheldon-segmented-chart') {
           <sheldon-segmented-chart
             [title]="setting.title"
@@ -71,11 +67,10 @@
             [masterField]="setting.masterField ?? null"
             [defaultSortDirection]="setting.defaultSortDirection ?? 'asc'"
             [auxReduce]="$any(setting.auxReduce ?? [])"
-            [categoria]="categoriaCorrente() || getCategoriaRandom()"
+            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
             [data]="$any(dataMap()[setting.data])"
           />
         }
-
         @case ('sheldon-chart-treemap') {
           <sheldon-chart-treemap
             [title]="setting.title"
@@ -85,11 +80,10 @@
             [reduceBy]="$any(setting.reduceBy ?? 'sum')"
             [groups]="$any(setting.groups ?? [])"
             [auxReduce]="$any(setting.auxReduce ?? [])"
-            [categoria]="categoriaCorrente() || getCategoriaRandom()"
+            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
             [data]="$any(dataMap()[setting.data])"
           />
         }
-
         @case ('sheldon-mosaic-map') {
           <sheldon-mosaic-map
             [data]="$any(dataMap()[setting.data])"

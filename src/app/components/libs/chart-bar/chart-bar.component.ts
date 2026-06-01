@@ -63,6 +63,7 @@ export default class ChartBarComponent implements OnInit {
     this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()});
   }
 
+  gradients: Signal<string[]> = computed(() => this.data().map(d => getRandomGradient(this.categoria(), '0deg')));
   bars: Signal<BarItem[]> = computed(() => {
     const reduce = this.currentReduce();
     if (!reduce) return [];
@@ -80,12 +81,11 @@ export default class ChartBarComponent implements OnInit {
     const keys = this.getGroupedKeys(grouped);
     const values = keys.map(label => getReducedValueByLabel(grouped, label, reduce.reduceBy));
     const max = Math.max(...values, 1);
-
     return keys.map((label, i): BarItem => ({
       label,
       value: values[i],
       pct: (values[i] / max) * 100,
-      background: this.getBarBackground('90deg')
+      background: this.gradients()[i]
     }));
   });
   categoria = input<string>('');
@@ -121,7 +121,5 @@ export default class ChartBarComponent implements OnInit {
     this.currentReduce.set($event.value);
   }
 
-  protected getBarBackground(rotation: string = '0deg'): string {
-    return getRandomGradient(this.categoria(), rotation);
-  }
+
 }

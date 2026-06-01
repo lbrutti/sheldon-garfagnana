@@ -27,9 +27,9 @@ export default class Dashboard implements OnInit {
     return this.filters().find(f => f.key === 'categoria')?.value ?? ''
   });
 
-  getCategoriaRandom(): string {
-    const categorieInterventi = ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'sociale'];
-    return categorieInterventi[Math.floor(Math.random() * categorieInterventi.length)];
+  getCategoriaRandom(index: number): string {
+    const categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
+    return categorieInterventi[index % categorieInterventi.length];
   }
 
   interventiFiltrati = computed(() => {
