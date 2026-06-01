@@ -21,7 +21,14 @@ export default class Dashboard implements OnInit {
     type: "FeatureCollection",
     features: []
   });
-  protected categoriaCorrente = signal<string>('none');
+  protected categoriaCorrente = computed<string>(() => {
+    return this.filters().find(f => f.key === 'categoria')?.value ?? ''
+  });
+
+  getCategoriaRandom(): string {
+    const categorieInterventi = ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'sociale'];
+    return categorieInterventi[Math.floor(Math.random() * categorieInterventi.length)];
+  }
 
   interventiFiltrati = computed(() => {
     return this.interventi().filter((intervento: InterventoInterface) => {
@@ -190,8 +197,7 @@ export default class Dashboard implements OnInit {
 
   protected applyFilters($event: FilterOptionInterface[]) {
     this.filters.set($event);
-    const categoria = $event.find(f => f.key === 'categoria')?.value ?? '';
-    this.categoriaCorrente.set(categoria);
+
   }
 
 }

@@ -36,7 +36,7 @@
             [class.pop-segment--hovered]="hoveredIndex() === i"
             [class.pop-segment--dimmed]="hoveredIndex() !== null && hoveredIndex() !== i"
             [style.flex]="hoveredIndex() === i ? seg.percentage * 2.2 : seg.percentage"
-            [style.background-color]="hoveredIndex() === i ? seg.hoverColor : seg.color"
+            [style.background]="hoveredIndex() === i ? seg.hoverColor : seg.color"
             (mouseenter)="onSegmentHover(i)"
             (mouseleave)="onSegmentLeave()"
             [attr.aria-label]="seg.label + ': ' + formatPercentage(seg.percentage)"

@@ -18,6 +18,7 @@ export interface BarItem {
   label: string;
   value: number;
   pct: number;
+  background: string
 }
 
 @Component({
@@ -79,10 +80,11 @@ export default class ChartBarComponent implements OnInit {
     const values = keys.map(label => getReducedValueByLabel(grouped, label, reduce.reduceBy));
     const max = Math.max(...values, 1);
 
-    return keys.map((label, i) => ({
+    return keys.map((label, i): BarItem => ({
       label,
       value: values[i],
       pct: (values[i] / max) * 100,
+      background: this.getBarBackground('90deg')
     }));
   });
   categoria = input<string>('');
@@ -119,7 +121,6 @@ export default class ChartBarComponent implements OnInit {
   }
 
   protected getBarBackground(rotation: string = '0deg'): string {
-    const stopPoint = Math.floor(Math.random() * (90 - 10 + 1) + 10)+'%';
-    return getRandomGradient(this.categoria(), rotation, stopPoint);
+    return getRandomGradient(this.categoria(), rotation);
   }
 }

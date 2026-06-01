@@ -2,7 +2,7 @@ import {
   Component,
   signal,
   computed,
-  ChangeDetectionStrategy, input, InputSignal, OnInit, Signal,
+  ChangeDetectionStrategy, input, InputSignal, OnInit, Signal, Input,
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
@@ -11,7 +11,7 @@ import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@ang
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {ChartData} from 'chart.js';
-import {getReducedValue, getReducedValueByLabel} from '../../../utils';
+import {getRandomGradient, getReducedValue, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 
 export interface SegmentInterface {
@@ -52,6 +52,7 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
   auxReduce = input<{ campo: keyof DataInterface, reduceBy: string }[]>([]);
   groupBy = input<string | keyof DataInterface>('comune');
   limit = input<number>(15);
+  categoria = input<string>('');
 
   showSorting = input<boolean>(true);
   sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
@@ -86,7 +87,7 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
         shortLabel: dataKey,
         percentage: reducedValue / reducedTotal * 100,
         count: reducedValue,
-        color: 'red',
+        color: this.getBarBackground('90deg'),
         hoverColor: 'gold',
         textColor: 'black',
       });
@@ -136,5 +137,9 @@ export default class ChartHorizontalStackedBarComponent implements OnInit {
 
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value);
+  }
+
+  protected getBarBackground(rotation: string = '0deg'): string {
+    return getRandomGradient(this.categoria(), rotation);
   }
 }

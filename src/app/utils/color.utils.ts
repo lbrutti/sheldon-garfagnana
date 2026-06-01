@@ -45,22 +45,23 @@ function stopPosition(index: number, total: number): number {
   return index / (total - 1);
 }
 
-export function getRandomGradient(categoria: string, rotation: string = '0deg', stopPoint: string = '50%') {
+export function getRandomGradient(categoria: string, rotation: string = '0deg') {
+  const stopPoint = Math.floor(Math.random() * (90 - 10 + 1) + 10) + '%';
   let colorCat = '';
-  switch (categoria) {
-    case 'Ambiente':
+  switch (categoria.toLowerCase()) {
+    case 'ambiente':
       colorCat = 'ambiente';
       break;
-    case 'Cultura':
+    case 'cultura':
       colorCat = 'cultura';
       break;
-    case 'Mobilità':
+    case 'mobilità':
       colorCat = 'mobilita';
       break;
-    case 'Sicurezza':
+    case 'sicurezza':
       colorCat = 'sicurezza';
       break;
-    case 'Sociale':
+    case 'sociale':
       colorCat = 'sociale';
       break;
     default:

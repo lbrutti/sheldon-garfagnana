@@ -31,7 +31,7 @@
         <div class="h-bar"
              [style.width.%]="bar.pct"
              [style.min-height]="'var(--min-bar-height, 96px)'"
-             [style.background]="getBarBackground('90deg')">
+             [style.background]="bar.background">
           <div class="h-bar-caption">
             <span class="h-bar-label">{{ bar.label }}</span>
             <span class="h-bar-value">{{ bar.value }}</span>

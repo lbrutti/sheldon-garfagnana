@@ -146,8 +146,8 @@ export default class ChartTreemapComponent implements OnInit {
   }
 
   protected getBarBackground(rotation: string = '0deg'): string {
-    const stopPoint = Math.floor(Math.random() * (90 - 10 + 1) + 10)+'%';
-    return getRandomGradient(this.categoria(), rotation, stopPoint);
+
+    return getRandomGradient(this.categoria(), rotation);
   }
 }
 

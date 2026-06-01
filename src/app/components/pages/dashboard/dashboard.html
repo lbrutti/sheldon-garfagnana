@@ -11,7 +11,7 @@
       filterBy="comune" masterField="comune"
       sortBy="category"
       defaultSortDirection="asc"
-      [categoria]="categoriaCorrente()"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
       [showSorting]="false"
       [limit]="0"
       [data]="interventiPerFine()"
@@ -26,7 +26,7 @@
       filterBy="comune" masterField="comune"
       sortBy="category"
       defaultSortDirection="asc"
-      [categoria]="categoriaCorrente()"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
       [showSorting]="false"
       [limit]="0"
       [data]="interventiPerInizio()"
@@ -42,7 +42,7 @@
       reduceBy="count"
       sortBy="value"
       defaultSortDirection="desc"
-      [categoria]="categoriaCorrente()"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
       [showSorting]="true"
       [limit]="10"
       [data]="interventiPerComune()"
@@ -103,6 +103,7 @@
       defaultSortDirection="asc"
       groupBy="valore"
       reduceBy="count"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
       [data]="interventiPerFonte()"
     />
   </div>
@@ -113,6 +114,7 @@
       defaultSortDirection="asc"
       groupBy="valore"
       reduceBy="count"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
       [data]="interventiPerPartecipazione()"
     />
   </div>
@@ -125,6 +127,7 @@
       [auxReduce]="[{campo:'nome', reduceBy:'count'} , {campo:'valore', reduceBy:'sum'}]"
       groupBy="nome"
       reduceBy="count"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
       [data]="interventiPerStato()"
     />
   </div>
@@ -135,6 +138,7 @@
       defaultSortDirection="asc"
       groupBy="valore"
       reduceBy="count"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
       [data]="interventiPerUnione()"
     />
   </div>
@@ -146,7 +150,7 @@
       filterBy="comune" masterField="comune"
       campo="valore"
       reduceBy="sum"
-      [categoria]="categoriaCorrente()"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
 
       [data]="interventiPerTipologia()"
       [groups]="['tipologia']"
@@ -160,7 +164,7 @@
       campo="valore"
       reduceBy="sum"
       filterBy="comune" masterField="comune"
-      [categoria]="categoriaCorrente()"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
 
       [data]="interventiPerCategoria()"
       [groups]="['categoria']"
@@ -175,7 +179,7 @@
       reduceBy="sum"
       filterBy="comune"
       masterField="comune"
-      [categoria]="categoriaCorrente()"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
 
       [data]="interventiPerTarget()"
       [groups]="['target']"
@@ -189,7 +193,7 @@
       campo="valore"
       reduceBy="sum"
       filterBy="comune" masterField="comune"
-      [categoria]="categoriaCorrente()"
+      [categoria]="categoriaCorrente() || getCategoriaRandom()"
 
       [data]="interventiPerTema()"
       [groups]="['tema']"
