@@ -23,20 +23,13 @@ export interface TreemapTile {
   label: string;
   value: number;
   formattedValue: string;
-  gradient: string;
   x: number; // percentage
   y: number;
   w: number;
   h: number;
+  color: string;
 }
 
-const GRADIENT_PRESETS: string[] = [
-  'linear-gradient(135deg, var(--color-gradient-a-start), var(--color-gradient-a-mid, var(--color-gradient-a-end)), var(--color-gradient-a-end))',
-  'linear-gradient(135deg, var(--color-gradient-b-start), var(--color-gradient-b-mid, var(--color-gradient-b-end)), var(--color-gradient-b-end))',
-  'linear-gradient(135deg, var(--color-gradient-c-start), var(--color-gradient-c-mid, var(--color-gradient-c-end)), var(--color-gradient-c-end))',
-  'linear-gradient(135deg, var(--color-gradient-d-start), var(--color-gradient-d-end))',
-  'linear-gradient(135deg, var(--color-gradient-e-start), var(--color-gradient-e-end))',
-];
 
 @Component({
   selector: 'sheldon-chart-treemap',
@@ -67,6 +60,10 @@ export default class ChartTreemapComponent implements OnInit {
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
   currentReduce = signal<AuxReduceOption | null>(null);
+
+  gradients: Signal<string[]> = computed(() => {
+    return this.data().map(d => getRandomGradient(this.categoria(), '90deg'));
+  });
 
   ngOnInit(): void {
     this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
@@ -110,29 +107,23 @@ export default class ChartTreemapComponent implements OnInit {
       .sort((a, b) => b.value - a.value);
   });
 
-  /** Assign a stable gradient index per unique outer-group value. */
-  protected groupGradientMap = computed<Map<string, string>>(() => {
-    const unique = [...new Set(this.aggregatedTree().map(d => d.groupKey))];
-    return new Map(unique.map((g, i) => [g, GRADIENT_PRESETS[i % GRADIENT_PRESETS.length]]));
-  });
 
   tiles: Signal<TreemapTile[]> = computed(() => {
     const items = this.aggregatedTree();
-    const gradientMap = this.groupGradientMap();
     const {reduceBy} = this.currentReduce()!;
     if (!items.length) return [];
 
     const layout = squarify(items, {x: 0, y: 0, w: 100, h: 100});
 
-    return layout.map(tile => ({
+    return layout.map((tile, i: number) => ({
       label: tile.label,
       value: tile.value,
       formattedValue: reduceBy === 'sum' ? formatEuro(tile.value) : `${tile.value}`,
-      gradient: gradientMap.get(tile.groupKey) ?? GRADIENT_PRESETS[0],
       x: tile.x,
       y: tile.y,
       w: tile.w,
       h: tile.h,
+      color: this.gradients()[i]
     }));
   });
   categoria = input<string>('');

@@ -20,10 +20,7 @@ import {getRandomGradient} from '../../../utils';
 })
 export default class ChartHorizontalBarComponent extends ChartBarComponent {
   override gradients: Signal<string[]> = computed(() => {
-    console.log(this.categoria());
-    const gradients = this.data().map(d => getRandomGradient(this.categoria(), '90deg'));
-    console.log(gradients);
-    return gradients;
+    return this.data().map(d => getRandomGradient(this.categoria(), '90deg'));
   });
 
 }

@@ -36,7 +36,7 @@
           [style.top.%]="tile.y"
           [style.width.%]="tile.w"
           [style.height.%]="tile.h"
-          [style.background]="getBarBackground()">
+          [style.background]="tile.color">
           <div class="treemap-tile__label">{{ tile.label }}</div>
           <div class="treemap-tile__value">{{ tile.formattedValue }}</div>
         </div>
