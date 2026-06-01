@@ -10,8 +10,10 @@ import ChartSegmentedBarComponent from './chart-segmented-bar/chart-segmented-ba
 import ListaComponent from './lista/lista.component';
 import ChartTreemapComponent from './chart-treemap/chart-treemap.component';
 import SheldonMosaicMapComponent from './sheldon-mosaic-map/sheldon-mosaic-map.component';
+import ChartLabelComponent from './chart-label/chart-label.component';
 
 export * from './card/card.component';
+export * from './chart-label/chart-label.component';
 export * from './chart-horizontal-bar/chart-horizontal-bar.component';
 export * from './chart-segmented-bar/chart-segmented-bar.component';
 export * from './chart-bar/chart-bar.component';
@@ -22,7 +24,7 @@ export * from './chart-line/chart-line.component';
 export * from './kpi/kpi.component';
 export * from './lista/lista.component';
 export * from './chart-treemap/chart-treemap.component';
-export { default as SheldonMosaicMapComponent } from './sheldon-mosaic-map/sheldon-mosaic-map.component';
+export {default as SheldonMosaicMapComponent} from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 
 export const components = [
   GlobalSearchComponent,
@@ -37,4 +39,5 @@ export const components = [
   KpiComponent,
   ListaComponent,
   SheldonMosaicMapComponent,
+  ChartLabelComponent
 ];

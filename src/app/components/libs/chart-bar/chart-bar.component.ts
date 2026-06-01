@@ -14,6 +14,8 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {getRandomGradient, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.interface';
+import {components} from '../index';
+import ChartLabelComponent from '../chart-label/chart-label.component';
 
 export interface BarItem {
   label: string;
@@ -30,6 +32,7 @@ export interface BarItem {
     MatButtonToggle,
     DynamicFilterComponent,
     SortToggle,
+    ChartLabelComponent,
   ],
   templateUrl: './chart-bar.component.html',
   styleUrl: './chart-bar.component.scss',

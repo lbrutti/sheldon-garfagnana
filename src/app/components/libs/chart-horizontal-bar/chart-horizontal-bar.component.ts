@@ -5,6 +5,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import ChartBarComponent from '../chart-bar/chart-bar.component';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import {getRandomGradient} from '../../../utils';
+import ChartLabelComponent from '../chart-label/chart-label.component';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -14,6 +15,7 @@ import {getRandomGradient} from '../../../utils';
     MatButtonToggle,
     DynamicFilterComponent,
     SortToggle,
+    ChartLabelComponent,
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',

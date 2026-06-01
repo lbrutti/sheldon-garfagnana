@@ -34,7 +34,7 @@
         <div class="bar-col">
           <!--          <span class="bar-value">{{ bar.value }}</span>-->
           <div class="bar" [style.height.%]="bar.pct" [style.background]="bar.background">
-            <span class="bar-label">{{ bar.label }}</span>
+            <sheldon-chart-label [text]="bar.label"/>
           </div>
         </div>
       }

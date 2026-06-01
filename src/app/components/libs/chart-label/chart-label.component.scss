@@ -1,0 +1,10 @@
+//@use "@angular/material" as mat;
+
+:host {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 90%;
+  color: white;
+  background: black;
+}

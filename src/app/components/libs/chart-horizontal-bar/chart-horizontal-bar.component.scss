@@ -4,8 +4,20 @@
   .h-bars-container {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    //gap: 6px;
   }
+
+  .h-bar-container {
+    position: relative;
+
+    sheldon-chart-label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+  }
+
 
   .h-bar {
     height: 28px;
@@ -37,5 +49,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
 
 }
