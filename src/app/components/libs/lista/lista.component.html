@@ -13,23 +13,15 @@
       <cdk-virtual-scroll-viewport appendOnly itemSize="30" class="list-container">
 
         <mat-list-item *cdkVirtualFor="let dato of filteredData()">
-          <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">
-          <span [style]="{display:'inline-block', textOverflow:'ellipsis', width:'80%'}">
-            {{ dato.nome }}
-          </span>
-            <span [style]="{display:'inline-block'}">
-            {{ dato.valore | multiples }}
-          </span>
+          <div class="list-row">
+            <span class="nome-container">{{ dato.nome }}</span>
+            <span class="valore-container">{{ dato.valore | multiples }}</span>
           </div>
         </mat-list-item>
         <mat-list-item>
-          <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">
-          <span [style]="{display:'inline-block'}">
-            Totale
-          </span>
-            <span [style]="{display:'inline-block'}">
-            {{ totaleValore()  | multiples }}
-          </span>
+          <div class="list-row">
+            <span class="nome-container">Totale</span>
+            <span class="valore-container">{{ totaleValore() | multiples }}</span>
           </div>
         </mat-list-item>
       </cdk-virtual-scroll-viewport>

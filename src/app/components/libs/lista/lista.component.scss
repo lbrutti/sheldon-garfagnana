@@ -24,12 +24,36 @@
 
   mat-list-item {
     padding: 0;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .kpi-value {
-    font-size: 3rem;
-    font-weight: 700;
-    margin: 0;
+  .list-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
   }
 
+  .nome-container {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .valore-container {
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+
+::ng-deep {
+  .cdk-virtual-scroll-content-wrapper {
+    position: relative;
+    contain: content;
+  }
+}
 }
