@@ -37,8 +37,11 @@
           [style.width.%]="tile.w"
           [style.height.%]="tile.h"
           [style.background]="tile.color">
-          <div class="treemap-tile__label">{{ tile.label }}</div>
-          <div class="treemap-tile__value">{{ tile.formattedValue }}</div>
+          <sheldon-two-lines-chart-label
+            [text]="tile.label"
+            [sub]="tile.formattedValue"/>
+          <!--          <div class="treemap-tile__label">{{ tile.label }}</div>-->
+          <!--          <div class="treemap-tile__value">{{ tile.formattedValue }}</div>-->
         </div>
       }
     </div>

@@ -35,6 +35,7 @@ export interface SegmentInterface {
     SortToggle,
     MatButtonToggle,
     MatButtonToggleGroup,
+    components,
 
   ],
   templateUrl: './chart-segmented-bar.component.html',

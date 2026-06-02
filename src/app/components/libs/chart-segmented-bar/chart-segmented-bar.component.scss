@@ -32,7 +32,7 @@
 
     &__left {
       flex: 1;
-      padding: 12px 14px;
+      //padding: 12px 14px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -43,7 +43,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 20px;
+      //padding: 12px 20px;
       min-width: 110px;
     }
   }
@@ -68,7 +68,7 @@
     font-size: 10px;
     font-weight: 600;
     letter-spacing: 0.08em;
-    padding: 2px 7px;
+    //padding: 2px 7px;
     border-radius: 2px;
     background: transparent;
   }
@@ -115,16 +115,13 @@
     height: 120px;
     width: 100%;
     overflow: hidden;
-    border-radius: 1px;
-    border: 1px solid $border;
   }
 
   // Each segment
   .pop-segment {
     display: flex;
-    align-items: flex-start;
+    align-items: flex-end;
     justify-content: flex-start;
-    padding: 8px 6px;
     overflow: hidden;
     cursor: pointer;
     transition: flex 0.35s cubic-bezier(0.4, 0, 0.2, 1),
@@ -147,8 +144,7 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
       line-height: 1.3;
-      white-space: normal; // allow wrap when expanded
-      word-break: break-word;
+      //word-break:
       transition: none;
     }
 
@@ -156,7 +152,6 @@
       font-size: 14px;
       font-weight: 800;
       letter-spacing: -0.01em;
-      margin-top: 2px;
     }
 
     &__count {
@@ -168,11 +163,12 @@
     // ── Hovered state ──────────────────────────────────────────────────────────
     // flex value is set inline via [style.flex] binding in the template
     &--hovered {
-      box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.15);
       z-index: 1;
 
       .pop-segment__label {
-        white-space: normal;
+        white-space: nowrap;
+        word-break: keep-all;
+        //width: fit-content;
       }
     }
 
@@ -187,8 +183,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 14px;
-    border-top: 1px solid $border;
+    //padding: 8px 14px;
+    //border-top: 1px solid $border;
     background: #fff;
 
     &__source {
@@ -211,7 +207,7 @@
       letter-spacing: 0.06em !important;
       color: $text-muted !important;
       min-width: unset !important;
-      padding: 0 4px !important;
+      //padding: 0 4px !important;
       line-height: 1 !important;
       height: auto !important;
 

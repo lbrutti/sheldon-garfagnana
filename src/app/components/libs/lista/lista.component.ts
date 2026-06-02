@@ -10,10 +10,20 @@ import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {MatList, MatListItem} from '@angular/material/list';
 import {DecimalPipe} from '@angular/common';
+import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {MultiplesPipe} from '../../../pipes';
 
 @Component({
   selector: 'sheldon-list',
-  imports: [CardComponent, DynamicFilterComponent, MatList, MatListItem, DecimalPipe],
+  imports: [
+    CardComponent,
+    DynamicFilterComponent,
+    MatList,
+    MatListItem,
+    CdkFixedSizeVirtualScroll,
+    CdkVirtualScrollViewport,
+    CdkVirtualForOf,
+    MultiplesPipe],
   templateUrl: './lista.component.html',
   styleUrl: './lista.component.scss',
 })

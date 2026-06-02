@@ -26,12 +26,12 @@
         }
       </mat-button-toggle-group>
     }
-    <div class="h-bars-container">
-      @for (bar of bars(); track bar.label) {
-        <div class="h-bar-container">
-            <sheldon-chart-label
-              text="{{bar.label}}"
-              sub="{{bar.value}}"/>
+<!--    <div class="h-bars-container">-->
+      <cdk-virtual-scroll-viewport itemSize="38" class="h-bars-container">
+        <div *cdkVirtualFor="let bar of bars();" class="h-bar-container">
+          <sheldon-chart-label
+            text="{{bar.label}}"
+            sub="{{bar.value}}"/>
 
           <div class="h-bar"
                [style.width.%]="bar.pct"
@@ -39,7 +39,8 @@
                [style.background]="bar.background">
           </div>
         </div>
-      }
-    </div>
+
+      </cdk-virtual-scroll-viewport>
+<!--    </div>-->
   </ng-container>
 </sheldon-card>

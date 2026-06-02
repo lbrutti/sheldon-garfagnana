@@ -6,12 +6,15 @@ import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} f
 import {getExplodedData} from '../../../utils';
 import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
+import {DecimalPipe} from '@angular/common';
 
 @Component({
   selector: 'sheldon-dashboard',
   imports: [...components],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
+  providers: [DecimalPipe] // Add DecimalPipe to providers so it can be injected
+
 })
 export default class Dashboard implements OnInit {
 

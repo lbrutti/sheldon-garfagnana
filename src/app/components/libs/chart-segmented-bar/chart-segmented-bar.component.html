@@ -40,18 +40,23 @@
             class="pop-segment"
             [class.pop-segment--hovered]="hoveredIndex() === i"
             [class.pop-segment--dimmed]="hoveredIndex() !== null && hoveredIndex() !== i"
-            [style.flex]="hoveredIndex() === i ? seg.percentage * 2.2 : seg.percentage"
-            [style.background]="hoveredIndex() === i ? seg.hoverColor : seg.color"
+            [style.flex]="hoveredIndex() === i ? seg.percentage * 3 : seg.percentage"
+            [style.background]="seg.color"
             (mouseenter)="onSegmentHover(i)"
             (mouseleave)="onSegmentLeave()"
             [attr.aria-label]="seg.label + ': ' + formatPercentage(seg.percentage)"
           >
             <div class="pop-segment__content" [style.color]="seg.textColor">
-            <span class="pop-segment__label">
-              {{ hoveredIndex() === i ? seg.label : seg.shortLabel }}
-            </span>
-              <span class="pop-segment__pct">{{ formatPercentage(seg.percentage) }}</span>
-              <span class="pop-segment__count">{{ formatCount(seg.count) }}</span>
+              <sheldon-two-lines-chart-label
+                class="pop-segment__label"
+                text="{{ hoveredIndex() === i ? seg.label : seg.shortLabel }}"
+                sub="{{ formatPercentage(seg.percentage) }}"
+              />
+<!--              <span class="pop-segment__label">-->
+<!--              {{ hoveredIndex() === i ? seg.label : seg.shortLabel }}-->
+<!--            </span>-->
+<!--              <span class="pop-segment__pct">{{ formatPercentage(seg.percentage) }}</span>-->
+<!--              &lt;!&ndash;              <span class="pop-segment__count">{{ formatCount(seg.count) }}</span>&ndash;&gt;-->
             </div>
           </div>
         }

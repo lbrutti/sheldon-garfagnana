@@ -1,10 +1,22 @@
 :host {
   width: 100%;
 
+  sheldon-card {
+    height: 364px;
+  }
+
   .h-bars-container {
     display: flex;
     flex-direction: column;
+    height: 280px;
+    overflow-y: scroll;
     //gap: 6px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+    &::-webkit-scrollbar { /* WebKit */
+      width: 0;
+      height: 0;
+    }
   }
 
   .h-bar-container {

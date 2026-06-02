@@ -1,12 +1,16 @@
 :host {
   width: 100%;
 
+  sheldon-card{
+    height: 254px;
+  }
   .bars-container {
+    position: relative;
     display: flex;
     align-items: flex-end;
     //gap: 6px;
-    height: 240px;
-    padding-top: 20px;
+    height: 132px;
+    //padding-top: 20px;
   }
 
   .bar-col {

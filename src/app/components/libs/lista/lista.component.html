@@ -8,28 +8,31 @@
       (filterChange)="onFilterChange($event)"/>
 
     <mat-list>
-      @for (dato of filteredData(); track dato) {
-        <mat-list-item>
+      <!--      @for (dato of filteredData(); track dato) {-->
+      <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="list-container">
+
+        <mat-list-item *cdkVirtualFor="let dato of filteredData()">
           <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">
-          <span [style]="{display:'inline-block'}">
+          <span [style]="{display:'inline-block', textOverflow:'ellipsis', width:'80%'}">
             {{ dato.nome }}
           </span>
             <span [style]="{display:'inline-block'}">
-            {{ dato.valore | number }} {{ udm() }}
+            {{ dato.valore | multiples }}
           </span>
           </div>
         </mat-list-item>
-      }
-      <mat-list-item>
-        <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">
+        <mat-list-item>
+          <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">
           <span [style]="{display:'inline-block'}">
             Totale
           </span>
-          <span [style]="{display:'inline-block'}">
-            {{ totaleValore() | number }} {{ udm() }}
+            <span [style]="{display:'inline-block'}">
+            {{ totaleValore()  | multiples }}
           </span>
-        </div>
-      </mat-list-item>
+          </div>
+        </mat-list-item>
+      </cdk-virtual-scroll-viewport>
+      <!--      }-->
     </mat-list>
   </ng-container>
 </sheldon-card>

@@ -11,13 +11,9 @@
 
   mat-button-toggle-group {
     border: 0 !important;
-    border-radius: var(--mat-button-toggle-shape, var(--mat-sys-corner-extra-large));
-
   }
 
   mat-button-toggle {
     border: 1px solid black !important;
-
-    border-radius: var(--mat-button-toggle-shape, var(--mat-sys-corner-extra-large));
   }
 }

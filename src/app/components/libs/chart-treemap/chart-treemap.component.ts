@@ -12,6 +12,9 @@ import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
 import {getRandomGradient, getReducedValue} from '../../../utils';
 import CardComponent from '../card/card.component';
 import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.interface';
+import {MultiplesPipe} from '../../../pipes';
+import {DecimalPipe} from '@angular/common';
+import {components} from '../index';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -34,7 +37,9 @@ export interface TreemapTile {
     MatButtonToggleGroup,
     MatButtonToggle,
     DynamicFilterComponent,
+    components,
   ],
+  providers: [DecimalPipe, MultiplesPipe],
   templateUrl: './chart-treemap.component.html',
   styleUrl: './chart-treemap.component.scss',
 })
@@ -60,6 +65,9 @@ export default class ChartTreemapComponent implements OnInit {
   gradients: Signal<string[]> = computed(() => {
     return this.data().map(d => getRandomGradient(this.categoria(), '90deg'));
   });
+
+  constructor(private readonly multiples: MultiplesPipe) {
+  }
 
   ngOnInit(): void {
     this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
@@ -114,7 +122,7 @@ export default class ChartTreemapComponent implements OnInit {
     return layout.map((tile, i: number) => ({
       label: tile.label,
       value: tile.value,
-      formattedValue: reduceBy === 'sum' ? formatEuro(tile.value) : `${tile.value}`,
+      formattedValue: this.multiples.transform(tile.value),
       x: tile.x,
       y: tile.y,
       w: tile.w,
