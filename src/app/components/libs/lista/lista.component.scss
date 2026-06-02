@@ -55,5 +55,8 @@
     position: relative;
     contain: content;
   }
+  .cdk-virtual-scroll-spacer {
+    height: 0 !important;
+  }
 }
 }
