@@ -74,7 +74,6 @@
     "groupBy": "valore",
     "reduceBy": "sum",
     "limit": 0,
-    "udm": "€",
     "data": "interventiPerComune"
   },
   {
