@@ -216,7 +216,7 @@ export default class Dashboard implements OnInit {
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;
     this.comuniPolygons = this.apiService.comuniPolygons;
-    fetch('/settings/dashboardSettings.json')
+    fetch('settings/dashboardSettings.json')
       .then(r => r.json())
       .then((s: WidgetSetting[]) => this.settings.set(s));
   }
