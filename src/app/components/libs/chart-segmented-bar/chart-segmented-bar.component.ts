@@ -15,6 +15,7 @@ import {ChartData} from 'chart.js';
 import {getRandomGradient, getReducedValue, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
+import {MultiplesPipe} from '../../../pipes';
 
 export interface SegmentInterface {
   label: string;
@@ -38,6 +39,7 @@ export interface SegmentInterface {
     ReduceToggleComponent,
     ChartTwoLinesLabelComponent
   ],
+  providers: [MultiplesPipe],
   templateUrl: './chart-segmented-bar.component.html',
   styleUrls: ['./chart-segmented-bar.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush,
@@ -98,6 +100,9 @@ export default class ChartSegmentedBarComponent implements OnInit {
     return segments;
   });
 
+  constructor(private readonly multiples: MultiplesPipe) {
+  }
+
   ngOnInit(): void {
     this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()})
     this.sortDirection.set(this.defaultSortDirection());
@@ -125,8 +130,12 @@ export default class ChartSegmentedBarComponent implements OnInit {
     return `(${count.toLocaleString('it-IT')})`;
   }
 
-  formatPercentage(value: number): string {
-    return value.toFixed(1).replace('.', ',') + '%';
+  formatPercentage(seg: SegmentInterface): string {
+    if (this.currentReduce().reduceBy === 'sum') {
+      return this.multiples.transform(seg.count);
+    } else {
+      return seg.percentage.toFixed(1).replace('.', ',') + '%';
+    }
   }
 
   protected onFilterChange($event: FilterOptionInterface[]) {

@@ -38,13 +38,13 @@
             [style.background]="seg.color"
             (mouseenter)="onSegmentHover(i)"
             (mouseleave)="onSegmentLeave()"
-            [attr.aria-label]="seg.label + ': ' + formatPercentage(seg.percentage)"
+            [attr.aria-label]="seg.label + ': ' + formatPercentage(seg)"
           >
             <div class="pop-segment__content" [style.color]="seg.textColor">
               <sheldon-two-lines-chart-label
                 class="pop-segment__label"
                 text="{{ hoveredIndex() === i ? seg.label : seg.shortLabel }}"
-                sub="{{ formatPercentage(seg.percentage) }}"
+                sub="{{ formatPercentage(seg) }}"
               />
             </div>
           </div>
