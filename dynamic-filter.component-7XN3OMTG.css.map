@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/dynamic-filter/dynamic-filter.component.scss"],
-  "sourcesContent": [":host {\n  display: block;\n  //height: 38px;\n\n  .filter-field {\n    //height: 38px;\n    display: flex;\n    flex-direction: column;\n    gap: 4px;\n    //margin-bottom: 12px;\n  }\n  ::ng-deep {\n    .mat-mdc-text-field-wrapper {\n      padding: 0 !important;\n    }\n    .mdc-floating-label--float-above{\n      display: none !important;\n    }\n    .mdc-notched-outline{\n      border: none !important;\n    }\n    .mdc-floating-label{\n      height: 38px !important;\n      mat-label{\n        vertical-align: middle;\n      }\n    }\n  }\n}\n"],
-  "mappings": "AAAA,MACE,QAAA,MAGA,MAAA,CAAA,aAEE,QAAA,KACA,eAAA,OACA,IAAA,IAIA,MAAA,UAAA,CAAA,2BAZJ,QAaM,YAEF,MAAA,UAAA,CAAA,gCACE,QAAA,eAEF,MAAA,UAAA,CAAA,oBACE,OAAA,eAEF,MAAA,UAAA,CAAA,mBACE,OAAA,eACA,MAAA,UAAA,CAFF,mBAEE,UACE,eAAA",
-  "names": []
-}
