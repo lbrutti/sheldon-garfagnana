@@ -164,17 +164,24 @@
     // flex value is set inline via [style.flex] binding in the template
     &--hovered {
       z-index: 1;
+      overflow: visible;
+
+      .pop-segment__content {
+        overflow: visible;
+      }
 
       .pop-segment__label {
+        overflow: visible;
+        text-overflow: clip;
         white-space: nowrap;
         word-break: keep-all;
-        //width: fit-content;
+        margin-right: 2px;
       }
     }
 
     // ── Dimmed siblings ────────────────────────────────────────────────────────
     &--dimmed {
-      filter: brightness(0.92) saturate(0.8);
+      filter: brightness(0.8) saturate(0.8);
     }
   }
 

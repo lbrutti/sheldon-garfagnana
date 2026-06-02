@@ -41,6 +41,7 @@
             [class.pop-segment--hovered]="hoveredIndex() === i"
             [class.pop-segment--dimmed]="hoveredIndex() !== null && hoveredIndex() !== i"
             [style.flex]="hoveredIndex() === i ? seg.percentage * 3 : seg.percentage"
+            [style.min-width]="hoveredIndex() === i ? 'max-content' : null"
             [style.background]="seg.color"
             (mouseenter)="onSegmentHover(i)"
             (mouseleave)="onSegmentLeave()"
