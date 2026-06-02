@@ -14,7 +14,6 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {getRandomGradient, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.interface';
-import {components} from '../index';
 import ChartLabelComponent from '../chart-label/chart-label.component';
 
 export interface BarItem {
@@ -60,7 +59,7 @@ export default class ChartBarComponent implements OnInit {
   reduceBy = input<string>('sum');
   auxReduce = input<ReduceByDeclaration[]>([]);
 
-  currentReduce = signal<{ campo: string; reduceBy: string } | null>(null);
+  currentReduce = signal<ReduceByDeclaration | null>(null);
 
   ngOnInit(): void {
     this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()});

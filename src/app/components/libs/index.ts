@@ -11,6 +11,7 @@ import ListaComponent from './lista/lista.component';
 import ChartTreemapComponent from './chart-treemap/chart-treemap.component';
 import SheldonMosaicMapComponent from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 import ChartLabelComponent from './chart-label/chart-label.component';
+import ChartTwoLinesLabelComponent from './chart-two-lines-label/chart-two-lines-label.component';
 
 export * from './card/card.component';
 export * from './chart-label/chart-label.component';
@@ -39,5 +40,5 @@ export const components = [
   KpiComponent,
   ListaComponent,
   SheldonMosaicMapComponent,
-  ChartLabelComponent
-];
+  ChartLabelComponent,
+  ChartTwoLinesLabelComponent];

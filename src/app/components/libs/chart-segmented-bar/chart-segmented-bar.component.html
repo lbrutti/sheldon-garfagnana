@@ -1,16 +1,21 @@
 <sheldon-card>
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container content>
-    <!--    SORTING -->
-    <sheldon-sort-toggle
-      [defaultSortDirection]="this.defaultSortDirection()"
-      (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
-    <!--    FILTERING -->
-    <sheldon-dynamic-filter
-      [filterBy]="this.filtersFields()"
-      [dataset]="this.data()"
-      [masterField]="this.masterField()"
-      (filterChange)="onFilterChange($event)"/>
+    @if (showSorting()) {
+
+      <!--    SORTING -->
+      <sheldon-sort-toggle
+        [defaultSortDirection]="this.defaultSortDirection()"
+        (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
+    }
+    @if (filterBy() !== null) {
+      <!--    FILTERING -->
+      <sheldon-dynamic-filter
+        [filterBy]="this.filtersFields()"
+        [dataset]="this.data()"
+        [masterField]="this.masterField()"
+        (filterChange)="onFilterChange($event)"/>
+    }
     <!--    AUX REDUCE SWITCHES-->
     @if (this.auxReduce().length) {
       <mat-button-toggle-group

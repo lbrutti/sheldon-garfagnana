@@ -54,7 +54,7 @@ export default class ChartSegmentedBarComponent implements OnInit {
   limit = input<number>(15);
   categoria = input<string>('');
 
-  showSorting = input<boolean>(true);
+  showSorting = input<boolean>(false);
   sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
   sortDirection = signal<string>('desc');
   defaultSortDirection = input<'asc' | 'desc'>('desc');

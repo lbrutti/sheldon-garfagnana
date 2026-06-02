@@ -11,13 +11,9 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
 import {getRandomGradient, getReducedValue} from '../../../utils';
 import CardComponent from '../card/card.component';
+import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.interface';
 
 type ReduceMode = 'sum' | 'count' | 'max';
-
-export interface AuxReduceOption {
-  campo: string;
-  reduceBy: ReduceMode;
-}
 
 export interface TreemapTile {
   label: string;
@@ -50,7 +46,7 @@ export default class ChartTreemapComponent implements OnInit {
 
   campo = input<string>('valore');
   reduceBy = input<ReduceMode>('sum');
-  auxReduce = input<AuxReduceOption[]>([]);
+  auxReduce = input<ReduceByDeclaration[]>([]);
 
   filterBy = input<string | null>(null);
   filtersFields = computed<string[]>((): string[] =>
@@ -59,7 +55,7 @@ export default class ChartTreemapComponent implements OnInit {
   masterField = input<string | null>(null);
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
-  currentReduce = signal<AuxReduceOption | null>(null);
+  currentReduce = signal<ReduceByDeclaration | null>(null);
 
   gradients: Signal<string[]> = computed(() => {
     return this.data().map(d => getRandomGradient(this.categoria(), '90deg'));
@@ -129,7 +125,7 @@ export default class ChartTreemapComponent implements OnInit {
   categoria = input<string>('');
 
   protected onReduceChange($event: MatButtonToggleChange) {
-    this.currentReduce.set($event.value as AuxReduceOption);
+    this.currentReduce.set($event.value as ReduceByDeclaration);
   }
 
   protected onFilterChange($event: FilterOptionInterface[]) {
