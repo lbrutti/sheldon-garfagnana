@@ -8,7 +8,8 @@ import {getRandomGradient} from '../../../utils';
 import ChartLabelComponent from '../chart-label/chart-label.component';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {MultiplesPipe} from '../../../pipes';
-import {MatList, MatListItem} from '@angular/material/list';
+import {MatList} from '@angular/material/list';
+import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -24,7 +25,7 @@ import {MatList, MatListItem} from '@angular/material/list';
     CdkVirtualForOf,
     MultiplesPipe,
     MatList,
-    MatListItem,
+    ReduceToggleComponent,
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',

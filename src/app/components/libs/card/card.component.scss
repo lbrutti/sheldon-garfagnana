@@ -10,18 +10,15 @@
   box-sizing: border-box;
   justify-content: space-between;
 
-  .subheader {
-    height: 49px !important;
-    background: red;
-  }
+
 
   .sheldon-card-subheader {
+    min-height: 49px !important;
     align-items: baseline;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
-
-
+    
     // mat-button-toggle-group projected into [subheader] inherits the same height token.
     --mat-button-toggle-height: var(--filter-control-height, 18px) !important;
   }

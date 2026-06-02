@@ -1,26 +1,24 @@
 <sheldon-card>
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container subheader>
-    <div class="subheader">
-      @if (showSorting()) {
-        <!--    SORTING -->
-        <sheldon-sort-toggle
-          [defaultSortDirection]="this.defaultSortDirection()"
-          (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
-      }
-      @if (filterBy() !== null) {
-        <!--    FILTERING -->
-        <sheldon-dynamic-filter
-          [filterBy]="this.filtersFields()"
-          [dataset]="this.data()"
-          [masterField]="this.masterField()"
-          (filterChange)="onFilterChange($event)"/>
-      }
-      <!--    AUX REDUCE SWITCHES-->
-      @if (this.auxReduce().length) {
-        <sheldon-reduce-toggle [options]="this.auxReduce()" (reduceChange)="onReduceChange($event)"/>
-      }
-    </div>
+    @if (showSorting()) {
+      <!--    SORTING -->
+      <sheldon-sort-toggle
+        [defaultSortDirection]="this.defaultSortDirection()"
+        (sortChange)="onSortChange($event)"></sheldon-sort-toggle>
+    }
+    @if (filterBy() !== null) {
+      <!--    FILTERING -->
+      <sheldon-dynamic-filter
+        [filterBy]="this.filtersFields()"
+        [dataset]="this.data()"
+        [masterField]="this.masterField()"
+        (filterChange)="onFilterChange($event)"/>
+    }
+    <!--    AUX REDUCE SWITCHES-->
+    @if (this.auxReduce().length) {
+      <sheldon-reduce-toggle [options]="this.auxReduce()" (reduceChange)="onReduceChange($event)"/>
+    }
   </ng-container>
   <ng-container content>
     <!-- ── CUSTOM SEGMENTED BAR ───────────────────────── -->
