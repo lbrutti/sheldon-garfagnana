@@ -1,11 +1,11 @@
-import {Component, computed, input, output, Signal} from '@angular/core';
-import {MatFormField, MatInputModule, MatLabel} from '@angular/material/input';
+import {Component, computed, effect, inject, input, output, Signal, untracked} from '@angular/core';
+import {MatFormField, MatInputModule} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
-
 
 @Component({
   selector: 'sheldon-global-search',
@@ -22,51 +22,97 @@ import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
   templateUrl: './global-search.component.html',
   styleUrl: './global-search.component.scss',
 })
-
 export default class GlobalSearchComponent {
+  private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+
   selectUnione = new FormControl<FilterOptionInterface>({key: '', value: ''});
   selectUnioneSignal = toSignal(this.selectUnione.valueChanges);
 
   chipSet = new FormControl<FilterOptionInterface[]>([]);
   chipSetSignal = toSignal(this.chipSet.valueChanges);
 
-
   interventi = input<InterventoInterface[]>([]);
-  filter = output<(FilterOptionInterface)[]>();
+  filter = output<FilterOptionInterface[]>();
 
   suggestions: Signal<FilterOptionInterface[]> = computed(() => {
-
-    const unioni = Array.from(new Set(this.interventi()
-      .map(i => i.unione.trim())))
-      .map(c => ({
-        label: c.trim(),
-        value: c.trim(),
-        key: 'unione'
-      }))
+    const unioni = Array.from(new Set(this.interventi().map(i => i.unione.trim())))
+      .map(c => ({label: c.trim(), value: c.trim(), key: 'unione'}))
       .sort((a, b) => a.value.localeCompare(b.value));
-
-    return [{label: "Tutte le unioni", key: 'unione', value: ''}, ...unioni];
+    return [{label: 'Tutte le unioni', key: 'unione', value: ''}, ...unioni];
   });
 
-  chips: Signal<FilterOptionInterface[]> = computed(() => {
-    const chips = Array.from(new Set(this.interventi()
-      .flatMap(i => i.categoria.split('|')).map(c => c.trim())))
-      .map(c => ({
-        value: c.trim(),
-        key: 'categoria'
-      }))
-      .sort((a, b) => a.value.localeCompare(b.value));
-    return chips;
-  });
+  chips: Signal<FilterOptionInterface[]> = computed(() =>
+    Array.from(new Set(this.interventi().flatMap(i => i.categoria.split('|')).map(c => c.trim())))
+      .map(c => ({value: c.trim(), key: 'categoria'}))
+      .sort((a, b) => a.value.localeCompare(b.value)),
+  );
 
+  constructor() {
+    // Restore filter state from URL once data is available (runs once)
+    let restored = false;
+    effect(() => {
+      const chips = this.chips();
+      const suggestions = this.suggestions();
+      if (!restored && chips.length && suggestions.length > 1) {
+        restored = true;
+        untracked(() => this.restoreFromUrl());
+      }
+    });
+  }
+
+  private restoreFromUrl(): void {
+    const params = this.route.snapshot.queryParams;
+    let hasFilter = false;
+
+    if (params['unione']) {
+      const match = this.suggestions().find(s => s.value === params['unione']);
+      if (match) {
+        this.selectUnione.setValue(match, {emitEvent: false});
+        hasFilter = true;
+      }
+    }
+
+    if (params['categoria']) {
+      const match = this.chips().find(c => c.value === params['categoria']);
+      if (match) {
+        this.chipSet.setValue([match], {emitEvent: false});
+        hasFilter = true;
+      }
+    }
+
+    if (hasFilter) {
+      this.emitFilter();
+    }
+  }
+
+  private updateQueryParams(): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {
+        unione: this.selectUnione.value?.value || null,
+        categoria: this.chipSet.value?.[0]?.value || null,
+      },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
+  }
+
+  private emitFilter(): void {
+    this.filter.emit(
+      [this.selectUnione.value, ...(this.chipSet.value ?? [])].filter(f => f),
+    );
+  }
 
   protected applyFilter() {
-    this.filter.emit([this.selectUnioneSignal(), ...(this.chipSetSignal() || [])].filter(f => f));
+    this.emitFilter();
+    this.updateQueryParams();
   }
 
   protected handleToggle($event: MatButtonToggleChange) {
-    // Keep multiple mode but enforce single-or-none: deselect all others when a new one is picked
+    // Enforce single-or-none: deselect all others when a new one is picked
     this.chipSet.setValue($event.source.checked ? [$event.source.value] : []);
-    this.filter.emit([this.selectUnioneSignal(), ...(this.chipSet.value ?? [])].filter(f => f));
+    this.emitFilter();
+    this.updateQueryParams();
   }
 }
