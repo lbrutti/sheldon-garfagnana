@@ -12,6 +12,7 @@ import ChartTreemapComponent from './chart-treemap/chart-treemap.component';
 import SheldonMosaicMapComponent from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 import ChartLabelComponent from './chart-label/chart-label.component';
 import ChartTwoLinesLabelComponent from './chart-two-lines-label/chart-two-lines-label.component';
+import ReduceToggleComponent from './reduce-toggle/reduce-toggle';
 
 export * from './card/card.component';
 export * from './chart-label/chart-label.component';
@@ -25,6 +26,7 @@ export * from './chart-line/chart-line.component';
 export * from './kpi/kpi.component';
 export * from './lista/lista.component';
 export * from './chart-treemap/chart-treemap.component';
+export { default as ReduceToggleComponent } from './reduce-toggle/reduce-toggle';
 export {default as SheldonMosaicMapComponent} from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 
 export const components = [
@@ -41,4 +43,5 @@ export const components = [
   ListaComponent,
   SheldonMosaicMapComponent,
   ChartLabelComponent,
-  ChartTwoLinesLabelComponent];
+  ChartTwoLinesLabelComponent,
+  ReduceToggleComponent];

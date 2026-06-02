@@ -6,7 +6,8 @@ import {
   signal,
   Signal,
 } from '@angular/core';
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatButtonToggleChange} from '@angular/material/button-toggle';
+import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {FilterOptionInterface, TreemapDataInterface} from '../../../interfaces';
 import {getRandomGradient, getReducedValue} from '../../../utils';
@@ -35,9 +36,8 @@ export interface TreemapTile {
   selector: 'sheldon-chart-treemap',
   imports: [
     CardComponent,
-    MatButtonToggleGroup,
-    MatButtonToggle,
     DynamicFilterComponent,
+    ReduceToggleComponent,
     ChartTwoLinesLabelComponent
   ],
   providers: [DecimalPipe, MultiplesPipe],

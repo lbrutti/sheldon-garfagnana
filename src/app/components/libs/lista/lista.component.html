@@ -1,12 +1,13 @@
 <sheldon-card>
   <ng-container title>{{ title() }}</ng-container>
-  <ng-container content>
+  <ng-container subheader>
     <sheldon-dynamic-filter
       [filterBy]="filtersFields()"
       [dataset]="data()"
       [masterField]="masterField()"
       (filterChange)="onFilterChange($event)"/>
-
+  </ng-container>
+  <ng-container content>
     <mat-list>
       <!--      @for (dato of filteredData(); track dato) {-->
       <cdk-virtual-scroll-viewport appendOnly itemSize="30" class="list-container">

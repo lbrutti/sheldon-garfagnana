@@ -13,18 +13,7 @@
 
     <!--  AUX REDUCE SWITCHES -->
     @if (this.auxReduce().length) {
-      <mat-button-toggle-group
-        [value]="this.auxReduce()[0]"
-        [hideSingleSelectionIndicator]="true"
-        [hideMultipleSelectionIndicator]="true"
-        (change)="onReduceChange($event)">
-        <!---->
-        @for (aux of this.auxReduce(); track aux) {
-          <mat-button-toggle [value]="aux">
-            <span>{{ aux.campo }}</span>
-          </mat-button-toggle>
-        }
-      </mat-button-toggle-group>
+      <sheldon-reduce-toggle [options]="this.auxReduce()" (reduceChange)="onReduceChange($event)" />
     }
 
   </ng-container>
