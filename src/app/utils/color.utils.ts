@@ -45,8 +45,8 @@ function stopPosition(index: number, total: number): number {
   return index / (total - 1);
 }
 
-export function getRandomGradient(categoria: string, rotation: string = '0deg') {
-  const stopPoint = Math.floor(Math.random() * (90 - 10 + 1) + 10) + '%';
+export function getRandomGradient(categoria: string, rotation: string = '0deg', minStop = 10, maxStop = 90) {
+  const stopPoint = Math.floor(Math.random() * (maxStop - minStop + 1) + minStop) + '%';
   let colorCat = '';
   switch (categoria.toLowerCase()) {
     case 'ambiente':

@@ -1,0 +1,4 @@
+:host {
+  // Override this variable to resize the toggle buttons uniformly.
+  --mat-button-toggle-height: var(--filter-control-height, 18px);
+}

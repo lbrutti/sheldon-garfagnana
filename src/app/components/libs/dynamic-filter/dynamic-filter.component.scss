@@ -1,29 +1,40 @@
 :host {
   display: block;
-  //height: 38px;
+
+  // Override this variable to resize all filter controls uniformly.
+  --filter-control-height: var(--filter-control-height, 18px);
 
   .filter-field {
-    //height: 38px;
     display: flex;
     flex-direction: column;
     gap: 4px;
-    //margin-bottom: 12px;
   }
+
   ::ng-deep {
     .mat-mdc-text-field-wrapper {
       padding: 0 !important;
     }
-    .mdc-floating-label--float-above{
+    .mdc-floating-label--float-above {
       display: none !important;
     }
-    .mdc-notched-outline{
+    .mdc-notched-outline {
       border: none !important;
     }
-    .mdc-floating-label{
-      height: 38px !important;
-      mat-label{
+    .mdc-floating-label {
+      height: var(--filter-control-height) !important;
+      mat-label {
         vertical-align: middle;
       }
     }
+    .mat-mdc-form-field-infix {
+      min-height: var(--filter-control-height) !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+    }
+    .mdc-text-field {
+      min-height: var(--filter-control-height) !important;
+    }
+    // mat-option height in the autocomplete panel
+    --mat-option-height: var(--filter-control-height);
   }
 }

@@ -1,9 +1,7 @@
 <sheldon-card>
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container subheader>
-
     @if (showSorting()) {
-
       <!--    SORTING -->
       <sheldon-sort-toggle
         [defaultSortDirection]="this.defaultSortDirection()"
@@ -21,11 +19,11 @@
     @if (this.auxReduce().length) {
       <mat-button-toggle-group
         [value]="this.auxReduce()[0]"
+        [hideSingleSelectionIndicator]="true"
+        [hideMultipleSelectionIndicator]="true"
         (change)="onReduceChange($event)">
         @for (aux of this.auxReduce(); track aux) {
-          <mat-button-toggle [value]="aux">
-            <span>{{ aux.campo }}</span>
-          </mat-button-toggle>
+          <mat-button-toggle [value]="aux">{{ aux.campo }}</mat-button-toggle>
         }
       </mat-button-toggle-group>
     }

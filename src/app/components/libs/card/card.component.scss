@@ -10,6 +10,16 @@
   box-sizing: border-box;
   justify-content: space-between;
 
+  .sheldon-card-subheader {
+    align-items: baseline;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  
+
+    // mat-button-toggle-group projected into [subheader] inherits the same height token.
+    --mat-button-toggle-height: var(--filter-control-height, 18px) !important;
+  }
 
   //.sheldon-card-content{
   //  height: 100%;
