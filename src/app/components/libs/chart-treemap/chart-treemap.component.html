@@ -1,6 +1,6 @@
 <sheldon-card>
   <ng-container title>{{ this.title() }}</ng-container>
-  <ng-container content>
+  <ng-container subheader>
 
     <!--  FILTERING -->
     @if (this.filterBy() !== null) {
@@ -24,6 +24,9 @@
         }
       </mat-button-toggle-group>
     }
+
+  </ng-container>
+  <ng-container content>
 
     <!--  TREEMAP -->
     <div class="treemap-wrapper">

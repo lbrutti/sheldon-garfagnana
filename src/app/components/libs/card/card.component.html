@@ -14,6 +14,10 @@
     </div>
   </div>
 
+  <div class="sheldon-card-subheader" [style]="{display:'flex', justifyContent:'space-between', flexDirection:'row'}">
+    <ng-content select="[subheader]"></ng-content>
+  </div>
+
   <div class="sheldon-card-content">
     <ng-content select="[content]"></ng-content>
   </div>

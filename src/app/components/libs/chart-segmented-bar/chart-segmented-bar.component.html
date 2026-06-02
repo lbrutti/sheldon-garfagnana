@@ -1,6 +1,7 @@
 <sheldon-card>
   <ng-container title>{{ this.title() }}</ng-container>
-  <ng-container content>
+  <ng-container subheader>
+
     @if (showSorting()) {
 
       <!--    SORTING -->
@@ -28,6 +29,8 @@
         }
       </mat-button-toggle-group>
     }
+  </ng-container>
+  <ng-container content>
     <!-- ── CUSTOM SEGMENTED BAR ───────────────────────── -->
     <div class="pop-bar-container">
       <div

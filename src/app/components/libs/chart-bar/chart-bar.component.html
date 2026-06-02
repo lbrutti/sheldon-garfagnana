@@ -1,6 +1,7 @@
 <sheldon-card>
   <ng-container title>{{ title() }}</ng-container>
-  <ng-container content>
+  <ng-container subheader>
+
     @if (showSorting()) {
       <sheldon-sort-toggle
         [defaultSortDirection]="defaultSortDirection()"
@@ -29,6 +30,8 @@
         }
       </mat-button-toggle-group>
     }
+  </ng-container>
+  <ng-container content>
     <div class="bars-container">
       @for (bar of bars(); track bar.label) {
         <div class="bar-col">

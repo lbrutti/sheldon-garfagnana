@@ -1,6 +1,9 @@
 <sheldon-card>
-  <ng-container title>{{ title() }}</ng-container>
-  <ng-container content>
+  <ng-container title>
+    {{ title() }}
+  </ng-container>
+
+  <ng-container subheader>
     @if (showSorting()) {
       <sheldon-sort-toggle
         [defaultSortDirection]="defaultSortDirection()"
@@ -26,7 +29,9 @@
         }
       </mat-button-toggle-group>
     }
-    <!--    <div class="h-bars-container">-->
+  </ng-container>
+
+  <ng-container content>
     <cdk-virtual-scroll-viewport itemSize="38" class="h-bars-container">
       <div *cdkVirtualFor="let bar of bars();" class="h-bar-container">
         <sheldon-chart-label
@@ -41,6 +46,5 @@
       </div>
 
     </cdk-virtual-scroll-viewport>
-    <!--    </div>-->
   </ng-container>
 </sheldon-card>

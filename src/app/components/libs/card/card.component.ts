@@ -5,10 +5,8 @@ import {MatIcon} from '@angular/material/icon';
 @Component({
   selector: 'sheldon-card',
   imports: [
-
     MatIcon,
     MatIconButton,
-
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
