@@ -49,7 +49,7 @@
       }
     ],
     "showSorting": false,
-    "limit": 0,
+    "limit": 10,
     "data": "interventiPerComune",
     "tileWidth": 4
   },
