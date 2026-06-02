@@ -48,7 +48,7 @@
         "reduceBy": "sum"
       }
     ],
-    "showSorting": true,
+    "showSorting": false,
     "limit": 0,
     "data": "interventiPerComune",
     "tileWidth": 4

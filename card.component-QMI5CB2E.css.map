@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/card/card.component.scss"],
+  "sourcesContent": ["//@use \"@angular/material\" as mat;\n\n:host {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  height: auto;\n  border: solid 1px black;\n  padding: 0;\n  box-sizing: border-box;\n  justify-content: space-between;\n\n\n  //.sheldon-card-content{\n  //  height: 100%;\n  //}\n}\n"],
+  "mappings": "AAEA,MACE,QAAA,KACA,eAAA,OACA,MAAA,KACA,OAAA,KACA,OAAA,MAAA,IAAA,MALF,QAME,EACA,WAAA,WACA,gBAAA",
+  "names": []
+}

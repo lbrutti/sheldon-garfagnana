@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/lista/lista.component.scss"],
+  "sourcesContent": [":host {\n  width: 100%;\n  height: 364px;\n\n  .kpi-value-wrapper {\n    display: flex;\n    align-items: center;\n    justify-content: center;\n  }\n\n  .list-container {\n    display: flex;\n    flex-direction: column;\n    height: 280px;\n    overflow-y: scroll;\n    //gap: 6px;\n    scrollbar-width: none; /* Firefox */\n    -ms-overflow-style: none; /* Internet Explorer 10+ */\n    &::-webkit-scrollbar { /* WebKit */\n      width: 0;\n      height: 0;\n    }\n  }\n\n  mat-list-item {\n    padding: 0;\n  }\n\n  .kpi-value {\n    font-size: 3rem;\n    font-weight: 700;\n    margin: 0;\n  }\n\n}\n"],
+  "mappings": "AAAA,MACE,MAAA,KACA,OAAA,MAEA,MAAA,CAAA,kBACE,QAAA,KACA,YAAA,OACA,gBAAA,OAGF,MAAA,CAAA,eACE,QAAA,KACA,eAAA,OACA,OAAA,MACA,WAAA,OAEA,gBAAA,KACA,mBAAA,KACA,MAAA,CARF,cAQE,oBACE,MAAA,EACA,OAAA,EAIJ,MAAA,cAxBF,QAyBI,EAGF,MAAA,CAAA,UACE,UAAA,KACA,YAAA,IA9BJ,OA+BI",
+  "names": []
+}

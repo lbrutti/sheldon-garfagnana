@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/global-search/global-search.component.scss"],
-  "sourcesContent": [":host {\n  display: flex;\n  flex-direction: row;\n\n  form {\n    display: flex;\n    flex-direction: row;\n    justify-content: space-between;\n    width: 100%;\n  }\n\n  mat-button-toggle-group {\n    border: 0 !important;\n    border-radius: var(--mat-button-toggle-shape, var(--mat-sys-corner-extra-large));\n\n  }\n\n  mat-button-toggle {\n    border: 1px solid black !important;\n\n    border-radius: var(--mat-button-toggle-shape, var(--mat-sys-corner-extra-large));\n  }\n}\n"],
-  "mappings": "AAAA,MACE,QAAA,KACA,eAAA,IAEA,MAAA,KACE,QAAA,KACA,eAAA,IACA,gBAAA,cACA,MAAA,KAGF,MAAA,wBACE,OAAA,YACA,cAAA,IAAA,yBAAA,EAAA,IAAA,+BAIF,MAAA,kBACE,OAAA,IAAA,MAAA,gBAEA,cAAA,IAAA,yBAAA,EAAA,IAAA",
-  "names": []
-}
