@@ -42,6 +42,10 @@ body {
     .tile--#{$i} {
       grid-column: span $i;
 
+      @media (max-width: 959px) {
+        grid-column: span 4;
+      }
+
       @media (max-width: 599px) {
         grid-column: span 1;
       }

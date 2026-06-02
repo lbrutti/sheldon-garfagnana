@@ -8,6 +8,7 @@ import {getRandomGradient} from '../../../utils';
 import ChartLabelComponent from '../chart-label/chart-label.component';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {MultiplesPipe} from '../../../pipes';
+import {MatList, MatListItem} from '@angular/material/list';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -22,6 +23,8 @@ import {MultiplesPipe} from '../../../pipes';
     CdkFixedSizeVirtualScroll,
     CdkVirtualForOf,
     MultiplesPipe,
+    MatList,
+    MatListItem,
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',

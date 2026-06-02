@@ -1,3 +1,4 @@
+@import "../../../../theme/variables.scss";
 :host {
   display: block;
 
@@ -38,17 +39,33 @@
     }
 
     .mdc-text-field {
-      min-height: var(--filter-control-height) !important;
+      height: var(--filter-control-height, 25px) !important;
     }
 
-    .mdc-list-item {
-      min-height: 25px;
-      line-height: 25px;
+    .mat-mdc-option {
+      min-height: var(--filter-control-height);
+      line-height: var(--filter-control-height);
       font-size: 13px;
-      background-color: var(--filter-control-background-color);
     }
 
-    // mat-option height in the autocomplete panel
-    --mat-option-height: var(--filter-control-height);
+    .mat-mdc-form-field-icon-suffix {
+      display: flex;
+      align-items: center;
+      height: var(--filter-control-height);
+
+      .mat-mdc-icon-button {
+        --mdc-icon-button-state-layer-size: var(--filter-control-height) !important;
+        width: var(--filter-control-height) !important;
+        height: var(--filter-control-height) !important;
+        padding: 0;
+
+        .mat-icon {
+          font-size: calc(var(--filter-control-height) - 2px);
+          line-height: var(--filter-control-height);
+          width: calc(var(--filter-control-height) - 2px);
+          height: calc(var(--filter-control-height) - 2px);
+        }
+      }
+    }
   }
 }

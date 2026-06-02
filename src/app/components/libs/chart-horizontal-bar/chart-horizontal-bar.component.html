@@ -32,8 +32,8 @@
   </ng-container>
 
   <ng-container content>
-    <cdk-virtual-scroll-viewport itemSize="38" class="h-bars-container">
-      <div *cdkVirtualFor="let bar of bars();" class="h-bar-container">
+    @for (bar of bars(); track bars) {
+      <div class="h-bar-container">
         <sheldon-chart-label
           text="{{bar.label}}"
           sub="{{bar.value|multiples}}"/>
@@ -44,7 +44,7 @@
              [style.background]="bar.background">
         </div>
       </div>
+    }
 
-    </cdk-virtual-scroll-viewport>
   </ng-container>
 </sheldon-card>
