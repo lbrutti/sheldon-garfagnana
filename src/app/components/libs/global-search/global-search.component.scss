@@ -1,3 +1,5 @@
+$control-height: 25px;
+
 :host {
   display: flex;
   flex-direction: row;
@@ -7,13 +9,60 @@
     flex-direction: row;
     justify-content: space-between;
     width: 100%;
+    height: $control-height;
+    min-height: $control-height;
   }
 
-  mat-button-toggle-group {
-    border: 0 !important;
-  }
+  // ── mat-form-field / mat-select ──────────────────────────────────────────────
+  ::ng-deep {
+    mat-form-field {
+      .mat-mdc-text-field-wrapper,
+      .mat-mdc-form-field-flex,
+      .mat-mdc-form-field-infix {
+        height: $control-height;
+        min-height: $control-height;
+        padding-top: 0;
+        padding-bottom: 0;
+      }
 
-  mat-button-toggle {
-    border: 1px solid black !important;
+      .mat-mdc-select-trigger {
+        height: $control-height;
+        line-height: $control-height;
+      }
+
+      .mdc-notched-outline__notch,
+      .mdc-notched-outline__leading,
+      .mdc-notched-outline__trailing {
+        border-top-width: 1px;
+        border-bottom-width: 1px;
+      }
+    }
+
+    // mat-option in the dropdown panel
+    .mat-mdc-option {
+      min-height: $control-height;
+      line-height: $control-height;
+      font-size: 13px;
+    }
+
+    // mat-button-toggle
+    mat-button-toggle-group {
+      border: 0 !important;
+    }
+
+    mat-button-toggle {
+      border: 1px solid black !important;
+
+      .mat-button-toggle-button {
+        height: $control-height;
+        line-height: $control-height;
+      }
+
+      .mat-button-toggle-label-content {
+        line-height: $control-height;
+        padding: 0 8px;
+        font-size: 13px;
+      }
+    }
   }
 }
