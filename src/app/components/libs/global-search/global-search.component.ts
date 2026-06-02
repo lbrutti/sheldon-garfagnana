@@ -39,12 +39,13 @@ export default class GlobalSearchComponent {
     const unioni = Array.from(new Set(this.interventi()
       .map(i => i.unione.trim())))
       .map(c => ({
+        label: c.trim(),
         value: c.trim(),
         key: 'unione'
       }))
       .sort((a, b) => a.value.localeCompare(b.value));
 
-    return unioni;
+    return [{label: "Tutte le unioni", key: 'unione', value: ''}, ...unioni];
   });
 
   chips: Signal<FilterOptionInterface[]> = computed(() => {

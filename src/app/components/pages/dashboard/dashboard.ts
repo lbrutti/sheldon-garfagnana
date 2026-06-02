@@ -3,7 +3,7 @@ import {ProjectsApiService} from '../../../services/projects-api.service';
 import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
 import {components} from '../../libs';
 import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
-import {getExplodedData} from '../../../utils';
+import {getExplodedData, shuffleArray} from '../../../utils';
 import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
@@ -31,8 +31,8 @@ export default class Dashboard implements OnInit {
   });
 
   getCategoriaRandom(index: number): string {
-    const categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
-    return categorieInterventi[index % categorieInterventi.length];
+
+    return this.categorieInterventi[index % this.categorieInterventi.length];
   }
 
   interventiFiltrati = computed(() => {
@@ -40,7 +40,7 @@ export default class Dashboard implements OnInit {
       if (this.filters().length === 0) {
         return true;
       }
-      const filtroUnione = this.filters().find(f => f.key === 'unione');
+      const filtroUnione = this.filters().find(f => (f.key === 'unione' && f.value));
       const matchUnione = filtroUnione ? intervento.unione === filtroUnione.value : true;
       const altriFiltri = this.filters().filter(f => f.key !== 'unione');
       const matchAltriFiltri = altriFiltri.length ? altriFiltri.some((f: FilterOptionInterface) => {
@@ -84,7 +84,10 @@ export default class Dashboard implements OnInit {
     comuniPolygons: this.comuniPolygons(),
   }));
 
+  categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
+
   constructor(protected apiService: ProjectsApiService) {
+    this.categorieInterventi = shuffleArray(this.categorieInterventi);
     effect(() => {
       const interventi = this.interventiFiltrati();
 
@@ -220,7 +223,6 @@ export default class Dashboard implements OnInit {
 
   protected applyFilters($event: FilterOptionInterface[]) {
     this.filters.set($event);
-
   }
 
 }

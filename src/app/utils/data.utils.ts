@@ -34,4 +34,23 @@ export function getExplodedData(data: any, explodeBy: string): any {
   return data.flatMap((d: any) => {
     return d[explodeBy].split('|').map((f: any) => ({...d, [explodeBy]: f.trim()}));
   });
+
+}
+
+export function shuffleArray(array: any[]): any[] {
+  const randomArray = JSON.parse(JSON.stringify(array));
+  let currentIndex = randomArray.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [randomArray[currentIndex], randomArray[randomIndex]] = [
+      randomArray[randomIndex], randomArray[currentIndex]];
+  }
+  return randomArray;
 }

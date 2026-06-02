@@ -167,6 +167,10 @@
     ],
     "auxReduce": [
       {
+        "campo": "valore",
+        "reduceBy": "sum"
+      },
+      {
         "campo": "progetti",
         "reduceBy": "count"
       }
@@ -186,6 +190,10 @@
       "categoria"
     ],
     "auxReduce": [
+      {
+        "campo": "valore",
+        "reduceBy": "sum"
+      },
       {
         "campo": "progetti",
         "reduceBy": "count"
@@ -207,6 +215,10 @@
     ],
     "auxReduce": [
       {
+        "campo": "valore",
+        "reduceBy": "sum"
+      },
+      {
         "campo": "progetti",
         "reduceBy": "count"
       }
@@ -226,6 +238,10 @@
       "tema"
     ],
     "auxReduce": [
+      {
+        "campo": "valore",
+        "reduceBy": "sum"
+      },
       {
         "campo": "progetti",
         "reduceBy": "count"

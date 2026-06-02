@@ -2,12 +2,17 @@
   <mat-form-field appearance="outline">
     <mat-select
       [formControl]="selectUnione"
-      value="all"
+      [value]="{
+        value: '',
+        key: 'unione'
+      }"
+      placeholder="Cerca per unione"
       (selectionChange)="(applyFilter())"
     >
-      <mat-option value="all">Tutte le unioni</mat-option>
+
+
       @for (option of suggestions(); track option) {
-        <mat-option [value]="option">{{ option.value }}</mat-option>
+        <mat-option [value]="option">{{ option.label }}</mat-option>
       }
     </mat-select>
 

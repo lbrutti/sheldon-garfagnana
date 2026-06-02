@@ -18,11 +18,11 @@ export class MultiplesPipe implements PipeTransform {
     if (value == null) {
       return '-';
     }
-    if (value > 1000) {
-      return `${this.decimalPipe.transform(value / 1000, '1.0-0')}K`;
-    }
     if (value > 1000000) {
       return `${this.decimalPipe.transform(value / 1000000, '1.0-0')}M`;
+    }
+    if (value > 1000) {
+      return `${this.decimalPipe.transform(value / 1000, '1.0-0')}K`;
     }
     return `${this.decimalPipe.transform(value, '1.0-0')}`;
 

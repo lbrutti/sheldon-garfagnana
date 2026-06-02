@@ -13,6 +13,7 @@ import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {ChartData} from 'chart.js';
 import {getRandomGradient, getReducedValue, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
+import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
 
 export interface SegmentInterface {
   label: string;
@@ -35,8 +36,7 @@ export interface SegmentInterface {
     SortToggle,
     MatButtonToggle,
     MatButtonToggleGroup,
-    components,
-
+    ChartTwoLinesLabelComponent
   ],
   templateUrl: './chart-segmented-bar.component.html',
   styleUrls: ['./chart-segmented-bar.component.scss'],

@@ -9,7 +9,7 @@
 
     <mat-list>
       <!--      @for (dato of filteredData(); track dato) {-->
-      <cdk-virtual-scroll-viewport appendOnly itemSize="50" class="list-container">
+      <cdk-virtual-scroll-viewport appendOnly itemSize="30" class="list-container">
 
         <mat-list-item *cdkVirtualFor="let dato of filteredData()">
           <div [style]="{display:'flex', flexDirection:'row', justifyContent:'space-between'}">

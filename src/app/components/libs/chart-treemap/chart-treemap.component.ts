@@ -15,6 +15,7 @@ import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.inter
 import {MultiplesPipe} from '../../../pipes';
 import {DecimalPipe} from '@angular/common';
 import {components} from '../index';
+import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -37,7 +38,7 @@ export interface TreemapTile {
     MatButtonToggleGroup,
     MatButtonToggle,
     DynamicFilterComponent,
-    components,
+    ChartTwoLinesLabelComponent
   ],
   providers: [DecimalPipe, MultiplesPipe],
   templateUrl: './chart-treemap.component.html',

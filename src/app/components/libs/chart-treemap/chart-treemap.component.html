@@ -14,11 +14,9 @@
     <!--  AUX REDUCE SWITCHES -->
     @if (this.auxReduce().length) {
       <mat-button-toggle-group
-        [value]="this.currentReduce()"
+        [value]="this.auxReduce()[0]"
         (change)="onReduceChange($event)">
-        <mat-button-toggle [value]="{campo: this.campo(), reduceBy: this.reduceBy()}">
-          <span>{{ this.campo() }}</span>
-        </mat-button-toggle>
+        <!---->
         @for (aux of this.auxReduce(); track aux) {
           <mat-button-toggle [value]="aux">
             <span>{{ aux.campo }}</span>
@@ -40,8 +38,6 @@
           <sheldon-two-lines-chart-label
             [text]="tile.label"
             [sub]="tile.formattedValue"/>
-          <!--          <div class="treemap-tile__label">{{ tile.label }}</div>-->
-          <!--          <div class="treemap-tile__value">{{ tile.formattedValue }}</div>-->
         </div>
       }
     </div>
