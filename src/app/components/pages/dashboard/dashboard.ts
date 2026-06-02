@@ -42,7 +42,7 @@ export default class Dashboard implements OnInit {
       }
       const filtroUnione = this.filters().find(f => (f.key === 'unione' && f.value));
       const matchUnione = filtroUnione ? intervento.unione === filtroUnione.value : true;
-      const altriFiltri = this.filters().filter(f => f.key !== 'unione');
+      const altriFiltri = this.filters().filter(f => f.key && f.key !== 'unione');
       const matchAltriFiltri = altriFiltri.length ? altriFiltri.some((f: FilterOptionInterface) => {
         return (intervento as any)[(f as FilterOptionInterface).key].indexOf((f as FilterOptionInterface).value) >= 0;
       }) : true;
