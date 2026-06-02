@@ -6,8 +6,8 @@ import ChartBarComponent from '../chart-bar/chart-bar.component';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import {getRandomGradient} from '../../../utils';
 import ChartLabelComponent from '../chart-label/chart-label.component';
-import {CdkScrollable} from '@angular/cdk/overlay';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
+import {MultiplesPipe} from '../../../pipes';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -18,10 +18,10 @@ import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} fr
     DynamicFilterComponent,
     SortToggle,
     ChartLabelComponent,
-    CdkScrollable,
     CdkVirtualScrollViewport,
     CdkFixedSizeVirtualScroll,
     CdkVirtualForOf,
+    MultiplesPipe,
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',

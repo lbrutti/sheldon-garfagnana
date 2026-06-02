@@ -8,11 +8,10 @@ import {
   signal,
 } from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import {TitleCasePipe} from '@angular/common';
 import {debounceTime, distinctUntilChanged} from 'rxjs';
-import {MatFormField, MatInput, MatLabel, MatSuffix} from '@angular/material/input';
+import {MatFormField, MatInput, MatSuffix} from '@angular/material/input';
 import {
-  MatAutocomplete, MatAutocompleteOrigin,
+  MatAutocomplete,
   MatAutocompleteTrigger,
   MatOption,
 } from '@angular/material/autocomplete';
@@ -25,9 +24,7 @@ import {MatIcon} from '@angular/material/icon';
   standalone: true,
   imports: [
     ReactiveFormsModule,
-    TitleCasePipe,
     MatOption,
-    MatLabel,
     MatFormField,
     MatInput,
     MatSuffix,
