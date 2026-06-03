@@ -45,7 +45,7 @@
             type="fill"
             [paint]="comuniFillPaint()"
             (layerMouseEnter)="onPolygonEnter($event)"
-            (layerMouseMove)="onPolygonMove($event)"
+            (layerMouseMove)="onPolygonEnter($event)"
             (layerMouseLeave)="onPolygonLeave()">
           </mgl-layer>
 
@@ -79,12 +79,12 @@
           [style.left.px]="tooltipPos()!.x + 14"
           [style.top.px]="tooltipPos()!.y + 14">
           <strong>{{ hoveredFeature()?.properties?.[municipalityKey()] }}</strong>
-          @if (hoveredValue() !== null && activeAuxReduce()) {
-            <span>{{ activeAuxReduce()!.campo }}: {{ hoveredValue() | number: '1.0-2' }}</span>
+          @for (prop of this.tooltipProperties(); track prop.property) {
+            <div>{{ prop.label }}: {{ hoveredFeature()?.properties?.[prop.property] | multiples }}</div>
           }
         </div>
       }
-      
+
     </div>
 
   </ng-container>

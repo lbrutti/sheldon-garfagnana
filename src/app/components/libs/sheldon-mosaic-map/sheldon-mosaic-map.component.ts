@@ -10,7 +10,7 @@ import {
   untracked,
   ViewChild,
 } from '@angular/core';
-import {DecimalPipe} from '@angular/common';
+import {DecimalPipe, JsonPipe} from '@angular/common';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Polygon} from 'geojson';
@@ -20,6 +20,7 @@ import CardComponent from '../card/card.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {AuxReduceOption, ColorStop, FilterOptionInterface} from '../../../interfaces';
 import {EventData} from '@angular/cdk/testing';
+import {MultiplesPipe} from '../../../pipes';
 
 const DEFAULT_COLOR_STOPS: ColorStop[] = [
   {value: 0, color: '#1a3a6b'},
@@ -71,6 +72,8 @@ function polygonBbox(feature: Feature<Polygon>): [number, number, number, number
     MatButtonToggleGroup,
     MatButtonToggle,
     DecimalPipe,
+    MultiplesPipe,
+    JsonPipe,
   ],
   templateUrl: './sheldon-mosaic-map.component.html',
   styleUrl: './sheldon-mosaic-map.component.scss',
@@ -83,6 +86,8 @@ export default class SheldonMosaicMapComponent implements OnInit {
   auxReduce = input<AuxReduceOption[]>([]);
   colorSetting = input<ColorStop[]>(DEFAULT_COLOR_STOPS);
   municipalityKey = input<string>('comune');
+  tooltipProperties = input<{ property: string, label: string }[]>([]);
+
 
   // ── Outputs ────────────────────────────────────────────────────────────────
   polygonHover = output<Feature<Polygon>>();
@@ -263,10 +268,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
     this.tooltipPos.set({x: event.point.x, y: event.point.y});
     map.getCanvas().style.cursor = 'pointer';
     this.polygonHover.emit(feature);
-  }
-
-  onPolygonMove(event: MapLayerMouseEvent): void {
-    this.tooltipPos.set({x: event.point.x, y: event.point.y});
   }
 
   onPolygonLeave(): void {

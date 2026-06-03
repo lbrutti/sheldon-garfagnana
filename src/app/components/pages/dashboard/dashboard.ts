@@ -15,6 +15,7 @@ import {getExplodedData, shuffleArray} from '../../../utils';
 import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
+import camelcase from 'camelcase';
 
 @Component({
   selector: 'sheldon-dashboard',
@@ -253,11 +254,11 @@ export default class Dashboard implements OnInit {
             comuniMap.set(i.comune, {});
           }
           const counterStati = comuniMap.get(i.comune);
-
-          if (!counterStati[i.stato]) {
-            counterStati[i.stato] = 1;
+          const camelStato = camelcase(i.stato);
+          if (!counterStati[camelStato]) {
+            counterStati[camelStato] = 1;
           } else {
-            counterStati[i.stato]++;
+            counterStati[camelStato]++;
             comuniMap.set(i.comune, counterStati)
           }
         });

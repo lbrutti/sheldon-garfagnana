@@ -31,6 +31,7 @@ export default interface WidgetSetting {
 
   // mosaic-map specific
   municipalityKey?: string,
+  tooltipProperties?: { property: string; label: string; }[];
 
   //descrizione card
   desc?: string,

@@ -260,7 +260,25 @@
         "reduceBy": "count"
       }
     ],
-    "data": "featureComuni"
+    "data": "featureComuni",
+    "tooltipProperties": [
+      {
+        "property": "inCorso",
+        "label": "Progetti in corso"
+      },
+      {
+        "property": "concluso",
+        "label": "Progetti conclusi"
+      },
+      {
+        "property": "inProgettazione",
+        "label": "Progetti in progettazione"
+      },
+      {
+        "property": "approvato",
+        "label": "Progetti approvati"
+      }
+    ]
   },
   {
     "id": "descrizione_garfagnana",
