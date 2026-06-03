@@ -265,7 +265,10 @@ export default class Dashboard implements OnInit {
           }
         });
         const updatedFeats = JSON.parse(JSON.stringify(this.comuniPolygons())).features.map((f: any) => {
-          f.properties = {...f.properties, ...comuniMap.get((f.properties as any).name)};
+          const totaleComune = (Object.values(comuniMap.get((f.properties as any).name) ?? {}) as number[])
+            .reduce((a:number, b:number): number => (a+b), 0);
+          f.properties = {...f.properties, ...comuniMap.get((f.properties as any).name), totale: totaleComune};
+          console.log(totaleComune);
           return f;
         });
 

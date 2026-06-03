@@ -164,33 +164,29 @@ export default class SheldonMosaicMapComponent implements OnInit {
     };
   });
 
-  /** MapLibre interpolate expression built from colorSetting input. */
-  private colorExpression = computed(() => {
-    const sel = this.selectedComune();
-    const key = this.municipalityKey();
-    const conditions: any[] = ['case'];
-    const categoria = normalizzaStringa(this.categoria());
-    const hoveredColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
-    const unHoveredColor = resolveColorVariable(`--color-gradient-${categoria}-end`);
-    if (sel) {
-      conditions.push(['==', ['get', key], sel], hoveredColor);
-    }
-    conditions.push(['boolean', ['feature-state', 'hover'], false], hoveredColor, unHoveredColor);
-    return conditions;
-  });
 
   /** Fill layer paint — choropleth color with hover/select opacity. */
   comuniFillPaint = computed(() => {
     const sel = this.selectedComune();
     const key = this.municipalityKey();
-    const conditions: any[] = ['case'];
+
+    const colorExpr: any[] = ['case'];
+    const categoria = normalizzaStringa(this.categoria());
+    const hoveredColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
+    const unHoveredColor = resolveColorVariable(`--color-gradient-${categoria}-end`);
     if (sel) {
-      conditions.push(['==', ['get', key], sel], 1.0);
+      colorExpr.push(['==', ['get', key], sel], hoveredColor);
     }
-    conditions.push(['boolean', ['feature-state', 'hover'], false], 0.7, 0.88);
+    colorExpr.push(['boolean', ['feature-state', 'hover'], false], hoveredColor, unHoveredColor);
+
+    const opacityExpr: any[] = ['case'];
+    if (sel) {
+      opacityExpr.push(['==', ['get', key], sel], 1.0);
+    }
+    opacityExpr.push(['boolean', ['feature-state', 'hover'], false], 0.7, 0.88);
     return {
-      'fill-color': this.colorExpression() as any,
-      'fill-opacity': conditions as any,
+      'fill-color': colorExpr as any,
+      'fill-opacity': opacityExpr as any,
     };
   });
 
@@ -202,14 +198,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
       : ['==', ['get', key], '__none__'];
   });
 
-
-  /** Aggregated value for the currently hovered feature. */
-  hoveredValue = computed(() => {
-    const f = this.hoveredFeature();
-    if (!f) return null;
-    const comune = String(f.properties?.[this.municipalityKey()] ?? '');
-    return this.comuneValues()[comune] ?? null;
-  });
 
   /** Bounding box of the full FeatureCollection expanded by 5% on each side. */
   private collectionBbox = computed<[[number, number], [number, number]] | null>(() => {
@@ -264,7 +252,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
     const map = this.mapInstance;
     if (!map || !event.features?.length) return;
     const feature = event.features[0] as unknown as Feature<Polygon>;
-
+    this.selectedComune.set(feature.properties?.['name']);
     if (this.hoveredFeatureId !== null) {
       map.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
     }
@@ -304,7 +292,17 @@ export default class SheldonMosaicMapComponent implements OnInit {
         (f) => String(f.properties?.[this.municipalityKey()]) === value
       );
       if (feature) {
-        this.mapInstance.fitBounds(polygonBbox(feature));
+
+        const coords = feature.geometry.coordinates[0]; // exterior ring
+        const lng = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
+        const lat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
+        const point = this.mapInstance.project([lng, lat]);
+        this.hoveredFeatureId = feature.id;
+        this.hoveredFeature.set(feature);
+        this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: true});
+        this.tooltipPos.set({x: point.x, y: point.y});
+        this.polygonHover.emit(feature);
+
       }
     }
   }

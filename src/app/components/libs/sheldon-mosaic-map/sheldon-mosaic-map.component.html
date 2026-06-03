@@ -24,6 +24,7 @@
     <!-- Map wrapper -->
     <div class="map-wrapper">
       <mgl-map
+        [cooperativeGestures]="true"
         [mapStyle]="mapStyle"
         [cancelPendingTileRequestsWhileZooming]="true"
         [maxZoom]="14"
@@ -61,14 +62,14 @@
             }">
           </mgl-layer>
 
-          <!-- Thicker outline for selected comune -->
-          <mgl-layer
-            id="comuni-selected"
-            source="comuni"
-            type="line"
-            [filter]="selectedFilter()"
-            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">
-          </mgl-layer>
+<!--          &lt;!&ndash; Thicker outline for selected comune &ndash;&gt;-->
+<!--          <mgl-layer-->
+<!--            id="comuni-selected"-->
+<!--            source="comuni"-->
+<!--            type="line"-->
+<!--            [filter]="selectedFilter()"-->
+<!--            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">-->
+<!--          </mgl-layer>-->
         }
       </mgl-map>
 
