@@ -18,11 +18,11 @@ export class FitTextDirective implements OnInit, OnDestroy {
   ngOnInit(): void {
     const el = this.el.nativeElement;
 
-    this.resizeObserver = new ResizeObserver(() => this.fit());
+    this.resizeObserver = new ResizeObserver(() => requestAnimationFrame(() => this.fit()));
     if (el.parentElement) this.resizeObserver.observe(el.parentElement);
 
     // Re-fit whenever text content changes (e.g. animated counter ticking)
-    this.mutationObserver = new MutationObserver(() => this.fit());
+    this.mutationObserver = new MutationObserver(() => requestAnimationFrame(() => this.fit()));
     this.mutationObserver.observe(el, {childList: true, subtree: true, characterData: true});
 
     this.fit();

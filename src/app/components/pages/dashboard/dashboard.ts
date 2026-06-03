@@ -85,6 +85,11 @@ export default class Dashboard implements OnInit, OnDestroy {
   interventiPerStato = signal<DataInterface[]>([]);
   interventiPerUnione = signal<DataInterface[]>([]);
 
+  interventoRandomGarfagnana = signal<any>({});
+  interventoRandomLunigiana = signal<any>({});
+  interventoRandomSerchio = signal<any>({});
+  interventoRandomPistoiese = signal<any>({});
+
   protected dataMap = computed<Record<string, unknown>>(() => ({
     interventiPerComune: this.interventiPerComune(),
     comuniConInterventi: this.comuniConInterventi(),
@@ -99,6 +104,10 @@ export default class Dashboard implements OnInit, OnDestroy {
     interventiPerStato: this.interventiPerStato(),
     interventiPerUnione: this.interventiPerUnione(),
     comuniPolygons: this.comuniPolygons(),
+    interventoRandomGarfagnana: this.interventoRandomGarfagnana(),
+    interventoRandomLunigiana: this.interventoRandomLunigiana(),
+    interventoRandomSerchio: this.interventoRandomSerchio(),
+    interventoRandomPistoiese: this.interventoRandomPistoiese(),
   }));
 
   categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
@@ -227,6 +236,17 @@ export default class Dashboard implements OnInit, OnDestroy {
         this.interventiPerPartecipazione.set(dataInterventiPerPartecipazione);
         this.interventiPerStato.set(dataInterventiPerStato);
         this.interventiPerUnione.set(dataInterventiPerUnione);
+
+        //random per dettagli
+
+        const interventiGarfagnana = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Garfagnana'))[0];
+        const interventiLunigiana = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Lunigiana'))[0];
+        const interventiSerchio = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Media Valle del Serchio'))[0];
+        const interventiPistoiese = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Appennino Pistoiese'))[0];
+        this.interventoRandomGarfagnana.set(interventiGarfagnana);
+        this.interventoRandomLunigiana.set(interventiLunigiana);
+        this.interventoRandomSerchio.set(interventiSerchio);
+        this.interventoRandomPistoiese.set(interventiPistoiese);
       });
     });
   }
@@ -255,10 +275,14 @@ export default class Dashboard implements OnInit, OnDestroy {
 
     // Apply masonry in one batch — grid layout height is set correctly before repaint
     grid.style.gridAutoRows = `${this.MASONRY_ROW_PX}px`;
-    tiles.forEach((t, i) => { if (spans[i] > 0) t.style.gridRowEnd = `span ${spans[i]}`; });
+    tiles.forEach((t, i) => {
+      if (spans[i] > 0) t.style.gridRowEnd = `span ${spans[i]}`;
+    });
 
-    // Resume observations for content/window resize
-    this.resizeObserver = new ResizeObserver(() => this.recalculateMasonry());
+    // Resume observations for content/window resize — defer to next frame to avoid
+    // "ResizeObserver loop completed with undelivered notifications" when DOM mutations
+    // from this call trigger another resize in the same animation frame.
+    this.resizeObserver = new ResizeObserver(() => requestAnimationFrame(() => this.recalculateMasonry()));
     tiles.forEach(t => this.resizeObserver!.observe(t));
   }
 
@@ -271,8 +295,8 @@ export default class Dashboard implements OnInit, OnDestroy {
       .then(r => r.json())
       //random tiles
       .then((s: WidgetSetting[]) => this.settings.set(shuffleArray(s)));
-      //ordine definito nei settaggi
-      // .then((s: WidgetSetting[]) => this.settings.set(s));
+    //ordine definito nei settaggi
+    // .then((s: WidgetSetting[]) => this.settings.set(s));
   }
 
   protected applyFilters($event: FilterOptionInterface[]) {

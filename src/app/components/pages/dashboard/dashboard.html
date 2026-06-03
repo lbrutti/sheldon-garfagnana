@@ -2,98 +2,109 @@
 
 <div class="sheldon-grid" #grid>
   @for (setting of settings(); track setting.id; let idx = $index) {
-    <div [class]="'tile tile--' + setting.tileWidth">
+    @if ($any(dataMap()[setting.data])) {
 
-      @switch (setting.tag) {
 
-        @case ('sheldon-chart-bars') {
-          <sheldon-chart-bars
-            [title]="setting.title"
-            [groupBy]="$any(setting.groupBy)"
-            [reduceBy]="setting.reduceBy ?? 'count'"
-            [filterBy]="setting.filterBy ?? null"
-            [masterField]="setting.masterField ?? null"
-            [sortBy]="setting.sortBy ?? 'value'"
-            [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
-            [showSorting]="setting.showSorting ?? false"
-            [limit]="setting.limit ?? 0"
-            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
-            [data]="$any(dataMap()[setting.data])"
-          />
-        }
-        @case ('sheldon-chart-h-bars') {
-          <sheldon-chart-h-bars
-            [title]="setting.title"
-            [groupBy]="$any(setting.groupBy)"
-            [reduceBy]="setting.reduceBy ?? 'count'"
-            [filterBy]="setting.filterBy ?? null"
-            [masterField]="setting.masterField ?? null"
-            [sortBy]="setting.sortBy ?? 'value'"
-            [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
-            [showSorting]="setting.showSorting ?? false"
-            [limit]="setting.limit ?? 0"
-            [auxReduce]="setting.auxReduce ?? []"
-            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
-            [data]="$any(dataMap()[setting.data])"
-          />
-        }
-        @case ('sheldon-kpi') {
-          <sheldon-kpi
-            [title]="setting.title"
-            [groupBy]="$any(setting.groupBy)"
-            [reduceBy]="setting.reduceBy ?? 'count'"
-            [filterBy]="setting.filterBy ?? ''"
-            [masterField]="setting.masterField ?? null"
-            [minFontSize]="setting.minFontSize ?? 45"
-            [limit]="setting.limit ?? 0"
-            [udm]="setting.udm ?? null"
-            [data]="$any(dataMap()[setting.data])"
-          />
-        }
-        @case ('sheldon-list') {
-          <sheldon-list
-            [title]="setting.title"
-            [filterBy]="setting.filterBy ?? ''"
-            [masterField]="setting.masterField ?? null"
-            [data]="$any(dataMap()[setting.data])"
-          />
-        }
-        @case ('sheldon-segmented-chart') {
-          <sheldon-segmented-chart
-            [title]="setting.title"
-            [groupBy]="$any(setting.groupBy)"
-            [reduceBy]="setting.reduceBy ?? 'count'"
-            [filterBy]="setting.filterBy ?? null"
-            [masterField]="setting.masterField ?? null"
-            [defaultSortDirection]="setting.defaultSortDirection ?? 'asc'"
-            [auxReduce]="$any(setting.auxReduce ?? [])"
-            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
-            [data]="$any(dataMap()[setting.data])"
-          />
-        }
-        @case ('sheldon-chart-treemap') {
-          <sheldon-chart-treemap
-            [title]="setting.title"
-            [filterBy]="setting.filterBy ?? null"
-            [masterField]="setting.masterField ?? null"
-            [campo]="setting.campo ?? 'valore'"
-            [reduceBy]="$any(setting.reduceBy ?? 'sum')"
-            [groups]="$any(setting.groups ?? [])"
-            [auxReduce]="$any(setting.auxReduce ?? [])"
-            [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
-            [data]="$any(dataMap()[setting.data])"
-          />
-        }
-        @case ('sheldon-mosaic-map') {
-          <sheldon-mosaic-map
-            [data]="$any(dataMap()[setting.data])"
-            [auxReduce]="$any(setting.auxReduce ?? [])"
-            [municipalityKey]="setting.municipalityKey ?? 'name'"
-          />
+      <div [class]="'tile tile--' + setting.tileWidth">
+
+        @switch (setting.tag) {
+
+          @case ('sheldon-chart-bars') {
+            <sheldon-chart-bars
+              [title]="setting.title"
+              [groupBy]="$any(setting.groupBy)"
+              [reduceBy]="setting.reduceBy ?? 'count'"
+              [filterBy]="setting.filterBy ?? null"
+              [masterField]="setting.masterField ?? null"
+              [sortBy]="setting.sortBy ?? 'value'"
+              [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
+              [showSorting]="setting.showSorting ?? false"
+              [limit]="setting.limit ?? 0"
+              [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+              [data]="$any(dataMap()[setting.data])"
+            />
+          }
+          @case ('sheldon-chart-h-bars') {
+            <sheldon-chart-h-bars
+              [title]="setting.title"
+              [groupBy]="$any(setting.groupBy)"
+              [reduceBy]="setting.reduceBy ?? 'count'"
+              [filterBy]="setting.filterBy ?? null"
+              [masterField]="setting.masterField ?? null"
+              [sortBy]="setting.sortBy ?? 'value'"
+              [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
+              [showSorting]="setting.showSorting ?? false"
+              [limit]="setting.limit ?? 0"
+              [auxReduce]="setting.auxReduce ?? []"
+              [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+              [data]="$any(dataMap()[setting.data])"
+            />
+          }
+          @case ('sheldon-kpi') {
+            <sheldon-kpi
+              [title]="setting.title"
+              [groupBy]="$any(setting.groupBy)"
+              [reduceBy]="setting.reduceBy ?? 'count'"
+              [filterBy]="setting.filterBy ?? ''"
+              [masterField]="setting.masterField ?? null"
+              [minFontSize]="setting.minFontSize ?? 45"
+              [limit]="setting.limit ?? 0"
+              [udm]="setting.udm ?? null"
+              [data]="$any(dataMap()[setting.data])"
+            />
+          }
+          @case ('sheldon-list') {
+            <sheldon-list
+              [title]="setting.title"
+              [filterBy]="setting.filterBy ?? ''"
+              [masterField]="setting.masterField ?? null"
+              [data]="$any(dataMap()[setting.data])"
+            />
+          }
+          @case ('sheldon-segmented-chart') {
+            <sheldon-segmented-chart
+              [title]="setting.title"
+              [groupBy]="$any(setting.groupBy)"
+              [reduceBy]="setting.reduceBy ?? 'count'"
+              [filterBy]="setting.filterBy ?? null"
+              [masterField]="setting.masterField ?? null"
+              [defaultSortDirection]="setting.defaultSortDirection ?? 'asc'"
+              [auxReduce]="$any(setting.auxReduce ?? [])"
+              [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+              [data]="$any(dataMap()[setting.data])"
+            />
+          }
+          @case ('sheldon-chart-treemap') {
+            <sheldon-chart-treemap
+              [title]="setting.title"
+              [filterBy]="setting.filterBy ?? null"
+              [masterField]="setting.masterField ?? null"
+              [campo]="setting.campo ?? 'valore'"
+              [reduceBy]="$any(setting.reduceBy ?? 'sum')"
+              [groups]="$any(setting.groups ?? [])"
+              [auxReduce]="$any(setting.auxReduce ?? [])"
+              [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+              [data]="$any(dataMap()[setting.data])"
+            />
+          }
+          @case ('sheldon-mosaic-map') {
+            <sheldon-mosaic-map
+              [data]="$any(dataMap()[setting.data])"
+              [auxReduce]="$any(setting.auxReduce ?? [])"
+              [municipalityKey]="setting.municipalityKey ?? 'name'"
+            />
+          }
+          @case ('sheldon-card-descrizione') {
+            <sheldon-descrizione
+              [data]="$any(dataMap()[setting.data])"
+              [title]="$any(setting.title ?? 'nome')"
+              [description]="setting.desc"
+              [url]="setting.url"
+            />
+          }
         }
 
-      }
-
-    </div>
+      </div>
+    }
   }
 </div>

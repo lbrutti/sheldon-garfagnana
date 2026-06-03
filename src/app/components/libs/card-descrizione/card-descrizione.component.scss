@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  .sheldon-kpi-content{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+  .kpi-value-wrapper{
+    margin-top:auto;
+  }
+}

@@ -24,12 +24,11 @@
   </ng-container>
 
   <ng-container content>
-    @for (bar of bars(); track bars) {
+    @for (bar of bars(); track bar) {
       <div class="h-bar-container">
         <sheldon-chart-label
           text="{{bar.label}}"
           sub="{{bar.value|multiples}}"/>
-
         <div class="h-bar"
              [style.width.%]="bar.pct"
              [style.min-height]="'var(--min-bar-height, 96px)'"

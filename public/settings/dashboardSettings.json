@@ -261,5 +261,41 @@
       }
     ],
     "data": "comuniPolygons"
+  },
+  {
+    "id": "descrizione_garfagnana",
+    "tag": "sheldon-card-descrizione",
+    "tileWidth": 4,
+    "title": "nome",
+    "desc": "descrizione",
+    "url": "link",
+    "data": "interventoRandomGarfagnana"
+  },
+  {
+    "id": "descrizione_pistoiese",
+    "tag": "sheldon-card-descrizione",
+    "tileWidth": 4,
+    "title": "nome",
+    "desc": "descrizione",
+    "url": "link",
+    "data": "interventoRandomPistoiese"
+  },
+  {
+    "id": "descrizione_serchio",
+    "tag": "sheldon-card-descrizione",
+    "tileWidth": 4,
+    "title": "nome",
+    "desc": "descrizione",
+    "url": "link",
+    "data": "interventoRandomSerchio"
+  },
+  {
+    "id": "descrizione_lunigiana",
+    "tag": "sheldon-card-descrizione",
+    "tileWidth": 4,
+    "title": "nome",
+    "desc": "descrizione",
+    "url": "link",
+    "data": "interventoRandomLunigiana"
   }
 ]

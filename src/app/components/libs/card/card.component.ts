@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 
@@ -12,4 +12,5 @@ import {MatIcon} from '@angular/material/icon';
   styleUrl: './card.component.scss',
 })
 export default class CardComponent {
+  showButtons = input<boolean>(true);
 }

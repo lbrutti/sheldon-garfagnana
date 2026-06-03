@@ -4,14 +4,16 @@
       <ng-content select="[title]"></ng-content>
     </div>
 
-    <div class="sheldon-card-buttons">
-      <button matIconButton>
-        <mat-icon aria-hidden="false" aria-label="info" fontIcon="info"></mat-icon>
-      </button>
-      <button matIconButton>
-        <mat-icon aria-hidden="false" aria-label="download" fontIcon="arrow_downward"></mat-icon>
-      </button>
-    </div>
+    @if (showButtons()) {
+      <div class="sheldon-card-buttons">
+        <button matIconButton>
+          <mat-icon aria-hidden="false" aria-label="info" fontIcon="info"></mat-icon>
+        </button>
+        <button matIconButton>
+          <mat-icon aria-hidden="false" aria-label="download" fontIcon="arrow_downward"></mat-icon>
+        </button>
+      </div>
+    }
   </div>
 
   <div class="sheldon-card-subheader">
