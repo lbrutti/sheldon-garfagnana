@@ -28,11 +28,11 @@
     --mat-button-toggle-height: var(--filter-control-height, 18px) !important;
   }
 
-  .sheldon-card-buttons{
-    button{
-      height: var(--mat-button-toggle-height, 18px) !important;
-    }
+  .sheldon-card-buttons {
+    display: flex;
+    align-items: center;
   }
+
   //.sheldon-card-content{
   //  height: 100%;
   //}

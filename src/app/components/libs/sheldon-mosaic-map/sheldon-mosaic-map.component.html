@@ -1,6 +1,6 @@
 <sheldon-card>
   <ng-container title>{{ title() }}</ng-container>
-  <ng-container content>
+  <ng-container subheader>
 
     <!-- Controls row -->
     <div class="map-controls">
@@ -19,7 +19,8 @@
         </mat-button-toggle-group>
       }
     </div>
-
+  </ng-container>
+  <ng-container content>
     <!-- Map wrapper -->
     <div class="map-wrapper">
       <mgl-map
@@ -54,7 +55,8 @@
             type="line"
             [paint]="{
               'line-color': '#0a0f1e',
-              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.8, 12, 2]
+              'line-opacity':0.5,
+              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.3, 12, 0.5]
             }">
           </mgl-layer>
 

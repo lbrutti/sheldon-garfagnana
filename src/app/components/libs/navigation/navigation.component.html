@@ -1,11 +1,11 @@
-<nav mat-tab-nav-bar [tabPanel]="tabPanel">
-  @for (link of links; track link) {
-    <a mat-tab-link
-       [routerLink]="link.url"
-       (click)="activeLink = link.url"
-       [active]="activeLink == link.url"> {{ link.name }} </a>
-  }
-</nav>
+<!--<nav mat-tab-nav-bar [tabPanel]="tabPanel">-->
+<!--  @for (link of links; track link) {-->
+<!--    <a mat-tab-link-->
+<!--       [routerLink]="link.url"-->
+<!--       (click)="activeLink = link.url"-->
+<!--       [active]="activeLink == link.url"> {{ link.name }} </a>-->
+<!--  }-->
+<!--</nav>-->
 <mat-tab-nav-panel #tabPanel>
   <router-outlet/>
 </mat-tab-nav-panel>

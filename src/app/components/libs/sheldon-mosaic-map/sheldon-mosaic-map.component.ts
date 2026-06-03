@@ -260,7 +260,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
       const map = untracked(() => this.mapInstance);
       if (!map) return;
       map.setMaxBounds(bb);
-      map.fitBounds(bb, {padding: 24, duration: 0});
+      map.fitBounds(bb);
     });
   }
 
@@ -326,7 +326,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
         (f) => String(f.properties?.[this.municipalityKey()]) === value
       );
       if (feature) {
-        this.mapInstance.fitBounds(polygonBbox(feature), {padding: 40, maxZoom: 13});
+        this.mapInstance.fitBounds(polygonBbox(feature));
       }
     }
   }

@@ -1,15 +1,11 @@
 import {
-  afterEveryRender,
   Component,
   computed,
   effect,
-  ElementRef,
-  OnDestroy,
   OnInit,
   signal,
   Signal,
   untracked,
-  ViewChild
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
@@ -28,14 +24,9 @@ import {DecimalPipe} from '@angular/common';
   providers: [DecimalPipe] // Add DecimalPipe to providers so it can be injected
 
 })
-export default class Dashboard implements OnInit, OnDestroy {
+export default class Dashboard implements OnInit {
 
-  @ViewChild('grid') private gridRef!: ElementRef<HTMLElement>;
-  private resizeObserver?: ResizeObserver;
-  private readonly MASONRY_ROW_PX = 4;
-  private readonly MASONRY_GAP_PX = 16;
-
-  protected settings = signal<WidgetSetting[]>([]);
+protected settings = signal<WidgetSetting[]>([]);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
 
@@ -115,9 +106,6 @@ export default class Dashboard implements OnInit, OnDestroy {
   constructor(protected apiService: ProjectsApiService) {
     this.categorieInterventi = shuffleArray(this.categorieInterventi);
 
-    if (!CSS.supports('grid-template-rows', 'masonry')) {
-      afterEveryRender(() => this.gridRef && this.recalculateMasonry());
-    }
     effect(() => {
       const interventi = this.interventiFiltrati();
 
@@ -259,40 +247,6 @@ export default class Dashboard implements OnInit, OnDestroy {
     });
   }
 
-
-  ngOnDestroy(): void {
-    this.resizeObserver?.disconnect();
-  }
-
-  private recalculateMasonry(): void {
-    const grid = this.gridRef.nativeElement;
-    const tiles = Array.from(grid.children) as HTMLElement[];
-
-    // Pause observer to avoid feedback loop during DOM reset
-    this.resizeObserver?.disconnect();
-
-    // Reset to auto rows so getBoundingClientRect returns natural content heights
-    grid.style.gridAutoRows = 'auto';
-    tiles.forEach(t => (t.style.gridRowEnd = ''));
-
-    // Measure natural heights (forces synchronous reflow)
-    const spans = tiles.map(t => {
-      const h = t.getBoundingClientRect().height;
-      return h > 0 ? Math.ceil((h + this.MASONRY_GAP_PX) / (this.MASONRY_ROW_PX + this.MASONRY_GAP_PX)) : 0;
-    });
-
-    // Apply masonry in one batch — grid layout height is set correctly before repaint
-    grid.style.gridAutoRows = `${this.MASONRY_ROW_PX}px`;
-    tiles.forEach((t, i) => {
-      if (spans[i] > 0) t.style.gridRowEnd = `span ${spans[i]}`;
-    });
-
-    // Resume observations for content/window resize — defer to next frame to avoid
-    // "ResizeObserver loop completed with undelivered notifications" when DOM mutations
-    // from this call trigger another resize in the same animation frame.
-    this.resizeObserver = new ResizeObserver(() => requestAnimationFrame(() => this.recalculateMasonry()));
-    tiles.forEach(t => this.resizeObserver!.observe(t));
-  }
 
   ngOnInit(): void {
     this.apiService.getInterventi();

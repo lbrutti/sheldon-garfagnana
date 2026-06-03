@@ -17,9 +17,8 @@ body {
   gap: 16px;
   padding: 16px;
 
-  @supports (grid-template-rows: masonry) {
-    grid-template-rows: masonry;
-    align-tracks: stretch;
+  @supports (grid-auto-flow: masonry) {
+    grid-auto-flow: masonry;
   }
 
   @media (max-width: 959px) {
