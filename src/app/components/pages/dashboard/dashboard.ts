@@ -261,8 +261,10 @@ export default class Dashboard implements OnInit, OnDestroy {
     this.comuniPolygons = this.apiService.comuniPolygons;
     fetch('settings/dashboardSettings.json')
       .then(r => r.json())
-      // .then((s: WidgetSetting[]) => this.settings.set(shuffleArray(s)));
-      .then((s: WidgetSetting[]) => this.settings.set(s));
+      //random tiles
+      .then((s: WidgetSetting[]) => this.settings.set(shuffleArray(s)));
+      //ordine definito nei settaggi
+      // .then((s: WidgetSetting[]) => this.settings.set(s));
   }
 
   protected applyFilters($event: FilterOptionInterface[]) {
