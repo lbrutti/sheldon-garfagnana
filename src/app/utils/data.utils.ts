@@ -54,3 +54,8 @@ export function shuffleArray(array: any[]): any[] {
   }
   return randomArray;
 }
+
+export function normalizzaStringa(value:string): string {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+}
+

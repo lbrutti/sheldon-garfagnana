@@ -2,7 +2,7 @@ import {
   Component,
   computed,
   effect,
-  ElementRef,
+  ElementRef, Input,
   input,
   OnInit,
   output,
@@ -21,6 +21,8 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {AuxReduceOption, ColorStop, FilterOptionInterface} from '../../../interfaces';
 import {EventData} from '@angular/cdk/testing';
 import {MultiplesPipe} from '../../../pipes';
+import {normalizzaStringa, resolveColorVariable} from '../../../utils';
+import camelcase from 'camelcase';
 
 const DEFAULT_COLOR_STOPS: ColorStop[] = [
   {value: 0, color: '#1a3a6b'},
@@ -71,9 +73,7 @@ function polygonBbox(feature: Feature<Polygon>): [number, number, number, number
     LayerComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
-    DecimalPipe,
     MultiplesPipe,
-    JsonPipe,
   ],
   templateUrl: './sheldon-mosaic-map.component.html',
   styleUrl: './sheldon-mosaic-map.component.scss',
@@ -87,7 +87,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   colorSetting = input<ColorStop[]>(DEFAULT_COLOR_STOPS);
   municipalityKey = input<string>('comune');
   tooltipProperties = input<{ property: string, label: string }[]>([]);
-
+  categoria = input<string>('ambiente');
 
   // ── Outputs ────────────────────────────────────────────────────────────────
   polygonHover = output<Feature<Polygon>>();
@@ -166,8 +166,17 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   /** MapLibre interpolate expression built from colorSetting input. */
   private colorExpression = computed(() => {
-    const stops = this.colorSetting().flatMap((s) => [s.value, s.color]);
-    return ['interpolate', ['linear'], ['get', '_colorValue'], ...stops];
+    const sel = this.selectedComune();
+    const key = this.municipalityKey();
+    const conditions: any[] = ['case'];
+    const categoria = normalizzaStringa(this.categoria());
+    const hoveredColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
+    const unHoveredColor = resolveColorVariable(`--color-gradient-${categoria}-end`);
+    if (sel) {
+      conditions.push(['==', ['get', key], sel], hoveredColor);
+    }
+    conditions.push(['boolean', ['feature-state', 'hover'], false], hoveredColor, unHoveredColor);
+    return conditions;
   });
 
   /** Fill layer paint — choropleth color with hover/select opacity. */
@@ -283,6 +292,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   }
 
   // ── Control events ─────────────────────────────────────────────────────────
+
 
   onFilterChange(filters: FilterOptionInterface[]): void {
     const comuneFilter = filters.find((f) => f.key === 'comune');

@@ -93,6 +93,7 @@
               [auxReduce]="$any(setting.auxReduce ?? [])"
               [municipalityKey]="setting.municipalityKey ?? 'name'"
               [tooltipProperties]="setting.tooltipProperties"
+              [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
             />
           }
           @case ('sheldon-card-descrizione') {
