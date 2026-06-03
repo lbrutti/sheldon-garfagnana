@@ -1,0 +1,10 @@
+<mat-button-toggle-group
+  [value]="options()[0]"
+  [hideSingleSelectionIndicator]="true"
+  [hideMultipleSelectionIndicator]="true"
+  (change)="onToggleChange($event)"
+>
+  @for (opt of options(); track opt.campo) {
+    <mat-button-toggle [value]="opt">{{ opt.label ?? opt.campo }}</mat-button-toggle>
+  }
+</mat-button-toggle-group>
