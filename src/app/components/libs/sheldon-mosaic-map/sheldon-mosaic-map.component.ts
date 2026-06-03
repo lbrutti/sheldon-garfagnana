@@ -35,22 +35,8 @@ const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features
 
 const MAP_STYLE: StyleSpecification = {
   version: 8,
-  sources: {
-    // osm: {
-    //   type: 'raster',
-    //   tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'],
-    //   tileSize: 256,
-    //  // attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-    // },
-  },
-  layers: [
-    // {
-    //   id: 'osm',
-    //   type: 'raster',
-    //   source: 'osm',
-    //   // paint: {'raster-opacity': 0.25, 'raster-saturation': -1, 'raster-brightness-max': 0.28},
-    // },
-  ],
+  sources: {},
+  layers: [],
 };
 
 function reduceValues(values: number[], mode: AuxReduceOption['reduceBy']): number {
@@ -90,7 +76,6 @@ function polygonBbox(feature: Feature<Polygon>): [number, number, number, number
   styleUrl: './sheldon-mosaic-map.component.scss',
 })
 export default class SheldonMosaicMapComponent implements OnInit {
-  @ViewChild('legendCanvas') legendCanvas?: ElementRef<HTMLCanvasElement>;
 
   // ── Inputs ─────────────────────────────────────────────────────────────────
   title = input<string>('Mappa');
@@ -203,15 +188,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
       : ['==', ['get', key], '__none__'];
   });
 
-  /** Min/max labels for the legend. */
-  legendMin = computed(() => {
-    const vals = Object.values(this.comuneValues());
-    return vals.length ? Math.min(...vals) : 0;
-  });
-  legendMax = computed(() => {
-    const vals = Object.values(this.comuneValues());
-    return vals.length ? Math.max(...vals) : 0;
-  });
 
   /** Aggregated value for the currently hovered feature. */
   hoveredValue = computed(() => {
@@ -237,22 +213,13 @@ export default class SheldonMosaicMapComponent implements OnInit {
         }
       }
     }
-    const px = (maxX - minX) * 0.30;
-    const py = (maxY - minY) * 0.30;
+    const px = (maxX - minX) * 0.1;
+    const py = (maxY - minY) * 0.1;
     return [[minX - px, minY - py], [maxX + px, maxY + py]];
   });
 
   constructor() {
-    effect(() => {
-      const canvas = this.legendCanvas?.nativeElement;
-      if (!canvas || !this.mapReady()) return;
-      const settings = this.colorSetting();
-      const ctx = canvas.getContext('2d')!;
-      const grad = ctx.createLinearGradient(0, 0, 160, 0);
-      settings.forEach((s) => grad.addColorStop(s.value / 100, s.color));
-      ctx.fillStyle = grad;
-      ctx.fillRect(0, 0, 160, 8);
-    });
+
 
     effect(() => {
       const bb = this.collectionBbox();

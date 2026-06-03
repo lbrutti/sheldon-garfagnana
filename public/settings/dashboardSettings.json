@@ -260,7 +260,7 @@
         "reduceBy": "count"
       }
     ],
-    "data": "comuniPolygons"
+    "data": "featureComuni"
   },
   {
     "id": "descrizione_garfagnana",

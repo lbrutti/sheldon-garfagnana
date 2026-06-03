@@ -26,7 +26,7 @@ import {DecimalPipe} from '@angular/common';
 })
 export default class Dashboard implements OnInit {
 
-protected settings = signal<WidgetSetting[]>([]);
+  protected settings = signal<WidgetSetting[]>([]);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
 
@@ -37,6 +37,7 @@ protected settings = signal<WidgetSetting[]>([]);
   protected categoriaCorrente = computed<string>(() => {
     return this.filters().find(f => f.key === 'categoria')?.value ?? ''
   });
+  featureComuni = signal<FeatureCollection<Polygon>>({type: "FeatureCollection", features: []});
 
   getCategoriaRandom(index: number): string {
 
@@ -99,6 +100,7 @@ protected settings = signal<WidgetSetting[]>([]);
     interventoRandomLunigiana: this.interventoRandomLunigiana(),
     interventoRandomSerchio: this.interventoRandomSerchio(),
     interventoRandomPistoiese: this.interventoRandomPistoiese(),
+    featureComuni: this.featureComuni(),
   }));
 
   categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
@@ -243,20 +245,43 @@ protected settings = signal<WidgetSetting[]>([]);
         this.interventoRandomLunigiana.set(interventiLunigiana);
         this.interventoRandomSerchio.set(interventiSerchio);
         this.interventoRandomPistoiese.set(interventiPistoiese);
+
+        //per mappa: merge interventi con dataset poligoni comuni
+        const comuniMap = new Map();
+        interventiDemuxPerStato.map(i => {
+          if (!comuniMap.has(i.comune)) {
+            comuniMap.set(i.comune, {});
+          }
+          const counterStati = comuniMap.get(i.comune);
+
+          if (!counterStati[i.stato]) {
+            counterStati[i.stato] = 1;
+          } else {
+            counterStati[i.stato]++;
+            comuniMap.set(i.comune, counterStati)
+          }
+        });
+        const updatedFeats = JSON.parse(JSON.stringify(this.comuniPolygons())).features.map((f: any) => {
+          f.properties = {...f.properties, ...comuniMap.get((f.properties as any).name)};
+          return f;
+        });
+
+        this.featureComuni.set({type: "FeatureCollection", features: updatedFeats});
       });
     });
   }
 
 
   ngOnInit(): void {
-    this.apiService.getInterventi();
-    this.apiService.getComuniPolygons();
-    this.interventi = this.apiService.interventi;
-    this.comuniPolygons = this.apiService.comuniPolygons;
     fetch('settings/dashboardSettings.json')
       .then(r => r.json())
       //random tiles
       .then((s: WidgetSetting[]) => this.settings.set(shuffleArray(s)));
+    this.apiService.getInterventi();
+    this.apiService.getComuniPolygons();
+    this.interventi = this.apiService.interventi;
+    this.comuniPolygons = this.apiService.comuniPolygons;
+    //merge interventi e comuni per conteggio
     //ordine definito nei settaggi
     // .then((s: WidgetSetting[]) => this.settings.set(s));
   }

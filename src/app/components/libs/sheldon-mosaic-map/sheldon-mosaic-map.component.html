@@ -25,6 +25,7 @@
     <div class="map-wrapper">
       <mgl-map
         [mapStyle]="mapStyle"
+        [cancelPendingTileRequestsWhileZooming]="true"
         [maxZoom]="14"
         (mapLoad)="onMapLoad($event)"
         (zoomEnd)="logZoomLevel($event)">
@@ -83,16 +84,7 @@
           }
         </div>
       }
-
-      <!-- Legend -->
-      <div class="map-legend">
-        <span class="legend-label">{{ activeAuxReduce()?.campo }}</span>
-        <canvas #legendCanvas width="160" height="8"></canvas>
-        <div class="legend-bounds">
-          <span>{{ legendMin() | number: '1.0-1' }}</span>
-          <span>{{ legendMax() | number: '1.0-1' }}</span>
-        </div>
-      </div>
+      
     </div>
 
   </ng-container>
