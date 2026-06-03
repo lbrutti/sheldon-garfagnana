@@ -22,14 +22,6 @@ body {
     align-tracks: stretch;
   }
 
-  @supports not (grid-template-rows: masonry) {
-    grid-auto-rows: 4px;
-
-    .tile {
-      align-self: start;
-    }
-  }
-
   @media (max-width: 959px) {
     grid-template-columns: repeat(4, 1fr);
   }

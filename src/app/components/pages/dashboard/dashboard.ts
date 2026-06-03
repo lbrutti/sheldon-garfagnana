@@ -240,16 +240,24 @@ export default class Dashboard implements OnInit, OnDestroy {
     const grid = this.gridRef.nativeElement;
     const tiles = Array.from(grid.children) as HTMLElement[];
 
+    // Pause observer to avoid feedback loop during DOM reset
+    this.resizeObserver?.disconnect();
+
+    // Reset to auto rows so getBoundingClientRect returns natural content heights
+    grid.style.gridAutoRows = 'auto';
     tiles.forEach(t => (t.style.gridRowEnd = ''));
+
+    // Measure natural heights (forces synchronous reflow)
     const spans = tiles.map(t => {
       const h = t.getBoundingClientRect().height;
       return h > 0 ? Math.ceil((h + this.MASONRY_GAP_PX) / (this.MASONRY_ROW_PX + this.MASONRY_GAP_PX)) : 0;
     });
-    tiles.forEach((t, i) => {
-      if (spans[i] > 0) t.style.gridRowEnd = `span ${spans[i]}`;
-    });
 
-    this.resizeObserver?.disconnect();
+    // Apply masonry in one batch — grid layout height is set correctly before repaint
+    grid.style.gridAutoRows = `${this.MASONRY_ROW_PX}px`;
+    tiles.forEach((t, i) => { if (spans[i] > 0) t.style.gridRowEnd = `span ${spans[i]}`; });
+
+    // Resume observations for content/window resize
     this.resizeObserver = new ResizeObserver(() => this.recalculateMasonry());
     tiles.forEach(t => this.resizeObserver!.observe(t));
   }
