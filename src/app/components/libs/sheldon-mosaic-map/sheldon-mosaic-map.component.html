@@ -80,7 +80,9 @@
           [style.top.px]="tooltipPos()!.y + 14">
           <strong>{{ hoveredFeature()?.properties?.[municipalityKey()] }}</strong>
           @for (prop of this.tooltipProperties(); track prop.property) {
-            <div>{{ prop.label }}: {{ hoveredFeature()?.properties?.[prop.property] | multiples }}</div>
+            @if (hoveredFeature()?.properties?.[prop.property]) {
+              <div>{{ hoveredFeature()?.properties?.[prop.property] | multiples }} {{ prop.label }}</div>
+            }
           }
         </div>
       }
