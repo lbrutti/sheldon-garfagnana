@@ -1,4 +1,16 @@
-import {Component, computed, effect, OnInit, signal, Signal, untracked} from '@angular/core';
+import {
+  afterEveryRender,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  signal,
+  Signal,
+  untracked,
+  ViewChild
+} from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
 import {components} from '../../libs';
@@ -16,7 +28,12 @@ import {DecimalPipe} from '@angular/common';
   providers: [DecimalPipe] // Add DecimalPipe to providers so it can be injected
 
 })
-export default class Dashboard implements OnInit {
+export default class Dashboard implements OnInit, OnDestroy {
+
+  @ViewChild('grid') private gridRef!: ElementRef<HTMLElement>;
+  private resizeObserver?: ResizeObserver;
+  private readonly MASONRY_ROW_PX = 4;
+  private readonly MASONRY_GAP_PX = 16;
 
   protected settings = signal<WidgetSetting[]>([]);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
@@ -88,6 +105,10 @@ export default class Dashboard implements OnInit {
 
   constructor(protected apiService: ProjectsApiService) {
     this.categorieInterventi = shuffleArray(this.categorieInterventi);
+
+    if (!CSS.supports('grid-template-rows', 'masonry')) {
+      afterEveryRender(() => this.gridRef && this.recalculateMasonry());
+    }
     effect(() => {
       const interventi = this.interventiFiltrati();
 
@@ -211,6 +232,28 @@ export default class Dashboard implements OnInit {
   }
 
 
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+  }
+
+  private recalculateMasonry(): void {
+    const grid = this.gridRef.nativeElement;
+    const tiles = Array.from(grid.children) as HTMLElement[];
+
+    tiles.forEach(t => (t.style.gridRowEnd = ''));
+    const spans = tiles.map(t => {
+      const h = t.getBoundingClientRect().height;
+      return h > 0 ? Math.ceil((h + this.MASONRY_GAP_PX) / (this.MASONRY_ROW_PX + this.MASONRY_GAP_PX)) : 0;
+    });
+    tiles.forEach((t, i) => {
+      if (spans[i] > 0) t.style.gridRowEnd = `span ${spans[i]}`;
+    });
+
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = new ResizeObserver(() => this.recalculateMasonry());
+    tiles.forEach(t => this.resizeObserver!.observe(t));
+  }
+
   ngOnInit(): void {
     this.apiService.getInterventi();
     this.apiService.getComuniPolygons();
@@ -218,6 +261,7 @@ export default class Dashboard implements OnInit {
     this.comuniPolygons = this.apiService.comuniPolygons;
     fetch('settings/dashboardSettings.json')
       .then(r => r.json())
+      // .then((s: WidgetSetting[]) => this.settings.set(shuffleArray(s)));
       .then((s: WidgetSetting[]) => this.settings.set(s));
   }
 

@@ -1,6 +1,6 @@
 <sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
 
-<div class="sheldon-grid">
+<div class="sheldon-grid" #grid>
   @for (setting of settings(); track setting.id; let idx = $index) {
     <div [class]="'tile tile--' + setting.tileWidth">
 
