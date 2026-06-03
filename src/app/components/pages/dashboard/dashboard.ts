@@ -196,24 +196,24 @@ export default class Dashboard implements OnInit, OnDestroy {
           nome: 'nome'
         });
 
-        const iterventiDemuxPerPartecipazione: InterventoInterface[] = getExplodedData(interventi, 'partecipazione');
-        const dataInterventiPerPartecipazione = parseInterventiToDataCollection(iterventiDemuxPerPartecipazione, {
+        const interventiDemuxPerPartecipazione: InterventoInterface[] = getExplodedData(interventi, 'partecipazione');
+        const dataInterventiPerPartecipazione = parseInterventiToDataCollection(interventiDemuxPerPartecipazione, {
           comune: 'comune',
           partecipazione: 'valore',
           inizio: 'anno',
           unione: 'unione',
           nome: 'nome'
         });
-        const iterventiDemuxPerStato: InterventoInterface[] = getExplodedData(interventi, 'stato');
-        const dataInterventiPerStato = parseInterventiToDataCollection(iterventiDemuxPerStato, {
+        const interventiDemuxPerStato: InterventoInterface[] = getExplodedData(interventi, 'stato');
+        const dataInterventiPerStato = parseInterventiToDataCollection(interventiDemuxPerStato, {
           comune: 'comune',
           stato: 'nome',
           importoTotale: 'valore',
           inizio: 'anno',
           unione: 'unione',
         });
-        const iterventiDemuxPerUnione: InterventoInterface[] = getExplodedData(interventi, 'unione');
-        const dataInterventiPerUnione = parseInterventiToDataCollection(iterventiDemuxPerUnione, {
+        const interventionDemuxPerUnione: InterventoInterface[] = getExplodedData(interventi, 'unione');
+        const dataInterventiPerUnione = parseInterventiToDataCollection(interventionDemuxPerUnione, {
           comune: 'comune',
           unione: 'valore',
           inizio: 'anno',
@@ -239,10 +239,18 @@ export default class Dashboard implements OnInit, OnDestroy {
 
         //random per dettagli
 
-        const interventiGarfagnana = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Garfagnana'))[0];
-        const interventiLunigiana = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Lunigiana'))[0];
-        const interventiSerchio = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Media Valle del Serchio'))[0];
-        const interventiPistoiese = shuffleArray(this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Appennino Pistoiese'))[0];
+        const interventiGarfagnana = shuffleArray(
+          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Garfagnana')
+        )[0];
+        const interventiLunigiana = shuffleArray(
+          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Lunigiana')
+        )[0];
+        const interventiSerchio = shuffleArray(
+          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Media Valle del Serchio')
+        )[0];
+        const interventiPistoiese = shuffleArray(
+          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Appennino Pistoiese')
+        )[0];
         this.interventoRandomGarfagnana.set(interventiGarfagnana);
         this.interventoRandomLunigiana.set(interventiLunigiana);
         this.interventoRandomSerchio.set(interventiSerchio);

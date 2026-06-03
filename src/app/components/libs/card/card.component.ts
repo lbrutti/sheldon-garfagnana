@@ -1,6 +1,7 @@
-import {Component, input} from '@angular/core';
+import {Component, inject, input} from '@angular/core';
 import {MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
+import {MatIcon, MatIconRegistry} from '@angular/material/icon';
+import {DomSanitizer} from '@angular/platform-browser';
 
 @Component({
   selector: 'sheldon-card',
@@ -13,4 +14,11 @@ import {MatIcon} from '@angular/material/icon';
 })
 export default class CardComponent {
   showButtons = input<boolean>(true);
+
+  constructor() {
+    const iconRegistry = inject(MatIconRegistry);
+    const sanitizer = inject(DomSanitizer);
+    iconRegistry.addSvgIcon('sheldon-info', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/info.svg'));
+    iconRegistry.addSvgIcon('sheldon-download', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/download.svg'));
+  }
 }

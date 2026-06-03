@@ -5,8 +5,10 @@
     <div class="sheldon-card-descrizione">
       {{ data()[description()] }}
     </div>
-    <div class="sheldon-card-descrizione-button">
-      <a matButton="outlined" href="{{data()[url()]}}" target="_blank">Scopri di più</a>
-    </div>
+    @if (data()[url()]) {
+      <div class="sheldon-card-descrizione-button">
+        <a matButton="outlined" href="{{data()[url()]}}" target="_blank">Scopri di più</a>
+      </div>
+    }
   </ng-container>
 </sheldon-card>

@@ -10,7 +10,12 @@
   box-sizing: border-box;
   justify-content: space-between;
 
-
+  .sheldon-card-title {
+    font-weight: 700;
+    //font-size: 12px;
+    line-height: 128%;
+    letter-spacing: 0;
+  }
 
   .sheldon-card-subheader {
     min-height: 49px !important;
@@ -23,6 +28,11 @@
     --mat-button-toggle-height: var(--filter-control-height, 18px) !important;
   }
 
+  .sheldon-card-buttons{
+    button{
+      height: var(--mat-button-toggle-height, 18px) !important;
+    }
+  }
   //.sheldon-card-content{
   //  height: 100%;
   //}
