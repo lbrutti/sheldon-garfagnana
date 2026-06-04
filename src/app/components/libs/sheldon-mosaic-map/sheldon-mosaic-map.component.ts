@@ -164,7 +164,10 @@ export default class SheldonMosaicMapComponent implements OnInit {
   /** 4 tints of the categoria start color: ranges 0 / <2 / <4 / >=4. */
   colorShades = computed<[string, string, string, string]>(() => {
     const categoria = normalizzaStringa(this.categoria());
-    const baseColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
+    let baseColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
+    if(baseColor ==='#000'){
+      baseColor = '#1d1d1d';
+    }
     return generateGradientShades(baseColor);
   });
 
