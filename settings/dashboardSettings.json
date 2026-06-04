@@ -256,8 +256,8 @@
     "municipalityKey": "name",
     "auxReduce": [
       {
-        "campo": "value",
-        "reduceBy": "count"
+        "campo": "totale",
+        "reduceBy": "sum"
       }
     ],
     "data": "featureComuni",
