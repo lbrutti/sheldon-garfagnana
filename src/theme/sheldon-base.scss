@@ -6,6 +6,15 @@ body {
   }
 }
 
+body.sheldon-theme-bw {
+  .bar,
+  .h-bar,
+  .pop-segment,
+  .treemap-tile {
+    outline: 1px solid white;
+  }
+}
+
 .mat-mdc-card-header-text {
   width: 100%
 }
