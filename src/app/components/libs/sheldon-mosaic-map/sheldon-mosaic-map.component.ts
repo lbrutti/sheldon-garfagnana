@@ -165,7 +165,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   colorShades = computed<[string, string, string, string]>(() => {
     const categoria = normalizzaStringa(this.categoria());
     let baseColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
-    if(baseColor ==='#000'){
+    if (baseColor === '#000') {
       baseColor = '#1d1d1d';
     }
     return generateGradientShades(baseColor);
@@ -184,12 +184,12 @@ export default class SheldonMosaicMapComponent implements OnInit {
     const key = this.municipalityKey();
     const hovering = this.isHovering();
     const choropleth = this.choroplethColorExpr();
-    const zeroShade = this.colorShades()[0];
+    const zeroShade = this.colorShades()[2];
 
     // Filter active: selected keeps choropleth color, others show zero-range shade at full opacity
     if (sel) {
       return {
-        'fill-outline-color': ['case', ['==', ['get', key], sel], choropleth, zeroShade] as any,
+        'fill-outline-color': zeroShade,
         'fill-color': ['case', ['==', ['get', key], sel], choropleth, 'transparent'] as any,
         'fill-opacity': 1.0 as any,
       };
