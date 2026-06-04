@@ -41,3 +41,6 @@ body {
 }
 
 @import "theme/sheldon-base";
+.maplibregl-ctrl-attrib {
+  display: none !important;
+}

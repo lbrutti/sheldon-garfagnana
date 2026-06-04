@@ -1,7 +1,6 @@
 <sheldon-card>
   <ng-container title>{{ title() }}</ng-container>
   <ng-container subheader>
-
     <!-- Controls row -->
     <div class="map-controls">
       <sheldon-dynamic-filter
@@ -72,6 +71,16 @@
 <!--          </mgl-layer>-->
         }
       </mgl-map>
+
+      <!-- Choropleth legend -->
+      <div class="map-legend">
+        @for (shade of colorShades(); track shade; let i = $index) {
+          <div class="legend-item">
+            <span class="legend-label">{{ legendLabels[i] }}</span>
+            <div class="legend-swatch" [style.background]="shade"></div>
+          </div>
+        }
+      </div>
 
       <!-- Hover tooltip -->
       @if (hoveredFeature() && tooltipPos()) {

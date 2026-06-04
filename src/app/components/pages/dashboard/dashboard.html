@@ -89,6 +89,7 @@
           }
           @case ('sheldon-mosaic-map') {
             <sheldon-mosaic-map
+              [title]="setting.title"
               [data]="$any(dataMap()[setting.data])"
               [auxReduce]="$any(setting.auxReduce ?? [])"
               [municipalityKey]="setting.municipalityKey ?? 'name'"

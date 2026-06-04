@@ -15,20 +15,10 @@ import type {Map, MapLayerMouseEvent, MapLibreEvent, MapLibreZoomEvent, StyleSpe
 
 import CardComponent from '../card/card.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {AuxReduceOption, ColorStop, FilterOptionInterface} from '../../../interfaces';
+import {AuxReduceOption, FilterOptionInterface} from '../../../interfaces';
 import {EventData} from '@angular/cdk/testing';
 import {MultiplesPipe} from '../../../pipes';
 import {normalizzaStringa, resolveColorVariable} from '../../../utils';
-
-const DEFAULT_COLOR_STOPS: ColorStop[] = [
-  {value: 0, color: '#1a3a6b'},
-  {value: 20, color: '#1a6b8a'},
-  {value: 35, color: '#2196b4'},
-  {value: 50, color: '#48c898'},
-  {value: 65, color: '#c8a840'},
-  {value: 80, color: '#e07040'},
-  {value: 100, color: '#e04848'},
-];
 
 const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
@@ -49,6 +39,32 @@ function reduceValues(values: number[], mode: AuxReduceOption['reduceBy']): numb
     case 'countunique':
       return new Set(values).size;
   }
+}
+
+function hexToRgb(hex: string): [number, number, number] | null {
+  const clean = hex.trim().replace('#', '');
+  if (clean.length === 6) {
+    return [
+      parseInt(clean.slice(0, 2), 16),
+      parseInt(clean.slice(2, 4), 16),
+      parseInt(clean.slice(4, 6), 16),
+    ];
+  }
+  return null;
+}
+
+/** Returns 4 tints of baseColor mixed with white at 20 / 45 / 70 / 100% intensity. */
+function generateGradientShades(baseColor: string): [string, string, string, string] {
+  const rgb = hexToRgb(baseColor);
+  if (!rgb) return [baseColor, baseColor, baseColor, baseColor];
+  const [r, g, b] = rgb;
+  const mix = (ratio: number): string => {
+    const cr = Math.round(r * ratio + 255 * (1 - ratio));
+    const cg = Math.round(g * ratio + 255 * (1 - ratio));
+    const cb = Math.round(b * ratio + 255 * (1 - ratio));
+    return `#${cr.toString(16).padStart(2, '0')}${cg.toString(16).padStart(2, '0')}${cb.toString(16).padStart(2, '0')}`;
+  };
+  return [mix(0.2), mix(0.45), mix(0.7), mix(1.0)];
 }
 
 @Component({
@@ -73,7 +89,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
   title = input<string>('Mappa');
   data = input<FeatureCollection<Polygon> | null>(null);
   auxReduce = input<AuxReduceOption[]>([]);
-  colorSetting = input<ColorStop[]>(DEFAULT_COLOR_STOPS);
   municipalityKey = input<string>('comune');
   tooltipProperties = input<{ property: string, label: string }[]>([]);
   categoria = input<string>('ambiente');
@@ -88,15 +103,18 @@ export default class SheldonMosaicMapComponent implements OnInit {
   mapReady = signal(false);
   activeAuxReduce = signal<AuxReduceOption | null>(null);
   private selectedComune = signal<string | null>(null);
+  private isHovering = signal(false);
   hoveredFeature = signal<Feature<Polygon> | null>(null);
   tooltipPos = signal<{ x: number; y: number } | null>(null);
 
   private mapInstance: Map | null = null;
   private hoveredFeatureId: string | number | null = null;
+  private pinnedFeature: Feature<Polygon> | null = null;
+  private pinnedTooltipPos: { x: number; y: number } | null = null;
 
   // ── Computed ───────────────────────────────────────────────────────────────
 
-  /** Dataset shaped for sheldon-dynamic-filter (needs DataInterface-compatible objects). */
+  /** Dataset shaped for sheldon-dynamic-filter. */
   comuniDataset = computed(() => {
     const key = this.municipalityKey();
     return (this.data()?.features ?? []).map((f) => ({
@@ -123,23 +141,11 @@ export default class SheldonMosaicMapComponent implements OnInit {
     return out;
   });
 
-  /** comuneValues normalized to [0, 100] for choropleth mapping. */
-  private normalizedValues = computed<Record<string, number>>(() => {
-    const vals = Object.values(this.comuneValues());
-    if (!vals.length) return {};
-    const min = Math.min(...vals);
-    const max = Math.max(...vals);
-    const range = max - min || 1;
-    return Object.fromEntries(
-      Object.entries(this.comuneValues()).map(([k, v]) => [k, ((v - min) / range) * 100])
-    );
-  });
-
-  /** Polygons with `_colorValue` (0-100) injected per comune for choropleth fill. */
+  /** Polygons with `_rawValue` (raw reduced value) injected per comune for choropleth fill. */
   derivedPolygons = computed<FeatureCollection<Polygon>>(() => {
     const polys = this.data();
     if (!polys) return EMPTY_COLLECTION as FeatureCollection<Polygon>;
-    const norm = this.normalizedValues();
+    const rawVals = this.comuneValues();
     const key = this.municipalityKey();
     return {
       ...polys,
@@ -147,47 +153,62 @@ export default class SheldonMosaicMapComponent implements OnInit {
         ...f,
         properties: {
           ...f.properties,
-          _colorValue: norm[String(f.properties?.[key] ?? '')] ?? 0,
+          _rawValue: rawVals[String(f.properties?.[key] ?? '')] ?? 0,
         },
       })),
     };
   });
 
+  readonly legendLabels = ['0', '<2', '<4', '4+'];
 
-  /** MapLibre interpolate expression built from colorSetting input. */
-    //TODO: modificare per fare coropletica con 4 gradazioni del colore start del gradiente in base al valore di `totale`
-  private colorExpression = computed(() => {
-    const stops = this.colorSetting().flatMap((s) => [s.value, s.color]);
-    return ['interpolate', ['linear'], ['get', '_colorValue'], ...stops];
+  /** 4 tints of the categoria start color: ranges 0 / <2 / <4 / >=4. */
+  colorShades = computed<[string, string, string, string]>(() => {
+    const categoria = normalizzaStringa(this.categoria());
+    const baseColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
+    return generateGradientShades(baseColor);
   });
 
-  /** Fill layer paint — choropleth color with hover/select opacity. */
+  /** MapLibre step expression mapping _rawValue to the 4 choropleth shades. */
+  private choroplethColorExpr = computed((): any[] => {
+    const [s0, s1, s2, s3] = this.colorShades();
+    // s0 → value=0 | s1 → 0<v<2 | s2 → 2≤v<4 | s3 → v≥4
+    return ['step', ['get', '_rawValue'], s0, 0.0001, s1, 2, s2, 4, s3];
+  });
+
+  /** Fill layer paint with choropleth colors and hover/filter state. */
   comuniFillPaint = computed(() => {
     const sel = this.selectedComune();
     const key = this.municipalityKey();
+    const hovering = this.isHovering();
+    const choropleth = this.choroplethColorExpr();
+    const zeroShade = this.colorShades()[0];
 
-    const colorExpr: any[] = ['case'];
-    const categoria = normalizzaStringa(this.categoria());
-    const hoveredColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
-    const unHoveredColor = resolveColorVariable(`--color-gradient-${categoria}-end`);
+    // Filter active: selected keeps choropleth color, others show zero-range shade at full opacity
     if (sel) {
-      colorExpr.push(['==', ['get', key], sel], hoveredColor);
+      return {
+        'fill-outline-color': 'transparent' as any,
+        'fill-color': ['case', ['==', ['get', key], sel], choropleth, zeroShade] as any,
+        'fill-opacity': 1.0 as any,
+      };
     }
-    colorExpr.push(['boolean', ['feature-state', 'hover'], false], hoveredColor, unHoveredColor);
 
-    const opacityExpr: any[] = ['case'];
-    if (sel) {
-      opacityExpr.push(['==', ['get', key], sel], 1.0);
+    // Hover active: all polygons keep choropleth color, non-hovered dim to 0.8
+    if (hovering) {
+      return {
+        'fill-outline-color': 'transparent' as any,
+        'fill-color': choropleth as any,
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1.0, 0.8] as any,
+      };
     }
-    opacityExpr.push(['boolean', ['feature-state', 'hover'], false], 0.7, 0.88);
+
     return {
-      'fill-outline-color': 'transparent',
-      'fill-color': colorExpr as any,
-      'fill-opacity': opacityExpr as any,
+      'fill-outline-color': 'transparent' as any,
+      'fill-color': choropleth as any,
+      'fill-opacity': 1.0 as any,
     };
   });
 
-  /** Bounding box of the full FeatureCollection expanded by 5% on each side. */
+  /** Bounding box of the full FeatureCollection expanded by 10% on each side. */
   private collectionBbox = computed<[[number, number], [number, number]] | null>(() => {
     const fc = this.data();
     if (!fc?.features.length) return null;
@@ -209,8 +230,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
   });
 
   constructor() {
-
-
     effect(() => {
       const bb = this.collectionBbox();
       if (!bb || !this.mapReady()) return;
@@ -239,8 +258,11 @@ export default class SheldonMosaicMapComponent implements OnInit {
   onPolygonEnter(event: MapLayerMouseEvent): void {
     const map = this.mapInstance;
     if (!map || !event.features?.length) return;
+    if (this.selectedComune()) return;
     const feature = event.features[0] as unknown as Feature<Polygon>;
-    this.selectedComune.set(feature.properties?.['name']);
+
+    this.isHovering.set(true);
+
     if (this.hoveredFeatureId !== null) {
       map.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
     }
@@ -262,36 +284,58 @@ export default class SheldonMosaicMapComponent implements OnInit {
       map.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
       this.hoveredFeatureId = null;
     }
-    this.hoveredFeature.set(null);
-    this.tooltipPos.set(null);
+    this.isHovering.set(false);
     map.getCanvas().style.cursor = '';
+
+    if (this.pinnedFeature && this.pinnedTooltipPos) {
+      this.hoveredFeature.set(this.pinnedFeature);
+      this.tooltipPos.set(this.pinnedTooltipPos);
+    } else {
+      this.hoveredFeature.set(null);
+      this.tooltipPos.set(null);
+    }
   }
 
   // ── Control events ─────────────────────────────────────────────────────────
-
 
   onFilterChange(filters: FilterOptionInterface[]): void {
     const comuneFilter = filters.find((f) => f.key === 'comune');
     const value = comuneFilter?.value ?? null;
     this.selectedComune.set(value);
 
-    if (value && this.mapInstance) {
-      const feature = this.data()?.features.find(
-        (f) => String(f.properties?.[this.municipalityKey()]) === value
-      );
-      if (feature) {
-
-        const coords = feature.geometry.coordinates[0]; // exterior ring
-        const lng = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
-        const lat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
-        const point = this.mapInstance.project([lng, lat]);
-        this.hoveredFeatureId = feature.id;
-        this.hoveredFeature.set(feature);
-        this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: true});
-        this.tooltipPos.set({x: point.x, y: point.y});
-        this.polygonHover.emit(feature);
-
+    if (!value) {
+      if (this.hoveredFeatureId !== null && this.mapInstance) {
+        this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
+        this.hoveredFeatureId = null;
       }
+      this.pinnedFeature = null;
+      this.pinnedTooltipPos = null;
+      this.hoveredFeature.set(null);
+      this.tooltipPos.set(null);
+      return;
+    }
+
+    const feature = this.data()?.features.find(
+      (f) => String(f.properties?.[this.municipalityKey()]) === value
+    );
+    if (feature && this.mapInstance) {
+      const coords = feature.geometry.coordinates[0];
+      const lng = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
+      const lat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
+      const point = this.mapInstance.project([lng, lat]);
+
+      if (this.hoveredFeatureId !== null) {
+        this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
+      }
+      this.hoveredFeatureId = feature.id ?? null;
+      if (this.hoveredFeatureId !== null) {
+        this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: true});
+      }
+      this.pinnedFeature = feature;
+      this.pinnedTooltipPos = {x: point.x, y: point.y};
+      this.hoveredFeature.set(feature);
+      this.tooltipPos.set(this.pinnedTooltipPos);
+      this.polygonHover.emit(feature);
     }
   }
 
