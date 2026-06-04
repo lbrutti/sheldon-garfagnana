@@ -100,7 +100,7 @@
           @case ('sheldon-card-descrizione') {
             <sheldon-descrizione
               [data]="$any(dataMap()[setting.data])"
-              [title]="$any(setting.title ?? 'nome')"
+              [title]="setting.title ?? 'nome'"
               [description]="setting.desc"
               [url]="setting.url"
             />

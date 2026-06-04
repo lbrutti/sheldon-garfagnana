@@ -6,6 +6,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
+import {components} from '../index';
 
 @Component({
   selector: 'sheldon-global-search',
@@ -18,6 +19,7 @@ import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
     MatButtonToggle,
     MatButtonToggleGroup,
     MatSelect,
+    components,
   ],
   templateUrl: './global-search.component.html',
   styleUrl: './global-search.component.scss',

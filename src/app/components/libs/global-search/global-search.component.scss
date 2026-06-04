@@ -1,8 +1,11 @@
 $control-height: 25px;
 
 :host {
-  display: flex;
-  flex-direction: row;
+  display: block;
+  //flex-direction: row;
+  .theme-switcher {
+    right: 0;
+  }
 
   form {
     display: flex;

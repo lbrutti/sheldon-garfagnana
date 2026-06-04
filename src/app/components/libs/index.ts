@@ -14,6 +14,7 @@ import ChartLabelComponent from './chart-label/chart-label.component';
 import ChartTwoLinesLabelComponent from './chart-two-lines-label/chart-two-lines-label.component';
 import ReduceToggleComponent from './reduce-toggle/reduce-toggle';
 import CardDescrizioneComponent from './card-descrizione/card-descrizione.component';
+import {ThemeSwitchComponent} from './theme-switch/theme-switch.component';
 
 export * from './card/card.component';
 export * from './chart-label/chart-label.component';
@@ -45,4 +46,7 @@ export const components = [
   ChartLabelComponent,
   ChartTwoLinesLabelComponent,
   ReduceToggleComponent,
-  CardDescrizioneComponent];
+  CardDescrizioneComponent,
+  ThemeSwitchComponent];
+
+export {ThemeSwitchComponent} from './theme-switch/theme-switch.component';

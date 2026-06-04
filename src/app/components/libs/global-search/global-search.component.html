@@ -1,3 +1,4 @@
+<sheldon-theme-switch />
 <form class="example-form">
   <mat-form-field appearance="outline">
     <mat-select
@@ -6,13 +7,10 @@
       placeholder="Cerca per unione"
       (selectionChange)="(applyFilter())"
     >
-
-
       @for (option of suggestions(); track option) {
         <mat-option [value]="option">{{ option.label }}</mat-option>
       }
     </mat-select>
-
   </mat-form-field>
   <mat-button-toggle-group
     [formControl]="chipSet"

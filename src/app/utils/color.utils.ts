@@ -1,7 +1,7 @@
 import {normalizzaStringa} from './data.utils';
 
 export function resolveColorVariable(variableName: string): string {
-  const style = getComputedStyle(document.documentElement);
+  const style = getComputedStyle(document.body);
   return style.getPropertyValue(variableName).trim();
 }
 
