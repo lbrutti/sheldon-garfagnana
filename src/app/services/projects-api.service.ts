@@ -63,7 +63,7 @@ export class ProjectsApiService {
   }
 
   getComuniPolygons() {
-    this.httpClient.get('data/comuni.mosaic.geojson', {
+    this.httpClient.get('data/comuni.polygons.grid.json', {
       responseType:
         'json'
     }).subscribe((res: any): void => {

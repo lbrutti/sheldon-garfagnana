@@ -2,15 +2,12 @@ import {
   Component,
   computed,
   effect,
-  ElementRef, Input,
   input,
   OnInit,
   output,
   signal,
   untracked,
-  ViewChild,
 } from '@angular/core';
-import {DecimalPipe, JsonPipe} from '@angular/common';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Polygon} from 'geojson';
@@ -22,7 +19,6 @@ import {AuxReduceOption, ColorStop, FilterOptionInterface} from '../../../interf
 import {EventData} from '@angular/cdk/testing';
 import {MultiplesPipe} from '../../../pipes';
 import {normalizzaStringa, resolveColorVariable} from '../../../utils';
-import camelcase from 'camelcase';
 
 const DEFAULT_COLOR_STOPS: ColorStop[] = [
   {value: 0, color: '#1a3a6b'},
@@ -53,13 +49,6 @@ function reduceValues(values: number[], mode: AuxReduceOption['reduceBy']): numb
     case 'countunique':
       return new Set(values).size;
   }
-}
-
-function polygonBbox(feature: Feature<Polygon>): [number, number, number, number] {
-  const coords = feature.geometry.coordinates.flat(1) as [number, number][];
-  const lngs = coords.map((c) => c[0]);
-  const lats = coords.map((c) => c[1]);
-  return [Math.min(...lngs), Math.min(...lats), Math.max(...lngs), Math.max(...lats)];
 }
 
 @Component({
@@ -165,6 +154,13 @@ export default class SheldonMosaicMapComponent implements OnInit {
   });
 
 
+  /** MapLibre interpolate expression built from colorSetting input. */
+    //TODO: modificare per fare coropletica con 4 gradazioni del colore start del gradiente in base al valore di `totale`
+  private colorExpression = computed(() => {
+    const stops = this.colorSetting().flatMap((s) => [s.value, s.color]);
+    return ['interpolate', ['linear'], ['get', '_colorValue'], ...stops];
+  });
+
   /** Fill layer paint — choropleth color with hover/select opacity. */
   comuniFillPaint = computed(() => {
     const sel = this.selectedComune();
@@ -185,19 +181,11 @@ export default class SheldonMosaicMapComponent implements OnInit {
     }
     opacityExpr.push(['boolean', ['feature-state', 'hover'], false], 0.7, 0.88);
     return {
+      'fill-outline-color': 'transparent',
       'fill-color': colorExpr as any,
       'fill-opacity': opacityExpr as any,
     };
   });
-
-  /** Filter for the selected-comune highlight line layer. */
-  selectedFilter = computed<any>(() => {
-    const key = this.municipalityKey();
-    return this.selectedComune()
-      ? ['==', ['get', key], this.selectedComune()]
-      : ['==', ['get', key], '__none__'];
-  });
-
 
   /** Bounding box of the full FeatureCollection expanded by 5% on each side. */
   private collectionBbox = computed<[[number, number], [number, number]] | null>(() => {
