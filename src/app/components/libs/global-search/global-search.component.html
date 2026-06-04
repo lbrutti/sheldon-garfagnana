@@ -1,30 +1,32 @@
-<sheldon-theme-switch />
-<form class="example-form">
-  <mat-form-field appearance="outline">
-    <mat-select
-      [formControl]="selectUnione"
-      [value]="{value: '',key: 'unione'}"
-      placeholder="Cerca per unione"
-      (selectionChange)="(applyFilter())"
+<div class="search-container">
+  <sheldon-theme-switch/>
+  <form class="example-form">
+    <mat-form-field appearance="outline">
+      <mat-select
+        [formControl]="selectUnione"
+        [value]="{value: '',key: 'unione'}"
+        placeholder="Cerca per unione"
+        (selectionChange)="(applyFilter())"
+      >
+        @for (option of suggestions(); track option) {
+          <mat-option [value]="option">{{ option.label }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-button-toggle-group
+      [formControl]="chipSet"
+      [hideSingleSelectionIndicator]="true"
+      [hideMultipleSelectionIndicator]="true"
+      name="ingredients"
+      aria-label="Ingredients"
+      multiple
     >
-      @for (option of suggestions(); track option) {
-        <mat-option [value]="option">{{ option.label }}</mat-option>
+      @for (option of chips(); track option) {
+        <mat-button-toggle
+          [value]="option"
+          (change)="(handleToggle($event))">{{ option.value }}
+        </mat-button-toggle>
       }
-    </mat-select>
-  </mat-form-field>
-  <mat-button-toggle-group
-    [formControl]="chipSet"
-    [hideSingleSelectionIndicator]="true"
-    [hideMultipleSelectionIndicator]="true"
-    name="ingredients"
-    aria-label="Ingredients"
-    multiple
-  >
-    @for (option of chips(); track option) {
-      <mat-button-toggle
-        [value]="option"
-        (change)="(handleToggle($event))">{{ option.value }}
-      </mat-button-toggle>
-    }
-  </mat-button-toggle-group>
-</form>
+    </mat-button-toggle-group>
+  </form>
+</div>

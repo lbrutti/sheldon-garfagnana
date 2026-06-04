@@ -3,8 +3,13 @@ $control-height: 25px;
 :host {
   display: block;
   //flex-direction: row;
-  .theme-switcher {
-    right: 0;
+  .search-container {
+    display: flex;
+    flex-direction: column;
+
+    sheldon-theme-switch {
+      margin-left: auto;
+    }
   }
 
   form {
