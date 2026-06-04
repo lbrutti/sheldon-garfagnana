@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/theme-switch/theme-switch.component.scss"],
+  "sourcesContent": [":host {\n  border: none;\n  display: inline-flex;\n  align-items: center;\n\n  * {\n    border: none;\n  }\n\n  ::ng-deep {\n    * {\n      border: none;\n    }\n\n    mat-button-toggle-group {\n      border: none;\n      border-radius: 0;\n    }\n\n    mat-button-toggle {\n      border: none !important;\n      padding: 0 !important;\n      margin: 0 !important;\n      gap: 0 !important;\n\n      &:not(:last-child) {\n        //  border-right: 1px solid currentColor;\n      }\n\n      .mat-button-toggle-button {\n        height: 25px;\n        line-height: 25px;\n      }\n\n      .mat-button-toggle-label-content {\n        line-height: 25px;\n        padding: 0;\n        display: flex;\n        align-items: center;\n      }\n\n      .theme-icon {\n        width: 25px;\n        height: 25px;\n        display: block;\n      }\n    }\n  }\n}\n"],
+  "mappings": "AAAA,MACE,OAAA,KACA,QAAA,YACA,YAAA,OAEA,MAAA,EACE,OAAA,KAIA,MAAA,UAAA,EACE,OAAA,KAGF,MAAA,UAAA,wBACE,OAAA,KAfN,cAgBM,EAGF,MAAA,UAAA,kBACE,OAAA,eApBN,QAqBM,YArBN,OAsBM,YACA,IAAA,YAMA,MAAA,UAAA,kBAAA,CAAA,yBACE,OAAA,KACA,YAAA,KAGF,MAAA,UAAA,kBAAA,CAAA,gCACE,YAAA,KAnCR,QAoCQ,EACA,QAAA,KACA,YAAA,OAGF,MAAA,UAAA,kBAAA,CAAA,WACE,MAAA,KACA,OAAA,KACA,QAAA",
+  "names": []
+}
