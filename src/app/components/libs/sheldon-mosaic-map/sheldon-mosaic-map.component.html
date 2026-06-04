@@ -86,11 +86,13 @@
       <!-- Hover tooltip -->
       @if (hoveredFeature() && tooltipPos()) {
         <div
-          class="map-tooltip">
-          <strong>{{ hoveredFeature()?.properties?.[municipalityKey()] }}</strong>
+          class="map-tooltip"
+          [style.background]="tooltipBackground">
+          <strong
+            [style.background]="tooltipGradient">{{ hoveredFeature()?.properties?.[municipalityKey()] }}</strong>
           @for (prop of this.tooltipProperties(); track prop.property) {
             @if (hoveredFeature()?.properties?.[prop.property]) {
-              <div>{{ hoveredFeature()?.properties?.[prop.property] | multiples }} {{ prop.label }}</div>
+              <div class="map-tooltip-item">{{ hoveredFeature()?.properties?.[prop.property] | multiples }} {{ prop.label }}</div>
             }
           }
         </div>

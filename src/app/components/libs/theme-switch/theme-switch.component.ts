@@ -17,7 +17,6 @@ const BW_CLASS = 'sheldon-theme-bw';
 export class ThemeSwitchComponent implements OnInit {
   readonly options: {value: Theme; icon: string}[] = [
     {value: 'light', icon: 'assets/svg/light-theme.svg'},
-    {value: 'dark', icon: 'assets/svg/dark-theme.svg'},
     {value: 'system', icon: 'assets/svg/bw-theme.svg'},
   ];
 

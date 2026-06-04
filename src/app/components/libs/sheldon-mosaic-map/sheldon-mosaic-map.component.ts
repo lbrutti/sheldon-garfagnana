@@ -18,7 +18,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {AuxReduceOption, FilterOptionInterface} from '../../../interfaces';
 import {EventData} from '@angular/cdk/testing';
 import {MultiplesPipe} from '../../../pipes';
-import {normalizzaStringa, resolveColorVariable} from '../../../utils';
+import {getRandomGradient, normalizzaStringa, resolveColorVariable} from '../../../utils';
 
 const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
@@ -168,6 +168,8 @@ export default class SheldonMosaicMapComponent implements OnInit {
     if (baseColor === '#000') {
       baseColor = '#1d1d1d';
     }
+    this.tooltipGradient = getRandomGradient(this.categoria(), '90deg', 80);
+    this.tooltipBackground = resolveColorVariable(`--color-gradient-${categoria}-end`)
     return generateGradientShades(baseColor);
   });
 
@@ -231,6 +233,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
     const py = (maxY - minY) * 0.1;
     return [[minX - px, minY - py], [maxX + px, maxY + py]];
   });
+  protected tooltipBackground: string;
 
   constructor() {
     effect(() => {
@@ -349,4 +352,8 @@ export default class SheldonMosaicMapComponent implements OnInit {
   logZoomLevel($event: MapLibreEvent<MouseEvent | TouchEvent | WheelEvent> & EventData): void {
     console.log(`current zoom : ${$event.target.getZoom()}`);
   }
+
+  protected readonly getRandomGradient = getRandomGradient;
+  protected readonly resolveColorVariable = resolveColorVariable;
+  protected tooltipGradient: string;
 }
