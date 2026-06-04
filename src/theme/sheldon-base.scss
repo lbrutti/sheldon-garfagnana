@@ -8,10 +8,15 @@ body {
 
 body.sheldon-theme-bw {
   .bar,
-  .h-bar,
+  .h-bar-container,
   .pop-segment,
   .treemap-tile {
-    outline: 1px solid white;
+    outline: 0.5px inset white;
+    outline-offset: -1px;
+  }
+  .h-bar-container sheldon-chart-label{
+    margin-left: 1.5px;
+    margin-top: 1.5px;
   }
 }
 
