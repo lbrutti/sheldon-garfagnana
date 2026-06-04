@@ -189,8 +189,8 @@ export default class SheldonMosaicMapComponent implements OnInit {
     // Filter active: selected keeps choropleth color, others show zero-range shade at full opacity
     if (sel) {
       return {
-        'fill-outline-color': 'transparent' as any,
-        'fill-color': ['case', ['==', ['get', key], sel], choropleth, zeroShade] as any,
+        'fill-outline-color': ['case', ['==', ['get', key], sel], choropleth, zeroShade] as any,
+        'fill-color': ['case', ['==', ['get', key], sel], choropleth, 'transparent'] as any,
         'fill-opacity': 1.0 as any,
       };
     }
