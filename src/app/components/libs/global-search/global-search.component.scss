@@ -64,6 +64,8 @@ $control-height: 25px;
 
 
     mat-button-toggle {
+      letter-spacing: 1px;
+
       &:not(:last-child) {
         margin-right: 4px;
       }

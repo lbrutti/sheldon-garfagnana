@@ -1,4 +1,7 @@
 :host {
-  --mat-button-toggle-height: var(--filter-control-height, 18px);
   margin-left: auto;
+  --mat-button-toggle-height: var(--filter-control-height, 18px);
+  --mat-button-toggle-selected-state-text-color: white;
+  --mat-button-toggle-selected-state-background-color: black;
+
 }
