@@ -11,7 +11,7 @@
   .list-container {
     display: flex;
     flex-direction: column;
-    height: 372px;
+    min-height: 96px;
     overflow-y: scroll;
     //gap: 6px;
     scrollbar-width: none; /* Firefox */

@@ -14,14 +14,33 @@ body.sheldon-theme-bw {
     outline: 0.5px inset white;
     outline-offset: -1px;
   }
-  .h-bar-container sheldon-chart-label{
+
+  .h-bar-container sheldon-chart-label {
     margin-left: 1.5px;
     margin-top: 1.5px;
+  }
+
+  .mat-mdc-icon-button svg {
+    fill: white;
+  }
+
+  .map-tooltip {
+    color: white;
   }
 }
 
 .mat-mdc-card-header-text {
   width: 100%
+}
+
+.maplibregl-ctrl-attrib {
+  display: none !important;
+}
+
+.mat-mdc-icon-button svg {
+  width: 13px !important;
+  height: 13px !important;
+  padding: 4px;
 }
 
 

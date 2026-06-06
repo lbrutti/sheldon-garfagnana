@@ -1,5 +1,5 @@
-<sheldon-card style="height: 471px"
-              [categoria]="categoria()">
+<sheldon-card
+  [categoria]="categoria()">
   <ng-container title>{{ title() }}</ng-container>
   <ng-container subheader>
     <sheldon-dynamic-filter
@@ -11,7 +11,8 @@
   <ng-container content>
     <mat-list>
       <!--      @for (dato of filteredData(); track dato) {-->
-      <cdk-virtual-scroll-viewport appendOnly itemSize="30" class="list-container">
+      <cdk-virtual-scroll-viewport appendOnly itemSize="30" class="list-container"
+                                   [style.height.px]="(filteredData().length < 10 ?filteredData().length * 36 : 270)">
 
         <mat-list-item *cdkVirtualFor="let dato of filteredData()">
           <div class="list-row">
