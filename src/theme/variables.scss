@@ -30,11 +30,13 @@
 
   --mat-icon-button-icon-size: 100%;
   --mat-icon-button-state-layer-size: 25px;
-
+  --mat-sys-surface: #F5F5F5;
 }
 
 // Black-and-white-only theme: all category gradients collapse to grayscale
 body.sheldon-theme-bw {
+  --mat-sys-surface: #FFF;
+
   --color-gradient-ambiente-start: #000;
   --color-gradient-ambiente-end: #000;
 

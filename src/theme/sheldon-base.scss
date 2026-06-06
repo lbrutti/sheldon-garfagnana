@@ -37,6 +37,10 @@ body.sheldon-theme-bw {
   display: none !important;
 }
 
+button {
+  text-transform: uppercase;
+}
+
 .mat-mdc-icon-button svg {
   width: 13px !important;
   height: 13px !important;
@@ -87,6 +91,4 @@ body.sheldon-theme-bw {
       }
     }
   }
-
-
 }

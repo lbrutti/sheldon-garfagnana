@@ -40,10 +40,12 @@
     "filterBy": null,
     "auxReduce": [
       {
+        "label": "N",
         "campo": "comune",
         "reduceBy": "count"
       },
       {
+        "label": "€ TOT",
         "campo": "valore",
         "reduceBy": "sum"
       }

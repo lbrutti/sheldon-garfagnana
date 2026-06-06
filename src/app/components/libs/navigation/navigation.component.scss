@@ -1,0 +1,5 @@
+:host {
+  ::ng-deep .mat-mdc-tab-link-container {
+    flex-grow: unset !important;
+  }
+}

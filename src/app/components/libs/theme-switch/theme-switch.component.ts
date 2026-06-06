@@ -9,7 +9,7 @@ import {Theme, ThemeService} from '../../../services/theme.service';
   templateUrl: './theme-switch.component.html',
   styleUrl: './theme-switch.component.scss',
 })
-export class ThemeSwitchComponent implements OnInit {
+export default class ThemeSwitchComponent implements OnInit {
   private readonly themeService = inject(ThemeService);
 
   readonly options: {value: Theme; icon: string}[] = [

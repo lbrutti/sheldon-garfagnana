@@ -7,6 +7,7 @@ import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@ang
 import {ActivatedRoute, Router} from '@angular/router';
 import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {components} from '../index';
+import ThemeSwitchComponent from '../theme-switch/theme-switch.component';
 
 @Component({
   selector: 'sheldon-global-search',
@@ -19,7 +20,8 @@ import {components} from '../index';
     MatButtonToggle,
     MatButtonToggleGroup,
     MatSelect,
-    components,
+    ThemeSwitchComponent,
+
   ],
   templateUrl: './global-search.component.html',
   styleUrl: './global-search.component.scss',
