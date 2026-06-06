@@ -31,6 +31,7 @@ export default class ListaComponent {
 
   title = input<string>('Numero di progetti per comune');
   infoText = input<string>('');
+  cardId = input<string>('');
   categoria = input<string>('sociale');
   filterBy = input<string>('');
   filtersFields = computed<string[]>(() => this.filterBy().split('|'));

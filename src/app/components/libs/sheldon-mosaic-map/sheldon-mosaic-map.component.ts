@@ -90,6 +90,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   // ── Inputs ─────────────────────────────────────────────────────────────────
   title = input<string>('Mappa');
   infoText = input<string>('');
+  cardId = input<string>('');
   data = input<FeatureCollection<Polygon> | null>(null);
   auxReduce = input<AuxReduceOption[]>([]);
   municipalityKey = input<string>('comune');

@@ -13,6 +13,7 @@
             <sheldon-chart-bars
               [title]="setting.title"
               [infoText]="setting.info ?? ''"
+              [cardId]="setting.id"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? null"
@@ -29,6 +30,7 @@
             <sheldon-chart-h-bars
               [title]="setting.title"
               [infoText]="setting.info ?? ''"
+              [cardId]="setting.id"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? null"
@@ -46,6 +48,7 @@
             <sheldon-kpi
               [title]="setting.title"
               [infoText]="setting.info ?? ''"
+              [cardId]="setting.id"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? ''"
@@ -62,6 +65,7 @@
             <sheldon-list
               [title]="setting.title"
               [infoText]="setting.info ?? ''"
+              [cardId]="setting.id"
               [filterBy]="setting.filterBy ?? ''"
               [masterField]="setting.masterField ?? null"
               [data]="$any(dataMap()[setting.data])"
@@ -73,6 +77,7 @@
             <sheldon-segmented-chart
               [title]="setting.title"
               [infoText]="setting.info ?? ''"
+              [cardId]="setting.id"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? null"
@@ -87,6 +92,7 @@
             <sheldon-chart-treemap
               [title]="setting.title"
               [infoText]="setting.info ?? ''"
+              [cardId]="setting.id"
               [filterBy]="setting.filterBy ?? null"
               [masterField]="setting.masterField ?? null"
               [campo]="setting.campo ?? 'valore'"
@@ -101,6 +107,7 @@
             <sheldon-mosaic-map
               [title]="setting.title"
               [infoText]="setting.info ?? ''"
+              [cardId]="setting.id"
               [data]="$any(dataMap()[setting.data])"
               [auxReduce]="$any(setting.auxReduce ?? [])"
               [municipalityKey]="setting.municipalityKey ?? 'name'"

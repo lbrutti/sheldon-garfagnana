@@ -35,7 +35,7 @@
   .sheldon-card-buttons {
     display: flex;
     align-items: center;
-    width: 80px;
+    width: 120px;
 
     button {
       width: var(--mat-icon-button-width, 40px);
@@ -94,5 +94,46 @@
       cursor: pointer;
       padding: 4px 12px;
     }
+  }
+
+  .sheldon-card-close-button {
+    border: none;
+    color: white;
+    cursor: pointer;
+    width: var(--mat-icon-button-width, 40px);
+    height: var(--mat-icon-button-heigth, 20px);
+    line-height: 1;
+  }
+
+  // Transient "link copied" toast.
+  .sheldon-card-copied {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    z-index: 1001;
+    background: black;
+    color: white;
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+}
+
+// Fullscreen deep-link view — the card fills the viewport above everything else.
+:host.fullscreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: 100vw !important;
+  height: 100vh !important;
+  background: white;
+  overflow: auto;
+
+  .sheldon-card-body {
+    flex: 1 1 auto;
+  }
+
+  .sheldon-card-content {
+    flex: 1 1 auto;
+    height: auto;
   }
 }

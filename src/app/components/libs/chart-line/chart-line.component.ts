@@ -31,6 +31,7 @@ export default class ChartLineComponent {
 
   title = input<string>('Numero di progetti per comune');
   infoText = input<string>('');
+  cardId = input<string>('');
   filterBy = input<string>('nome_comune');
   filtersFields = computed<string[]>((): string[] => {
     return this.filterBy().split('|');

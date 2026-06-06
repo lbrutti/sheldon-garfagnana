@@ -19,7 +19,24 @@
           (click)="openInfo()">
           <mat-icon aria-hidden="false" aria-label="info" svgIcon="sheldon-info"></mat-icon>
         </button>
+        <button matIconButton
+                [style.background]="endColor()"
+                class="sheldon-card-share-button"
+                (click)="shareCard()">
+          <mat-icon aria-hidden="false" aria-label="share" svgIcon="sheldon-share"></mat-icon>
+        </button>
+        @if (isFullscreen()) {
+          <button class="sheldon-card-close-button"
+                  [style.background]="startColor()"
+                  aria-label="close"
+                  (click)="exitFullscreen()">
+            <span aria-hidden="true">✕</span>
+          </button>
+        }
       </div>
+    }
+    @if (linkCopied()) {
+      <div class="sheldon-card-copied">Link copiato negli appunti</div>
     }
   </div>
 

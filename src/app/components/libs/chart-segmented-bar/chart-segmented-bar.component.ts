@@ -47,6 +47,7 @@ export interface SegmentInterface {
 export default class ChartSegmentedBarComponent implements OnInit {
   readonly title = input<string>('Popolazione');
   readonly infoText = input<string>('');
+  readonly cardId = input<string>('');
 
   readonly hoveredIndex = signal<number | null>(null);
   labelField = input<string>('nome');

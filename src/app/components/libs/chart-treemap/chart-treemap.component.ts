@@ -48,6 +48,7 @@ export default class ChartTreemapComponent implements OnInit {
 
   title = input<string>('Treemap');
   infoText = input<string>('');
+  cardId = input<string>('');
   data = input<TreemapDataInterface[]>([]);
   groups = input<(keyof TreemapDataInterface & string)[]>(['comune']);
 
