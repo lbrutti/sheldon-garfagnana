@@ -5,11 +5,11 @@
     </div>
     @if (showButtons()) {
       <div class="sheldon-card-buttons">
-        <button matIconButton [style.background]="startColor() ">
-          <mat-icon aria-hidden="false" aria-label="info" svgIcon="sheldon-info"></mat-icon>
-        </button>
         <button matIconButton [style.background]="endColor() ">
           <mat-icon aria-hidden="false" aria-label="download" svgIcon="sheldon-download"></mat-icon>
+        </button>
+        <button matIconButton [style.background]="startColor() ">
+          <mat-icon aria-hidden="false" aria-label="info" svgIcon="sheldon-info"></mat-icon>
         </button>
       </div>
     }
