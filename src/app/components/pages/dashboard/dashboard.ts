@@ -282,7 +282,7 @@ export default class Dashboard implements OnInit {
     fetch('settings/dashboardSettings.json')
       .then(r => r.json())
       //random tiles
-      .then((s: WidgetSetting[]) => this.settings.set(shuffleArray(s)));
+      .then((s: WidgetSetting[]) => this.settings.set(s));
     this.apiService.getInterventi();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;

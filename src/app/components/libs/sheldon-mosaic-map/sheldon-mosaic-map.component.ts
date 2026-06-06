@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   effect,
+  inject,
   input,
   OnInit,
   output,
@@ -19,6 +20,7 @@ import {AuxReduceOption, FilterOptionInterface} from '../../../interfaces';
 import {EventData} from '@angular/cdk/testing';
 import {MultiplesPipe} from '../../../pipes';
 import {getRandomGradient, normalizzaStringa, resolveColorVariable} from '../../../utils';
+import {ThemeService} from '../../../services/theme.service';
 
 const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
@@ -99,6 +101,9 @@ export default class SheldonMosaicMapComponent implements OnInit {
   // ── Public constants for template ─────────────────────────────────────────
   readonly mapStyle = MAP_STYLE;
 
+  // Track the active theme so the choropleth shades re-read their CSS variables on change.
+  private readonly theme = inject(ThemeService).theme;
+
   // ── State ──────────────────────────────────────────────────────────────────
   mapReady = signal(false);
   activeAuxReduce = signal<AuxReduceOption | null>(null);
@@ -163,6 +168,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   /** 4 tints of the categoria start color: ranges 0 / <2 / <4 / >=4. */
   colorShades = computed<[string, string, string, string]>(() => {
+    this.theme();
     const categoria = normalizzaStringa(this.categoria());
     let baseColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
     if (baseColor === '#000') {

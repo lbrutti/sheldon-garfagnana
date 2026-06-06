@@ -1,11 +1,6 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
-
-export type Theme = 'light' | 'dark' | 'system';
-
-const STORAGE_KEY = 'sheldon-theme';
-
-const BW_CLASS = 'sheldon-theme-bw';
+import {Theme, ThemeService} from '../../../services/theme.service';
 
 @Component({
   selector: 'sheldon-theme-switch',
@@ -15,29 +10,20 @@ const BW_CLASS = 'sheldon-theme-bw';
   styleUrl: './theme-switch.component.scss',
 })
 export class ThemeSwitchComponent implements OnInit {
+  private readonly themeService = inject(ThemeService);
+
   readonly options: {value: Theme; icon: string}[] = [
     {value: 'light', icon: 'assets/svg/light-theme.svg'},
     {value: 'system', icon: 'assets/svg/bw-theme.svg'},
   ];
 
-  theme = signal<Theme>('light');
+  readonly theme = this.themeService.theme;
 
   ngOnInit(): void {
-    const stored = localStorage.getItem(STORAGE_KEY) as Theme | null;
-    const initial: Theme = stored ?? 'light';
-    this.theme.set(initial);
-    this.apply(initial);
+    this.themeService.init();
   }
 
   onChange(event: MatButtonToggleChange): void {
-    const t = event.value as Theme;
-    this.theme.set(t);
-    localStorage.setItem(STORAGE_KEY, t);
-    this.apply(t);
-  }
-
-  private apply(t: Theme): void {
-    document.body.classList.toggle(BW_CLASS, t === 'system');
-    document.body.style.colorScheme = t === 'dark' ? 'dark' : 'light';
+    this.themeService.set(event.value as Theme);
   }
 }
