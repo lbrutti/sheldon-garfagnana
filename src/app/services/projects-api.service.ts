@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {DataInterface, InterventoInterface} from '../interfaces';
 import {csvToJson} from '../adapters';
 import {FeatureCollection, Geometry, Point, Polygon} from 'geojson';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +26,7 @@ export class ProjectsApiService {
   }
 
   getPopolazione() {
-    const SHEET_ID = "1v6tjQ-JyeN9MY01-oVRDcqzqbAyFIDmUozo1uV2_trY";
-    const GID = "691841134";
-    const url = this.getGVizURL(SHEET_ID, GID, "SELECT * WHERE D = 'nati'");
+    const url = this.getGVizURL(environment.sheets.spreadsheetId, environment.sheets.popolazioneGid, "SELECT * WHERE D = 'nati'");
     this.httpClient.get(url, {
       responseType:
         'text'
@@ -38,9 +37,7 @@ export class ProjectsApiService {
   }
 
   getInterventi() {
-    const SHEET_ID = "1v6tjQ-JyeN9MY01-oVRDcqzqbAyFIDmUozo1uV2_trY";
-    const GID = "807550168";
-    const url = this.getGVizURL(SHEET_ID, GID, "SELECT *");
+    const url = this.getGVizURL(environment.sheets.spreadsheetId, environment.sheets.interventiGid, "SELECT *");
     this.httpClient.get(url, {
       responseType:
         'text'
@@ -52,7 +49,7 @@ export class ProjectsApiService {
   }
 
   getComuniPoints() {
-    this.httpClient.get('data/comuni.points.json', {
+    this.httpClient.get(environment.data.comuniPoints, {
       responseType:
         'json'
     }).subscribe((res: any): void => {
@@ -63,7 +60,7 @@ export class ProjectsApiService {
   }
 
   getComuniPolygons() {
-    this.httpClient.get('data/comuni.polygons.grid.json', {
+    this.httpClient.get(environment.data.comuniPolygons, {
       responseType:
         'json'
     }).subscribe((res: any): void => {

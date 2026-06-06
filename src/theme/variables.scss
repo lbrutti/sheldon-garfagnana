@@ -1,6 +1,8 @@
 // Gradient variables on :root so getComputedStyle(document.documentElement) resolves them.
 // Override at :root level in a global theme to customise.
 :root {
+  --mat-sys-primary: transparent !important;
+  --mat-tab-inactive-label-text-color: white;
 
   //  VARIABILI PER GRADIENTI CATEGORIE
   --color-gradient-ambiente-start: #F4B80D;

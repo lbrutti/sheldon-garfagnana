@@ -1,5 +1,29 @@
 :host {
   ::ng-deep .mat-mdc-tab-link-container {
     flex-grow: unset !important;
+    height: 100%;
+  }
+  
+
+  .mdc-tab-indicator--active {
+    background-color: white !important;
+    color: black !important;
+  }
+
+  nav {
+    height: 24px !important;
+    display: flex;
+    flex-direction: row;
+
+    ::ng-deep.mat-mdc-tab-list {
+      display: flex;
+    }
+
+    a {
+      text-transform: uppercase;
+      height: 100%;
+      margin-top: auto;
+      margin-bottom: auto;
+    }
   }
 }
