@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/card/card.component.scss"],
+  "sourcesContent": ["//@use \"@angular/material\" as mat;\n\n:host {\n  display: flex;\n  flex-direction: column;\n  width: 100%;\n  height: fit-content;\n  border: solid 1px black;\n  padding: 0;\n  box-sizing: border-box;\n  justify-content: space-between;\n\n  .sheldon-card-title {\n    font-weight: 700;\n    //font-size: 12px;\n    line-height: 128%;\n    letter-spacing: 0;\n    color: white;\n    background: black;\n  }\n\n  .sheldon-card-subheader {\n    min-height: 49px !important;\n    align-items: baseline;\n    display: flex;\n    justify-content: space-between;\n    flex-direction: row;\n\n    // mat-button-toggle-group projected into [subheader] inherits the same height token.\n    --mat-button-toggle-height: var(--filter-control-height, 18px) !important;\n  }\n\n  .sheldon-card-buttons {\n    display: flex;\n    align-items: center;\n    width: 80px;\n\n    button {\n      width: var(--mat-icon-button-width, 40px);\n      height: var(--mat-icon-button-heigth, 20px);\n    }\n  }\n\n  //.sheldon-card-content{\n  //  height: 100%;\n  //}\n}\n"],
+  "mappings": "AAEA,MACE,QAAA,KACA,eAAA,OACA,MAAA,KACA,OAAA,YACA,OAAA,MAAA,IAAA,MALF,QAME,EACA,WAAA,WACA,gBAAA,cAEA,MAAA,CAAA,mBACE,YAAA,IAEA,YAAA,KACA,eAAA,EACA,MAAA,KACA,WAAA,KAGF,MAAA,CAAA,uBACE,WAAA,eACA,YAAA,SACA,QAAA,KACA,gBAAA,cACA,eAAA,IAGA,4BAAA,IAAA,uBAAA,EAAA,iBAGF,MAAA,CAAA,qBACE,QAAA,KACA,YAAA,OACA,MAAA,KAEA,MAAA,CALF,qBAKE,OACE,MAAA,IAAA,uBAAA,EAAA,MACA,OAAA,IAAA,wBAAA,EAAA",
+  "names": []
+}
