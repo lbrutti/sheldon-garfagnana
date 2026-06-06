@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/reduce-toggle/reduce-toggle.scss"],
+  "sourcesContent": [":host {\n  margin-left: auto;\n  --mat-button-toggle-height: var(--filter-control-height, 18px);\n  --mat-button-toggle-selected-state-text-color: white;\n  --mat-button-toggle-selected-state-background-color: black;\n\n}\n"],
+  "mappings": "AAAA,MACE,YAAA,KACA,4BAAA,IAAA,uBAAA,EAAA,MACA,+CAAA,MACA,qDAAA",
+  "names": []
+}
