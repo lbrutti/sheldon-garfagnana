@@ -51,6 +51,8 @@
               [limit]="setting.limit ?? 0"
               [udm]="setting.udm ?? null"
               [data]="$any(dataMap()[setting.data])"
+              [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+
             />
           }
           @case ('sheldon-list') {
@@ -59,6 +61,8 @@
               [filterBy]="setting.filterBy ?? ''"
               [masterField]="setting.masterField ?? null"
               [data]="$any(dataMap()[setting.data])"
+              [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+
             />
           }
           @case ('sheldon-segmented-chart') {

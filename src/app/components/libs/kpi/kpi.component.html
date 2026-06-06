@@ -1,4 +1,5 @@
-<sheldon-card style="height: 183px">
+<sheldon-card style="height: 183px"
+              [categoria]="categoria()">
   <ng-container title>{{ title() }}</ng-container>
   <ng-container subheader>
     <div class="sheldon-kpi-filter">
@@ -9,10 +10,10 @@
         (filterChange)="onFilterChange($event)"/>
     </div>
   </ng-container>
-    <ng-container content>
+  <ng-container content>
     <div class="sheldon-kpi-content" style="height: 55px">
       <div class="kpi-value-wrapper" sheldonFitText [minFontSize]="minFontSize()">
-          <span #counter ></span> <span>{{ udm() }}</span>
+        <span #counter></span> <span>{{ udm() }}</span>
       </div>
     </div>
   </ng-container>

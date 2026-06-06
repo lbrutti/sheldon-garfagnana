@@ -31,6 +31,12 @@
   .sheldon-card-buttons {
     display: flex;
     align-items: center;
+    width: 80px;
+
+    button {
+      width: var(--mat-icon-button-width, 40px);
+      height: var(--mat-icon-button-heigth, 20px);
+    }
   }
 
   //.sheldon-card-content{

@@ -27,6 +27,10 @@
   --min-bar-height: 38px;
 
   --mat-list-list-item-one-line-container-height: 30px;
+
+  --mat-icon-button-icon-size: 100%;
+  --mat-icon-button-state-layer-size: 25px;
+
 }
 
 // Black-and-white-only theme: all category gradients collapse to grayscale
@@ -52,3 +56,5 @@ body.sheldon-theme-bw {
   --color-gradient-societa-start: #000;
   --color-gradient-societa-end: #000;
 }
+
+

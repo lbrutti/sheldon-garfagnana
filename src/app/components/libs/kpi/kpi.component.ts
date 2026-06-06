@@ -26,7 +26,7 @@ export default class KpiComponent {
 
   title = input<string>('Numero di progetti per comune');
   minFontSize = input<number>(15);
-
+  categoria = input<string>('categoria');
   filterBy = input<string>('');
   filtersFields = computed<string[]>(() => this.filterBy().split('|'));
   private appliedFilters = signal<FilterOptionInterface[]>([]);

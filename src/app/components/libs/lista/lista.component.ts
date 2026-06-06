@@ -30,6 +30,7 @@ import {MultiplesPipe} from '../../../pipes';
 export default class ListaComponent {
 
   title = input<string>('Numero di progetti per comune');
+  categoria = input<string>('sociale');
   filterBy = input<string>('');
   filtersFields = computed<string[]>(() => this.filterBy().split('|'));
   private appliedFilters = signal<FilterOptionInterface[]>([]);
