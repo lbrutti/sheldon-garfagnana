@@ -1,4 +1,4 @@
-<sheldon-card>
+<sheldon-card style="height: 471px">
   <ng-container title>{{ this.title() }}</ng-container>
   <ng-container subheader>
 
@@ -13,7 +13,7 @@
 
     <!--  AUX REDUCE SWITCHES -->
     @if (this.auxReduce().length) {
-      <sheldon-reduce-toggle [options]="this.auxReduce()" (reduceChange)="onReduceChange($event)" />
+      <sheldon-reduce-toggle [options]="this.auxReduce()" (reduceChange)="onReduceChange($event)"/>
     }
 
   </ng-container>
