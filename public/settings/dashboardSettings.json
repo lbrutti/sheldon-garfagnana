@@ -129,10 +129,12 @@
     "masterField": "comune",
     "auxReduce": [
       {
+        "label": "N",
         "campo": "nome",
         "reduceBy": "count"
       },
       {
+        "label": "€ TOT",
         "campo": "valore",
         "reduceBy": "sum"
       }
@@ -166,12 +168,14 @@
     ],
     "auxReduce": [
       {
-        "campo": "valore",
-        "reduceBy": "sum"
-      },
-      {
+        "label": "N",
         "campo": "progetti",
         "reduceBy": "count"
+      },
+      {
+        "label": "€ TOT",
+        "campo": "valore",
+        "reduceBy": "sum"
       }
     ],
     "data": "interventiPerTipologia"
@@ -190,12 +194,14 @@
     ],
     "auxReduce": [
       {
-        "campo": "valore",
-        "reduceBy": "sum"
-      },
-      {
+        "label": "N",
         "campo": "progetti",
         "reduceBy": "count"
+      },
+      {
+        "label": "€ TOT",
+        "campo": "valore",
+        "reduceBy": "sum"
       }
     ],
     "data": "interventiPerCategoria"
@@ -214,12 +220,14 @@
     ],
     "auxReduce": [
       {
-        "campo": "valore",
-        "reduceBy": "sum"
-      },
-      {
+        "label": "N",
         "campo": "progetti",
         "reduceBy": "count"
+      },
+      {
+        "label": "€ TOT",
+        "campo": "valore",
+        "reduceBy": "sum"
       }
     ],
     "data": "interventiPerTarget"
@@ -238,12 +246,14 @@
     ],
     "auxReduce": [
       {
-        "campo": "valore",
-        "reduceBy": "sum"
-      },
-      {
+        "label": "N",
         "campo": "progetti",
         "reduceBy": "count"
+      },
+      {
+        "label": "€ TOT",
+        "campo": "valore",
+        "reduceBy": "sum"
       }
     ],
     "data": "interventiPerTema"
