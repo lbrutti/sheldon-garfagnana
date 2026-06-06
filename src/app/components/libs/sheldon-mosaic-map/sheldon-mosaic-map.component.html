@@ -1,5 +1,6 @@
 <sheldon-card
-  [categoria]="categoria()">
+  [categoria]="categoria()"
+  [infoText]="infoText()">
   <ng-container title>{{ title() }}</ng-container>
   <ng-container subheader>
     <!-- Controls row -->
@@ -24,8 +25,9 @@
     <!-- Map wrapper -->
     <div class="map-wrapper">
       <mgl-map
-        [cooperativeGestures]="true"
         [mapStyle]="mapStyle"
+        [canvasContextAttributes]="{preserveDrawingBuffer: true}"
+        [cooperativeGestures]="true"
         [cancelPendingTileRequestsWhileZooming]="true"
         [maxZoom]="14"
         (mapLoad)="onMapLoad($event)"

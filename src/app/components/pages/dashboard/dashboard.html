@@ -12,6 +12,7 @@
           @case ('sheldon-chart-bars') {
             <sheldon-chart-bars
               [title]="setting.title"
+              [infoText]="setting.info ?? ''"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? null"
@@ -27,6 +28,7 @@
           @case ('sheldon-chart-h-bars') {
             <sheldon-chart-h-bars
               [title]="setting.title"
+              [infoText]="setting.info ?? ''"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? null"
@@ -43,6 +45,7 @@
           @case ('sheldon-kpi') {
             <sheldon-kpi
               [title]="setting.title"
+              [infoText]="setting.info ?? ''"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? ''"
@@ -58,6 +61,7 @@
           @case ('sheldon-list') {
             <sheldon-list
               [title]="setting.title"
+              [infoText]="setting.info ?? ''"
               [filterBy]="setting.filterBy ?? ''"
               [masterField]="setting.masterField ?? null"
               [data]="$any(dataMap()[setting.data])"
@@ -68,6 +72,7 @@
           @case ('sheldon-segmented-chart') {
             <sheldon-segmented-chart
               [title]="setting.title"
+              [infoText]="setting.info ?? ''"
               [groupBy]="$any(setting.groupBy)"
               [reduceBy]="setting.reduceBy ?? 'count'"
               [filterBy]="setting.filterBy ?? null"
@@ -81,6 +86,7 @@
           @case ('sheldon-chart-treemap') {
             <sheldon-chart-treemap
               [title]="setting.title"
+              [infoText]="setting.info ?? ''"
               [filterBy]="setting.filterBy ?? null"
               [masterField]="setting.masterField ?? null"
               [campo]="setting.campo ?? 'valore'"
@@ -94,6 +100,7 @@
           @case ('sheldon-mosaic-map') {
             <sheldon-mosaic-map
               [title]="setting.title"
+              [infoText]="setting.info ?? ''"
               [data]="$any(dataMap()[setting.data])"
               [auxReduce]="$any(setting.auxReduce ?? [])"
               [municipalityKey]="setting.municipalityKey ?? 'name'"

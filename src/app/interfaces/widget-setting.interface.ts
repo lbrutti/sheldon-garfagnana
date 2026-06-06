@@ -36,4 +36,7 @@ export default interface WidgetSetting {
   //descrizione card
   desc?: string,
   url?: string,
+
+  //testo mostrato nell'overlay info della card
+  info?: string,
 }

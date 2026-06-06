@@ -41,6 +41,7 @@ export interface BarItem {
 export default class ChartBarComponent implements OnInit {
 
   title = input<string>('Numero di progetti per comune');
+  infoText = input<string>('');
 
   showSorting = input<boolean>(true);
   sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');

@@ -1,26 +1,47 @@
-<div>
+<div class="sheldon-card-root">
   <div class="sheldon-card-header" [style]="{display:'flex', justifyContent:'space-between', flexDirection:'row'}">
     <div class="sheldon-card-title">
       <ng-content select="[title]"></ng-content>
     </div>
     @if (showButtons()) {
       <div class="sheldon-card-buttons">
-        <button matIconButton [style.background]="endColor() ">
+        <button matIconButton
+                [style.background]="endColor()"
+                class="sheldon-card-download-button"
+                [disabled]="exporting()"
+                (click)="exportCard()">
           <mat-icon aria-hidden="false" aria-label="download" svgIcon="sheldon-download"></mat-icon>
         </button>
-        <button matIconButton [style.background]="startColor() ">
+        <button
+          matIconButton
+          [style.background]="startColor()"
+          class="sheldon-card-info-button"
+          (click)="openInfo()">
           <mat-icon aria-hidden="false" aria-label="info" svgIcon="sheldon-info"></mat-icon>
         </button>
       </div>
     }
-
   </div>
 
-  <div class="sheldon-card-subheader">
-    <ng-content select="[subheader]"></ng-content>
-  </div>
+  <div class="sheldon-card-body">
+    <div class="sheldon-card-subheader">
+      <ng-content select="[subheader]"></ng-content>
+    </div>
 
-  <div class="sheldon-card-content">
-    <ng-content select="[content]"></ng-content>
+    <div class="sheldon-card-content">
+      <ng-content select="[content]"></ng-content>
+    </div>
+
+    <div class="sheldon-card-info" [class.is-open]="showInfo()">
+      <div class="sheldon-card-info-text">
+        @if (infoText()) {
+          {{ infoText() }}
+        }
+        <ng-content select="[info]"></ng-content>
+      </div>
+      <button [style.background]="startColor()" class="sheldon-card-info-button-close" (click)="closeInfo()">
+        Chiudi
+      </button>
+    </div>
   </div>
 </div>

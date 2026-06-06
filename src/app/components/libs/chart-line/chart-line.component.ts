@@ -30,6 +30,7 @@ export default class ChartLineComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'line'> | undefined;
 
   title = input<string>('Numero di progetti per comune');
+  infoText = input<string>('');
   filterBy = input<string>('nome_comune');
   filtersFields = computed<string[]>((): string[] => {
     return this.filterBy().split('|');

@@ -25,6 +25,7 @@ export default class KpiComponent {
   @ViewChild('counter') counterEl!: ElementRef<HTMLElement>;
 
   title = input<string>('Numero di progetti per comune');
+  infoText = input<string>('');
   minFontSize = input<number>(15);
   categoria = input<string>('categoria');
   filterBy = input<string>('');
