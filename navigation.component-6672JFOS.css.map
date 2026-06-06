@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/navigation/navigation.component.scss"],
+  "sourcesContent": [":host {\n  ::ng-deep .mat-mdc-tab-link-container {\n    flex-grow: unset !important;\n    height: 100%;\n  }\n  \n\n  .mdc-tab-indicator--active {\n    background-color: white !important;\n    color: black !important;\n  }\n\n  nav {\n    height: 24px !important;\n    display: flex;\n    flex-direction: row;\n\n    ::ng-deep.mat-mdc-tab-list {\n      display: flex;\n    }\n\n    a {\n      text-transform: uppercase;\n      height: 100%;\n      margin-top: auto;\n      margin-bottom: auto;\n    }\n  }\n}\n"],
+  "mappings": "AACE,MAAA,UAAA,CAAA,2BACE,UAAA,gBACA,OAAA,KAIF,MAAA,CAAA,0BACE,iBAAA,eACA,MAAA,eAGF,MAAA,IACE,OAAA,eACA,QAAA,KACA,eAAA,IAEA,MAAA,IAAA,UAAA,CAAA,iBACE,QAAA,KAGF,MAAA,IAAA,EACE,eAAA,UACA,OAAA,KACA,WAAA,KACA,cAAA",
+  "names": []
+}
