@@ -35,7 +35,7 @@
 
 // Black-and-white-only theme: all category gradients collapse to grayscale
 body.sheldon-theme-bw {
-  --mat-sys-surface: #FFF;
+  --mat-button-toggle-divider-color: transparent;
 
   --color-gradient-ambiente-start: #000;
   --color-gradient-ambiente-end: #000;

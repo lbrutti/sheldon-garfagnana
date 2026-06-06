@@ -59,7 +59,7 @@ $control-height: 25px;
 
     // mat-button-toggle
     mat-button-toggle-group {
-      border: 0 !important;
+      border: none !important;
     }
 
 
@@ -68,7 +68,6 @@ $control-height: 25px;
         margin-right: 4px;
       }
 
-      border: 1px solid black !important;
       color: white;
       background: black;
 
@@ -125,7 +124,6 @@ body.sheldon-theme-bw {
 
     & {
       mat-button-toggle {
-        border: 1px solid black !important;
         color: black !important;
         background: white !important;
       }
