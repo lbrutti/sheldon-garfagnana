@@ -37,7 +37,6 @@ export default class Dashboard implements OnInit {
   });
   protected categoriaCorrente = computed<string>(() => {
     const cat = this.filters().find(f => f.key === 'categoria')?.value ?? '';
-    console.log(cat);
     return cat;
   });
   featureComuni = signal<FeatureCollection<Polygon>>({type: "FeatureCollection", features: []});

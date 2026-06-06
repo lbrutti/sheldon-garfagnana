@@ -2,6 +2,7 @@
   border: none;
   display: inline-flex;
   align-items: center;
+  margin-bottom: 4px;
 
   * {
     border: none;
@@ -22,11 +23,7 @@
       padding: 0 !important;
       margin: 0 !important;
       gap: 0 !important;
-
-      &:not(:last-child) {
-        //  border-right: 1px solid currentColor;
-      }
-
+      
       .mat-button-toggle-button {
         height: 25px;
         line-height: 25px;

@@ -62,8 +62,15 @@ $control-height: 25px;
       border: 0 !important;
     }
 
+
     mat-button-toggle {
+      &:not(:last-child) {
+        margin-right: 4px;
+      }
+
       border: 1px solid black !important;
+      color: white;
+      background: black;
 
       .mat-button-toggle-button {
         height: $control-height;
@@ -76,5 +83,59 @@ $control-height: 25px;
         font-size: 13px;
       }
     }
+
+    .mat-button-toggle-checked {
+
+      &[data-categoria=ambiente] {
+        background: linear-gradient(to left, var(--color-gradient-ambiente-start), var(--color-gradient-ambiente-end));
+      }
+
+      &[data-categoria=cultura] {
+        background: linear-gradient(to left, var(--color-gradient-cultura-start), var(--color-gradient-cultura-end));
+      }
+
+      &[data-categoria=mobilita] {
+        background: linear-gradient(to left, var(--color-gradient-mobilita-start), var(--color-gradient-mobilita-end));
+      }
+
+      &[data-categoria=sicurezza] {
+        background: linear-gradient(to left, var(--color-gradient-sicurezza-start), var(--color-gradient-sicurezza-end));
+      }
+
+      &[data-categoria=economia] {
+        background: linear-gradient(to left, var(--color-gradient-economia-start), var(--color-gradient-economia-end));
+      }
+
+      &[data-categoria=sociale] {
+        background: linear-gradient(to left, var(--color-gradient-sociale-start), var(--color-gradient-sociale-end));
+      }
+
+      &[data-categoria=societa] {
+        background: linear-gradient(to left, var(--color-gradient-societa-start), var(--color-gradient-societa-end));
+      }
+    }
+
   }
+}
+
+body.sheldon-theme-bw {
+
+  :host {
+
+
+    & {
+      mat-button-toggle {
+        border: 1px solid black !important;
+        color: black !important;
+        background: white !important;
+      }
+
+      .mat-button-toggle-checked {
+        color: white !important;
+        background: black !important;
+      }
+
+    }
+  }
+
 }

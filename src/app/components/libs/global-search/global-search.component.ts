@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {components} from '../index';
 import ThemeSwitchComponent from '../theme-switch/theme-switch.component';
+import {normalizzaStringa} from '../../../utils';
 
 @Component({
   selector: 'sheldon-global-search',
@@ -48,7 +49,7 @@ export default class GlobalSearchComponent {
 
   chips: Signal<FilterOptionInterface[]> = computed(() =>
     Array.from(new Set(this.interventi().flatMap(i => i.categoria.split('|')).map(c => c.trim())))
-      .map(c => ({value: c.trim(), key: 'categoria'}))
+      .map(c => ({value: c.trim(), key: 'categoria', label:c.trim()}))
       .sort((a, b) => a.value.localeCompare(b.value)),
   );
 
@@ -119,4 +120,6 @@ export default class GlobalSearchComponent {
     this.emitFilter();
     this.updateQueryParams();
   }
+
+  protected readonly normalizzaStringa = normalizzaStringa;
 }
