@@ -1,0 +1,17 @@
+@if (visible()) {
+  <div
+    class="chart-tooltip"
+    [style.left.px]="x() + offsetX()"
+    [style.top.px]="y() + offsetY()">
+    <sheldon-two-lines-chart-label
+      [text]="text()"
+      [sub]="sub()"/>
+    @if (infoLines().length) {
+      <div class="chart-tooltip-info">
+        @for (line of infoLines(); track $index) {
+          <div class="chart-tooltip-info-line">{{ line }}</div>
+        }
+      </div>
+    }
+  </div>
+}

@@ -17,6 +17,7 @@ import {MultiplesPipe} from '../../../pipes';
 import {DecimalPipe} from '@angular/common';
 import {components} from '../index';
 import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
+import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 import {TranslocoModule} from '@jsverse/transloco';
 
 type ReduceMode = 'sum' | 'count' | 'max';
@@ -40,6 +41,7 @@ export interface TreemapTile {
     DynamicFilterComponent,
     ReduceToggleComponent,
     ChartTwoLinesLabelComponent,
+    ChartTooltipComponent,
     TranslocoModule
   ],
   providers: [DecimalPipe, MultiplesPipe],
@@ -139,6 +141,23 @@ export default class ChartTreemapComponent implements OnInit {
     }));
   });
   categoria = input<string>('');
+
+  // ── Hover tooltip ────────────────────────────────────────────────────────────
+  protected hoveredTile = signal<TreemapTile | null>(null);
+  protected pointer = signal<{ x: number; y: number }>({x: 0, y: 0});
+
+  protected onTileEnter(tile: TreemapTile, event: MouseEvent) {
+    this.hoveredTile.set(tile);
+    this.pointer.set({x: event.clientX, y: event.clientY});
+  }
+
+  protected onTileMove(event: MouseEvent) {
+    this.pointer.set({x: event.clientX, y: event.clientY});
+  }
+
+  protected onTileLeave() {
+    this.hoveredTile.set(null);
+  }
 
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value as ReduceByDeclaration);
