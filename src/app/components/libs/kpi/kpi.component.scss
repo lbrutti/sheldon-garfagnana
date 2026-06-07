@@ -3,13 +3,38 @@
   width: 100%;
   height: 100%;
 
-  .sheldon-kpi-content{
+  // Make the card's body stretch so the value area fills the leftover height of
+  // the fixed-height card. Without this the content box collapses to its own
+  // content and the fit-text value can only grow to a tiny band — especially
+  // once the dynamic filter occupies the subheader. With the body flexed, the
+  // value area keeps (almost) all the card height whether or not the filter is
+  // shown, so even short numbers (e.g. "25") scale up to fill it.
+  ::ng-deep .sheldon-card-root {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  ::ng-deep .sheldon-card-body {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  ::ng-deep .sheldon-card-content {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .sheldon-kpi-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
   }
-  .kpi-value-wrapper{
-    margin-top:auto;
+
+  .kpi-value-wrapper {
+    margin-top: auto;
   }
 }
