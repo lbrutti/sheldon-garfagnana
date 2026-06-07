@@ -73,7 +73,10 @@ export default class ChartTreemapComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.currentReduce.set({campo: this.campo(), reduceBy: this.reduceBy()});
+    this.currentReduce.set({
+      campo: this.auxReduce()[0].campo ?? this.campo(),
+      reduceBy: this.auxReduce()[0].reduceBy ?? this.reduceBy()
+    });
   }
 
   protected filteredData = computed<TreemapDataInterface[]>(() => {
