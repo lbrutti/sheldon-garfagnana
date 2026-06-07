@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/chart-treemap/chart-treemap.component.scss"],
+  "sourcesContent": ["\n:host {\n  display: block;\n  width: 100%;\n\n  .treemap-wrapper {\n    position: relative;\n    width: 100%;\n    height: 400px;\n  }\n\n  .treemap-tile {\n    position: absolute;\n    box-sizing: border-box;\n    overflow: hidden;\n    cursor: default;\n  }\n\n  sheldon-two-lines-chart-label {\n    text-overflow: ellipsis;\n    padding: 0;\n    padding-right: 4px;\n    margin: 0;\n  }\n}\n"],
+  "mappings": "AACA,MACE,QAAA,MACA,MAAA,KAEA,MAAA,CAAA,gBACE,SAAA,SACA,MAAA,KACA,OAAA,MAGF,MAAA,CAAA,aACE,SAAA,SACA,WAAA,WACA,SAAA,OACA,OAAA,QAGF,MAAA,8BACE,cAAA,SAlBJ,QAmBI,EACA,IADA,IAnBJ,OAqBI",
+  "names": []
+}

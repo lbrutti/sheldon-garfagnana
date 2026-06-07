@@ -12,7 +12,8 @@
     "showSorting": false,
     "limit": 0,
     "data": "interventiPerFine",
-    "tileWidth": 3
+    "tileWidth": 3,
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_avvio",
@@ -27,7 +28,8 @@
     "showSorting": false,
     "limit": 0,
     "data": "interventiPerInizio",
-    "tileWidth": 3
+    "tileWidth": 3,
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_comune",
@@ -53,7 +55,8 @@
     "showSorting": false,
     "limit": 10,
     "data": "interventiPerComune",
-    "tileWidth": 3
+    "tileWidth": 3,
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "comuni_con_interventi",
@@ -64,7 +67,8 @@
     "minFontSize": 120,
     "limit": 0,
     "data": "comuniConInterventi",
-    "tileWidth": 3
+    "tileWidth": 3,
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "importo_finanziato",
@@ -77,7 +81,8 @@
     "reduceBy": "sum",
     "limit": 0,
     "udm": "€",
-    "data": "interventiPerComune"
+    "data": "interventiPerComune",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_finanziati",
@@ -89,7 +94,8 @@
     "groupBy": "comune",
     "reduceBy": "count",
     "limit": 0,
-    "data": "interventiPerComune"
+    "data": "interventiPerComune",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_programmati",
@@ -98,7 +104,8 @@
     "title": "Interventi programmati",
     "filterBy": "comune",
     "masterField": "comune",
-    "data": "interventiPerComune"
+    "data": "interventiPerComune",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_fonte",
@@ -110,7 +117,8 @@
     "defaultSortDirection": "asc",
     "groupBy": "valore",
     "reduceBy": "count",
-    "data": "interventiPerFonte"
+    "data": "interventiPerFonte",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_partecipazione",
@@ -120,7 +128,8 @@
     "defaultSortDirection": "asc",
     "groupBy": "valore",
     "reduceBy": "count",
-    "data": "interventiPerPartecipazione"
+    "data": "interventiPerPartecipazione",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_stato",
@@ -144,7 +153,8 @@
     "defaultSortDirection": "asc",
     "groupBy": "nome",
     "reduceBy": "count",
-    "data": "interventiPerStato"
+    "data": "interventiPerStato",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_unione",
@@ -154,7 +164,8 @@
     "defaultSortDirection": "asc",
     "groupBy": "valore",
     "reduceBy": "count",
-    "data": "interventiPerUnione"
+    "data": "interventiPerUnione",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_tipologia",
@@ -180,7 +191,8 @@
         "reduceBy": "sum"
       }
     ],
-    "data": "interventiPerTipologia"
+    "data": "interventiPerTipologia",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_categoria",
@@ -206,7 +218,8 @@
         "reduceBy": "sum"
       }
     ],
-    "data": "interventiPerCategoria"
+    "data": "interventiPerCategoria",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_target",
@@ -232,7 +245,8 @@
         "reduceBy": "sum"
       }
     ],
-    "data": "interventiPerTarget"
+    "data": "interventiPerTarget",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "interventi_per_tema",
@@ -258,7 +272,8 @@
         "reduceBy": "sum"
       }
     ],
-    "data": "interventiPerTema"
+    "data": "interventiPerTema",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "mappa_dashboard",
@@ -290,7 +305,8 @@
         "property": "approvato",
         "label": "Progetti approvati"
       }
-    ]
+    ],
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "descrizione_garfagnana",
@@ -299,7 +315,8 @@
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
-    "data": "interventoRandomGarfagnana"
+    "data": "interventoRandomGarfagnana",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "descrizione_pistoiese",
@@ -308,7 +325,8 @@
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
-    "data": "interventoRandomPistoiese"
+    "data": "interventoRandomPistoiese",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "descrizione_serchio",
@@ -317,7 +335,8 @@
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
-    "data": "interventoRandomSerchio"
+    "data": "interventoRandomSerchio",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   },
   {
     "id": "descrizione_lunigiana",
@@ -326,6 +345,7 @@
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
-    "data": "interventoRandomLunigiana"
+    "data": "interventoRandomLunigiana",
+    "info": "Lorem ipsum is a dummy or placeholder text commonly used in graphic design, publishing, and web development. It is typically a corrupted version of De finibus bonorum et malorum, a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
   }
 ]

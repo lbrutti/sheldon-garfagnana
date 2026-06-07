@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/chart-tooltip/chart-tooltip.component.scss"],
+  "sourcesContent": [":host {\n  .chart-tooltip {\n    position: fixed;\n    z-index: 1000;\n    pointer-events: none;\n    background: black;\n    color: white;\n    white-space: nowrap;\n    font-size: 18px;\n    padding: 4px 6px;\n    max-width: 196px;\n\n    sheldon-two-lines-chart-label {\n      white-space: wrap !important;\n    }\n\n    .chart-tooltip-info {\n      margin-top: 2px;\n      opacity: 0.8;\n    }\n  }\n}\n"],
+  "mappings": "AACE,MAAA,CAAA,cACE,SAAA,MACA,QAAA,KACA,eAAA,KACA,WAAA,KACA,MAAA,KACA,YAAA,OACA,UAAA,KAPF,QAQE,IAAA,IACA,UAAA,MAEA,MAAA,CAXF,cAWE,8BACE,YAAA,eAGF,MAAA,CAfF,cAeE,CAAA,mBACE,WAAA,IACA,QAAA",
+  "names": []
+}

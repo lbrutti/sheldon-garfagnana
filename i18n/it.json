@@ -1,0 +1,43 @@
+{
+  "card": {
+    "discoverMore": "Scopri di più",
+    "linkCopied": "Link copiato negli appunti",
+    "close": "Chiudi",
+    "copyPrompt": "Copia il link della card:"
+  },
+  "globalSearch": {
+    "searchByUnione": "Cerca per unione",
+    "category": "Categoria",
+    "allCategories": "Tutte le categorie"
+  },
+  "filter": {
+    "search": "Cerca un {field}",
+    "clear": "Cancella"
+  },
+  "list": {
+    "total": "Totale",
+    "itemsCount": "{count, plural, =0 {Nessun comune} one {1 comune} other {# comuni}}"
+  },
+  "segmentedBar": {
+    "populationDistribution": "Distribuzione popolazione: {title}"
+  },
+  "chart": {
+    "projectsByComune": "Numero di progetti per comune",
+    "treemap": "Treemap",
+    "map": "Mappa",
+    "population": "Popolazione"
+  },
+  "cardDescrizione": {
+    "detail": "Dettaglio intervento"
+  },
+  "dataStory": {
+    "populationByComune": "Popolazione per comune",
+    "populationByComuneStacked": "Popolazione per comune (stacked bars)",
+    "populationTrendByComune": "Andamento popolazione per comune",
+    "totalAreaPopulation": "Popolazione totale dell'area"
+  },
+  "pages": {
+    "dataStoriesPlaceholder": "data-stories works!",
+    "mapViewPlaceholder": "map-view works!"
+  }
+}
