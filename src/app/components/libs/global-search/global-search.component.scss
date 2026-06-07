@@ -1,3 +1,5 @@
+@import "../../../../theme/variables.scss";
+
 $control-height: 25px;
 
 :host {
@@ -31,6 +33,7 @@ $control-height: 25px;
     mat-select {
       background: black;
       color: white;
+      width: 318px !important;
 
       .mat-mdc-select-value,
       .mat-mdc-select-value-text,
@@ -56,31 +59,11 @@ $control-height: 25px;
       }
     }
 
-    mat-form-field {
-      .mat-mdc-text-field-wrapper,
-      .mat-mdc-form-field-flex,
-      .mat-mdc-form-field-infix {
-        height: $control-height;
-        min-height: $control-height;
-        padding: 0;
-      }
-
-      .mat-mdc-select-trigger {
-        height: $control-height;
-        line-height: $control-height;
-      }
-
-      .mdc-notched-outline__notch,
-      .mdc-notched-outline__leading,
-      .mdc-notched-outline__trailing {
-        border-top-width: 1px;
-        border-bottom-width: 1px;
-      }
-
-      .mat-mdc-form-field-infix {
-        width: 318px !important;
-      }
+    // categoria select is mobile-only; toggle chips are used on desktop
+    #select-categoria {
+      display: none;
     }
+
 
     // mat-option in the dropdown panel
     .mat-mdc-option {
@@ -117,7 +100,7 @@ $control-height: 25px;
       }
     }
 
-    .mat-button-toggle-checked {
+    .mdc-list-item--selected *, .mat-button-toggle-checked, #select-categoria {
 
       &[data-categoria=ambiente] {
         background: linear-gradient(to left, var(--color-gradient-ambiente-start), var(--color-gradient-ambiente-end));
@@ -172,6 +155,34 @@ $control-height: 25px;
       .mdc-list-item__primary-text {
         color: black;
       }
+    }
+  }
+}
+
+// ── mobile: full-width unione select + categoria select instead of toggles ───
+@media (max-width: $breakpoint-sm) {
+  :host ::ng-deep {
+    form {
+      flex-direction: column;
+      height: auto;
+      min-height: 0;
+      gap: 8px;
+      width: 100vw;
+      margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
+    }
+
+    // hide the desktop toggle chips, show the categoria select
+    mat-button-toggle-group {
+      display: none;
+    }
+
+    #select-categoria {
+      display: block;
+    }
+
+    #select-unione,
+    #select-categoria {
+      width: 100vw !important;
     }
   }
 }

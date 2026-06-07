@@ -59,11 +59,11 @@ button {
     grid-auto-flow: masonry;
   }
 
-  @media (max-width: 959px) {
+  @media (max-width: $breakpoint-md) {
     grid-template-columns: repeat(4, 1fr);
   }
 
-  @media (max-width: 599px) {
+  @media (max-width: $breakpoint-sm) {
     grid-template-columns: 1fr;
   }
 
@@ -83,11 +83,11 @@ button {
     .tile--#{$i} {
       grid-column: span $i;
 
-      @media (max-width: 959px) {
+      @media (max-width: $breakpoint-md) {
         grid-column: span 4;
       }
 
-      @media (max-width: 599px) {
+      @media (max-width: $breakpoint-sm) {
         grid-column: span 1;
       }
     }

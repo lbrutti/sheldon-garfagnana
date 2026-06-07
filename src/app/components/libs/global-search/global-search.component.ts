@@ -37,6 +37,9 @@ export default class GlobalSearchComponent {
   chipSet = new FormControl<FilterOptionInterface[]>([]);
   chipSetSignal = toSignal(this.chipSet.valueChanges);
 
+  // single-value control backing the mobile categoria <mat-select>
+  selectCategoria = new FormControl<FilterOptionInterface | string>('');
+
   interventi = input<InterventoInterface[]>([]);
   filter = output<FilterOptionInterface[]>();
 
@@ -81,7 +84,7 @@ export default class GlobalSearchComponent {
     if (params['categoria']) {
       const match = this.chips().find(c => c.value === params['categoria']);
       if (match) {
-        this.chipSet.setValue([match], {emitEvent: false});
+        this.setCategoria(match);
         hasFilter = true;
       }
     }
@@ -116,9 +119,26 @@ export default class GlobalSearchComponent {
 
   protected handleToggle($event: MatButtonToggleChange) {
     // Enforce single-or-none: deselect all others when a new one is picked
-    this.chipSet.setValue($event.source.checked ? [$event.source.value] : []);
-    this.emitFilter();
-    this.updateQueryParams();
+    this.setCategoria($event.source.checked ? $event.source.value : null);
+    this.applyFilter();
+  }
+
+  protected handleCategoriaSelect() {
+    const value = this.selectCategoria.value;
+    this.setCategoria(value && typeof value === 'object' ? value : null);
+    this.applyFilter();
+  }
+
+  /** data-categoria for the closed categoria select (drives its gradient background) */
+  protected get selectedCategoria(): string | null {
+    const value = this.selectCategoria.value;
+    return value && typeof value === 'object' ? normalizzaStringa(value.value) : null;
+  }
+
+  /** Keep the toggle group (chipSet) and the categoria select in sync from one source. */
+  private setCategoria(option: FilterOptionInterface | null): void {
+    this.chipSet.setValue(option ? [option] : [], {emitEvent: false});
+    this.selectCategoria.setValue(option ?? '', {emitEvent: false});
   }
 
   protected readonly normalizzaStringa = normalizzaStringa;

@@ -1,3 +1,8 @@
+// Responsive breakpoints (SCSS vars — usable inside @media queries).
+// $breakpoint-md: below desktop (tablet) ; $breakpoint-sm: below tablet (mobile).
+$breakpoint-md: 959px;
+$breakpoint-sm: 599px;
+
 // Gradient variables on :root so getComputedStyle(document.documentElement) resolves them.
 // Override at :root level in a global theme to customise.
 :root {

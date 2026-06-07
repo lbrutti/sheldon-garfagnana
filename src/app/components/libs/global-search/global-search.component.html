@@ -1,19 +1,35 @@
 <div class="search-container">
   <sheldon-theme-switch/>
   <form class="example-form">
-    <mat-form-field appearance="outline">
-      <mat-select
-        [formControl]="selectUnione"
-        [value]="{value: '',key: 'unione'}"
-        placeholder="Cerca per unione"
-        panelClass="global-search-select-panel"
-        (selectionChange)="(applyFilter())"
-      >
-        @for (option of suggestions(); track option) {
-          <mat-option [value]="option">{{ option.label }}</mat-option>
-        }
-      </mat-select>
-    </mat-form-field>
+    <mat-select
+      id="select-unione"
+      [formControl]="selectUnione"
+      [value]="{value: '',key: 'unione'}"
+      placeholder="Cerca per unione"
+      panelClass="global-search-select-panel"
+      (selectionChange)="(applyFilter())"
+    >
+      @for (option of suggestions(); track option) {
+        <mat-option [value]="option">{{ option.label }}</mat-option>
+      }
+    </mat-select>
+
+    <mat-select
+      id="select-categoria"
+      [formControl]="selectCategoria"
+      [attr.data-categoria]="selectedCategoria"
+      placeholder="Categoria"
+      panelClass="global-search-select-panel"
+      (selectionChange)="(handleCategoriaSelect())"
+    >
+      <mat-option value="">Tutte le categorie</mat-option>
+      @for (option of chips(); track option) {
+        <mat-option
+          [attr.data-categoria]="normalizzaStringa(option.value)"
+          [value]="option">{{ option.label }}
+        </mat-option>
+      }
+    </mat-select>
     <mat-button-toggle-group
       [formControl]="chipSet"
       [hideSingleSelectionIndicator]="true"
