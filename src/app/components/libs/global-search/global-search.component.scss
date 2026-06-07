@@ -39,16 +39,19 @@ $control-height: 25px;
         color: white;
       }
 
-      // replace the default arrow svg with download.svg (via mask so it keeps the white color)
-      .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
-        width: 12px;
-        height: 12px;
-        background-color: currentColor;
-        -webkit-mask: url('/assets/svg/download.svg') no-repeat center / contain;
-        mask: url('/assets/svg/download.svg') no-repeat center / contain;
+      .mat-mdc-select-arrow-wrapper {
+        padding-right: 8px;
+        // replace the default arrow svg with download.svg (via mask so it keeps the white color)
+        .mat-mdc-select-arrow {
+          width: 12px;
+          height: 12px;
+          background-color: currentColor;
+          -webkit-mask: url('/assets/svg/download.svg') no-repeat center / contain;
+          mask: url('/assets/svg/download.svg') no-repeat center / contain;
 
-        svg {
-          display: none;
+          svg {
+            display: none;
+          }
         }
       }
     }
@@ -73,8 +76,9 @@ $control-height: 25px;
         border-top-width: 1px;
         border-bottom-width: 1px;
       }
-      .mat-mdc-form-field-infix{
-        width: 280px !important;
+
+      .mat-mdc-form-field-infix {
+        width: 318px !important;
       }
     }
 

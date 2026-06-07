@@ -265,7 +265,7 @@ export default class Dashboard implements OnInit {
         });
         const updatedFeats = JSON.parse(JSON.stringify(this.comuniPolygons())).features.map((f: any) => {
           const totaleComune = (Object.values(comuniMap.get((f.properties as any).name) ?? {}) as number[])
-            .reduce((a:number, b:number): number => (a+b), 0);
+            .reduce((a: number, b: number): number => (a + b), 0);
           f.properties = {...f.properties, ...comuniMap.get((f.properties as any).name), totale: totaleComune};
           console.log(totaleComune);
           return f;
@@ -281,7 +281,10 @@ export default class Dashboard implements OnInit {
     fetch('settings/dashboardSettings.json')
       .then(r => r.json())
       //random tiles
-      .then((s: WidgetSetting[]) => this.settings.set(s));
+      .then((s: WidgetSetting[]) => {
+        const shuffled = shuffleArray(s).sort((a, b) => a.tileWidth - b.tileWidth);
+        return this.settings.set(shuffled)
+      });
     this.apiService.getInterventi();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;
