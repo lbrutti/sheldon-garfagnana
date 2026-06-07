@@ -27,14 +27,39 @@ $control-height: 25px;
 
   // ── mat-form-field / mat-select ──────────────────────────────────────────────
   ::ng-deep {
+    // closed select: black background, white text
+    mat-select {
+      background: black;
+      color: white;
+
+      .mat-mdc-select-value,
+      .mat-mdc-select-value-text,
+      .mat-mdc-select-placeholder,
+      .mat-mdc-select-arrow {
+        color: white;
+      }
+
+      // replace the default arrow svg with download.svg (via mask so it keeps the white color)
+      .mat-mdc-select-arrow-wrapper .mat-mdc-select-arrow {
+        width: 12px;
+        height: 12px;
+        background-color: currentColor;
+        -webkit-mask: url('/assets/svg/download.svg') no-repeat center / contain;
+        mask: url('/assets/svg/download.svg') no-repeat center / contain;
+
+        svg {
+          display: none;
+        }
+      }
+    }
+
     mat-form-field {
       .mat-mdc-text-field-wrapper,
       .mat-mdc-form-field-flex,
       .mat-mdc-form-field-infix {
         height: $control-height;
         min-height: $control-height;
-        padding-top: 0;
-        padding-bottom: 0;
+        padding: 0;
       }
 
       .mat-mdc-select-trigger {
@@ -47,6 +72,9 @@ $control-height: 25px;
       .mdc-notched-outline__trailing {
         border-top-width: 1px;
         border-bottom-width: 1px;
+      }
+      .mat-mdc-form-field-infix{
+        width: 280px !important;
       }
     }
 
@@ -116,6 +144,31 @@ $control-height: 25px;
       }
     }
 
+  }
+}
+
+// ── mat-select dropdown panel (rendered in a CDK overlay, outside :host) ──────
+::ng-deep .global-search-select-panel.mat-mdc-select-panel {
+  background: black;
+
+  .mat-mdc-option {
+    background: black;
+    color: white;
+
+    .mdc-list-item__primary-text {
+      color: white;
+    }
+
+    // hover (and keyboard-active) option: white background, black text
+    &:hover,
+    &.mat-mdc-option-active {
+      background: white;
+      color: black;
+
+      .mdc-list-item__primary-text {
+        color: black;
+      }
+    }
   }
 }
 
