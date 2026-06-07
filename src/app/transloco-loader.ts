@@ -7,6 +7,9 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   private http = inject(HttpClient);
 
   getTranslation(lang: string) {
-    return this.http.get<Translation>(`/i18n/${lang}.json`);
+    // Resolve relative to the app's <base href> so it works under a custom
+    // base path (e.g. GitHub Pages at /sheldon-garfagnana/).
+    const url = new URL(`i18n/${lang}.json`, document.baseURI).href;
+    return this.http.get<Translation>(url);
   }
 }
