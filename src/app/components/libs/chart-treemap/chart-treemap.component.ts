@@ -66,7 +66,7 @@ export default class ChartTreemapComponent implements OnInit {
   currentReduce = signal<ReduceByDeclaration | null>(null);
 
   gradients: Signal<string[]> = computed(() => {
-    return this.data().map(d => getRandomGradient(this.categoria(), '90deg'));
+    return this.data().map(d => getRandomGradient(this.categoria(), '0deg'));
   });
 
   constructor(private readonly multiples: MultiplesPipe) {
