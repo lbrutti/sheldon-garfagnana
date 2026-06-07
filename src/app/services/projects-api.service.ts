@@ -2,7 +2,7 @@ import {Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DataInterface, InterventoInterface} from '../interfaces';
 import {csvToJson} from '../adapters';
-import {FeatureCollection, Geometry, Point, Polygon} from 'geojson';
+import {FeatureCollection, Point, Polygon} from 'geojson';
 import {environment} from '../../environments/environment';
 
 @Injectable({

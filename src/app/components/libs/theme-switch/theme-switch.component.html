@@ -1,6 +1,7 @@
 <mat-button-toggle-group
   [hideSingleSelectionIndicator]="true"
   [hideMultipleSelectionIndicator]="true"
+  [attr.data-categoria]="categoriaCorrente()"
   [value]="theme()"
   (change)="onChange($event)">
   @for (opt of options; track opt.value) {

@@ -13,6 +13,8 @@ $control-height: 25px;
 
     sheldon-theme-switch {
       margin-left: auto;
+      margin-top: 8px;
+      margin-bottom: 4px;
     }
   }
 
@@ -161,27 +163,44 @@ $control-height: 25px;
 
 // ── mobile: full-width unione select + categoria select instead of toggles ───
 @media (max-width: $breakpoint-sm) {
-  :host ::ng-deep {
-    form {
+  form {
+    flex-direction: column !important;
+    gap: 8px;
+    //width: 100vw;
+    height: unset;
+    min-height: unset;
+    margin-top: 20px;
+    margin-bottom: 40px;
+    margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
+  }
+  :host {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+    padding-right: 16px;
+    //flex-direction: row;
+    .search-container {
+      display: flex;
       flex-direction: column;
-      height: auto;
-      min-height: 0;
-      gap: 8px;
-      width: 100vw;
-      margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
+
+      sheldon-theme-switch {
+        margin-bottom: -8px;
+      }
     }
 
+  }
+  :host ::ng-deep {
+
     // hide the desktop toggle chips, show the categoria select
-    mat-button-toggle-group {
+    // scoped to the form so the theme-switch toggle group stays visible on mobile
+    .search-form mat-button-toggle-group {
       display: none;
     }
 
-    #select-categoria {
-      display: block;
-    }
 
     #select-unione,
     #select-categoria {
+      display: block;
       width: 100vw !important;
     }
   }

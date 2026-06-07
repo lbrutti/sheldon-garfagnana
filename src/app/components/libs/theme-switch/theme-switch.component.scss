@@ -17,13 +17,19 @@
       border: none;
       border-radius: 0;
     }
-
+    
+    // when a categoria is set, the checked toggle takes that categoria's gradient-start color
+    @each $cat in ambiente, cultura, mobilita, sicurezza, economia, sociale, societa {
+      [data-categoria='#{$cat}'] .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
+        background-color: var(--color-gradient-#{$cat}-start) !important;
+      }
+    }
     mat-button-toggle {
       border: none !important;
       padding: 0 !important;
       margin: 0 !important;
       gap: 0 !important;
-      
+      background: none !important;
       .mat-button-toggle-button {
         height: 25px;
         line-height: 25px;
