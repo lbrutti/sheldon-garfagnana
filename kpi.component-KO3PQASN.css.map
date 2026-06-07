@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/kpi/kpi.component.scss"],
-  "sourcesContent": [":host {\n  display: block;\n  width: 100%;\n  height: 100%;\n\n  .sheldon-kpi-content{\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    height: 100%;\n  }\n  .kpi-value-wrapper{\n    margin-top:auto;\n  }\n}\n"],
-  "mappings": "AAAA,MACE,QAAA,MACA,MAAA,KACA,OAAA,KAEA,MAAA,CAAA,oBACE,QAAA,KACA,eAAA,OACA,gBAAA,cACA,OAAA,KAEF,MAAA,CAAA,kBACE,WAAA",
-  "names": []
-}

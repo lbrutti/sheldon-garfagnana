@@ -12,7 +12,7 @@
     "showSorting": false,
     "limit": 0,
     "data": "interventiPerFine",
-    "tileWidth": 4
+    "tileWidth": 3
   },
   {
     "id": "interventi_per_avvio",
@@ -27,7 +27,7 @@
     "showSorting": false,
     "limit": 0,
     "data": "interventiPerInizio",
-    "tileWidth": 4
+    "tileWidth": 3
   },
   {
     "id": "interventi_per_comune",
@@ -53,7 +53,7 @@
     "showSorting": false,
     "limit": 10,
     "data": "interventiPerComune",
-    "tileWidth": 4
+    "tileWidth": 3
   },
   {
     "id": "comuni_con_interventi",
@@ -94,7 +94,7 @@
   {
     "id": "interventi_programmati",
     "tag": "sheldon-list",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Interventi programmati",
     "filterBy": "comune",
     "masterField": "comune",
@@ -103,7 +103,7 @@
   {
     "id": "interventi_per_fonte",
     "tag": "sheldon-segmented-chart",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Interventi per fonte di finanziamento",
     "filterBy": "comune",
     "masterField": "comune",
@@ -115,7 +115,7 @@
   {
     "id": "interventi_per_partecipazione",
     "tag": "sheldon-segmented-chart",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Interventi con coinvolgimento dei cittadini",
     "defaultSortDirection": "asc",
     "groupBy": "valore",
@@ -125,7 +125,7 @@
   {
     "id": "interventi_per_stato",
     "tag": "sheldon-segmented-chart",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Stato di avanzamento degli interventi",
     "filterBy": "comune",
     "masterField": "comune",
@@ -149,7 +149,7 @@
   {
     "id": "interventi_per_unione",
     "tag": "sheldon-segmented-chart",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Distribuzione degli interventi per Unione",
     "defaultSortDirection": "asc",
     "groupBy": "valore",
@@ -159,7 +159,7 @@
   {
     "id": "interventi_per_tipologia",
     "tag": "sheldon-chart-treemap",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Tipologia di intervento",
     "filterBy": "comune",
     "masterField": "comune",
@@ -185,7 +185,7 @@
   {
     "id": "interventi_per_categoria",
     "tag": "sheldon-chart-treemap",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Categorie principali degli interventi",
     "filterBy": "comune",
     "masterField": "comune",
@@ -211,7 +211,7 @@
   {
     "id": "interventi_per_target",
     "tag": "sheldon-chart-treemap",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Destinatari principali degli interventi",
     "filterBy": "comune",
     "masterField": "comune",
@@ -237,7 +237,7 @@
   {
     "id": "interventi_per_tema",
     "tag": "sheldon-chart-treemap",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "Ambiti di azione principali degli interventi",
     "filterBy": "comune",
     "masterField": "comune",
@@ -263,7 +263,7 @@
   {
     "id": "mappa_dashboard",
     "tag": "sheldon-mosaic-map",
-    "tileWidth": 8,
+    "tileWidth": 9,
     "title": "Distribuzione dei progetti per comune",
     "municipalityKey": "name",
     "auxReduce": [
@@ -295,7 +295,7 @@
   {
     "id": "descrizione_garfagnana",
     "tag": "sheldon-card-descrizione",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
@@ -304,7 +304,7 @@
   {
     "id": "descrizione_pistoiese",
     "tag": "sheldon-card-descrizione",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
@@ -313,7 +313,7 @@
   {
     "id": "descrizione_serchio",
     "tag": "sheldon-card-descrizione",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
@@ -322,7 +322,7 @@
   {
     "id": "descrizione_lunigiana",
     "tag": "sheldon-card-descrizione",
-    "tileWidth": 4,
+    "tileWidth": 3,
     "title": "nome",
     "desc": "descrizione",
     "url": "link",
