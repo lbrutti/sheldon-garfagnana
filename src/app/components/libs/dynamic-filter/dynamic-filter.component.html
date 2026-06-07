@@ -14,12 +14,14 @@
       />
 
       @if (hasValue(field)) {
-        <button matSuffix mat-icon-button (click)="clearField(field, trigger, inputEl)" type="button" aria-label="Clear">
+        <button matSuffix mat-icon-button (click)="clearField(field, trigger, inputEl)" type="button"
+                aria-label="Clear">
           <mat-icon>close</mat-icon>
         </button>
       }
 
-      <mat-autocomplete #auto="matAutocomplete" >
+      <mat-autocomplete #auto="matAutocomplete"
+                        class="dynamic-filter-autocomplete-panel">
         @for (opt of filteredOptions(field); track opt.key) {
           <mat-option [value]="opt.value">{{ opt.value }}</mat-option>
         }

@@ -12,8 +12,19 @@
   }
 
   ::ng-deep {
+    // closed field: white background, black text (flipped from the global-search select)
     .mat-mdc-text-field-wrapper {
       padding: 0 !important;
+      background: white;
+    }
+
+    input.mat-mdc-input-element {
+      color: black;
+
+      &::placeholder {
+        color: black;
+        opacity: 1;
+      }
     }
 
     .mdc-floating-label--float-above {
@@ -65,6 +76,32 @@
           width: calc(var(--filter-control-height) - 2px);
           height: calc(var(--filter-control-height) - 2px);
         }
+      }
+    }
+  }
+}
+
+// ── autocomplete dropdown panel (rendered in a CDK overlay, outside :host) ────
+// Mirrors the global-search select panel with flipped colors.
+::ng-deep .dynamic-filter-autocomplete-panel.mat-mdc-autocomplete-panel {
+  background: white;
+
+  .mat-mdc-option {
+    background: white;
+    color: black;
+
+    .mdc-list-item__primary-text {
+      color: black;
+    }
+
+    // hover (and keyboard-active) option: black background, white text
+    &:hover,
+    &.mat-mdc-option-active {
+      background: black;
+      color: white;
+
+      .mdc-list-item__primary-text {
+        color: white;
       }
     }
   }
