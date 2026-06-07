@@ -1,6 +1,7 @@
 @if (visible()) {
   <div
     class="chart-tooltip"
+    [class.interactive]="interactive()"
     [style.left.px]="x() + offsetX()"
     [style.top.px]="y() + offsetY()">
     <sheldon-two-lines-chart-label

@@ -23,10 +23,11 @@
   <ng-container content>
 
     <!--  TREEMAP -->
-    <div class="treemap-wrapper">
+    <div class="treemap-wrapper" #wrapper>
       @for (tile of tiles(); track tile.label) {
         <div
           class="treemap-tile cursor-pointer"
+          [class.dimmed]="hoveredTile() !== null && hoveredTile() !== tile"
           [style.left.%]="tile.x"
           [style.top.%]="tile.y"
           [style.width.%]="tile.w"
@@ -34,7 +35,8 @@
           [style.background]="tile.color"
           (mouseenter)="onTileEnter(tile, $event)"
           (mousemove)="onTileMove($event)"
-          (mouseleave)="onTileLeave()">
+          (mouseleave)="onTileLeave()"
+          (touchstart)="onTileTouch(tile, $event)">
           @if (hoveredTile() !== tile) {
             <sheldon-two-lines-chart-label
               [text]="tile.label"
@@ -44,13 +46,17 @@
       }
     </div>
 
-    <!--  HOVER TOOLTIP -->
+    <!--  HOVER / TOUCH TOOLTIP -->
     <sheldon-chart-tooltip
       [visible]="hoveredTile() !== null"
+      [interactive]="touchMode()"
       [text]="hoveredTile()?.label ?? ''"
       [sub]="hoveredTile()?.formattedValue ?? ''"
       [x]="pointer().x"
-      [y]="pointer().y"/>
+      [y]="pointer().y"
+      [offsetX]="0"
+      [offsetY]="0"
+      (click)="onTooltipClick()"/>
 
   </ng-container>
 </sheldon-card>

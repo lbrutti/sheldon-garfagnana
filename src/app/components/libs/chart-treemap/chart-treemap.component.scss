@@ -14,6 +14,13 @@
     box-sizing: border-box;
     overflow: hidden;
     cursor: default;
+    transition: opacity 0.15s ease;
+
+    &.dimmed {
+      //transition: opacity 0.15s ease;
+      //opacity: 0.35;
+      filter: brightness(0.75);
+    }
   }
 
   sheldon-two-lines-chart-label {

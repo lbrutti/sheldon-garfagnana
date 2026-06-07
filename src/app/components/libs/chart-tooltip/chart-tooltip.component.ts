@@ -26,6 +26,9 @@ export default class ChartTooltipComponent {
   /** Whether the tooltip is shown. */
   visible = input<boolean>(false);
 
+  /** When true the tooltip captures pointer events (e.g. so it can be tapped to dismiss on touch). */
+  interactive = input<boolean>(false);
+
   /** Pointer position in viewport coordinates (e.g. MouseEvent.clientX/clientY). */
   x = input<number>(0);
   y = input<number>(0);

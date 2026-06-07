@@ -10,6 +10,11 @@
     padding: 4px 6px;
     max-width: 196px;
 
+    &.interactive {
+      pointer-events: auto;
+      cursor: pointer;
+    }
+
     sheldon-two-lines-chart-label {
       white-space: wrap !important;
     }

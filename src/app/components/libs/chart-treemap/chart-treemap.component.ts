@@ -1,10 +1,13 @@
 import {
   Component,
-  computed, Input,
+  computed,
+  ElementRef,
+  Input,
   input,
   OnInit,
   signal,
   Signal,
+  viewChild,
 } from '@angular/core';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
@@ -142,21 +145,75 @@ export default class ChartTreemapComponent implements OnInit {
   });
   categoria = input<string>('');
 
-  // ── Hover tooltip ────────────────────────────────────────────────────────────
+  // ── Hover / touch tooltip ─────────────────────────────────────────────────────
+  private readonly wrapperRef = viewChild<ElementRef<HTMLElement>>('wrapper');
+  private readonly tooltipRef = viewChild(ChartTooltipComponent, {read: ElementRef});
+
   protected hoveredTile = signal<TreemapTile | null>(null);
   protected pointer = signal<{ x: number; y: number }>({x: 0, y: 0});
+  /** True while the tooltip is driven by touch: it then stays open and can be tapped to dismiss. */
+  protected touchMode = signal<boolean>(false);
 
   protected onTileEnter(tile: TreemapTile, event: MouseEvent) {
+    if (this.touchMode()) return;
     this.hoveredTile.set(tile);
-    this.pointer.set({x: event.clientX, y: event.clientY});
+    this.updateTooltipPosition(event.clientX, event.clientY);
   }
 
   protected onTileMove(event: MouseEvent) {
-    this.pointer.set({x: event.clientX, y: event.clientY});
+    if (this.touchMode()) return;
+    this.updateTooltipPosition(event.clientX, event.clientY);
   }
 
   protected onTileLeave() {
+    if (this.touchMode()) return;
     this.hoveredTile.set(null);
+  }
+
+  protected onTileTouch(tile: TreemapTile, event: TouchEvent) {
+    // Suppress the synthesized mouse events that would otherwise fight with touch handling.
+    event.preventDefault();
+    const touch = event.changedTouches[0];
+    this.touchMode.set(true);
+    if (this.hoveredTile()) {
+      this.hoveredTile.set(null);
+    } else {
+      this.hoveredTile.set(tile);
+      this.updateTooltipPosition(touch.clientX, touch.clientY);
+      // Re-clamp once the tooltip has rendered and its real size is known.
+      requestAnimationFrame(() => this.updateTooltipPosition(touch.clientX, touch.clientY));
+    }
+  }
+
+  /** Dismiss the tooltip when it is tapped on a touch device. */
+  protected onTooltipClick() {
+    if (!this.touchMode()) return;
+    this.hoveredTile.set(null);
+    this.touchMode.set(false);
+  }
+
+  /** Position the tooltip next to the pointer, clamped to stay within the treemap container. */
+  private updateTooltipPosition(clientX: number, clientY: number) {
+    const offset = 12;
+    let x = clientX + offset;
+    let y = clientY + offset;
+
+    const wrapper = this.wrapperRef()?.nativeElement;
+    if (wrapper) {
+      const bounds = wrapper.getBoundingClientRect();
+      const tip = this.tooltipRef()?.nativeElement.querySelector('.chart-tooltip') as HTMLElement | null;
+      const tipW = tip?.offsetWidth ?? 196;
+      const tipH = tip?.offsetHeight ?? 64;
+
+      // Flip to the other side of the pointer when it would overflow, then hard-clamp inside the wrapper.
+      if (x + tipW > bounds.right) x = clientX - offset - tipW;
+      x = Math.min(Math.max(x, bounds.left), Math.max(bounds.right - tipW, bounds.left));
+
+      if (y + tipH > bounds.bottom) y = clientY - offset - tipH;
+      y = Math.min(Math.max(y, bounds.top), Math.max(bounds.bottom - tipH, bounds.top));
+    }
+
+    this.pointer.set({x, y});
   }
 
   protected onReduceChange($event: MatButtonToggleChange) {
