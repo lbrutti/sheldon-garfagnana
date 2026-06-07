@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/card-descrizione/card-descrizione.component.scss"],
+  "sourcesContent": [":host {\n  display: block;\n  width: 100%;\n  height: 100%;\n\n  .sheldon-kpi-content {\n    display: flex;\n    flex-direction: column;\n    justify-content: space-between;\n    height: 100%;\n  }\n\n  .kpi-value-wrapper {\n    margin-top: auto;\n  }\n\n  ::ng-deep {\n    .mat-mdc-outlined-button:not(:disabled) {\n      color: black !important;\n    }\n  }\n}\n"],
+  "mappings": "AAAA,MACE,QAAA,MACA,MAAA,KACA,OAAA,KAEA,MAAA,CAAA,oBACE,QAAA,KACA,eAAA,OACA,gBAAA,cACA,OAAA,KAGF,MAAA,CAAA,kBACE,WAAA,KAIA,MAAA,UAAA,CAAA,uBAAA,KAAA,WACE,MAAA",
+  "names": []
+}
