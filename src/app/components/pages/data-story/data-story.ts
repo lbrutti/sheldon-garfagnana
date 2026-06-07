@@ -6,6 +6,7 @@ import KpiComponent from "../../libs/kpi/kpi.component";
 import {MatGridList, MatGridTile} from "@angular/material/grid-list";
 import {DataInterface,} from '../../../interfaces';
 import {ProjectsApiService} from '../../../services/projects-api.service';
+import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-public-story',
@@ -15,7 +16,8 @@ import {ProjectsApiService} from '../../../services/projects-api.service';
     ChartBarComponent,
     KpiComponent,
     MatGridList,
-    MatGridTile
+    MatGridTile,
+    TranslocoModule
   ],
   templateUrl: './data-story.html',
   styleUrl: './data-story.scss',

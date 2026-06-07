@@ -4,7 +4,7 @@
   <mat-grid-tile>
     <sheldon-chart-bars
       groupBy="comune"
-      title="Popolazione per comune"
+      [title]="'dataStory.populationByComune' | transloco"
       filterBy="unione|anno"
       reduceBy="sum"
       [data]="popolazione()"
@@ -13,7 +13,7 @@
   <mat-grid-tile>
     <sheldon-chart-h-bars
       groupBy="comune"
-      title="Popolazione per comune (stacked bars)"
+      [title]="'dataStory.populationByComuneStacked' | transloco"
       filterBy="unione|anno"
       masterField="unione"
       reduceBy="sum"
@@ -23,7 +23,7 @@
   <mat-grid-tile>
     <sheldon-chart-line
       groupBy="anno"
-      title="Andamento popolazione per comune"
+      [title]="'dataStory.populationTrendByComune' | transloco"
       filterBy="unione|comune"
       masterField="unione"
       reduceBy="sum"
@@ -33,7 +33,7 @@
   <mat-grid-tile>
     <sheldon-kpi
       groupBy="comune"
-      title="Popolazione totale dell'area"
+      [title]="'dataStory.totalAreaPopulation' | transloco"
       filterBy="unione|comune|anno"
       masterField="unione"
       reduceBy="sum"

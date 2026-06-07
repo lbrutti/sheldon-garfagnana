@@ -8,6 +8,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import {toPng} from 'html-to-image';
 import {normalizzaStringa, resolveColorVariable} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
+import {TranslocoModule, TranslocoService} from '@jsverse/transloco';
 
 /** Query-string key holding the id of the card to display fullscreen. */
 const CARD_PARAM = 'card';
@@ -17,6 +18,7 @@ const CARD_PARAM = 'card';
   imports: [
     MatIcon,
     MatIconButton,
+    TranslocoModule,
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
@@ -30,6 +32,7 @@ export default class CardComponent {
   private readonly route = inject(ActivatedRoute);
   // Track the active theme so the colours below re-read their CSS variables on change.
   private readonly theme = inject(ThemeService).theme;
+  private readonly transloco = inject(TranslocoService);
   showButtons = input<boolean>(true);
   categoria = input<string>('ambiente');
   /** Text shown in the info overlay opened by the info button. */
@@ -139,7 +142,7 @@ export default class CardComponent {
       this.flagCopied();
     } catch {
       // Clipboard blocked (e.g. insecure context) — surface the link directly.
-      window.prompt('Copia il link della card:', url);
+      window.prompt(this.transloco.translate('card.copyPrompt'), url);
     }
   }
 

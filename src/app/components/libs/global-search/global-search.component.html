@@ -5,7 +5,7 @@
       id="select-unione"
       [formControl]="selectUnione"
       [value]="{value: '',key: 'unione'}"
-      placeholder="Cerca per unione"
+      [placeholder]="'globalSearch.searchByUnione' | transloco"
       panelClass="global-search-select-panel"
       (selectionChange)="(applyFilter())"
     >
@@ -18,11 +18,11 @@
       id="select-categoria"
       [formControl]="selectCategoria"
       [attr.data-categoria]="selectedCategoria"
-      placeholder="Categoria"
+      [placeholder]="'globalSearch.category' | transloco"
       panelClass="global-search-select-panel"
       (selectionChange)="(handleCategoriaSelect())"
     >
-      <mat-option value="">Tutte le categorie</mat-option>
+      <mat-option value="">{{ 'globalSearch.allCategories' | transloco }}</mat-option>
       @for (option of chips(); track option) {
         <mat-option
           [attr.data-categoria]="normalizzaStringa(option.value)"

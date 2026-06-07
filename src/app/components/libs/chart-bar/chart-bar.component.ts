@@ -16,6 +16,7 @@ import {SortToggle} from '../sort-toggle/sort-toggle';
 import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.interface';
 import ChartLabelComponent from '../chart-label/chart-label.component';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
+import {TranslocoModule} from '@jsverse/transloco';
 
 export interface BarItem {
   label: string;
@@ -34,13 +35,14 @@ export interface BarItem {
     SortToggle,
     ChartLabelComponent,
     ReduceToggleComponent,
+    TranslocoModule,
   ],
   templateUrl: './chart-bar.component.html',
   styleUrl: './chart-bar.component.scss',
 })
 export default class ChartBarComponent implements OnInit {
 
-  title = input<string>('Numero di progetti per comune');
+  title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
 

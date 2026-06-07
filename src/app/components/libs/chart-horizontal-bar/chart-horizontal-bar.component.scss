@@ -11,13 +11,6 @@
     height: 100%;
     overflow-y: scroll;
     align-items: end;
-    //gap: 6px;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    &::-webkit-scrollbar { /* WebKit */
-      width: 0;
-      height: 0;
-    }
   }
 
   .h-bar-container {

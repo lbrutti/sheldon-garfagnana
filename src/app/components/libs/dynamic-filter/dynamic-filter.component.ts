@@ -18,6 +18,7 @@ import {
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-dynamic-filter',
@@ -32,6 +33,7 @@ import {MatIcon} from '@angular/material/icon';
     MatIcon,
     MatAutocompleteTrigger,
     MatAutocomplete,
+    TranslocoModule,
   ],
   templateUrl: './dynamic-filter.component.html',
   styleUrl: './dynamic-filter.component.scss',

@@ -2,13 +2,14 @@
   [categoria]="categoria()"
   [infoText]="infoText()"
   [cardId]="cardId()">
-  <ng-container title>{{ title() }}</ng-container>
+  <ng-container title>{{ title() || ('chart.projectsByComune' | transloco) }}</ng-container>
   <ng-container subheader>
     <sheldon-dynamic-filter
       [filterBy]="filtersFields()"
       [dataset]="data()"
       [masterField]="masterField()"
       (filterChange)="onFilterChange($event)"/>
+    <span class="list-count">{{ 'list.itemsCount' | transloco: { count: filteredData().length } }}</span>
   </ng-container>
   <ng-container content>
     <mat-list>
@@ -24,7 +25,7 @@
         </mat-list-item>
         <mat-list-item>
           <div class="list-row">
-            <span class="nome-container">Totale</span>
+            <span class="nome-container">{{ 'list.total' | transloco }}</span>
             <span class="valore-container">{{ totaleValore() | multiples }}</span>
           </div>
         </mat-list-item>

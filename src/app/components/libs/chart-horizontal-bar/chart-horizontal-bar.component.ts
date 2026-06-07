@@ -10,6 +10,7 @@ import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} fr
 import {MultiplesPipe} from '../../../pipes';
 import {MatList} from '@angular/material/list';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
+import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -26,6 +27,7 @@ import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
     MultiplesPipe,
     MatList,
     ReduceToggleComponent,
+    TranslocoModule,
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',

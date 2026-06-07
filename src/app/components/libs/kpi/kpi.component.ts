@@ -14,17 +14,18 @@ import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValue} from '../../../utils';
 import {FitTextDirective} from '../../../directives/fit-text.directive';
+import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-kpi',
-  imports: [CardComponent, DynamicFilterComponent, FitTextDirective],
+  imports: [CardComponent, DynamicFilterComponent, FitTextDirective, TranslocoModule],
   templateUrl: './kpi.component.html',
   styleUrl: './kpi.component.scss',
 })
 export default class KpiComponent {
   @ViewChild('counter') counterEl!: ElementRef<HTMLElement>;
 
-  title = input<string>('Numero di progetti per comune');
+  title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
   minFontSize = input<number>(15);

@@ -12,6 +12,7 @@ import {MatList, MatListItem} from '@angular/material/list';
 import {DecimalPipe} from '@angular/common';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {MultiplesPipe} from '../../../pipes';
+import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-list',
@@ -23,13 +24,14 @@ import {MultiplesPipe} from '../../../pipes';
     CdkFixedSizeVirtualScroll,
     CdkVirtualScrollViewport,
     CdkVirtualForOf,
-    MultiplesPipe],
+    MultiplesPipe,
+    TranslocoModule],
   templateUrl: './lista.component.html',
   styleUrl: './lista.component.scss',
 })
 export default class ListaComponent {
 
-  title = input<string>('Numero di progetti per comune');
+  title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
   categoria = input<string>('sociale');

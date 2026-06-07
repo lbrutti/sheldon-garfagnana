@@ -8,14 +8,14 @@
         #inputEl
         [id]="field"
         [formControlName]="field"
-        [placeholder]="'Cerca un '+field"
+        [placeholder]="'filter.search' | transloco: { field: field }"
         [matAutocomplete]="auto"
         #trigger="matAutocompleteTrigger"
       />
 
       @if (hasValue(field)) {
         <button matSuffix mat-icon-button (click)="clearField(field, trigger, inputEl)" type="button"
-                aria-label="Clear">
+                [attr.aria-label]="'filter.clear' | transloco">
           <mat-icon>close</mat-icon>
         </button>
       }

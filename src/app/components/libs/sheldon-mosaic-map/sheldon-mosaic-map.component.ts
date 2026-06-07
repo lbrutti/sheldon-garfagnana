@@ -21,6 +21,7 @@ import {EventData} from '@angular/cdk/testing';
 import {MultiplesPipe} from '../../../pipes';
 import {getRandomGradient, normalizzaStringa, resolveColorVariable} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
+import {TranslocoModule} from '@jsverse/transloco';
 
 const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
@@ -81,6 +82,7 @@ function generateGradientShades(baseColor: string): [string, string, string, str
     MatButtonToggleGroup,
     MatButtonToggle,
     MultiplesPipe,
+    TranslocoModule,
   ],
   templateUrl: './sheldon-mosaic-map.component.html',
   styleUrl: './sheldon-mosaic-map.component.scss',
@@ -88,7 +90,7 @@ function generateGradientShades(baseColor: string): [string, string, string, str
 export default class SheldonMosaicMapComponent implements OnInit {
 
   // ── Inputs ─────────────────────────────────────────────────────────────────
-  title = input<string>('Mappa');
+  title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
   data = input<FeatureCollection<Polygon> | null>(null);

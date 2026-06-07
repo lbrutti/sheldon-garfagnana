@@ -2,7 +2,7 @@
   [categoria]="categoria()"
   [infoText]="infoText()"
   [cardId]="cardId()">
-  <ng-container title>{{ title() }}</ng-container>
+  <ng-container title>{{ title() || ('chart.map' | transloco) }}</ng-container>
   <ng-container subheader>
     <!-- Controls row -->
     <div class="map-controls">

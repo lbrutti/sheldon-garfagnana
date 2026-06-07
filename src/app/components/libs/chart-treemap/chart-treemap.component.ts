@@ -17,6 +17,7 @@ import {MultiplesPipe} from '../../../pipes';
 import {DecimalPipe} from '@angular/common';
 import {components} from '../index';
 import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
+import {TranslocoModule} from '@jsverse/transloco';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -38,7 +39,8 @@ export interface TreemapTile {
     CardComponent,
     DynamicFilterComponent,
     ReduceToggleComponent,
-    ChartTwoLinesLabelComponent
+    ChartTwoLinesLabelComponent,
+    TranslocoModule
   ],
   providers: [DecimalPipe, MultiplesPipe],
   templateUrl: './chart-treemap.component.html',
@@ -46,7 +48,7 @@ export interface TreemapTile {
 })
 export default class ChartTreemapComponent implements OnInit {
 
-  title = input<string>('Treemap');
+  title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
   data = input<TreemapDataInterface[]>([]);

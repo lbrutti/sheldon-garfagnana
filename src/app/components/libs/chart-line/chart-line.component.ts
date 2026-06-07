@@ -12,6 +12,7 @@ import {BaseChartDirective} from 'ng2-charts';
 import {ChartData, ChartEvent} from 'chart.js';
 
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
+import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-chart-line',
@@ -21,7 +22,8 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
     // MatButtonToggle,
     // MatIcon,
     BaseChartDirective,
-    DynamicFilterComponent
+    DynamicFilterComponent,
+    TranslocoModule
   ],
   templateUrl: './chart-line.component.html',
   styleUrl: './chart-line.component.scss',
@@ -29,7 +31,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 export default class ChartLineComponent {
   @ViewChild(BaseChartDirective) chart: BaseChartDirective<'line'> | undefined;
 
-  title = input<string>('Numero di progetti per comune');
+  title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
   filterBy = input<string>('nome_comune');

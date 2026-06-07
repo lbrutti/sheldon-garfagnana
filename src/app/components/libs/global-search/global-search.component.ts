@@ -9,6 +9,7 @@ import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {components} from '../index';
 import ThemeSwitchComponent from '../theme-switch/theme-switch.component';
 import {normalizzaStringa} from '../../../utils';
+import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-global-search',
@@ -22,7 +23,7 @@ import {normalizzaStringa} from '../../../utils';
     MatButtonToggleGroup,
     MatSelect,
     ThemeSwitchComponent,
-
+    TranslocoModule,
   ],
   templateUrl: './global-search.component.html',
   styleUrl: './global-search.component.scss',

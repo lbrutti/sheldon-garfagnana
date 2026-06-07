@@ -16,6 +16,7 @@ import {getRandomGradient, getReducedValue, getReducedValueByLabel} from '../../
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
 import {MultiplesPipe} from '../../../pipes';
+import {TranslocoModule} from '@jsverse/transloco';
 
 export interface SegmentInterface {
   label: string;
@@ -37,7 +38,8 @@ export interface SegmentInterface {
     DynamicFilterComponent,
     SortToggle,
     ReduceToggleComponent,
-    ChartTwoLinesLabelComponent
+    ChartTwoLinesLabelComponent,
+    TranslocoModule
   ],
   providers: [MultiplesPipe],
   templateUrl: './chart-segmented-bar.component.html',
@@ -45,7 +47,7 @@ export interface SegmentInterface {
   // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export default class ChartSegmentedBarComponent implements OnInit {
-  readonly title = input<string>('Popolazione');
+  readonly title = input<string>('');
   readonly infoText = input<string>('');
   readonly cardId = input<string>('');
 

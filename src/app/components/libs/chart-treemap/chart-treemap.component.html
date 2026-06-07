@@ -2,7 +2,7 @@
               [categoria]="categoria()"
               [infoText]="infoText()"
               [cardId]="cardId()">
-  <ng-container title>{{ this.title() }}</ng-container>
+  <ng-container title>{{ this.title() || ('chart.treemap' | transloco) }}</ng-container>
   <ng-container subheader>
 
     <!--  FILTERING -->

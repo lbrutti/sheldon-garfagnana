@@ -36,7 +36,7 @@
       </div>
     }
     @if (linkCopied()) {
-      <div class="sheldon-card-copied">Link copiato negli appunti</div>
+      <div class="sheldon-card-copied">{{ 'card.linkCopied' | transloco }}</div>
     }
   </div>
 
@@ -57,7 +57,7 @@
         <ng-content select="[info]"></ng-content>
       </div>
       <button [style.background]="startColor()" class="sheldon-card-info-button-close" (click)="closeInfo()">
-        Chiudi
+        {{ 'card.close' | transloco }}
       </button>
     </div>
   </div>
