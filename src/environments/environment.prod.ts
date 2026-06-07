@@ -11,4 +11,5 @@ export const environment = {
     comuniPoints: 'data/comuni.points.json',
     comuniPolygons: 'data/comuni.polygons.grid.json',
   },
+  categorie: ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'economia', 'sociale', 'societa']
 };

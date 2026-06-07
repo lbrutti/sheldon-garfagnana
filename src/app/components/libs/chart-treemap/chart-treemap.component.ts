@@ -157,12 +157,12 @@ export default class ChartTreemapComponent implements OnInit {
   protected onTileEnter(tile: TreemapTile, event: MouseEvent) {
     if (this.touchMode()) return;
     this.hoveredTile.set(tile);
-    this.updateTooltipPosition(event.clientX, event.clientY);
+    this.positionTooltip(event.clientX, event.clientY);
   }
 
   protected onTileMove(event: MouseEvent) {
     if (this.touchMode()) return;
-    this.updateTooltipPosition(event.clientX, event.clientY);
+    this.positionTooltip(event.clientX, event.clientY);
   }
 
   protected onTileLeave() {
@@ -179,9 +179,7 @@ export default class ChartTreemapComponent implements OnInit {
       this.hoveredTile.set(null);
     } else {
       this.hoveredTile.set(tile);
-      this.updateTooltipPosition(touch.clientX, touch.clientY);
-      // Re-clamp once the tooltip has rendered and its real size is known.
-      requestAnimationFrame(() => this.updateTooltipPosition(touch.clientX, touch.clientY));
+      this.positionTooltip(touch.clientX, touch.clientY);
     }
   }
 
@@ -192,26 +190,38 @@ export default class ChartTreemapComponent implements OnInit {
     this.touchMode.set(false);
   }
 
+  /**
+   * Override the raw event coordinates so the tooltip always renders inside the chart area.
+   * Clamps immediately with the current (or fallback) tooltip size, then re-clamps on the next
+   * frame once the tooltip has rendered and its real dimensions are measurable.
+   */
+  private positionTooltip(clientX: number, clientY: number) {
+    this.updateTooltipPosition(clientX, clientY);
+    requestAnimationFrame(() => this.updateTooltipPosition(clientX, clientY));
+  }
+
   /** Position the tooltip next to the pointer, clamped to stay within the treemap container. */
   private updateTooltipPosition(clientX: number, clientY: number) {
-    const offset = 12;
-    let x = clientX + offset;
-    let y = clientY + offset;
-
     const wrapper = this.wrapperRef()?.nativeElement;
-    if (wrapper) {
-      const bounds = wrapper.getBoundingClientRect();
-      const tip = this.tooltipRef()?.nativeElement.querySelector('.chart-tooltip') as HTMLElement | null;
-      const tipW = tip?.offsetWidth ?? 196;
-      const tipH = tip?.offsetHeight ?? 64;
-
-      // Flip to the other side of the pointer when it would overflow, then hard-clamp inside the wrapper.
-      if (x + tipW > bounds.right) x = clientX - offset - tipW;
-      x = Math.min(Math.max(x, bounds.left), Math.max(bounds.right - tipW, bounds.left));
-
-      if (y + tipH > bounds.bottom) y = clientY - offset - tipH;
-      y = Math.min(Math.max(y, bounds.top), Math.max(bounds.bottom - tipH, bounds.top));
+    if (!wrapper) {
+      this.pointer.set({x: clientX, y: clientY});
+      return;
     }
+
+    const offset = 12;
+    const bounds = wrapper.getBoundingClientRect();
+    const tip = this.tooltipRef()?.nativeElement.querySelector('.chart-tooltip') as HTMLElement | null;
+    const tipW = tip?.offsetWidth ?? 196;
+    const tipH = tip?.offsetHeight ?? 64;
+
+    // Flip to the other side of the pointer when it would overflow, then hard-clamp inside the wrapper.
+    let x = clientX + offset;
+    if (x + tipW > bounds.right) x = clientX - offset - tipW;
+    x = Math.min(Math.max(x, bounds.left), Math.max(bounds.right - tipW, bounds.left));
+
+    let y = clientY + offset;
+    if (y + tipH > bounds.bottom) y = clientY - offset - tipH;
+    y = Math.min(Math.max(y, bounds.top), Math.max(bounds.bottom - tipH, bounds.top));
 
     this.pointer.set({x, y});
   }
