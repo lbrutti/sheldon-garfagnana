@@ -4,6 +4,7 @@ import {
   ElementRef,
   Input,
   input,
+  OnDestroy,
   OnInit,
   signal,
   Signal,
@@ -51,7 +52,7 @@ export interface TreemapTile {
   templateUrl: './chart-treemap.component.html',
   styleUrl: './chart-treemap.component.scss',
 })
-export default class ChartTreemapComponent implements OnInit {
+export default class ChartTreemapComponent implements OnInit, OnDestroy {
 
   title = input<string>('');
   infoText = input<string>('');
@@ -76,7 +77,19 @@ export default class ChartTreemapComponent implements OnInit {
     return this.data().map(d => getRandomGradient(this.categoria(), '0deg'));
   });
 
+  private readonly scrollListener = () => {
+    if (this.touchMode()) {
+      this.hoveredTile.set(null);
+      this.touchMode.set(false);
+    }
+  };
+
   constructor(private readonly multiples: MultiplesPipe) {
+    window.addEventListener('scroll', this.scrollListener, {passive: true, capture: true});
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.scrollListener, true);
   }
 
   ngOnInit(): void {
@@ -175,7 +188,7 @@ export default class ChartTreemapComponent implements OnInit {
     event.preventDefault();
     const touch = event.changedTouches[0];
     this.touchMode.set(true);
-    if (this.hoveredTile()) {
+    if (this.hoveredTile() === tile) {
       this.hoveredTile.set(null);
     } else {
       this.hoveredTile.set(tile);
