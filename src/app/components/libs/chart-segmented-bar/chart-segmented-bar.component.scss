@@ -54,6 +54,9 @@
 
     &__label {
       transition: none;
+      font-size: 12px;
+      padding: 2px 5px 3px 5px;
+
     }
 
     // ── Hovered state ──────────────────────────────────────────────────────────
@@ -73,13 +76,14 @@
         word-break: keep-all;
         margin: 0;
         margin-right: 2px;
-
+        
       }
     }
 
     // ── Dimmed siblings ────────────────────────────────────────────────────────
     &--dimmed {
       filter: brightness(0.8) saturate(0.8);
+    
     }
   }
 
