@@ -6,6 +6,7 @@
 @use '@angular/material' as mat;
 @import 'maplibre-gl/dist/maplibre-gl.css';
 @import 'theme/variables';
+@import 'theme/fonts';
 
 html {
   height: 100%;
@@ -15,7 +16,7 @@ html {
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
       ),
-      typography: TASA Orbiter,
+      typography: tasaDeck,
       density: 0,
     )
   );
