@@ -2,8 +2,10 @@ import {
   Component,
   computed,
   effect,
+  ElementRef,
   inject,
   input,
+  OnDestroy,
   OnInit,
   output,
   signal,
@@ -87,7 +89,7 @@ function generateGradientShades(baseColor: string): [string, string, string, str
   templateUrl: './sheldon-mosaic-map.component.html',
   styleUrl: './sheldon-mosaic-map.component.scss',
 })
-export default class SheldonMosaicMapComponent implements OnInit {
+export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
 
   // ── Inputs ─────────────────────────────────────────────────────────────────
   title = input<string>('');
@@ -107,6 +109,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
 
   // Track the active theme so the choropleth shades re-read their CSS variables on change.
   private readonly theme = inject(ThemeService).theme;
+  private readonly elRef = inject(ElementRef<HTMLElement>);
 
   // ── State ──────────────────────────────────────────────────────────────────
   mapReady = signal(false);
@@ -120,6 +123,7 @@ export default class SheldonMosaicMapComponent implements OnInit {
   private hoveredFeatureId: string | number | null = null;
   private pinnedFeature: Feature<Polygon> | null = null;
   private pinnedTooltipPos: { x: number; y: number } | null = null;
+  private resizeObserver: ResizeObserver | null = null;
 
   // ── Computed ───────────────────────────────────────────────────────────────
 
@@ -251,7 +255,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
       if (!bb || !this.mapReady()) return;
       const map = untracked(() => this.mapInstance);
       if (!map) return;
-      map.setMaxBounds(bb);
       map.fitBounds(bb);
     });
   }
@@ -260,12 +263,19 @@ export default class SheldonMosaicMapComponent implements OnInit {
     if (this.auxReduce().length) {
       this.activeAuxReduce.set(this.auxReduce()[0]);
     }
+    this.resizeObserver = new ResizeObserver(() => this.mapInstance?.resize());
+    this.resizeObserver.observe(this.elRef.nativeElement);
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
   }
 
   // ── Map lifecycle ──────────────────────────────────────────────────────────
 
   onMapLoad(map: Map): void {
     this.mapInstance = map;
+    map.resize();
     this.mapReady.set(true);
   }
 
@@ -359,9 +369,6 @@ export default class SheldonMosaicMapComponent implements OnInit {
     this.activeAuxReduce.set(event.value as AuxReduceOption);
   }
 
-  logZoomLevel($event: MapLibreEvent<MouseEvent | TouchEvent | WheelEvent> & EventData): void {
-    console.log(`current zoom : ${$event.target.getZoom()}`);
-  }
 
   protected readonly getRandomGradient = getRandomGradient;
   protected readonly resolveColorVariable = resolveColorVariable;
