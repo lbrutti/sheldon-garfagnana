@@ -167,6 +167,7 @@ $control-height: 25px;
 
 // ── mobile: full-width unione select + categoria select instead of toggles ───
 @media (max-width: $breakpoint-sm) {
+
   form {
     flex-direction: column !important;
     gap: 8px;
@@ -175,13 +176,13 @@ $control-height: 25px;
     min-height: unset;
     margin-top: 20px;
     margin-bottom: 40px;
-    margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
+    //margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
   }
   :host {
     display: flex;
     flex-direction: column;
-    padding-left: 16px;
-    padding-right: 16px;
+    //padding-left: 16px;
+    //padding-right: 16px;
     //flex-direction: row;
     .search-container {
       display: flex;
@@ -205,7 +206,7 @@ $control-height: 25px;
     #select-unione,
     #select-categoria {
       display: block;
-      width: 100vw !important;
+      width: 100% !important;
     }
   }
 }
