@@ -1,11 +1,9 @@
 <sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
 
-<div class="sheldon-grid">
+<ngx-masonry class="sheldon-grid" [options]="masonryOptions">
   @for (setting of settings(); track setting.id; let idx = $index) {
     @if ($any(dataMap()[setting.data])) {
-
-
-      <div [class]="'tile tile--' + setting.tileWidth">
+      <div ngxMasonryItem [class]="'tile tile--' + setting.tileWidth">
 
         @switch (setting.tag) {
 
@@ -128,4 +126,4 @@
       </div>
     }
   }
-</div>
+</ngx-masonry>

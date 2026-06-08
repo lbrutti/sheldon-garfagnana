@@ -16,16 +16,23 @@ import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
 import camelcase from 'camelcase';
+import {NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components],
+  imports: [...components, NgxMasonryModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   providers: [DecimalPipe] // Add DecimalPipe to providers so it can be injected
 
 })
 export default class Dashboard implements OnInit {
+
+  protected masonryOptions: NgxMasonryOptions = {
+    gutter: 16,
+    percentPosition: true,
+    animations: {},
+  };
 
   protected settings = signal<WidgetSetting[]>([]);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
