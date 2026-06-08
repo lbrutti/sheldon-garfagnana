@@ -9,9 +9,11 @@
   background: black;
   padding-right: 2px;
 
+
   .label-title,
   .label-subtitle {
     overflow: hidden;
     text-overflow: ellipsis;
+    line-height: 14px;
   }
 }

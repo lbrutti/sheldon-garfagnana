@@ -1,7 +1,17 @@
 @font-face {
   font-family: 'tasaDeck';
   font-style: normal;
-  font-weight: 400 700;
+  font-weight: 400 500;
+  font-display: swap;
+  src:
+    url('/fonts/TASAOrbiterDeck-Medium.woff2') format('woff2'),
+    url('/fonts/TASAOrbiterDeck-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'tasaDeck';
+  font-style: normal;
+  font-weight: 600 700;
   font-display: swap;
   src:
     url('/fonts/TASAOrbiterDeck-SemiBold.woff2') format('woff2'),

@@ -16,6 +16,7 @@
     .mat-mdc-text-field-wrapper {
       padding: 0 !important;
       background: white;
+      margin-top: 8px;
     }
 
     input.mat-mdc-input-element {
@@ -47,6 +48,8 @@
       min-height: var(--filter-control-height) !important;
       padding-top: 0 !important;
       padding-bottom: 0 !important;
+      font-size: 12px;
+      padding-left: 8px;
     }
 
     .mdc-text-field {
