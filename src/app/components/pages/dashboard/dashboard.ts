@@ -1,11 +1,16 @@
 import {
+  AfterViewInit,
   Component,
   computed,
   effect,
+  OnDestroy,
   OnInit,
+  QueryList,
   signal,
   Signal,
   untracked,
+  ViewChild,
+  ViewChildren,
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
@@ -16,23 +21,31 @@ import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
 import camelcase from 'camelcase';
-import {NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
+import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 
 @Component({
   selector: 'sheldon-dashboard',
   imports: [...components, NgxMasonryModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
-  providers: [DecimalPipe] // Add DecimalPipe to providers so it can be injected
-
+  providers: [DecimalPipe]
 })
-export default class Dashboard implements OnInit {
+export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
+
+  @ViewChild(NgxMasonryComponent) private masonry!: NgxMasonryComponent;
+  @ViewChildren(NgxMasonryDirective) private masonryItems!: QueryList<NgxMasonryDirective>;
 
   protected masonryOptions: NgxMasonryOptions = {
     gutter: 16,
     percentPosition: true,
     animations: {},
   };
+
+  private resizeObserver = new ResizeObserver(() => {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    this.rafId = requestAnimationFrame(() => this.masonry?.layout());
+  });
+  private rafId?: number;
 
   protected settings = signal<WidgetSetting[]>([]);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
@@ -299,6 +312,20 @@ export default class Dashboard implements OnInit {
     //merge interventi e comuni per conteggio
     //ordine definito nei settaggi
     // .then((s: WidgetSetting[]) => this.settings.set(s));
+  }
+
+  ngAfterViewInit(): void {
+    this.masonryItems.changes.subscribe(() => {
+      this.resizeObserver.disconnect();
+      this.masonryItems.forEach(item =>
+        this.resizeObserver.observe(item.element.nativeElement)
+      );
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.resizeObserver.disconnect();
+    if (this.rafId) cancelAnimationFrame(this.rafId);
   }
 
   protected applyFilters($event: FilterOptionInterface[]) {
