@@ -5,14 +5,18 @@ $search-select-font: 'Funnel Display', sans-serif;
 
 :host {
   display: block;
-  padding-left: 16px;
-  padding-right: 16px;
+  //padding-left: 16px;
+  //padding-right: 16px;
+  margin-bottom: 12px;
   //flex-direction: row;
   .search-container {
     display: flex;
     flex-direction: column;
 
     sheldon-theme-switch {
+      padding-left: 0;
+      padding-right: 0;
+
       margin-left: auto;
       margin-top: 8px;
       margin-bottom: 4px;
@@ -168,6 +172,7 @@ $search-select-font: 'Funnel Display', sans-serif;
 
 // ── mobile: full-width unione select + categoria select instead of toggles ───
 @media (max-width: $breakpoint-sm) {
+
   form {
     flex-direction: column !important;
     gap: 8px;
@@ -176,13 +181,13 @@ $search-select-font: 'Funnel Display', sans-serif;
     min-height: unset;
     margin-top: 20px;
     margin-bottom: 40px;
-    margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
+    //margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
   }
   :host {
     display: flex;
     flex-direction: column;
-    padding-left: 16px;
-    padding-right: 16px;
+    //padding-left: 16px;
+    //padding-right: 16px;
     //flex-direction: row;
     .search-container {
       display: flex;
@@ -206,7 +211,7 @@ $search-select-font: 'Funnel Display', sans-serif;
     #select-unione,
     #select-categoria {
       display: block;
-      width: 100vw !important;
+      width: 100% !important;
     }
   }
 }
