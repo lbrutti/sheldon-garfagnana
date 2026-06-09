@@ -1,4 +1,4 @@
-import {Injectable, signal, WritableSignal} from '@angular/core';
+import {computed, Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DataInterface, InterventoInterface} from '../interfaces';
 import {csvToJson} from '../adapters';
@@ -19,6 +19,8 @@ export class ProjectsApiService {
     type: 'FeatureCollection',
     features: []
   });
+  private _loadingCount = signal(0);
+  readonly loading = computed(() => this._loadingCount() > 0);
 
   constructor(
     protected readonly httpClient: HttpClient,
@@ -27,45 +29,47 @@ export class ProjectsApiService {
 
   getPopolazione() {
     const url = this.getGVizURL(environment.sheets.spreadsheetId, environment.sheets.popolazioneGid, "SELECT * WHERE D = 'nati'");
-    this.httpClient.get(url, {
-      responseType:
-        'text'
-    }).subscribe((res: any) => {
-      let data: DataInterface[] = csvToJson(res) as DataInterface[];
-      this._popolazione.set(data);
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(url, {responseType: 'text'}).subscribe({
+      next: (res: any) => {
+        this._popolazione.set(csvToJson(res) as DataInterface[]);
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
     });
   }
 
   getInterventi() {
     const url = this.getGVizURL(environment.sheets.spreadsheetId, environment.sheets.interventiGid, "SELECT *");
-    this.httpClient.get(url, {
-      responseType:
-        'text'
-    }).subscribe((res: any) => {
-      let data: InterventoInterface[] = csvToJson(res) as InterventoInterface[];
-      this._interventi.set(data);
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(url, {responseType: 'text'}).subscribe({
+      next: (res: any) => {
+        this._interventi.set(csvToJson(res) as InterventoInterface[]);
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
     });
-
   }
 
   getComuniPoints() {
-    this.httpClient.get(environment.data.comuniPoints, {
-      responseType:
-        'json'
-    }).subscribe((res: any): void => {
-      console.log(res);
-      this._comuniPoints.set(res as FeatureCollection<Point>);
-
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.data.comuniPoints, {responseType: 'json'}).subscribe({
+      next: (res: any) => {
+        this._comuniPoints.set(res as FeatureCollection<Point>);
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
     });
   }
 
   getComuniPolygons() {
-    this.httpClient.get(environment.data.comuniPolygons, {
-      responseType:
-        'json'
-    }).subscribe((res: any): void => {
-      this._comuniPolygons.set(res as FeatureCollection<Polygon>);
-
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.data.comuniPolygons, {responseType: 'json'}).subscribe({
+      next: (res: any) => {
+        this._comuniPolygons.set(res as FeatureCollection<Polygon>);
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
     });
   }
 
