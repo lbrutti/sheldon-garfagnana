@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/chart-treemap/chart-treemap.component.scss"],
+  "sourcesContent": ["\n:host {\n  display: block;\n  width: 100%;\n\n  .treemap-wrapper {\n    position: relative;\n    width: 100%;\n    height: 400px;\n  }\n\n  .treemap-tile {\n    position: absolute;\n    box-sizing: border-box;\n    overflow: hidden;\n    cursor: default;\n    transition: left var(--chart-transition-duration) ease,\n      top var(--chart-transition-duration) ease,\n      width var(--chart-transition-duration) ease,\n      height var(--chart-transition-duration) ease,\n      opacity 0.15s ease;\n\n    &.dimmed {\n      //transition: opacity 0.15s ease;\n      //opacity: 0.35;\n      filter: brightness(0.75);\n    }\n  }\n\n  sheldon-two-lines-chart-label {\n    text-overflow: ellipsis;\n    padding: 2px 5px 2px 5px;\n    font-size: 12px;\n    margin: 0;\n  }\n}\n"],
+  "mappings": "AACA,MACE,QAAA,MACA,MAAA,KAEA,MAAA,CAAA,gBACE,SAAA,SACA,MAAA,KACA,OAAA,MAGF,MAAA,CAAA,aACE,SAAA,SACA,WAAA,WACA,SAAA,OACA,OAAA,QACA,WAAA,KAAA,IAAA,6BAAA,IAAA,CAAA,IAAA,IAAA,6BAAA,IAAA,CAAA,MAAA,IAAA,6BAAA,IAAA,CAAA,OAAA,IAAA,6BAAA,IAAA,CAAA,QAAA,KAAA,KAMA,MAAA,CAXF,YAWE,CAAA,OAGE,OAAA,WAAA,KAIJ,MAAA,8BACE,cAAA,SA7BJ,QA8BI,IAAA,IACA,UAAA,KA/BJ,OAgCI",
+  "names": []
+}
