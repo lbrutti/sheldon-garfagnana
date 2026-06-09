@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/chart-label/chart-label.component.scss"],
-  "sourcesContent": ["//@use \"@angular/material\" as mat;\n\n:host {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  max-height: 90%;\n  color: white;\n  background: black;\n  padding-right: 2px;\n}\n"],
-  "mappings": "AAEA,MACE,YAAA,OACA,SAAA,OACA,cAAA,SACA,WAAA,IACA,MAAA,KACA,WAAA,KACA,cAAA",
-  "names": []
-}
