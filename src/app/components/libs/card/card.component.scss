@@ -10,7 +10,6 @@
   box-sizing: border-box;
   justify-content: space-between;
   background: white;
-  overflow: hidden;
 
   .sheldon-card-title {
     font-weight: 700;
@@ -44,21 +43,17 @@
     }
   }
 
-  .sheldon-card-root {
-    display: flex;
-    flex-direction: column;
-  }
+  //.sheldon-card-content{
+  //  height: 100%;
+  //}
 
   // Positioning context for the info overlay — it covers the subheader + content.
   .sheldon-card-body {
     position: relative;
-    padding-left: 8px;
     font-family: tasaDeck, sans-serif;
     font-size: 13px;
     font-weight: 500;
     line-height: 140%;
-    display: flex;
-    flex-direction: column;
   }
 
   .sheldon-card-info {
