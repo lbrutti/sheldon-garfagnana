@@ -276,7 +276,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
       if (!bb || !this.mapReady()) return;
       const map = untracked(() => this.mapInstance);
       if (!map) return;
-      map.fitBounds(bb);
+      map.fitBounds(bb, { animate: false });
     });
   }
 
