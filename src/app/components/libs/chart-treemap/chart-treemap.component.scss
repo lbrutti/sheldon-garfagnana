@@ -14,7 +14,11 @@
     box-sizing: border-box;
     overflow: hidden;
     cursor: default;
-    transition: opacity 0.15s ease;
+    transition: left var(--chart-transition-duration) ease,
+      top var(--chart-transition-duration) ease,
+      width var(--chart-transition-duration) ease,
+      height var(--chart-transition-duration) ease,
+      opacity 0.15s ease;
 
     &.dimmed {
       //transition: opacity 0.15s ease;

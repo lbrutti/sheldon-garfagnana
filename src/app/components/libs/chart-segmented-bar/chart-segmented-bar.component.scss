@@ -38,7 +38,7 @@
     justify-content: flex-start;
     overflow: hidden;
     cursor: pointer;
-    transition: flex 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    transition: flex var(--chart-transition-duration) cubic-bezier(0.4, 0, 0.2, 1),
     filter 0.25s ease,
     box-shadow 0.25s ease;
     position: relative;

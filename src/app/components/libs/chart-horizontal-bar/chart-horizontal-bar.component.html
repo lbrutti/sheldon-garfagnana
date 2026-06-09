@@ -27,7 +27,7 @@
   </ng-container>
 
   <ng-container content>
-    @for (bar of bars(); track bar) {
+    @for (bar of bars(); track bar.label) {
       <div class="h-bar-container">
         <sheldon-chart-label
           text="{{bar.label}}"

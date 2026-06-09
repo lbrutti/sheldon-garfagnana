@@ -111,28 +111,23 @@ export default class ChartLineComponent {
 
 
   public chartOptions: Signal<ChartConfiguration<'line'>['options']> = computed(() => {
-    return {
-      //set bars horizontally
-      indexAxis: 'x',
-      // We use these empty structures as placeholders for dynamic theming.
-      scales: {
-        x: {
-          display: true,
+    const raw = getComputedStyle(document.documentElement)
+      .getPropertyValue('--chart-transition-duration')
+      .trim();
+    const animationDuration = raw.endsWith('ms')
+      ? parseFloat(raw)
+      : parseFloat(raw) * 1000 || 350;
 
-        },
-        y: {
-          display: false,
-        },
+    return {
+      animation: {duration: animationDuration},
+      indexAxis: 'x',
+      scales: {
+        x: {display: true},
+        y: {display: false},
       },
       plugins: {
-        legend: {
-          display: false,
-        },
-        // annotation: {
-        //   clip: true, // <-- critical: clips annotations to the chart area
-        //   annotations: this.annotationsSignal()
-        // },
-      }
+        legend: {display: false},
+      },
     };
   });
   public chartType = 'line' as const;
