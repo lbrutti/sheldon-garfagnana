@@ -18,8 +18,7 @@
     letter-spacing: 0;
     color: white;
     background: black;
-    padding-left: 5px;
-    padding-right: 5px;
+   padding: 2px 8px 2px 8px;
   }
 
   .sheldon-card-subheader {
@@ -40,7 +39,7 @@
 
     button {
       width: var(--mat-icon-button-width, 40px);
-      height: var(--mat-icon-button-heigth, 20px);
+      height: var(--mat-icon-button-heigth, 21px);
     }
   }
 
@@ -51,6 +50,11 @@
   // Positioning context for the info overlay — it covers the subheader + content.
   .sheldon-card-body {
     position: relative;
+    padding-left: 8px;
+    font-family: tasaDeck, sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 140%;
   }
 
   .sheldon-card-info {

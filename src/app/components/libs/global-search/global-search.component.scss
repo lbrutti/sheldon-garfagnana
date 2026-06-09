@@ -1,6 +1,7 @@
 @import "../../../../theme/variables.scss";
 
 $control-height: 25px;
+$search-select-font: 'Funnel Display', sans-serif;
 
 :host {
   display: block;
@@ -46,6 +47,10 @@ $control-height: 25px;
       .mat-mdc-select-placeholder,
       .mat-mdc-select-arrow {
         color: white;
+        font-family: $search-select-font;
+        font-weight: 800;
+        letter-spacing: -0.001em;
+        padding-left: 3px;
       }
 
       .mat-mdc-select-arrow-wrapper {
