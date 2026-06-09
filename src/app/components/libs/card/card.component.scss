@@ -10,6 +10,7 @@
   box-sizing: border-box;
   justify-content: space-between;
   background: white;
+  --sheldon-card-buttons-width: 80px;
 
   .sheldon-card-title {
     font-weight: 700;
@@ -28,14 +29,34 @@
     justify-content: space-between;
     flex-direction: row;
 
-    // mat-button-toggle-group projected into [subheader] inherits the same height token.
-    --mat-button-toggle-height: var(--filter-control-height, 18px) !important;
+    --mat-button-toggle-height: var(--mat-icon-button-heigth, 21px) !important;
+
+    ::ng-deep mat-button-toggle-group {
+      display: flex;
+      width: var(--sheldon-card-buttons-width);
+      box-sizing: border-box;
+
+      .mat-button-toggle {
+        flex: 1 1 0;
+        min-width: 0;
+
+        .mat-button-toggle-button {
+          height: var(--mat-icon-button-heigth, 21px);
+          line-height: var(--mat-icon-button-heigth, 21px);
+        }
+
+        .mat-button-toggle-label-content {
+          line-height: var(--mat-icon-button-heigth, 21px);
+          padding: 0 2px;
+        }
+      }
+    }
   }
 
   .sheldon-card-buttons {
     display: flex;
     align-items: center;
-    width: 80px;
+    width: var(--sheldon-card-buttons-width);
 
     button {
       width: var(--mat-icon-button-width, 40px);
