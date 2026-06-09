@@ -34,10 +34,12 @@ export class ThemeService {
 
   /** Update the theme, persist it, apply it to the DOM, and reflect it in the URL. */
   set(theme: Theme): void {
+    document.body.classList.add('sheldon-theme-transitioning');
     this.apply(theme);
     this.theme.set(theme);
     localStorage.setItem(STORAGE_KEY, theme);
     this.syncUrl(theme);
+    setTimeout(() => document.body.classList.remove('sheldon-theme-transitioning'), 400);
   }
 
   private parse(value: string | null): Theme | null {
