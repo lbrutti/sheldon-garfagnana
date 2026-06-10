@@ -1,0 +1,160 @@
+{
+  "datasets": [
+    {
+      "key": "interventiPerComune",
+      "type": "standard",
+      "mapping": {
+        "comune": "comune",
+        "importoTotale": "valore",
+        "inizio": "anno",
+        "unione": "unione",
+        "nome": "nome"
+      }
+    },
+    {
+      "key": "comuniConInterventi",
+      "type": "uniqueComuni"
+    },
+    {
+      "key": "interventiPerFine",
+      "type": "standard",
+      "mapping": {
+        "comune": "comune",
+        "importoTotale": "valore",
+        "fine": "anno",
+        "unione": "unione"
+      }
+    },
+    {
+      "key": "interventiPerInizio",
+      "type": "standard",
+      "mapping": {
+        "comune": "comune",
+        "importoTotale": "valore",
+        "inizio": "anno",
+        "unione": "unione"
+      }
+    },
+    {
+      "key": "interventiPerCategoria",
+      "type": "treemap",
+      "explodeOn": "categoria",
+      "mapping": {
+        "comune": "comune",
+        "importoTotale": "valore",
+        "inizio": "anno",
+        "unione": "unione",
+        "gruppi": ["categoria"]
+      }
+    },
+    {
+      "key": "interventiPerTarget",
+      "type": "treemap",
+      "explodeOn": "target",
+      "mapping": {
+        "comune": "comune",
+        "importoTotale": "valore",
+        "inizio": "anno",
+        "unione": "unione",
+        "gruppi": ["target"]
+      }
+    },
+    {
+      "key": "interventiPerTema",
+      "type": "treemap",
+      "explodeOn": "tema",
+      "mapping": {
+        "comune": "comune",
+        "importoTotale": "valore",
+        "inizio": "anno",
+        "unione": "unione",
+        "gruppi": ["tema"]
+      }
+    },
+    {
+      "key": "interventiPerTipologia",
+      "type": "treemap",
+      "explodeOn": "tipologia",
+      "mapping": {
+        "comune": "comune",
+        "importoTotale": "valore",
+        "inizio": "anno",
+        "unione": "unione",
+        "gruppi": ["tipologia"]
+      }
+    },
+    {
+      "key": "interventiPerFonte",
+      "type": "standard",
+      "explodeOn": "importoFonti",
+      "mapping": {
+        "comune": "comune",
+        "importoFonti": "valore",
+        "inizio": "anno",
+        "unione": "unione",
+        "nome": "nome"
+      }
+    },
+    {
+      "key": "interventiPerPartecipazione",
+      "type": "standard",
+      "explodeOn": "partecipazione",
+      "mapping": {
+        "comune": "comune",
+        "partecipazione": "valore",
+        "inizio": "anno",
+        "unione": "unione",
+        "nome": "nome"
+      }
+    },
+    {
+      "key": "interventiPerStato",
+      "type": "standard",
+      "explodeOn": "stato",
+      "mapping": {
+        "comune": "comune",
+        "stato": "nome",
+        "importoTotale": "valore",
+        "inizio": "anno",
+        "unione": "unione"
+      }
+    },
+    {
+      "key": "interventiPerUnione",
+      "type": "standard",
+      "explodeOn": "unione",
+      "mapping": {
+        "comune": "comune",
+        "unione": "valore",
+        "inizio": "anno",
+        "nome": "nome"
+      }
+    },
+    {
+      "key": "interventoRandomGarfagnana",
+      "type": "randomByUnion",
+      "unioneFilter": "Garfagnana"
+    },
+    {
+      "key": "interventoRandomLunigiana",
+      "type": "randomByUnion",
+      "unioneFilter": "Lunigiana"
+    },
+    {
+      "key": "interventoRandomSerchio",
+      "type": "randomByUnion",
+      "unioneFilter": "Media Valle del Serchio"
+    },
+    {
+      "key": "interventoRandomPistoiese",
+      "type": "randomByUnion",
+      "unioneFilter": "Appennino Pistoiese"
+    },
+    {
+      "key": "featureComuni",
+      "type": "mapMerge",
+      "explodeOn": "stato",
+      "groupByField": "stato"
+    }
+  ]
+}

@@ -4,3 +4,4 @@ export * from './interventoInterface';
 export * from './data.interface';
 
 export * from './mosaic-map.interface';
+export * from './dashboard-parsing-config.interface';

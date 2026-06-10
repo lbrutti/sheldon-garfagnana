@@ -9,7 +9,7 @@
       [dataset]="data()"
       [masterField]="masterField()"
       (filterChange)="onFilterChange($event)"/>
-<!--    <span class="list-count">{{ 'list.itemsCount' | transloco: { count: filteredData().length } }}</span>-->
+    <!--    <span class="list-count">{{ 'list.itemsCount' | transloco: { count: filteredData().length } }}</span>-->
   </ng-container>
   <ng-container content>
     <mat-list>
@@ -24,7 +24,7 @@
           </div>
         </mat-list-item>
         <mat-list-item>
-          <div class="list-row">
+          <div class="list-row" [style.font-weight]="'bold'">
             <span class="nome-container">{{ 'list.total' | transloco }}</span>
             <span class="valore-container">{{ totaleValore() | multiples }}</span>
           </div>

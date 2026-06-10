@@ -11,11 +11,23 @@ import {
   untracked,
   ViewChild,
   ViewChildren,
+  WritableSignal,
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
-import {DataInterface, FilterOptionInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
+import {
+  DashboardParsingConfig,
+  DataInterface,
+  FilterOptionInterface,
+  InterventoInterface,
+  TreemapDataInterface,
+} from '../../../interfaces';
 import {components} from '../../libs';
-import {parseInterventiToDataCollection, parseInterventiToTreeDataCollection,} from '../../../adapters';
+import {
+  InterventoToDataMapping,
+  InterventoToTreeDataMapping,
+  parseInterventiToDataCollection,
+  parseInterventiToTreeDataCollection,
+} from '../../../adapters';
 import {getExplodedData, shuffleArray} from '../../../utils';
 import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
@@ -48,6 +60,7 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
   private rafId?: number;
 
   protected settings = signal<WidgetSetting[]>([]);
+  protected parsingConfig = signal<DashboardParsingConfig | null>(null);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
 
@@ -127,171 +140,89 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
 
+  private dataSignals: Record<string, WritableSignal<any>> = {
+    interventiPerComune: this.interventiPerComune,
+    comuniConInterventi: this.comuniConInterventi,
+    interventiPerFine: this.interventiPerFine,
+    interventiPerInizio: this.interventiPerInizio,
+    interventiPerCategoria: this.interventiPerCategoria,
+    interventiPerTarget: this.interventiPerTarget,
+    interventiPerTema: this.interventiPerTema,
+    interventiPerTipologia: this.interventiPerTipologia,
+    interventiPerFonte: this.interventiPerFonte,
+    interventiPerPartecipazione: this.interventiPerPartecipazione,
+    interventiPerStato: this.interventiPerStato,
+    interventiPerUnione: this.interventiPerUnione,
+    interventoRandomGarfagnana: this.interventoRandomGarfagnana,
+    interventoRandomLunigiana: this.interventoRandomLunigiana,
+    interventoRandomSerchio: this.interventoRandomSerchio,
+    interventoRandomPistoiese: this.interventoRandomPistoiese,
+    featureComuni: this.featureComuni,
+  };
+
   constructor(protected apiService: ProjectsApiService) {
     this.categorieInterventi = shuffleArray(this.categorieInterventi);
 
     effect(() => {
       const interventi = this.interventiFiltrati();
+      const config = this.parsingConfig();
+      if (!config) return;
 
       untracked(() => {
-        const dataInterventiPerComune: DataInterface[] = parseInterventiToDataCollection(interventi, {
-          comune: 'comune',
-          importoTotale: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-          nome: 'nome',
-        });
-        const dataComuniConInterventi: DataInterface[] = Array.from(new Set(interventi.map(i => i.comune)))
-          .map((comune: string): DataInterface => ({
-            comune: comune,
-            valore: 1,
-            anno: 0,
-            unione: '_'
-          }));
-        const dataPerFine: DataInterface[] = parseInterventiToDataCollection(interventi, {
-          comune: 'comune',
-          importoTotale: 'valore',
-          fine: 'anno',
-          unione: 'unione',
-        });
-        const dataPerInizio: DataInterface[] = parseInterventiToDataCollection(interventi, {
-          comune: 'comune',
-          importoTotale: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-        });
-        // preprocessing per treemaps
-        const interventiDemuxPerCategoria: InterventoInterface[] = getExplodedData(interventi, 'categoria');
-        const treeMapInterventiPerCategoria: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
-          interventiDemuxPerCategoria, {
-            comune: 'comune',
-            importoTotale: 'valore',
-            inizio: 'anno',
-            unione: 'unione',
-            gruppi: ['categoria']
-          });
-        const interventiDemuxPerTarget: InterventoInterface[] = getExplodedData(interventi, 'target');
-        const treeMapInterventiPerTarget: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
-          interventiDemuxPerTarget, {
-            comune: 'comune',
-            importoTotale: 'valore',
-            inizio: 'anno',
-            unione: 'unione',
-            gruppi: ['target']
-          });
-        const interventiDemuxPerTema: InterventoInterface[] = getExplodedData(interventi, 'tema');
-        const treeMapInterventiPerTema: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
-          interventiDemuxPerTema, {
-            comune: 'comune',
-            importoTotale: 'valore',
-            inizio: 'anno',
-            unione: 'unione',
-            gruppi: ['tema']
-          });
-        const interventiDemuxPerTipologia: InterventoInterface[] = getExplodedData(interventi, 'tipologia');
-        const treeMapInterventiPerTipologia: TreemapDataInterface[] = parseInterventiToTreeDataCollection(
-          interventiDemuxPerTipologia, {
-            comune: 'comune',
-            importoTotale: 'valore',
-            inizio: 'anno',
-            unione: 'unione',
-            gruppi: ['tipologia']
-          });
-
-        //vanno spacchettati per fonte
-        const interventiDemuxPerFonte: InterventoInterface[] = getExplodedData(interventi, 'importoFonti');
-        const dataInterventiPerFonte: DataInterface[] = parseInterventiToDataCollection(interventiDemuxPerFonte, {
-          comune: 'comune',
-          importoFonti: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-          nome: 'nome'
-        });
-
-        const interventiDemuxPerPartecipazione: InterventoInterface[] = getExplodedData(interventi, 'partecipazione');
-        const dataInterventiPerPartecipazione = parseInterventiToDataCollection(interventiDemuxPerPartecipazione, {
-          comune: 'comune',
-          partecipazione: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-          nome: 'nome'
-        });
-        const interventiDemuxPerStato: InterventoInterface[] = getExplodedData(interventi, 'stato');
-        const dataInterventiPerStato = parseInterventiToDataCollection(interventiDemuxPerStato, {
-          comune: 'comune',
-          stato: 'nome',
-          importoTotale: 'valore',
-          inizio: 'anno',
-          unione: 'unione',
-        });
-        const interventionDemuxPerUnione: InterventoInterface[] = getExplodedData(interventi, 'unione');
-        const dataInterventiPerUnione = parseInterventiToDataCollection(interventionDemuxPerUnione, {
-          comune: 'comune',
-          unione: 'valore',
-          inizio: 'anno',
-          nome: 'nome'
-        });
-
-        this.interventiPerComune.set(dataInterventiPerComune);
-        this.interventiPerFine.set(dataPerFine);
-        this.interventiPerInizio.set(dataPerInizio);
-        this.comuniConInterventi.set(dataComuniConInterventi);
-
-        //treemaps signals
-        this.interventiPerCategoria.set(treeMapInterventiPerCategoria);
-        this.interventiPerTarget.set(treeMapInterventiPerTarget);
-        this.interventiPerTema.set(treeMapInterventiPerTema);
-        this.interventiPerTipologia.set(treeMapInterventiPerTipologia);
-
-        // stacks
-        this.interventiPerFonte.set(dataInterventiPerFonte);
-        this.interventiPerPartecipazione.set(dataInterventiPerPartecipazione);
-        this.interventiPerStato.set(dataInterventiPerStato);
-        this.interventiPerUnione.set(dataInterventiPerUnione);
-
-        //random per dettagli
-
-        const interventiGarfagnana = shuffleArray(
-          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Garfagnana')
-        )[0];
-        const interventiLunigiana = shuffleArray(
-          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Lunigiana')
-        )[0];
-        const interventiSerchio = shuffleArray(
-          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Media Valle del Serchio')
-        )[0];
-        const interventiPistoiese = shuffleArray(
-          this.interventiFiltrati().filter((i: InterventoInterface) => i.unione === 'Appennino Pistoiese')
-        )[0];
-        this.interventoRandomGarfagnana.set(interventiGarfagnana);
-        this.interventoRandomLunigiana.set(interventiLunigiana);
-        this.interventoRandomSerchio.set(interventiSerchio);
-        this.interventoRandomPistoiese.set(interventiPistoiese);
-
-        //per mappa: merge interventi con dataset poligoni comuni
-        const comuniMap = new Map();
-        interventiDemuxPerStato.map(i => {
-          if (!comuniMap.has(i.comune)) {
-            comuniMap.set(i.comune, {});
+        const explodedCache = new Map<string, InterventoInterface[]>();
+        const getExploded = (field: string): InterventoInterface[] => {
+          if (!explodedCache.has(field)) {
+            explodedCache.set(field, getExplodedData(interventi, field));
           }
-          const counterStati = comuniMap.get(i.comune);
-          const camelStato = camelcase(i.stato);
-          if (!counterStati[camelStato]) {
-            counterStati[camelStato] = 1;
-          } else {
-            counterStati[camelStato]++;
-            comuniMap.set(i.comune, counterStati)
-          }
-        });
-        const updatedFeats = JSON.parse(JSON.stringify(this.comuniPolygons())).features.map((f: any) => {
-          const totaleComune = (Object.values(comuniMap.get((f.properties as any).name) ?? {}) as number[])
-            .reduce((a: number, b: number): number => (a + b), 0);
-          f.properties = {...f.properties, ...comuniMap.get((f.properties as any).name), totale: totaleComune};
-          console.log(totaleComune);
-          return f;
-        });
+          return explodedCache.get(field)!;
+        };
 
-        this.featureComuni.set({type: "FeatureCollection", features: updatedFeats});
+        for (const entry of config.datasets) {
+          const sig = this.dataSignals[entry.key];
+          if (!sig) continue;
+
+          switch (entry.type) {
+            case 'standard': {
+              const source = entry.explodeOn ? getExploded(entry.explodeOn) : interventi;
+              sig.set(parseInterventiToDataCollection(source, entry.mapping as InterventoToDataMapping));
+              break;
+            }
+            case 'treemap': {
+              const source = getExploded(entry.explodeOn);
+              sig.set(parseInterventiToTreeDataCollection(source, entry.mapping as InterventoToTreeDataMapping));
+              break;
+            }
+            case 'uniqueComuni': {
+              sig.set(
+                Array.from(new Set(interventi.map(i => i.comune)))
+                  .map((comune): DataInterface => ({comune, valore: 1, anno: 0, unione: '_'}))
+              );
+              break;
+            }
+            case 'randomByUnion': {
+              sig.set(shuffleArray(interventi.filter(i => i.unione === entry.unioneFilter))[0]);
+              break;
+            }
+            case 'mapMerge': {
+              const exploded = getExploded(entry.explodeOn);
+              const comuniMap = new Map<string, Record<string, number>>();
+              exploded.forEach(i => {
+                if (!comuniMap.has(i.comune)) comuniMap.set(i.comune, {});
+                const counts = comuniMap.get(i.comune)!;
+                const key = camelcase((i as any)[entry.groupByField]);
+                counts[key] = (counts[key] ?? 0) + 1;
+              });
+              const updatedFeats = JSON.parse(JSON.stringify(this.comuniPolygons())).features.map((f: any) => {
+                const totale = (Object.values(comuniMap.get(f.properties.name) ?? {}) as number[])
+                  .reduce((a: number, b: number) => a + b, 0);
+                f.properties = {...f.properties, ...comuniMap.get(f.properties.name), totale};
+                return f;
+              });
+              sig.set({type: 'FeatureCollection', features: updatedFeats});
+              break;
+            }
+          }
+        }
       });
     });
   }
@@ -300,18 +231,17 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     fetch('settings/dashboardSettings.json')
       .then(r => r.json())
-      //random tiles
       .then((s: WidgetSetting[]) => {
         const shuffled = shuffleArray(s).sort((a, b) => a.tileWidth - b.tileWidth);
-        return this.settings.set(shuffled)
+        return this.settings.set(shuffled);
       });
+    fetch('settings/dashboardParsingConfig.json')
+      .then(r => r.json())
+      .then((config: DashboardParsingConfig) => this.parsingConfig.set(config));
     this.apiService.getInterventi();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;
     this.comuniPolygons = this.apiService.comuniPolygons;
-    //merge interventi e comuni per conteggio
-    //ordine definito nei settaggi
-    // .then((s: WidgetSetting[]) => this.settings.set(s));
   }
 
   ngAfterViewInit(): void {
