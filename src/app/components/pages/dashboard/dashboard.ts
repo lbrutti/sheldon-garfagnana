@@ -15,7 +15,6 @@ import {
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {
-  DashboardParsingConfig,
   DataInterface,
   FilterOptionInterface,
   InterventoInterface,
@@ -49,7 +48,8 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   protected masonryOptions: NgxMasonryOptions = {
     gutter: 16,
-    percentPosition: true,
+    columnWidth: 96,
+    percentPosition: false,
     animations: {},
   };
 
@@ -60,7 +60,6 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
   private rafId?: number;
 
   protected settings = signal<WidgetSetting[]>([]);
-  protected parsingConfig = signal<DashboardParsingConfig | null>(null);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
 
@@ -164,8 +163,16 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     this.categorieInterventi = shuffleArray(this.categorieInterventi);
 
     effect(() => {
+      const raw = this.apiService.dashboardSettings();
+      if (!raw.length) return;
+      untracked(() => {
+        this.settings.set(shuffleArray([...raw]).sort((a, b) => a.tileWidth - b.tileWidth));
+      });
+    });
+
+    effect(() => {
       const interventi = this.interventiFiltrati();
-      const config = this.parsingConfig();
+      const config = this.apiService.dashboardParsingConfig();
       if (!config) return;
 
       untracked(() => {
@@ -229,15 +236,8 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit(): void {
-    fetch('settings/dashboardSettings.json')
-      .then(r => r.json())
-      .then((s: WidgetSetting[]) => {
-        const shuffled = shuffleArray(s).sort((a, b) => a.tileWidth - b.tileWidth);
-        return this.settings.set(shuffled);
-      });
-    fetch('settings/dashboardParsingConfig.json')
-      .then(r => r.json())
-      .then((config: DashboardParsingConfig) => this.parsingConfig.set(config));
+    this.apiService.getDashboardSettings();
+    this.apiService.getDashboardParsingConfig();
     this.apiService.getInterventi();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;

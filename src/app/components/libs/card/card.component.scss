@@ -19,7 +19,10 @@
     letter-spacing: 0.6px;
     color: white;
     background: black;
-   padding: 2px 8px 2px 8px;
+    padding: 1px 8px 1px 8px;
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    white-space: nowrap;
   }
 
   .sheldon-card-subheader {
