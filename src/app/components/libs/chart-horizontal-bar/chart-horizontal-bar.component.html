@@ -1,4 +1,4 @@
-<sheldon-card
+<sheldon-card class="height-l"
               [categoria]="categoria()"
               [infoText]="infoText()"
               [cardId]="cardId()">
@@ -27,18 +27,20 @@
   </ng-container>
 
   <ng-container content>
-    @for (bar of bars(); track bar.label) {
-      <div class="h-bar-container">
-        <sheldon-chart-label
-          text="{{bar.label}}"
-          sub="{{bar.value|multiples}}"/>
-        <div class="h-bar"
-             [style.width.%]="bar.pct"
-             [style.min-height]="'var(--min-bar-height, 96px)'"
-             [style.background]="bar.background">
+    <div class="h-bars-container">
+      @for (bar of bars(); track bar.label) {
+        <div class="h-bar-container">
+          <sheldon-chart-label
+            text="{{bar.label}}"
+            sub="{{bar.value|multiples}}"/>
+          <div class="h-bar"
+               [style.width.%]="bar.pct"
+               [style.min-height]="'var(--min-bar-height, 96px)'"
+               [style.background]="bar.background">
+          </div>
         </div>
-      </div>
-    }
+      }
+    </div>
 
   </ng-container>
 </sheldon-card>

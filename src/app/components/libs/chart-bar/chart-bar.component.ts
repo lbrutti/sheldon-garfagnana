@@ -1,6 +1,6 @@
 import {
   Component,
-  computed, Input,
+  computed,
   input,
   InputSignal,
   OnInit,
@@ -8,7 +8,7 @@ import {
   Signal,
 } from '@angular/core';
 import CardComponent from '../card/card.component';
-import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
+import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getRandomGradient, getReducedValueByLabel} from '../../../utils';
@@ -29,8 +29,6 @@ export interface BarItem {
   selector: 'sheldon-chart-bars',
   imports: [
     CardComponent,
-    MatButtonToggleGroup,
-    MatButtonToggle,
     DynamicFilterComponent,
     SortToggle,
     ChartLabelComponent,

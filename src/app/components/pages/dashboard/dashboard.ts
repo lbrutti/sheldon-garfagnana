@@ -50,6 +50,7 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     gutter: 16,
     columnWidth: 96,
     percentPosition: false,
+    fitWidth:true,
     animations: {},
   };
 

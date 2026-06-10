@@ -90,3 +90,12 @@ button {
     cursor: pointer !important;
   }
 }
+
+// Widget height utilities — apply on a .tile (or any wrapping element).
+// Sets both the element height and a CSS variable that sheldon-card reads via
+// inheritance, so the card fills the constrained height even when nested inside
+// a widget component.
+.height-sm { --sheldon-tile-height: 184px; height: 184px; }
+.height-m  { --sheldon-tile-height: 254px; height: 254px; }
+.height-l  { --sheldon-tile-height: 304px; height: 304px; }
+.height-xl { --sheldon-tile-height: 568px; height: 568px; }

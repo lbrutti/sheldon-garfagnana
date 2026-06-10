@@ -1,7 +1,8 @@
-<sheldon-card style="min-height: 471px"
-              [categoria]="categoria()"
-              [infoText]="infoText()"
-              [cardId]="cardId()">
+<sheldon-card
+  class="height-l"
+  [categoria]="categoria()"
+  [infoText]="infoText()"
+  [cardId]="cardId()">
   <ng-container title>{{ this.title() || ('chart.treemap' | transloco) }}</ng-container>
   <ng-container subheader>
 
