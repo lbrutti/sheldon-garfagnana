@@ -1,0 +1,18 @@
+key,type,mapping,explodeOn,unioneFilter,groupByField
+interventiPerComune,standard,"{""comune"":""comune"",""importoTotale"":""valore"",""inizio"":""anno"",""unione"":""unione"",""nome"":""nome""}",,,
+comuniConInterventi,uniqueComuni,,,,
+interventiPerFine,standard,"{""comune"":""comune"",""importoTotale"":""valore"",""fine"":""anno"",""unione"":""unione""}",,,
+interventiPerInizio,standard,"{""comune"":""comune"",""importoTotale"":""valore"",""inizio"":""anno"",""unione"":""unione""}",,,
+interventiPerCategoria,treemap,"{""comune"":""comune"",""importoTotale"":""valore"",""inizio"":""anno"",""unione"":""unione"",""gruppi"":[""categoria""]}",categoria,,
+interventiPerTarget,treemap,"{""comune"":""comune"",""importoTotale"":""valore"",""inizio"":""anno"",""unione"":""unione"",""gruppi"":[""target""]}",target,,
+interventiPerTema,treemap,"{""comune"":""comune"",""importoTotale"":""valore"",""inizio"":""anno"",""unione"":""unione"",""gruppi"":[""tema""]}",tema,,
+interventiPerTipologia,treemap,"{""comune"":""comune"",""importoTotale"":""valore"",""inizio"":""anno"",""unione"":""unione"",""gruppi"":[""tipologia""]}",tipologia,,
+interventiPerFonte,standard,"{""comune"":""comune"",""importoFonti"":""valore"",""inizio"":""anno"",""unione"":""unione"",""nome"":""nome""}",importoFonti,,
+interventiPerPartecipazione,standard,"{""comune"":""comune"",""partecipazione"":""valore"",""inizio"":""anno"",""unione"":""unione"",""nome"":""nome""}",partecipazione,,
+interventiPerStato,standard,"{""comune"":""comune"",""stato"":""nome"",""importoTotale"":""valore"",""inizio"":""anno"",""unione"":""unione""}",stato,,
+interventiPerUnione,standard,"{""comune"":""comune"",""unione"":""valore"",""inizio"":""anno"",""nome"":""nome""}",unione,,
+interventoRandomGarfagnana,randomByUnion,,,Garfagnana,
+interventoRandomLunigiana,randomByUnion,,,Lunigiana,
+interventoRandomSerchio,randomByUnion,,,Media Valle del Serchio,
+interventoRandomPistoiese,randomByUnion,,,Appennino Pistoiese,
+featureComuni,mapMerge,,stato,,stato

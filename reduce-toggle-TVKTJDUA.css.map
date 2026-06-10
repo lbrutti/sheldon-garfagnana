@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/reduce-toggle/reduce-toggle.scss"],
+  "sourcesContent": [":host {\n  margin-left: auto;\n  --mat-button-toggle-height: var(--mat-icon-button-heigth, 21px);\n  --mat-button-toggle-selected-state-text-color: white;\n  --mat-button-toggle-selected-state-background-color: black;\n  width: 80px;\n\n  mat-button-toggle {\n    min-width: 20px;\n    max-width: 60px;\n    width: auto;\n\n\n    span {\n      width: auto;\n      padding-right: 5px;\n      padding-left: 5px;\n    }\n\n    &:last-child {\n      background: red !important;\n      width: fit-content;\n    }\n  }\n}\n"],
+  "mappings": "AAAA,MACE,YAAA,KACA,4BAAA,IAAA,wBAAA,EAAA,MACA,+CAAA,MACA,qDAAA,MACA,MAAA,KAEA,MAAA,kBACE,UAAA,KACA,UAAA,KACA,MAAA,KAGA,MAAA,kBAAA,KACE,MAAA,KACA,cAAA,IACA,aAAA,IAGF,MAAA,iBAAA,YACE,WAAA,cACA,MAAA",
+  "names": []
+}
