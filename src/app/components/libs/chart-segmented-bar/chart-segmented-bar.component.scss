@@ -59,24 +59,13 @@
 
     }
 
-    // ── Hovered state ──────────────────────────────────────────────────────────
-    // flex value is set inline via [style.flex] binding in the template
+    // ── Expanded state (opt-in via expandOnHover input) ───────────────────────
     &--hovered {
       z-index: 1;
       overflow: visible;
 
       .pop-segment__content {
         overflow: visible;
-      }
-
-      .pop-segment__label {
-        overflow: visible;
-        text-overflow: clip;
-        white-space: nowrap;
-        word-break: keep-all;
-        margin: 0;
-        margin-right: 2px;
-        
       }
     }
 

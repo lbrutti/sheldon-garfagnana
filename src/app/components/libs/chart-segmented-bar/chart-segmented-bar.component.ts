@@ -1,22 +1,28 @@
 import {
   Component,
-  signal,
   computed,
-  ChangeDetectionStrategy, input, InputSignal, OnInit, Signal, Input,
+  signal,
+  ElementRef,
+  input,
+  InputSignal,
+  OnDestroy,
+  OnInit,
+  Signal,
+  viewChild,
 } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
-import {components, DynamicFilterComponent} from '../index';
+import {DynamicFilterComponent} from '../index';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
-import {ChartData} from 'chart.js';
 import {getRandomGradient, getReducedValue, getReducedValueByLabel} from '../../../utils';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
 import {MultiplesPipe} from '../../../pipes';
 import {TranslocoModule} from '@jsverse/transloco';
+import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 
 export interface SegmentInterface {
   label: string;
@@ -39,19 +45,18 @@ export interface SegmentInterface {
     SortToggle,
     ReduceToggleComponent,
     ChartTwoLinesLabelComponent,
-    TranslocoModule
+    TranslocoModule,
+    ChartTooltipComponent,
   ],
   providers: [MultiplesPipe],
   templateUrl: './chart-segmented-bar.component.html',
   styleUrls: ['./chart-segmented-bar.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export default class ChartSegmentedBarComponent implements OnInit {
+export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
   readonly title = input<string>('');
   readonly infoText = input<string>('');
   readonly cardId = input<string>('');
 
-  readonly hoveredIndex = signal<number | null>(null);
   labelField = input<string>('nome');
   data = input<DataInterface[]>([]);
   currentReduce = signal<{ campo: string, reduceBy: string } | null>(null);
@@ -60,6 +65,8 @@ export default class ChartSegmentedBarComponent implements OnInit {
   groupBy = input<string | keyof DataInterface>('comune');
   limit = input<number>(15);
   categoria = input<string>('');
+
+  expandOnHover = input<boolean>(false);
 
   showSorting = input<boolean>(false);
   sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
@@ -72,6 +79,23 @@ export default class ChartSegmentedBarComponent implements OnInit {
     return this.filterBy() !== null ? this.filterBy().split('|') : [];
   });
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
+
+  // ── Hover state ───────────────────────────────────────────────────────────────
+  protected hoveredSegment = signal<SegmentInterface | null>(null);
+
+  // ── Hover / touch tooltip ─────────────────────────────────────────────────────
+  private readonly wrapperRef = viewChild<ElementRef<HTMLElement>>('wrapper');
+  private readonly tooltipRef = viewChild(ChartTooltipComponent, {read: ElementRef});
+
+  protected pointer = signal<{ x: number; y: number }>({x: 0, y: 0});
+  protected touchMode = signal<boolean>(false);
+
+  private readonly scrollListener = () => {
+    if (this.touchMode()) {
+      this.hoveredSegment.set(null);
+      this.touchMode.set(false);
+    }
+  };
 
   segments: Signal<SegmentInterface[]> = computed((): any[] => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
@@ -105,29 +129,92 @@ export default class ChartSegmentedBarComponent implements OnInit {
   });
 
   constructor(private readonly multiples: MultiplesPipe) {
+    window.addEventListener('scroll', this.scrollListener, {passive: true, capture: true});
   }
 
   ngOnInit(): void {
-    this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()})
+    this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()});
     this.sortDirection.set(this.defaultSortDirection());
   }
 
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.scrollListener, true);
+  }
+
   getGroupedKeys(grouped: any): string[] {
-    const groupKeys = this.sortBy() === 'category' ? Object.keys(grouped).sort((a, b) => `${a}`.localeCompare(`${b}`)) : Object.keys(grouped).sort((a, b) => {
-      return getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy) - getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy);
-    });
-    if ((!this.showSorting() && (this.defaultSortDirection() === 'desc')) || (this.showSorting() && this.sortDirection() === 'desc')) {
+    const groupKeys = this.sortBy() === 'category'
+      ? Object.keys(grouped).sort((a, b) => `${a}`.localeCompare(`${b}`))
+      : Object.keys(grouped).sort((a, b) => {
+        return getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy) -
+          getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy);
+      });
+    if ((!this.showSorting() && (this.defaultSortDirection() === 'desc')) ||
+      (this.showSorting() && this.sortDirection() === 'desc')) {
       groupKeys.reverse();
     }
     return this.limit() ? groupKeys.slice(0, this.limit()) : groupKeys;
   }
 
-  onSegmentHover(index: number): void {
-    this.hoveredIndex.set(index);
+  protected onSegmentEnter(seg: SegmentInterface, event: MouseEvent): void {
+    if (this.touchMode()) return;
+    this.hoveredSegment.set(seg);
+    this.positionTooltip(event.clientX, event.clientY);
   }
 
-  onSegmentLeave(): void {
-    this.hoveredIndex.set(null);
+  protected onSegmentMove(event: MouseEvent): void {
+    if (this.touchMode()) return;
+    this.positionTooltip(event.clientX, event.clientY);
+  }
+
+  protected onSegmentLeave(): void {
+    if (this.touchMode()) return;
+    this.hoveredSegment.set(null);
+  }
+
+  protected onSegmentTouch(seg: SegmentInterface, event: TouchEvent): void {
+    event.preventDefault();
+    const touch = event.changedTouches[0];
+    this.touchMode.set(true);
+    if (this.hoveredSegment() === seg) {
+      this.hoveredSegment.set(null);
+    } else {
+      this.hoveredSegment.set(seg);
+      this.positionTooltip(touch.clientX, touch.clientY);
+    }
+  }
+
+  protected onTooltipClick(): void {
+    if (!this.touchMode()) return;
+    this.hoveredSegment.set(null);
+    this.touchMode.set(false);
+  }
+
+  private positionTooltip(clientX: number, clientY: number) {
+    this.updateTooltipPosition(clientX, clientY);
+    requestAnimationFrame(() => this.updateTooltipPosition(clientX, clientY));
+  }
+
+  private updateTooltipPosition(clientX: number, clientY: number) {
+    const wrapper = this.wrapperRef()?.nativeElement;
+    if (!wrapper) {
+      this.pointer.set({x: clientX, y: clientY});
+      return;
+    }
+    const offset = 12;
+    const bounds = wrapper.getBoundingClientRect();
+    const tip = this.tooltipRef()?.nativeElement.querySelector('.chart-tooltip') as HTMLElement | null;
+    const tipW = tip?.offsetWidth ?? 196;
+    const tipH = tip?.offsetHeight ?? 64;
+
+    let x = clientX + offset;
+    if (x + tipW > bounds.right) x = clientX - offset - tipW;
+    x = Math.min(Math.max(x, bounds.left), Math.max(bounds.right - tipW, bounds.left));
+
+    let y = clientY + offset;
+    if (y + tipH > bounds.bottom) y = clientY - offset - tipH;
+    y = Math.min(Math.max(y, bounds.top), Math.max(bounds.bottom - tipH, bounds.top));
+
+    this.pointer.set({x, y});
   }
 
   formatCount(count: number): string {
@@ -153,5 +240,4 @@ export default class ChartSegmentedBarComponent implements OnInit {
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value);
   }
-
 }

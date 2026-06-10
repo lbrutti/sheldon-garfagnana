@@ -14,6 +14,12 @@
 
   .h-bar-container {
     position: relative;
+    transition: filter 0.15s ease;
+    cursor: pointer;
+
+    &.dimmed {
+      filter: brightness(0.75);
+    }
 
     sheldon-chart-label {
       position: absolute;

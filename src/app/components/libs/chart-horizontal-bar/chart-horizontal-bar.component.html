@@ -27,12 +27,19 @@
   </ng-container>
 
   <ng-container content>
-    <div class="h-bars-container">
+    <div class="h-bars-container" #wrapper>
       @for (bar of bars(); track bar.label) {
-        <div class="h-bar-container">
-          <sheldon-chart-label
-            text="{{bar.label}}"
-            sub="{{bar.value|multiples}}"/>
+        <div class="h-bar-container"
+             [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar"
+             (mouseenter)="onBarEnter(bar, $event)"
+             (mousemove)="onBarMove($event)"
+             (mouseleave)="onBarLeave()"
+             (touchstart)="onBarTouch(bar, $event)">
+          @if (hoveredBar() !== bar) {
+            <sheldon-chart-label
+              text="{{bar.label}}"
+              sub="{{bar.value|multiples}}"/>
+          }
           <div class="h-bar"
                [style.width.%]="bar.pct"
                [style.min-height]="'var(--min-bar-height, 96px)'"
@@ -42,5 +49,15 @@
       }
     </div>
 
+    <sheldon-chart-tooltip
+      [visible]="hoveredBar() !== null"
+      [interactive]="touchMode()"
+      [text]="hoveredBar()?.label ?? ''"
+      [sub]="hoveredBar() ? (hoveredBar()!.value | multiples) : ''"
+      [x]="pointer().x"
+      [y]="pointer().y"
+      [offsetX]="0"
+      [offsetY]="0"
+      (click)="onTooltipClick()"/>
   </ng-container>
 </sheldon-card>

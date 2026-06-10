@@ -1,11 +1,14 @@
 import {
   Component,
   computed,
+  ElementRef,
   input,
   InputSignal,
+  OnDestroy,
   OnInit,
   signal,
   Signal,
+  viewChild,
 } from '@angular/core';
 import CardComponent from '../card/card.component';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
@@ -17,12 +20,14 @@ import ReduceByDeclaration from '../../../interfaces/reduce-by-declaration.inter
 import ChartLabelComponent from '../chart-label/chart-label.component';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import {TranslocoModule} from '@jsverse/transloco';
+import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
+import {MultiplesPipe} from '../../../pipes';
 
 export interface BarItem {
   label: string;
   value: number;
   pct: number;
-  background: string
+  background: string;
 }
 
 @Component({
@@ -34,11 +39,13 @@ export interface BarItem {
     ChartLabelComponent,
     ReduceToggleComponent,
     TranslocoModule,
+    ChartTooltipComponent,
+    MultiplesPipe,
   ],
   templateUrl: './chart-bar.component.html',
   styleUrl: './chart-bar.component.scss',
 })
-export default class ChartBarComponent implements OnInit {
+export default class ChartBarComponent implements OnInit, OnDestroy {
 
   title = input<string>('');
   infoText = input<string>('');
@@ -65,8 +72,31 @@ export default class ChartBarComponent implements OnInit {
 
   currentReduce = signal<ReduceByDeclaration | null>(null);
 
+  // ── Hover / touch tooltip ─────────────────────────────────────────────────────
+  protected readonly wrapperRef = viewChild<ElementRef<HTMLElement>>('wrapper');
+  protected readonly tooltipRef = viewChild(ChartTooltipComponent, {read: ElementRef});
+
+  protected hoveredBar = signal<BarItem | null>(null);
+  protected pointer = signal<{ x: number; y: number }>({x: 0, y: 0});
+  protected touchMode = signal<boolean>(false);
+
+  private readonly scrollListener = () => {
+    if (this.touchMode()) {
+      this.hoveredBar.set(null);
+      this.touchMode.set(false);
+    }
+  };
+
+  constructor() {
+    window.addEventListener('scroll', this.scrollListener, {passive: true, capture: true});
+  }
+
   ngOnInit(): void {
     this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()});
+  }
+
+  ngOnDestroy(): void {
+    window.removeEventListener('scroll', this.scrollListener, true);
   }
 
   gradients: Signal<string[]> = computed(() => this.data().map(d => getRandomGradient(this.categoria(), '0deg')));
@@ -115,6 +145,68 @@ export default class ChartBarComponent implements OnInit {
     return this.limit() ? groupKeys.slice(0, this.limit()) : groupKeys;
   }
 
+  protected onBarEnter(bar: BarItem, event: MouseEvent) {
+    if (this.touchMode()) return;
+    this.hoveredBar.set(bar);
+    this.positionTooltip(event.clientX, event.clientY);
+  }
+
+  protected onBarMove(event: MouseEvent) {
+    if (this.touchMode()) return;
+    this.positionTooltip(event.clientX, event.clientY);
+  }
+
+  protected onBarLeave() {
+    if (this.touchMode()) return;
+    this.hoveredBar.set(null);
+  }
+
+  protected onBarTouch(bar: BarItem, event: TouchEvent) {
+    event.preventDefault();
+    const touch = event.changedTouches[0];
+    this.touchMode.set(true);
+    if (this.hoveredBar() === bar) {
+      this.hoveredBar.set(null);
+    } else {
+      this.hoveredBar.set(bar);
+      this.positionTooltip(touch.clientX, touch.clientY);
+    }
+  }
+
+  protected onTooltipClick() {
+    if (!this.touchMode()) return;
+    this.hoveredBar.set(null);
+    this.touchMode.set(false);
+  }
+
+  private positionTooltip(clientX: number, clientY: number) {
+    this.updateTooltipPosition(clientX, clientY);
+    requestAnimationFrame(() => this.updateTooltipPosition(clientX, clientY));
+  }
+
+  private updateTooltipPosition(clientX: number, clientY: number) {
+    const wrapper = this.wrapperRef()?.nativeElement;
+    if (!wrapper) {
+      this.pointer.set({x: clientX, y: clientY});
+      return;
+    }
+    const offset = 12;
+    const bounds = wrapper.getBoundingClientRect();
+    const tip = this.tooltipRef()?.nativeElement.querySelector('.chart-tooltip') as HTMLElement | null;
+    const tipW = tip?.offsetWidth ?? 196;
+    const tipH = tip?.offsetHeight ?? 64;
+
+    let x = clientX + offset;
+    if (x + tipW > bounds.right) x = clientX - offset - tipW;
+    x = Math.min(Math.max(x, bounds.left), Math.max(bounds.right - tipW, bounds.left));
+
+    let y = clientY + offset;
+    if (y + tipH > bounds.bottom) y = clientY - offset - tipH;
+    y = Math.min(Math.max(y, bounds.top), Math.max(bounds.bottom - tipH, bounds.top));
+
+    this.pointer.set({x, y});
+  }
+
   protected onSortChange($event: MatButtonToggleChange) {
     this.sortDirection.set($event.value);
   }
@@ -126,6 +218,4 @@ export default class ChartBarComponent implements OnInit {
   protected onReduceChange($event: MatButtonToggleChange) {
     this.currentReduce.set($event.value);
   }
-
-
 }

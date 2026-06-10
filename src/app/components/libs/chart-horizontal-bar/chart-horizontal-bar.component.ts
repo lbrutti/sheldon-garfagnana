@@ -11,6 +11,7 @@ import {MultiplesPipe} from '../../../pipes';
 import {MatList} from '@angular/material/list';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import {TranslocoModule} from '@jsverse/transloco';
+import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -28,6 +29,7 @@ import {TranslocoModule} from '@jsverse/transloco';
     MatList,
     ReduceToggleComponent,
     TranslocoModule,
+    ChartTooltipComponent,
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',
