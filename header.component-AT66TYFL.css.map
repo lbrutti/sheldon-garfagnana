@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/header/header.component.scss"],
+  "sourcesContent": ["$border: 1px solid #3a3a3a;\n\n:host {\n  display: block;\n  width: 100%;\n}\n\n.sheldon-header {\n  display: grid;\n  grid-template-columns: 1fr 1fr 1fr;\n  height: 48px;\n  border-bottom: $border;\n}\n\n.panel {\n  display: flex;\n  align-items: center;\n  padding: 0 20px;\n  background-color: #111;\n  border-right: $border;\n  text-decoration: none;\n\n  &:last-child {\n    border-right: none;\n  }\n\n  &--nav {\n    justify-content: center;\n    cursor: pointer;\n    transition: background-color 0.2s ease, color 0.2s ease;\n\n    &:hover:not(.panel--active) {\n      background-color: #222;\n    }\n  }\n\n  &--active {\n    background-color: #e8e4e0;\n\n    .label {\n      color: #111;\n    }\n  }\n}\n\n.label {\n  font-family: inherit;\n  font-size: 13px;\n  font-weight: 700;\n  letter-spacing: 0.08em;\n  text-transform: uppercase;\n  color: #fff;\n  white-space: nowrap;\n}\n"],
+  "mappings": "AAEA,MACE,QAAA,MACA,MAAA,KAGF,CAAA,eACE,QAAA,KACA,sBAAA,IAAA,IAAA,IACA,OAAA,KACA,cAXO,IAAA,MAAA,QAcT,CAAA,MACE,QAAA,KACA,YAAA,OAdF,QAeE,EAAA,KACA,iBAAA,KACA,aAnBO,IAAA,MAAA,QAoBP,gBAAA,KAEA,CARF,KAQE,YACE,aAAA,KAGF,CAAA,WACE,gBAAA,OACA,OAAA,QACA,WAAA,iBAAA,IAAA,IAAA,CAAA,MAAA,IAAA,KAEA,CALF,UAKE,MAAA,KAAA,CAAA,eACE,iBAAA,KAIJ,CALE,cAMA,iBAAA,QAEA,CARA,cAQA,CAAA,MACE,MAAA,KAKN,CANI,MAOF,YAAA,QACA,UAAA,KACA,YAAA,IACA,eAAA,MACA,eAAA,UACA,MAAA,KACA,YAAA",
+  "names": []
+}
