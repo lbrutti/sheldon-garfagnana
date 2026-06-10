@@ -1,0 +1,24 @@
+field,type,required,description,allowed_values,used_by
+id,string,yes,Unique identifier for the widget tile. Must be unique across all rows.,Any unique string,All
+tag,string,yes,Component type to render. Determines which visualisation is shown.,"sheldon-chart-bars, sheldon-chart-h-bars, sheldon-kpi, sheldon-list, sheldon-segmented-chart, sheldon-chart-treemap, sheldon-mosaic-map, sheldon-card-descrizione",All
+title,string,yes,Title shown in the widget header.,Any text,All
+data,string,yes,"Key of the dataset to display. Must match a key field in dashboardParsingConfig.","interventiPerComune, interventiPerFine, interventiPerInizio, comuniConInterventi, interventiPerCategoria, interventiPerTarget, interventiPerTema, interventiPerTipologia, interventiPerFonte, interventiPerPartecipazione, interventiPerStato, interventiPerUnione, interventoRandomGarfagnana, interventoRandomLunigiana, interventoRandomSerchio, interventoRandomPistoiese, featureComuni",All
+tileWidth,number,yes,"Width of the tile in grid columns. The full grid is 12 columns wide, so tileWidth=3 means the tile occupies one quarter of the row.",1–12,All
+groupBy,string,no,Field used to group and aggregate data along the chart axis.,"anno, comune, valore, nome","sheldon-chart-bars, sheldon-chart-h-bars, sheldon-kpi, sheldon-segmented-chart, sheldon-chart-treemap"
+reduceBy,string,no,Aggregation function applied to each group.,"count (number of items), sum (total of valore), max (highest valore)","sheldon-chart-bars, sheldon-chart-h-bars, sheldon-kpi, sheldon-segmented-chart, sheldon-chart-treemap"
+filterBy,string,no,Field on which the global filter is applied to this widget. Leave empty for no filter.,"comune, unione","sheldon-chart-bars, sheldon-chart-h-bars, sheldon-kpi, sheldon-list, sheldon-segmented-chart, sheldon-chart-treemap"
+masterField,string,no,When this field changes in the global filter it resets all other active filters. Usually the same as filterBy.,comune,"sheldon-chart-bars, sheldon-chart-h-bars, sheldon-kpi, sheldon-list, sheldon-segmented-chart, sheldon-chart-treemap"
+sortBy,string,no,Axis along which results are sorted.,"category (alphabetical by group label), value (by aggregated value)","sheldon-chart-bars, sheldon-chart-h-bars"
+defaultSortDirection,string,no,Default direction of the sort.,"asc (ascending), desc (descending)","sheldon-chart-bars, sheldon-chart-h-bars, sheldon-segmented-chart"
+showSorting,boolean,no,Whether to display the sort toggle buttons in the widget header.,"true, false","sheldon-chart-bars, sheldon-chart-h-bars"
+limit,number,no,"Maximum number of items shown. Use 0 for no limit (show all).",0 or any positive integer,"sheldon-chart-bars, sheldon-chart-h-bars, sheldon-kpi, sheldon-list"
+info,string,no,Text shown in the information overlay when the user clicks the info icon.,Any text,All
+auxReduce,JSON array,no,"Additional aggregate metrics shown as toggle buttons above the chart. Each element must be a JSON object with keys: label (button text), campo (field to aggregate), reduceBy (count/sum/max). Example: [{""label"":""N"",""campo"":""comune"",""reduceBy"":""count""},{""label"":""€ TOT"",""campo"":""valore"",""reduceBy"":""sum""}]","JSON array of {label, campo, reduceBy}","sheldon-chart-h-bars, sheldon-segmented-chart, sheldon-chart-treemap, sheldon-mosaic-map"
+minFontSize,number,no,Minimum font size in pixels for the large KPI numeric value. Increase for short numbers.,e.g. 45 (default) or 120 for very prominent KPIs,sheldon-kpi
+udm,string,no,Unit of measure displayed after the KPI value.,"e.g. €, %, km",sheldon-kpi
+campo,string,no,Data field to aggregate on for the treemap tiles.,valore,sheldon-chart-treemap
+groups,JSON array,no,"Fields used to colour and label treemap tiles. Must match the explodeOn / gruppi key in dashboardParsingConfig. Example: [""categoria""]","JSON array of field name strings, e.g. [""categoria""], [""target""], [""tema""], [""tipologia""]",sheldon-chart-treemap
+municipalityKey,string,no,GeoJSON feature property used to match municipalities to dataset values.,name (default),sheldon-mosaic-map
+tooltipProperties,JSON array,no,"Rows shown in the map hover tooltip. Each element must have: property (GeoJSON feature property key) and label (human-readable label). Example: [{""property"":""inCorso"",""label"":""Progetti in corso""}]","JSON array of {property, label}",sheldon-mosaic-map
+desc,string,no,Name of the field in the dataset record from which the description text is read.,descrizione,sheldon-card-descrizione
+url,string,no,Name of the field in the dataset record from which the link URL is read.,link,sheldon-card-descrizione
