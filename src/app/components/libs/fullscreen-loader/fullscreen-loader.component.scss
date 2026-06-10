@@ -17,14 +17,9 @@
 }
 
 .loader__spinner {
-  width: 72px;
-  height: 72px;
-  filter: brightness(0) invert(1);
-  animation: loader-spin 1.1s linear infinite;
-}
-
-@keyframes loader-spin {
-  to {
-    transform: rotate(360deg);
-  }
+  display: block;
+  flex-shrink: 0;
+  width: 68px;
+  height: 97px;
+  pointer-events: none;
 }
