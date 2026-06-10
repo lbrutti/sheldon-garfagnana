@@ -1,0 +1,29 @@
+<svg width="68" height="97" viewBox="0 0 68 97" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect y="96.8619" width="96.8619" height="67.1195" transform="rotate(-90 0 96.8619)" fill="url(#paint0_linear_863_102)"/>
+  <defs>
+    <linearGradient id="paint0_linear_863_102" x1="28.3904" y1="130.422" x2="57.0554" y2="130.422" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F4B80D" stop-opacity="0.992157">
+        <animate
+          attributeName="offset"
+          values="0;0;1;1;0;0"
+          keyTimes="0;0.2;0.4;0.6;0.8;1"
+          dur="2.4s"
+          repeatCount="indefinite"
+          calcMode="spline"
+          keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
+        />
+      </stop>
+      <stop stop-color="#C79BCC">
+        <animate
+          attributeName="offset"
+          values="0;1;1;0;0;0"
+          keyTimes="0;0.2;0.4;0.6;0.8;1"
+          dur="2.4s"
+          repeatCount="indefinite"
+          calcMode="spline"
+          keySplines="0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1;0.4 0 0.2 1"
+        />
+      </stop>
+    </linearGradient>
+  </defs>
+</svg>

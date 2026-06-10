@@ -1,3 +1,32 @@
 <div class="loader" [class.loader--hidden]="!visible()" [style.background]="gradientStyle">
-  <img [src]="spinnerSrc()" class="loader__spinner" alt="" />
+  <svg
+    class="loader__spinner"
+    width="68"
+    height="97"
+    viewBox="0 0 68 97"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <defs>
+      <linearGradient
+        id="preloaderGradient"
+        x1="28.3904"
+        y1="130.422"
+        x2="57.0554"
+        y2="130.422"
+        gradientUnits="userSpaceOnUse"
+      >
+        <stop stop-color="#F4B80D" stop-opacity="0.992157" #yellowStop />
+        <stop stop-color="#C79BCC" #purpleStop />
+      </linearGradient>
+    </defs>
+    <rect
+      y="96.8619"
+      width="96.8619"
+      height="67.1195"
+      transform="rotate(-90 0 96.8619)"
+      fill="url(#preloaderGradient)"
+    />
+  </svg>
 </div>
