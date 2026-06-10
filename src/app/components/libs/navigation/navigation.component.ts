@@ -5,6 +5,7 @@ import {filter, map} from 'rxjs';
 import {MatTabLink, MatTabNav, MatTabNavPanel} from '@angular/material/tabs';
 import {normalizzaStringa, resolveColorVariable, shuffleArray} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
+import HeaderComponent from '../header/header.component';
 
 @Component({
   selector: 'sheldon-navigation',
@@ -14,6 +15,7 @@ import {ThemeService} from '../../../services/theme.service';
     MatTabLink,
     RouterOutlet,
     RouterLink,
+    HeaderComponent,
   ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',

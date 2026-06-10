@@ -1,0 +1,54 @@
+$border: 1px solid #3a3a3a;
+
+:host {
+  display: block;
+  width: 100%;
+}
+
+.sheldon-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  height: 48px;
+  border-bottom: $border;
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  background-color: #111;
+  border-right: $border;
+  text-decoration: none;
+
+  &:last-child {
+    border-right: none;
+  }
+
+  &--nav {
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &:hover:not(.panel--active) {
+      background-color: #222;
+    }
+  }
+
+  &--active {
+    background-color: #e8e4e0;
+
+    .label {
+      color: #111;
+    }
+  }
+}
+
+.label {
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  white-space: nowrap;
+}

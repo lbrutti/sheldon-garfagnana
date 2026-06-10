@@ -1,0 +1,13 @@
+<header class="sheldon-header">
+  <div class="panel panel--brand">
+    <span class="label">PAESAGGI FUTURI</span>
+  </div>
+
+  <a class="panel panel--nav" [class.panel--active]="activeSection() === 'progetti'" routerLink="/dashboard">
+    <span class="label">I PROGETTI</span>
+  </a>
+
+  <a class="panel panel--nav" [class.panel--active]="activeSection() === 'dati'" routerLink="/map">
+    <span class="label">I DATI</span>
+  </a>
+</header>
