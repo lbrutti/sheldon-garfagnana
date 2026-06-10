@@ -54,6 +54,17 @@
             (layerMouseLeave)="onPolygonLeave()">
           </mgl-layer>
 
+          <mgl-layer
+            id="comuni-zero-line"
+            source="comuni"
+            type="line"
+            [filter]="zeroValueFilter"
+            [paint]="comuniZeroLinePaint()"
+            (layerMouseEnter)="onPolygonEnter($event)"
+            (layerMouseMove)="onPolygonEnter($event)"
+            (layerMouseLeave)="onPolygonLeave()">
+          </mgl-layer>
+
           <!--          &lt;!&ndash; Default boundary outlines &ndash;&gt;-->
             <!--          <mgl-layer-->
             <!--            id="comuni-line"-->
@@ -83,7 +94,12 @@
         @for (shade of colorShades(); track shade; let i = $index) {
           <div class="legend-item">
             <span class="legend-label">{{ legendLabels[i] }}</span>
-            <div class="legend-swatch" [style.background]="shade"></div>
+            <div
+              class="legend-swatch"
+              [class.legend-swatch--outline]="$first"
+              [style.background]="$first ? 'transparent' : shade"
+              [style.border-color]="$first ? maxColorShade() : null">
+            </div>
           </div>
         }
       </div>

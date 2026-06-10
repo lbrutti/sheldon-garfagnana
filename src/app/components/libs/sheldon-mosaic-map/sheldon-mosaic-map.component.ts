@@ -187,26 +187,47 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     return generateGradientShades(baseColor);
   });
 
+  /** Max-range shade — used for zero-value polygon stroke and legend swatch. */
+  readonly maxColorShade = computed(() => this.colorShades()[3]);
+
   /** MapLibre step expression mapping _rawValue to the 4 choropleth shades. */
   private choroplethColorExpr = computed((): any[] => {
-    const [s0, s1, s2, s3] = this.colorShades();
-    // s0 → value=0 | s1 → 0<v<2 | s2 → 2≤v<4 | s3 → v≥4
-    return ['step', ['get', '_rawValue'], s0, 0.0001, s1, 2, s2, 4, s3];
+    const [, s1, s2, s3] = this.colorShades();
+    // s1 → 0<v<2 | s2 → 2≤v<4 | s3 → v≥4 (value=0 handled separately as stroke-only)
+    return ['step', ['get', '_rawValue'], s1, 0.0001, s1, 2, s2, 4, s3];
   });
+
+  /** Transparent fill for zero values; choropleth fill otherwise. */
+  private choroplethFillExpr = computed((): any[] => {
+    return ['case', ['==', ['get', '_rawValue'], 0], 'transparent', this.choroplethColorExpr()];
+  });
+
+  readonly zeroValueFilter = ['==', ['get', '_rawValue'], 0] as any;
+
+  /** 1px outline for zero-value comuni using the max-range shade. */
+  comuniZeroLinePaint = computed(() => ({
+    'line-color': this.maxColorShade(),
+    'line-width': 1,
+  }));
 
   /** Fill layer paint with choropleth colors and hover/filter state. */
   comuniFillPaint = computed(() => {
     const sel = this.selectedComune();
     const key = this.municipalityKey();
     const hovering = this.isHovering();
-    const choropleth = this.choroplethColorExpr();
-    const zeroShade = this.colorShades()[2];
+    const fillColor = this.choroplethFillExpr();
+    const filteredOutline = this.colorShades()[2];
 
     // Filter active: selected keeps choropleth color, others show zero-range shade at full opacity
     if (sel) {
       return {
-        'fill-outline-color': zeroShade,
-        'fill-color': ['case', ['==', ['get', key], sel], choropleth, 'transparent'] as any,
+        'fill-outline-color': [
+          'case',
+          ['==', ['get', key], sel],
+          'transparent',
+          ['case', ['==', ['get', '_rawValue'], 0], 'transparent', filteredOutline],
+        ] as any,
+        'fill-color': ['case', ['==', ['get', key], sel], fillColor, 'transparent'] as any,
         'fill-opacity': 1.0 as any,
       };
     }
@@ -215,14 +236,14 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     if (hovering) {
       return {
         'fill-outline-color': 'transparent' as any,
-        'fill-color': choropleth as any,
+        'fill-color': fillColor as any,
         'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1.0, 0.8] as any,
       };
     }
 
     return {
       'fill-outline-color': 'transparent' as any,
-      'fill-color': choropleth as any,
+      'fill-color': fillColor as any,
       'fill-opacity': 1.0 as any,
     };
   });
@@ -255,7 +276,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
       if (!bb || !this.mapReady()) return;
       const map = untracked(() => this.mapInstance);
       if (!map) return;
-      map.fitBounds(bb);
+      map.fitBounds(bb, { animate: false });
     });
   }
 

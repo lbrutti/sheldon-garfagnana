@@ -7,7 +7,7 @@ $search-select-font: 'Funnel Display', sans-serif;
   display: block;
   //padding-left: 16px;
   //padding-right: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 5vh;
   //flex-direction: row;
   .search-container {
     display: flex;
@@ -51,6 +51,7 @@ $search-select-font: 'Funnel Display', sans-serif;
         font-weight: 800;
         letter-spacing: -0.001em;
         padding-left: 3px;
+        font-size: 18px;
       }
 
       .mat-mdc-select-arrow-wrapper {
@@ -107,7 +108,12 @@ $search-select-font: 'Funnel Display', sans-serif;
       .mat-button-toggle-label-content {
         line-height: $control-height;
         padding: 0 8px;
-        font-size: 13px;
+        font-size: 18px;
+        color: white;
+        font-family: $search-select-font;
+        font-weight: 800;
+        letter-spacing: -0.001em;
+  
       }
     }
 

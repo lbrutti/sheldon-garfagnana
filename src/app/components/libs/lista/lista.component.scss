@@ -33,6 +33,7 @@
     padding: 0;
     width: 100%;
     box-sizing: border-box;
+    border-bottom: .5px solid #000;
   }
 
   .list-row {
@@ -50,6 +51,9 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding-left: 8px;
+    font-size: 14px;
+    letter-spacing: -0.0001em;
   }
 
   .valore-container {
