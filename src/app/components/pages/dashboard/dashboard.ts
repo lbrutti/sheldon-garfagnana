@@ -15,7 +15,6 @@ import {
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {
-  DashboardParsingConfig,
   DataInterface,
   FilterOptionInterface,
   InterventoInterface,
@@ -25,8 +24,6 @@ import {components} from '../../libs';
 import {
   InterventoToDataMapping,
   InterventoToTreeDataMapping,
-  parseDashboardParsingConfigCsv,
-  parseDashboardSettingsCsv,
   parseInterventiToDataCollection,
   parseInterventiToTreeDataCollection,
 } from '../../../adapters';
@@ -35,7 +32,6 @@ import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
 import camelcase from 'camelcase';
-import {environment} from '../../../../environments/environment';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 
 @Component({
@@ -64,7 +60,6 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
   private rafId?: number;
 
   protected settings = signal<WidgetSetting[]>([]);
-  protected parsingConfig = signal<DashboardParsingConfig | null>(null);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
   protected filters = signal<(FilterOptionInterface)[]>([]);
 
@@ -168,8 +163,16 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     this.categorieInterventi = shuffleArray(this.categorieInterventi);
 
     effect(() => {
+      const raw = this.apiService.dashboardSettings();
+      if (!raw.length) return;
+      untracked(() => {
+        this.settings.set(shuffleArray([...raw]).sort((a, b) => a.tileWidth - b.tileWidth));
+      });
+    });
+
+    effect(() => {
       const interventi = this.interventiFiltrati();
-      const config = this.parsingConfig();
+      const config = this.apiService.dashboardParsingConfig();
       if (!config) return;
 
       untracked(() => {
@@ -233,15 +236,8 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit(): void {
-    fetch(environment.settings.dashboardSettingsUrl)
-      .then(r => r.text())
-      .then(csv => {
-        const shuffled = shuffleArray(parseDashboardSettingsCsv(csv)).sort((a, b) => a.tileWidth - b.tileWidth);
-        this.settings.set(shuffled);
-      });
-    fetch(environment.settings.dashboardParsingConfigUrl)
-      .then(r => r.text())
-      .then(csv => this.parsingConfig.set(parseDashboardParsingConfigCsv(csv)));
+    this.apiService.getDashboardSettings();
+    this.apiService.getDashboardParsingConfig();
     this.apiService.getInterventi();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;

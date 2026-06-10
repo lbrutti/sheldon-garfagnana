@@ -1,9 +1,10 @@
 import {computed, Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {DataInterface, InterventoInterface} from '../interfaces';
-import {csvToJson} from '../adapters';
+import {DashboardParsingConfig, DataInterface, InterventoInterface} from '../interfaces';
+import {csvToJson, parseDashboardParsingConfigCsv, parseDashboardSettingsCsv} from '../adapters';
 import {FeatureCollection, Point, Polygon} from 'geojson';
 import {environment} from '../../environments/environment';
+import WidgetSetting from '../interfaces/widget-setting.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -19,6 +20,8 @@ export class ProjectsApiService {
     type: 'FeatureCollection',
     features: []
   });
+  private _dashboardSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
+  private _dashboardParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _loadingCount = signal(0);
   readonly loading = computed(() => this._loadingCount() > 0);
 
@@ -78,8 +81,32 @@ export class ProjectsApiService {
 
   }
 
+  getDashboardSettings() {
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.dashboardSettingsUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._dashboardSettings.set(parseDashboardSettingsCsv(csv));
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
+  getDashboardParsingConfig() {
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.dashboardParsingConfigUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._dashboardParsingConfig.set(parseDashboardParsingConfigCsv(csv));
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
   interventi = this._interventi.asReadonly();
   popolazione = this._popolazione.asReadonly();
   comuniPolygons = this._comuniPolygons.asReadonly();
   comuniPoints = this._comuniPoints.asReadonly();
+  dashboardSettings = this._dashboardSettings.asReadonly();
+  dashboardParsingConfig = this._dashboardParsingConfig.asReadonly();
 }
