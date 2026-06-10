@@ -15,8 +15,10 @@
   <ng-container content>
     <mat-list>
       <!--      @for (dato of filteredData(); track dato) {-->
-      <cdk-virtual-scroll-viewport appendOnly itemSize="30" class="list-container"
-                                   [style.height.px]="(filteredData().length < 10 ?filteredData().length * 36 : 270)">
+      <cdk-virtual-scroll-viewport
+        appendOnly
+        itemSize="30"
+        class="list-container">
 
         <mat-list-item *cdkVirtualFor="let dato of filteredData()">
           <div class="list-row">
