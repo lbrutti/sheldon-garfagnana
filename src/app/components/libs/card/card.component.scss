@@ -51,6 +51,7 @@
       width: var(--sheldon-card-buttons-width);
       box-sizing: border-box;
       border: 0;
+
       .mat-button-toggle {
         flex: 1 1 0;
         min-width: 0;
@@ -98,6 +99,8 @@
   }
 
   .sheldon-card-content {
+    display: flex;
+    flex-direction: column;
     flex: 1 1 auto;
     min-height: 0;
   }
