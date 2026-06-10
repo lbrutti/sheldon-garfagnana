@@ -167,7 +167,8 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
       const raw = this.apiService.dashboardSettings();
       if (!raw.length) return;
       untracked(() => {
-        this.settings.set(shuffleArray([...raw]).sort((a, b) => a.tileWidth - b.tileWidth));
+        // this.settings.set(shuffleArray([...raw]).sort((a, b) => a.tileWidth - b.tileWidth));
+        this.settings.set([...raw]);
       });
     });
 
