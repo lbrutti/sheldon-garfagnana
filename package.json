@@ -7,7 +7,8 @@
     "build": "ng build",
     "publish-gh": "ng build --base-href https://lbrutti.github.io/sheldon-garfagnana/ && npx angular-cli-ghpages --dir=dist/sheldon-garfagnana/browser",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "export-settings": "node scripts/export-settings-csv.mjs"
   },
   "private": true,
   "packageManager": "npm@10.8.2",

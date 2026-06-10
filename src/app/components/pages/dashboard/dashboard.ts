@@ -25,6 +25,8 @@ import {components} from '../../libs';
 import {
   InterventoToDataMapping,
   InterventoToTreeDataMapping,
+  parseDashboardParsingConfigCsv,
+  parseDashboardSettingsCsv,
   parseInterventiToDataCollection,
   parseInterventiToTreeDataCollection,
 } from '../../../adapters';
@@ -33,6 +35,7 @@ import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
 import camelcase from 'camelcase';
+import {environment} from '../../../../environments/environment';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 
 @Component({
@@ -49,7 +52,8 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   protected masonryOptions: NgxMasonryOptions = {
     gutter: 16,
-    percentPosition: true,
+    columnWidth: 96,
+    percentPosition: false,
     animations: {},
   };
 
@@ -229,15 +233,15 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
 
   ngOnInit(): void {
-    fetch('settings/dashboardSettings.json')
-      .then(r => r.json())
-      .then((s: WidgetSetting[]) => {
-        const shuffled = shuffleArray(s).sort((a, b) => a.tileWidth - b.tileWidth);
-        return this.settings.set(shuffled);
+    fetch(environment.settings.dashboardSettingsUrl)
+      .then(r => r.text())
+      .then(csv => {
+        const shuffled = shuffleArray(parseDashboardSettingsCsv(csv)).sort((a, b) => a.tileWidth - b.tileWidth);
+        this.settings.set(shuffled);
       });
-    fetch('settings/dashboardParsingConfig.json')
-      .then(r => r.json())
-      .then((config: DashboardParsingConfig) => this.parsingConfig.set(config));
+    fetch(environment.settings.dashboardParsingConfigUrl)
+      .then(r => r.text())
+      .then(csv => this.parsingConfig.set(parseDashboardParsingConfigCsv(csv)));
     this.apiService.getInterventi();
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;

@@ -3,6 +3,11 @@
 $breakpoint-md: 959px;
 $breakpoint-sm: 599px;
 
+// Grid column unit and gutter (fixed-pixel masonry grid).
+// tile-N width = N * ($col-unit + $grid-gutter) - $grid-gutter
+$col-unit: 96px;
+$grid-gutter: 16px;
+
 // Gradient variables on :root so getComputedStyle(document.documentElement) resolves them.
 // Override at :root level in a global theme to customise.
 :root {
