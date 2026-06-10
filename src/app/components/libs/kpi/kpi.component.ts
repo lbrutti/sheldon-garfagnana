@@ -94,7 +94,7 @@ export default class KpiComponent {
       const progress = Math.min(elapsed / duration, 1);
       const current = Math.round(from + delta * easeOut(progress));
 
-      el.textContent = this.formatter.format(current);
+      el.textContent = `${this.formatter.format(current)} ${this.udm()??''}`;
 
       if (progress < 1) {
         this.rafId = requestAnimationFrame(tick);
