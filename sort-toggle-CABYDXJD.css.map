@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/sort-toggle/sort-toggle.scss"],
+  "sourcesContent": [":host {\n  --mat-button-toggle-height: var(--mat-icon-button-heigth, 21px);\n}\n"],
+  "mappings": "AAAA,MACE,4BAAA,IAAA,wBAAA,EAAA",
+  "names": []
+}

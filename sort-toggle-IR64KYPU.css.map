@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/sort-toggle/sort-toggle.scss"],
-  "sourcesContent": [":host {\n  // Override this variable to resize the toggle buttons uniformly.\n  --mat-button-toggle-height: var(--filter-control-height, 18px);\n}\n"],
-  "mappings": "AAAA,MAEE,4BAAA,IAAA,uBAAA,EAAA",
-  "names": []
-}
