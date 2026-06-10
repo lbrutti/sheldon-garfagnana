@@ -53,8 +53,18 @@ button {
 
 
 .sheldon-grid {
+  // Hidden sizer element — masonry reads its pixel width to determine column spacing.
+  .grid-sizer {
+    width: var(--sheldon-col);
+    height: 0;
+    margin: 0;
+    padding: 0;
+    visibility: hidden;
+  }
+
   .tile {
     min-width: 0;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     margin-bottom: $grid-gutter;
@@ -65,15 +75,24 @@ button {
     }
   }
 
-  // Fixed-pixel columns: tile-N = N * ($col-unit + $grid-gutter) - $grid-gutter
+  // Fluid columns: --sheldon-col clamps 72–96px via 8vw so tiles scale
+  // up to 25% before wrapping; at $breakpoint-sm they collapse to full width.
   @for $i from 1 through 12 {
     .tile--#{$i} {
-      width: calc(#{$i} * (#{$col-unit} + #{$grid-gutter}) - #{$grid-gutter});
-
+      width: calc(#{$i} * (var(--sheldon-col) + #{$grid-gutter}) - #{$grid-gutter});
+            
       @media (max-width: $breakpoint-sm) {
         width: 100%;
       }
     }
+  }
+
+  // Bounce transition on tile reposition — only active after the first layout
+  // fires so tiles snap into place on initial render instead of flying in from (0,0).
+  &.layout-ready .tile {
+    transition:
+      left  0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+      top   0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 }
 

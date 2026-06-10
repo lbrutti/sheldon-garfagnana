@@ -1,6 +1,11 @@
 <sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
 
-<ngx-masonry class="sheldon-grid" [options]="masonryOptions">
+<ngx-masonry
+  class="sheldon-grid"
+  [class.layout-ready]="layoutReady()"
+  [options]="masonryOptions"
+  (layoutComplete)="onLayoutComplete()">
+  <div class="grid-sizer"></div>
   @for (setting of settings(); track setting.id; let idx = $index) {
     @if ($any(dataMap()[setting.data])) {
       <div ngxMasonryItem [class]="'tile tile--' + setting.tileWidth">

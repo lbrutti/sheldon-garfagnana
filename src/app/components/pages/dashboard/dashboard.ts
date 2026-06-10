@@ -48,10 +48,18 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   protected masonryOptions: NgxMasonryOptions = {
     gutter: 16,
-    columnWidth: 96,
+    columnWidth: '.grid-sizer',
     percentPosition: false,
-    fitWidth:true,
+    fitWidth: true,
+    horizontalOrder: true,
     animations: {},
+  };
+
+  protected layoutReady = signal(false);
+
+  private readonly windowResizeListener = () => {
+    if (this.rafId) cancelAnimationFrame(this.rafId);
+    this.rafId = requestAnimationFrame(() => this.masonry?.layout());
   };
 
   private resizeObserver = new ResizeObserver(() => {
@@ -59,6 +67,10 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     this.rafId = requestAnimationFrame(() => this.masonry?.layout());
   });
   private rafId?: number;
+
+  protected onLayoutComplete(): void {
+    if (!this.layoutReady()) this.layoutReady.set(true);
+  }
 
   protected settings = signal<WidgetSetting[]>([]);
   protected interventi: Signal<InterventoInterface[]> = signal([]);
@@ -244,6 +256,7 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     this.apiService.getComuniPolygons();
     this.interventi = this.apiService.interventi;
     this.comuniPolygons = this.apiService.comuniPolygons;
+    window.addEventListener('resize', this.windowResizeListener);
   }
 
   ngAfterViewInit(): void {
@@ -257,6 +270,7 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resizeObserver.disconnect();
+    window.removeEventListener('resize', this.windowResizeListener);
     if (this.rafId) cancelAnimationFrame(this.rafId);
   }
 

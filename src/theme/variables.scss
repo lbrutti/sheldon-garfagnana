@@ -1,16 +1,34 @@
 // Responsive breakpoints (SCSS vars — usable inside @media queries).
 // $breakpoint-md: below desktop (tablet) ; $breakpoint-sm: below tablet (mobile).
+$breakpoint-lg: 1366px;
 $breakpoint-md: 959px;
 $breakpoint-sm: 599px;
 
-// Grid column unit and gutter (fixed-pixel masonry grid).
+// Grid column unit and gutter.
 // tile-N width = N * ($col-unit + $grid-gutter) - $grid-gutter
+// --sheldon-col is the fluid runtime value (clamps between 72–96px via 8vw).
 $col-unit: 96px;
 $grid-gutter: 16px;
 
 // Gradient variables on :root so getComputedStyle(document.documentElement) resolves them.
 // Override at :root level in a global theme to customise.
 :root {
+  --sheldon-col: clamp(72px, 8vw, 96px);
+}
+
+// At 1366px (SD/laptop), drop to 90px: floor((1270+16)/106) = 12 masonry slots
+// in the 1270px content area → 4 tile--3-wide widgets per row instead of 3.
+@media (max-width: $breakpoint-lg) {
+  :root { --sheldon-col: 90px; }
+}
+
+// At 959px (tablet), drop to 56px: 12 slots in 863px → 4 tile--3s per row.
+@media (max-width: $breakpoint-md) {
+  :root { --sheldon-col: 56px; }
+}
+
+:root {
+
   --mat-sys-primary: transparent !important;
   --mat-tab-inactive-label-text-color: white;
 
