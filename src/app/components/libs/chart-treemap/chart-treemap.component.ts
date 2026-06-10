@@ -145,16 +145,20 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
 
     const layout = squarify(items, {x: 0, y: 0, w: 100, h: 100});
 
-    return layout.map((tile, i: number) => ({
-      label: tile.label,
-      value: tile.value,
-      formattedValue: this.multiples.transform(tile.value),
-      x: tile.x,
-      y: tile.y,
-      w: tile.w,
-      h: tile.h,
-      color: this.gradients()[i]
-    }));
+    return layout.map((tile, i: number) => {
+      const w = tile.x + tile.w >= 99.999 ? 100 - tile.x : tile.w;
+      const h = tile.y + tile.h >= 99.999 ? 100 - tile.y : tile.h;
+      return {
+        label: tile.label,
+        value: tile.value,
+        formattedValue: this.multiples.transform(tile.value),
+        x: tile.x,
+        y: tile.y,
+        w,
+        h,
+        color: this.gradients()[i]
+      };
+    });
   });
   categoria = input<string>('');
 
