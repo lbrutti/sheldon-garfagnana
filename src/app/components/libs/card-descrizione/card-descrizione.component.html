@@ -3,7 +3,8 @@
   [showButtons]="false">
   <ng-container title>{{ data()[title()] }}</ng-container>
   <ng-container content>
-    <div class="sheldon-card-descrizione">
+    <div class="sheldon-card-descrizione"
+         [class.has-button]="data()[url()]">
       {{ data()[description()] }}
     </div>
     @if (data()[url()]) {
