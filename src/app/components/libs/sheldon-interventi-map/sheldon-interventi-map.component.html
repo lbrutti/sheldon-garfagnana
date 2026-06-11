@@ -82,46 +82,64 @@
             }"
             (layerMouseEnter)="onInterventiEnter($event)"
             (layerMouseMove)="onInterventiEnter($event)"
-            (layerMouseLeave)="onInterventiLeave()">
+            (layerMouseLeave)="onInterventiLeave()"
+          >
           </mgl-layer>
 
         }
         <!-- Hover tooltip -->
+        @if (hoveredIntervento()) {
 
-        <mgl-popup
-          [feature]="hoveredIntervento()"
-          [closeButton]="false"
-          [closeOnMove]="true"
-          anchor="bottom-right">
-          <div
-            [style.background]="tooltipBackground">
-            <strong
-              [style.background]="tooltipGradient">{{ hoveredIntervento()?.properties?.['nome'] }}</strong>
-            @if (hoveredIntervento()?.properties?.['comune']) {
-              <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['comune'] }}</div>
-            }
-            @if (hoveredIntervento()?.properties?.['stato']) {
-              <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['stato'] }}</div>
-            }
-            @if (hoveredIntervento()?.properties?.['importoTotale']) {
-              <div
-                class="map-tooltip-item"> {{ this.formatter.format(hoveredIntervento()?.properties?.['importoTotale']) }}
-                €
-              </div>
-            }
+          <mgl-popup
+            [feature]="hoveredIntervento()"
+            [closeButton]="false"
+            [closeOnMove]="true"
+            anchor="right">
+            <div
+              class="map-tooltip"
+              [style.background]="tooltipBackground">
+              <strong class="map-tooltip-item-title"
+                      [style.color]="tooltipBackground">{{ hoveredIntervento()?.properties?.['nome'] }}
+              </strong>
 
-            @if (hoveredIntervento()?.properties?.['categoria']) {
-              <div
-                class="map-tooltip-item"> {{ hoveredIntervento()?.properties?.['categoria'] }}
-              </div>
-            }
+              @if (hoveredIntervento()?.properties?.['comune']) {
+                <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['comune'] }}</div>
+              }
+              @if (hoveredIntervento()?.properties?.['stato']) {
+                <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['stato'] }}</div>
+              }
+              @if (hoveredIntervento()?.properties?.['importoTotale']) {
+                <div
+                  class="map-tooltip-item">
+                  € {{ this.formatter.format(hoveredIntervento()?.properties?.['importoTotale']) }}
+                </div>
+              }
+              @if (hoveredIntervento()?.properties?.['categoria']) {
+                <div
+                  class="map-tooltip-item">
+                  <span class="map-tooltip-item-chip">{{ hoveredIntervento()?.properties?.['categoria'] }}</span>
+                </div>
+              }
 
-            @if (hoveredIntervento()?.properties?.['descrizione']) {
-              <div class="map-tooltip-item"> {{ hoveredIntervento()?.properties?.['descrizione'] }}
-              </div>
-            }
-          </div>
-        </mgl-popup>
+              @if (hoveredIntervento()?.properties?.['descrizione']) {
+                <div
+                  class="map-tooltip-item map-tooltip-item-descrizione"> {{ hoveredIntervento()?.properties?.['descrizione'] }}
+                </div>
+              }
+
+              @if (hoveredIntervento()?.properties?.['link']) {
+                <a
+                  href="{{hoveredIntervento()?.properties?.['link']}}"
+                  [style.color]="tooltipBackground"
+                  target="_blank">
+                  <div class="map-tooltip-item map-tooltip-item-link"> Scopri il progetto
+                  </div>
+                </a>
+              }
+            </div>
+          </mgl-popup>
+
+        }
       </mgl-map>
 
       <!-- Choropleth legend -->

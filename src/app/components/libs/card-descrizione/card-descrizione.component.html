@@ -9,9 +9,7 @@
       {{ data()[description()] }}
     </div>
     @if (data()[url()]) {
-      <div class="sheldon-card-descrizione-button">
-        <a matButton="outlined" href="{{data()[url()]}}" target="_blank">{{ 'card.discoverMore' | transloco }}</a>
-      </div>
+      <sheldon-link-button [data]="data()" [url]="url()"></sheldon-link-button>
     }
   </ng-container>
 </sheldon-card>
