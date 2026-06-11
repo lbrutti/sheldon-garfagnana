@@ -26,13 +26,17 @@
   <ng-container content>
     <div class="bars-container" #wrapper>
       @for (bar of bars(); track bar.label) {
-        <div class="bar-col"
-             [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar"
-             (mouseenter)="onBarEnter(bar, $event)"
-             (mousemove)="onBarMove($event)"
-             (mouseleave)="onBarLeave()"
-             (touchstart)="onBarTouch(bar, $event)">
-          <div class="bar" [style.height.%]="bar.pct" [style.background]="bar.background">
+        <div
+          class="bar-col"
+          [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar">
+          <div
+            class="bar"
+            [style.height.%]="bar.pct"
+            [style.background]="bar.background"
+            (mouseenter)="onBarEnter(bar, $event)"
+            (mousemove)="onBarMove($event)"
+            (mouseleave)="onBarLeave()"
+            (touchstart)="onBarTouch(bar, $event)">
             @if (hoveredBar() !== bar) {
               <sheldon-chart-label [text]="bar.label"/>
             }
