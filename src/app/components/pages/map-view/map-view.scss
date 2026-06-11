@@ -1,0 +1,11 @@
+@import '../../../../theme/variables';
+
+:host {
+  display: block;
+  padding: 16px 48px;
+  @media (max-width: $breakpoint-md) {
+    padding: 16px 16px;
+  }
+}
+
+

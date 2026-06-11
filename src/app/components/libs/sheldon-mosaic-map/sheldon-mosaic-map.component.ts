@@ -108,7 +108,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   readonly mapStyle = MAP_STYLE;
 
   // Track the active theme so the choropleth shades re-read their CSS variables on change.
-  private readonly theme = inject(ThemeService).theme;
+  protected readonly theme = inject(ThemeService).theme;
   private readonly elRef = inject(ElementRef<HTMLElement>);
 
   // ── State ──────────────────────────────────────────────────────────────────

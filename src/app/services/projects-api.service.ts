@@ -22,6 +22,8 @@ export class ProjectsApiService {
   });
   private _dashboardSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
   private _dashboardParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
+  private _mapInterventiSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
+  private _mapInterventiParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _loadingCount = signal(0);
   readonly loading = computed(() => this._loadingCount() > 0);
 
@@ -54,16 +56,6 @@ export class ProjectsApiService {
     });
   }
 
-  getComuniPoints() {
-    this._loadingCount.update(n => n + 1);
-    this.httpClient.get(environment.data.comuniPoints, {responseType: 'json'}).subscribe({
-      next: (res: any) => {
-        this._comuniPoints.set(res as FeatureCollection<Point>);
-        this._loadingCount.update(n => n - 1);
-      },
-      error: () => this._loadingCount.update(n => n - 1),
-    });
-  }
 
   getComuniPolygons() {
     this._loadingCount.update(n => n + 1);
@@ -103,10 +95,36 @@ export class ProjectsApiService {
     });
   }
 
+
+  getMapInterventiSettings() {
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.mapInterventiSettingsUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._mapInterventiSettings.set(parseDashboardSettingsCsv(csv));
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
+  getMapInterventiParsingConfig() {
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.mapInterventiParsingConfigUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._mapInterventiParsingConfig.set(parseDashboardParsingConfigCsv(csv));
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
   interventi = this._interventi.asReadonly();
   popolazione = this._popolazione.asReadonly();
   comuniPolygons = this._comuniPolygons.asReadonly();
-  comuniPoints = this._comuniPoints.asReadonly();
   dashboardSettings = this._dashboardSettings.asReadonly();
   dashboardParsingConfig = this._dashboardParsingConfig.asReadonly();
+
+
+  mapInterventiSettings = this._mapInterventiSettings.asReadonly();
+  mapInterventiParsingConfig = this._mapInterventiParsingConfig.asReadonly();
 }
