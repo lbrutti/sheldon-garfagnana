@@ -19,12 +19,6 @@
           (click)="openInfo()">
           <mat-icon aria-hidden="false" aria-label="info" svgIcon="sheldon-info"></mat-icon>
         </button>
-<!--        <button matIconButton-->
-<!--                [style.background]="endColor()"-->
-<!--                class="sheldon-card-share-button"-->
-<!--                (click)="shareCard()">-->
-<!--          <mat-icon aria-hidden="false" aria-label="share" svgIcon="sheldon-share"></mat-icon>-->
-<!--        </button>-->
         @if (isFullscreen()) {
           <button class="sheldon-card-close-button"
                   [style.background]="startColor()"
@@ -41,9 +35,12 @@
   </div>
 
   <div class="sheldon-card-body">
-    <div class="sheldon-card-subheader">
-      <ng-content select="[subheader]"></ng-content>
-    </div>
+    @if (showSubheader()) {
+
+      <div class="sheldon-card-subheader">
+        <ng-content select="[subheader]"></ng-content>
+      </div>
+    }
 
     <div class="sheldon-card-content">
       <ng-content select="[content]"></ng-content>
