@@ -1,16 +1,13 @@
 import {Component, computed, input, signal} from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
+import {GeoJSONSourceComponent, LayerComponent, MapComponent, PopupComponent} from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Point} from 'geojson';
 import type {Map, MapLayerMouseEvent} from 'maplibre-gl';
-
 import CardComponent from '../card/card.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
-import {MultiplesPipe} from '../../../pipes';
-
 import {TranslocoModule} from '@jsverse/transloco';
 import SheldonMosaicMapComponent from '../sheldon-mosaic-map/sheldon-mosaic-map.component';
-import {InterventoInterface} from '../../../interfaces/interventoInterface';
+import {InterventoInterface} from '../../../interfaces';
 
 @Component({
   selector: 'sheldon-interventi-map',
@@ -23,8 +20,8 @@ import {InterventoInterface} from '../../../interfaces/interventoInterface';
     LayerComponent,
     MatButtonToggleGroup,
     MatButtonToggle,
-    MultiplesPipe,
     TranslocoModule,
+    PopupComponent,
   ],
   templateUrl: './sheldon-interventi-map.component.html',
   styleUrl: './sheldon-interventi-map.component.scss',
@@ -45,27 +42,25 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
     map.addImage('interventi-square', ctx.getImageData(0, 0, size, size), {sdf: true});
   }
 
+  protected readonly formatter = new Intl.NumberFormat(navigator.language);
+
   hoveredIntervento = signal<Feature<Point> | null>(null);
-  interventiTooltipPos = signal<{x: number; y: number} | null>(null);
 
   onInterventiEnter(event: MapLayerMouseEvent): void {
     if (!this.mapInstance || !event.features?.length) return;
     const feature = event.features[0] as unknown as Feature<Point>;
-    const [lng, lat] = feature.geometry.coordinates;
-    const point = this.mapInstance.project([lng, lat]);
     this.hoveredIntervento.set(feature);
-    this.interventiTooltipPos.set({x: point.x, y: point.y});
     this.mapInstance.getCanvas().style.cursor = 'pointer';
   }
 
   onInterventiLeave(): void {
     this.hoveredIntervento.set(null);
-    this.interventiTooltipPos.set(null);
     if (this.mapInstance) this.mapInstance.getCanvas().style.cursor = '';
   }
 
   interventiFeatures = computed<FeatureCollection<Point>>(() => {
     const comuneFilter = this.selectedComune();
+    console.log(this.interventi());
     return {
       type: 'FeatureCollection',
       features: this.interventi()
@@ -81,6 +76,8 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
             categoria: i.categoria,
             stato: i.stato,
             importoTotale: i.importoTotale,
+            descrizione: i.descrizione,
+            link: i.link
           },
         })),
     };
