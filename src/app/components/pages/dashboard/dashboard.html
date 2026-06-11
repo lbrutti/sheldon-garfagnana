@@ -89,6 +89,7 @@
               [auxReduce]="$any(setting.auxReduce ?? [])"
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
               [data]="$any(dataMap()[setting.data])"
+              [expandOnHover]="true"
             />
           }
           @case ('sheldon-chart-treemap') {

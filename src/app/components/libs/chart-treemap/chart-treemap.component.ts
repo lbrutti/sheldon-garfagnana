@@ -301,21 +301,25 @@ function layout(items: LayoutItem[], rect: Rect): LayoutTile[] {
   if (rect.w >= rect.h) {
     const stripW = rowArea / rect.h;
     let y = rect.y;
-    for (const item of row) {
-      const h = item.area / stripW;
+    for (let j = 0; j < row.length; j++) {
+      const item = row[j];
+      const h = j === row.length - 1 ? rect.y + rect.h - y : item.area / stripW;
       tiles.push({...item, x: rect.x, y, w: stripW, h});
       y += h;
     }
-    return tiles.concat(layout(rest, {x: rect.x + stripW, y: rect.y, w: rect.w - stripW, h: rect.h}));
+    const nextX = rect.x + stripW;
+    return tiles.concat(layout(rest, {x: nextX, y: rect.y, w: rect.x + rect.w - nextX, h: rect.h}));
   } else {
     const stripH = rowArea / rect.w;
     let x = rect.x;
-    for (const item of row) {
-      const w = item.area / stripH;
+    for (let j = 0; j < row.length; j++) {
+      const item = row[j];
+      const w = j === row.length - 1 ? rect.x + rect.w - x : item.area / stripH;
       tiles.push({...item, x, y: rect.y, w, h: stripH});
       x += w;
     }
-    return tiles.concat(layout(rest, {x: rect.x, y: rect.y + stripH, w: rect.w, h: rect.h - stripH}));
+    const nextY = rect.y + stripH;
+    return tiles.concat(layout(rest, {x: rect.x, y: nextY, w: rect.w, h: rect.y + rect.h - nextY}));
   }
 }
 
