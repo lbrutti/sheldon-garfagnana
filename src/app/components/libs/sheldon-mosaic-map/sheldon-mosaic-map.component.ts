@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
-import type {Feature, FeatureCollection, Polygon} from 'geojson';
+import type {Feature, FeatureCollection, LineString, Polygon} from 'geojson';
 import type {Map, MapLayerMouseEvent, MapLibreEvent, MapLibreZoomEvent, StyleSpecification} from 'maplibre-gl';
 
 import CardComponent from '../card/card.component';
@@ -72,6 +72,45 @@ function generateGradientShades(baseColor: string): [string, string, string, str
   return [mix(0.2), mix(0.45), mix(0.7), mix(1.0)];
 }
 
+/** Picks a round step size for ~targetLines divisions across span degrees. */
+function niceGridStep(span: number, targetLines = 10): number {
+  const raw = span / targetLines;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(raw)));
+  const normalized = raw / magnitude;
+  const nice = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+  return nice * magnitude;
+}
+
+function buildGridGeoJson(bbox: [[number, number], [number, number]]): FeatureCollection<LineString> {
+  const [[minX, minY], [maxX, maxY]] = bbox;
+  const padX = (maxX - minX) * 0.5;
+  const padY = (maxY - minY) * 0.5;
+  const x0 = minX - padX;
+  const x1 = maxX + padX;
+  const y0 = minY - padY;
+  const y1 = maxY + padY;
+  const step = niceGridStep(Math.min(x1 - x0, y1 - y0));
+  const features: Feature<LineString>[] = [];
+
+  for (let x = Math.floor(x0 / step) * step; x <= x1; x += step) {
+    features.push({
+      type: 'Feature',
+      geometry: {type: 'LineString', coordinates: [[x, y0], [x, y1]]},
+      properties: {},
+    });
+  }
+
+  for (let y = Math.floor(y0 / step) * step; y <= y1; y += step) {
+    features.push({
+      type: 'Feature',
+      geometry: {type: 'LineString', coordinates: [[x0, y], [x1, y]]},
+      properties: {},
+    });
+  }
+
+  return {type: 'FeatureCollection', features};
+}
+
 @Component({
   selector: 'sheldon-mosaic-map',
   standalone: true,
@@ -106,6 +145,10 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
 
   // ── Public constants for template ─────────────────────────────────────────
   readonly mapStyle = MAP_STYLE;
+  readonly gridLinePaint = {
+    'line-color': '#b0aeae',
+    'line-width': 1,
+  };
 
   // Track the active theme so the choropleth shades re-read their CSS variables on change.
   private readonly theme = inject(ThemeService).theme;
@@ -267,6 +310,13 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     const px = (maxX - minX) * 0.1;
     const py = (maxY - minY) * 0.1;
     return [[minX - px, minY - py], [maxX + px, maxY + py]];
+  });
+
+  /** Geographic grid lines — zoom and pan with the map. */
+  gridGeoJson = computed<FeatureCollection<LineString>>(() => {
+    const bb = this.collectionBbox();
+    if (!bb) return EMPTY_COLLECTION as FeatureCollection<LineString>;
+    return buildGridGeoJson(bb);
   });
   protected tooltipBackground: string;
 

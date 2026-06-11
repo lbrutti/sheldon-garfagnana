@@ -35,6 +35,15 @@
       >
 
         @if (mapReady()) {
+          <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
+
+          <mgl-layer
+            id="grid-lines"
+            source="grid"
+            type="line"
+            [paint]="gridLinePaint">
+          </mgl-layer>
+
           <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
           <mgl-geojson-source
             id="comuni"
