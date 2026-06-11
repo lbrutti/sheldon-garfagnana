@@ -81,7 +81,7 @@
             }"
             (layerMouseEnter)="onInterventiEnter($event)"
             (layerMouseMove)="onInterventiEnter($event)"
-            (layerMouseLeave)="onInterventiLeave()"
+        
           >
           </mgl-layer>
 
@@ -92,13 +92,14 @@
           <mgl-popup
             [feature]="hoveredIntervento()"
             [closeButton]="false"
-            [closeOnMove]="true"
+            [closeOnMove]="false"
+            [closeOnClick]="true"
             anchor="right">
             <div
               class="map-tooltip"
-              [style.background]="tooltipBackground">
+              [style.background]="tooltipPolygonColor()">
               <strong class="map-tooltip-item-title"
-                      [style.color]="tooltipBackground">{{ hoveredIntervento()?.properties?.['nome'] }}
+                      [style.color]="tooltipPolygonColor()">{{ hoveredIntervento()?.properties?.['nome'] }}
               </strong>
 
               @if (hoveredIntervento()?.properties?.['comune']) {
@@ -129,7 +130,7 @@
               @if (hoveredIntervento()?.properties?.['link']) {
                 <a
                   href="{{hoveredIntervento()?.properties?.['link']}}"
-                  [style.color]="tooltipBackground"
+                  [style.color]="tooltipPolygonColor()"
                   target="_blank">
                   <div class="map-tooltip-item map-tooltip-item-link"> Scopri il progetto
                   </div>

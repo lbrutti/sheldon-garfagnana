@@ -46,6 +46,21 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
 
   hoveredIntervento = signal<Feature<Point> | null>(null);
 
+  tooltipPolygonColor = computed<string>(() => {
+    const comune = this.hoveredIntervento()?.properties?.['comune'] as string | undefined;
+    if (!comune) return this.tooltipBackground;
+    const feature = this.derivedPolygons().features.find(
+      (f) => f.properties?.[this.municipalityKey()] === comune,
+    );
+    if (!feature) return this.tooltipBackground;
+    const rawValue = (feature.properties?.['_rawValue'] as number) ?? 0;
+    const shades = this.colorShades();
+    if (rawValue === 0) return '#ffffff';
+    if (rawValue < 2) return shades[1];
+    if (rawValue < 4) return shades[2];
+    return shades[3];
+  });
+
   onInterventiEnter(event: MapLayerMouseEvent): void {
     if (!this.mapInstance || !event.features?.length) return;
     const feature = event.features[0] as unknown as Feature<Point>;
