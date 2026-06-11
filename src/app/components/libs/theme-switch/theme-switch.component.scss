@@ -1,52 +1,29 @@
 :host {
-  border: none;
   display: inline-flex;
   align-items: center;
   margin-bottom: 4px;
+}
 
-  * {
-    border: none;
-  }
+.theme-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  width: 25px;
+  height: 25px;
 
-  ::ng-deep {
-    * {
-      border: none;
-    }
-
-    mat-button-toggle-group {
-      border: none;
-      border-radius: 0;
-    }
-    
-    // when a categoria is set, the checked toggle takes that categoria's gradient-start color
-    @each $cat in ambiente, cultura, mobilita, sicurezza, economia, sociale, societa {
-      [data-categoria='#{$cat}'] .mat-button-toggle-appearance-standard.mat-button-toggle-checked {
-        background-color: var(--color-gradient-#{$cat}-start) !important;
-      }
-    }
-    mat-button-toggle {
-      border: none !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      gap: 0 !important;
-      background: none !important;
-      .mat-button-toggle-button {
-        height: 25px;
-        line-height: 25px;
-      }
-
-      .mat-button-toggle-label-content {
-        line-height: 25px;
-        padding: 0;
-        display: flex;
-        align-items: center;
-      }
-
-      .theme-icon {
-        width: 25px;
-        height: 25px;
-        display: block;
-      }
+  @each $cat in ambiente, cultura, mobilita, sicurezza, economia, sociale, societa {
+    &[data-categoria='#{$cat}'] {
+      background-color: var(--color-gradient-#{$cat}-start);
     }
   }
+}
+
+.theme-icon {
+  width: 25px;
+  height: 25px;
+  display: block;
 }

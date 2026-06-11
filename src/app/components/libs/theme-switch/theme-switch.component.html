@@ -1,12 +1,6 @@
-<mat-button-toggle-group
-  [hideSingleSelectionIndicator]="true"
-  [hideMultipleSelectionIndicator]="true"
+<button
+  class="theme-btn"
   [attr.data-categoria]="categoriaCorrente()"
-  [value]="theme()"
-  (change)="onChange($event)">
-  @for (opt of options; track opt.value) {
-    <mat-button-toggle [value]="opt.value" [aria-label]="opt.value">
-      <img [src]="opt.icon" [alt]="opt.value" class="theme-icon">
-    </mat-button-toggle>
-  }
-</mat-button-toggle-group>
+  (click)="toggle()">
+  <img [src]="nextOption().icon" [alt]="nextOption().value" class="theme-icon">
+</button>
