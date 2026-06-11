@@ -8,6 +8,7 @@ $breakpoint-sm: 599px;
 // tile-N width = N * ($col-unit + $grid-gutter) - $grid-gutter
 // --sheldon-col is the fluid runtime value (clamps between 72–96px via 8vw).
 $col-unit: 96px;
+$col-min: 60px;   // minimum column unit — tiles stop shrinking below this width
 $grid-gutter: 16px;
 
 // Gradient variables on :root so getComputedStyle(document.documentElement) resolves them.

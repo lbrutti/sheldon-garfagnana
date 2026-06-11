@@ -109,7 +109,7 @@ $search-select-font: 'Funnel Display', sans-serif;
         line-height: $control-height;
         padding: 0 8px;
         font-size: 18px;
-      //  color: white;
+        //  color: white;
         font-family: $search-select-font;
         font-weight: 800;
         letter-spacing: -0.001em;
@@ -177,7 +177,7 @@ $search-select-font: 'Funnel Display', sans-serif;
 }
 
 // ── mobile: full-width unione select + categoria select instead of toggles ───
-@media (max-width: $breakpoint-sm) {
+@media (max-width: $breakpoint-md){
 
   form {
     flex-direction: column !important;

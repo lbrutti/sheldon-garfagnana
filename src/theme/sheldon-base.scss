@@ -76,12 +76,15 @@ button {
   }
 
   // Percentage columns: each unit = 1/12 of container, so N columns always fill the full width.
+  // min-width prevents tiles from shrinking below $col-min per column unit.
   @for $i from 1 through 12 {
     .tile--#{$i} {
       width: calc(#{$i} / 12 * (100% + #{$grid-gutter}) - #{$grid-gutter});
+      min-width: calc(#{$i} * (#{$col-min} + #{$grid-gutter}) - #{$grid-gutter});
 
       @media (max-width: $breakpoint-sm) {
         width: 100%;
+        min-width: 0;
       }
     }
   }

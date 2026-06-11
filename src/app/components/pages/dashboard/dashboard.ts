@@ -53,7 +53,6 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     fitWidth: false,
     horizontalOrder: true,
     animations: {},
-
   };
 
   protected layoutReady = signal(false);
