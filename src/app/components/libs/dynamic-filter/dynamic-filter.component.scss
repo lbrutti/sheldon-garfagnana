@@ -1,4 +1,5 @@
 @import "../../../../theme/variables.scss";
+
 :host {
   display: block;
   //padding-top:8px;
@@ -18,13 +19,14 @@
       padding: 0 !important;
       background: white;
       margin-left: 7px;
+      color: black !important;
     }
 
     input.mat-mdc-input-element {
-      color: black;
+      color: black !important;
 
       &::placeholder {
-        color: black;
+        color: black !important;
         opacity: 1;
       }
     }
