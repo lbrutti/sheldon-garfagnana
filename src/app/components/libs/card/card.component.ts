@@ -40,6 +40,7 @@ export default class CardComponent {
   /** Stable id used to build and resolve the fullscreen share link. */
   cardId = input<string>('');
 
+  showSubheader = input<boolean>(true);
   /** The `?card=` id currently in the URL (preseeded so a deep link is fullscreen on first paint). */
   private readonly activeCard = toSignal(
     this.route.queryParamMap.pipe(map((params) => params.get(CARD_PARAM))),
