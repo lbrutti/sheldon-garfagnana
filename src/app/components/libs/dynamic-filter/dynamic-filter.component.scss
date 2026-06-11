@@ -1,7 +1,7 @@
 @import "../../../../theme/variables.scss";
 :host {
   display: block;
-  padding-top:8px;
+  //padding-top:8px;
 
   // Override this variable to resize all filter controls uniformly.
   --filter-control-height: var(--filter-control-height, 18px);

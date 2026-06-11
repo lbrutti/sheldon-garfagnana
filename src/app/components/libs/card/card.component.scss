@@ -37,12 +37,14 @@
   }
 
   .sheldon-card-subheader {
-    min-height: 49px !important;
+    min-height: 41px !important;
     align-items: baseline;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     flex-shrink: 0;
+    padding-top: 8px;
+    padding-bottom: 0;
 
     --mat-button-toggle-height: var(--mat-icon-button-heigth, 21px) !important;
 
