@@ -152,6 +152,15 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
 
+  private readonly tileDelayCache: number[] = [];
+
+  protected getTileDelay(idx: number): number {
+    if (this.tileDelayCache[idx] === undefined) {
+      this.tileDelayCache[idx] = +(Math.random() * 1.5).toFixed(2)+0.3;
+    }
+    return this.tileDelayCache[idx];
+  }
+
   private dataSignals: Record<string, WritableSignal<any>> = {
     interventiPerComune: this.interventiPerComune,
     comuniConInterventi: this.comuniConInterventi,
