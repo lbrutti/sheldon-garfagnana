@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/pages/map-view/map-view.ts", "src/app/components/pages/map-view/map-view.html"],
-  "sourcesContent": ["import { Component } from '@angular/core';\nimport { TranslocoModule } from '@jsverse/transloco';\n\n@Component({\n  selector: 'sheldon-map-view',\n  imports: [TranslocoModule],\n  templateUrl: './map-view.html',\n  styleUrl: './map-view.scss',\n})\nexport default class MapView {}\n", "<p>{{ 'pages.mapViewPlaceholder' | transloco }}</p>\n"],
-  "mappings": "qHASqBA,GAAO,IAAA,CAAd,MAAOA,CAAO,4CAAPA,EAAO,2BAAPA,EAAOC,UAAA,CAAA,CAAA,kBAAA,CAAA,EAAAC,MAAA,EAAAC,KAAA,EAAAC,SAAA,SAAAC,EAAAC,EAAA,CAAAD,EAAA,ICT5BE,EAAA,EAAA,GAAA,EAAGC,EAAA,CAAA,mBAA4CC,EAAA,SAA5CC,EAAA,EAAAC,EAAAC,EAAA,EAAA,EAAA,0BAAA,CAAA,kBDKSC,EAAeC,CAAA,EAAAC,cAAA,CAAA,CAAA,SAINf,CAAO,GAAA",
-  "names": ["MapView", "selectors", "decls", "vars", "template", "rf", "ctx", "\u0275\u0275domElementStart", "\u0275\u0275text", "\u0275\u0275domElementEnd", "\u0275\u0275advance", "\u0275\u0275textInterpolate", "\u0275\u0275pipeBind1", "TranslocoModule", "TranslocoPipe", "encapsulation"]
-}

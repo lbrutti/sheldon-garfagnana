@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/card-descrizione/sheldon-link-button/sheldon-link-button.scss"],
+  "sourcesContent": [":host {\n  .sheldon-card-descrizione-button {\n    display: flex;\n    margin-top: 12px;\n    margin-bottom: 12px;\n  }\n\n  ::ng-deep {\n\n    .mat-mdc-outlined-button {\n      margin-left: auto;\n      margin-right: auto;\n      align-self: center;\n      padding: 2px 8px 2px 8px;\n      height: 20px;\n      font-weight: 800;\n\n      &:not(:disabled) {\n        color: white !important;\n        background-color: black !important;\n      }\n    }\n  }\n}\n\n\n"],
+  "mappings": "AACE,MAAA,CAAA,gCACE,QAAA,KACA,WAAA,KACA,cAAA,KAKA,MAAA,UAAA,CAAA,wBACE,YAAA,KACA,aAAA,KACA,WAAA,OAXJ,QAYI,IAAA,IACA,OAAA,KACA,YAAA,IAEA,MAAA,UAAA,CARF,uBAQE,KAAA,WACE,MAAA,eACA,iBAAA",
+  "names": []
+}
