@@ -4,7 +4,6 @@ import {
   effect,
   ElementRef, Injector,
   input,
-  OnDestroy,
   signal,
   Signal,
   untracked,
@@ -23,7 +22,7 @@ import {TranslocoModule} from '@jsverse/transloco';
   templateUrl: './kpi.component.html',
   styleUrl: './kpi.component.scss',
 })
-export default class KpiComponent implements OnDestroy {
+export default class KpiComponent {
   @ViewChild('counter') counterEl!: ElementRef<HTMLElement>;
 
   title = input<string>('');
@@ -43,9 +42,6 @@ export default class KpiComponent implements OnDestroy {
 
   private readonly formatter = new Intl.NumberFormat(navigator.language);
   private rafId: number | null = null;
-  private firstAnimation = true;
-  private readonly creationTime = performance.now();
-  private fadeInTimeout: ReturnType<typeof setTimeout> | null = null;
 
   aggregatedValue: Signal<number> = computed(() => {
     const filters = this.appliedFilters();
@@ -68,7 +64,7 @@ export default class KpiComponent implements OnDestroy {
   private animFrom = 0;
   udm = input<string | null>(null);
 
-  constructor(private injector: Injector, private elementRef: ElementRef) {
+  constructor(private injector: Injector) {
     effect(() => {
       const to = this.aggregatedValue();
       const from = untracked(() => this.animFrom);
@@ -77,39 +73,11 @@ export default class KpiComponent implements OnDestroy {
         read: () => {
           const el = this.counterEl?.nativeElement;
           if (!el) return;
-
-          if (this.fadeInTimeout !== null) {
-            clearTimeout(this.fadeInTimeout);
-            this.fadeInTimeout = null;
-          }
-
-          const delay = this.firstAnimation ? this.computeCounterDelay() : 0;
-          this.firstAnimation = false;
+          this.animateCounter(el, from, to, 500);
           this.animFrom = to;
-
-          if (delay > 0) {
-            this.fadeInTimeout = setTimeout(() => {
-              this.fadeInTimeout = null;
-              this.animateCounter(el, from, to, 500);
-            }, delay);
-          } else {
-            this.animateCounter(el, from, to, 500);
-          }
         }
       }, {injector: this.injector});
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.fadeInTimeout !== null) clearTimeout(this.fadeInTimeout);
-    if (this.rafId !== null) cancelAnimationFrame(this.rafId);
-  }
-
-  private computeCounterDelay(): number {
-    const raw = getComputedStyle(this.elementRef.nativeElement).getPropertyValue('--tile-delay').trim();
-    const tileDelayMs = parseFloat(raw) * 1000 || 0;
-    const elapsed = performance.now() - this.creationTime;
-    return Math.max(0, tileDelayMs + 400 - elapsed);
   }
 
   private animateCounter(el: HTMLElement, from: number, to: number, duration = 1000) {

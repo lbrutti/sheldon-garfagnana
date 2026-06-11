@@ -8,7 +8,7 @@
   <div class="grid-sizer"></div>
   @for (setting of settings(); track setting.id; let idx = $index) {
     @if ($any(dataMap()[setting.data])) {
-      <div ngxMasonryItem [class]="'tile tile--' + setting.tileWidth" [style.--tile-delay]="getTileDelay(idx) + 's'">
+      <div ngxMasonryItem [class]="'tile tile--' + setting.tileWidth">
 
         @switch (setting.tag) {
 
