@@ -31,10 +31,7 @@
       @for (bar of bars(); track bar.label) {
         <div class="h-bar-container"
              [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar"
-             (mouseenter)="onBarEnter(bar, $event)"
-             (mousemove)="onBarMove($event)"
-             (mouseleave)="onBarLeave()"
-             (touchstart)="onBarTouch(bar, $event)">
+        >
           @if (hoveredBar() !== bar) {
             <sheldon-chart-label
               text="{{bar.label}}"
@@ -43,7 +40,11 @@
           <div class="h-bar"
                [style.width.%]="bar.pct"
                [style.min-height]="'var(--min-bar-height, 96px)'"
-               [style.background]="bar.background">
+               [style.background]="bar.background"
+               (mouseenter)="onBarEnter(bar, $event)"
+               (mousemove)="onBarMove($event)"
+               (mouseleave)="onBarLeave()"
+               (touchstart)="onBarTouch(bar, $event)">
           </div>
         </div>
       }

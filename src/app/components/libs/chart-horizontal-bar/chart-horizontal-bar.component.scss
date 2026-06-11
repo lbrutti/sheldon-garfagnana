@@ -15,7 +15,6 @@
   .h-bar-container {
     position: relative;
     transition: filter 0.15s ease;
-    cursor: pointer;
 
     &.dimmed {
       filter: brightness(0.75);
@@ -41,6 +40,8 @@
     box-sizing: border-box;
     overflow: hidden;
     transition: width var(--chart-transition-duration) ease;
+    cursor: pointer;
+
   }
 
   .h-bar-label,
