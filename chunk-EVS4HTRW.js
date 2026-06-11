@@ -1,2 +1,0 @@
-import{Ib as n,Jb as a,Rc as d,Sc as l,Wa as i,fc as p,gc as r,jb as o,nc as m,oc as c}from"./chunk-XIQLA7B2.js";var M=(()=>{class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=o({type:e,selectors:[["sheldon-map-view"]],decls:3,vars:3,template:function(t,f){t&1&&(n(0,"p"),p(1),m(2,"transloco"),a()),t&2&&(i(),r(c(2,1,"pages.mapViewPlaceholder")))},dependencies:[l,d],encapsulation:2})}return e})();export{M as default};
-//# sourceMappingURL=chunk-EVS4HTRW.js.map

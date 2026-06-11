@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/theme-switch/theme-switch.component.scss"],
+  "sourcesContent": [":host {\n  display: inline-flex;\n  align-items: center;\n  margin-bottom: 4px;\n}\n\n.theme-btn {\n  background: none;\n  border: none;\n  padding: 0;\n  margin: 0;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  width: 25px;\n  height: 25px;\n\n  @each $cat in ambiente, cultura, mobilita, sicurezza, economia, sociale, societa {\n    &[data-categoria='#{$cat}'] {\n      background-color: var(--color-gradient-#{$cat}-start);\n    }\n  }\n}\n\n.theme-icon {\n  width: 25px;\n  height: 25px;\n  display: block;\n}\n"],
+  "mappings": "AAAA,MACE,QAAA,YACA,YAAA,OACA,cAAA,IAGF,CAAA,UACE,WAAA,KACA,OAAA,KARF,QASE,EATF,OAUE,EACA,OAAA,QACA,QAAA,KACA,YAAA,OACA,MAAA,KACA,OAAA,KAGE,CAZJ,SAYI,CAAA,yBACE,iBAAA,IAAA,iCADF,CAZJ,SAYI,CAAA,wBACE,iBAAA,IAAA,gCADF,CAZJ,SAYI,CAAA,yBACE,iBAAA,IAAA,iCADF,CAZJ,SAYI,CAAA,0BACE,iBAAA,IAAA,kCADF,CAZJ,SAYI,CAAA,yBACE,iBAAA,IAAA,iCADF,CAZJ,SAYI,CAAA,wBACE,iBAAA,IAAA,gCADF,CAZJ,SAYI,CAAA,wBACE,iBAAA,IAAA,gCAKN,CAAA,WACE,MAAA,KACA,OAAA,KACA,QAAA",
+  "names": []
+}
