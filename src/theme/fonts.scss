@@ -17,3 +17,23 @@
     url('../../public/fonts/TASAOrbiterDeck-SemiBold.woff2') format('woff2'),
     url('../../public/fonts/TASAOrbiterDeck-SemiBold.woff') format('woff');
 }
+
+@font-face {
+  font-family: 'tasaDeck';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src:
+    url('../../public/fonts/TASAOrbiterDisplay-Bold.woff2') format('woff2'),
+    url('../../public/fonts/TASAOrbiterDisplay-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'tasaDeck';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src:
+    url('../../public/fonts/TASAOrbiterDisplay-Black.woff2') format('woff2'),
+    url('../../public/fonts/TASAOrbiterDisplay-Black.woff') format('woff');
+}
