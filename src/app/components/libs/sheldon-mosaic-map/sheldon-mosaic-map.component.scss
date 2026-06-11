@@ -1,23 +1,37 @@
 :host {
   display: block;
   width: 100%;
+  height: 100%;
 
-  .map-controls {
+  ::ng-deep .sheldon-card-root {
     display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-    //margin-bottom: 12px;
-    margin: auto;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  ::ng-deep .sheldon-card-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ::ng-deep .sheldon-card-content {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .map-wrapper {
     position: relative;
+    flex: 1 1 auto;
     width: 100%;
-    height: 480px;
+    height: 100%;
+    min-height: 0;
     overflow: hidden;
     background-image:
-      linear-gradient( #b0aeae 0.5px, transparent 0.5px),
+      linear-gradient(#b0aeae 0.5px, transparent 0.5px),
       linear-gradient(90deg, #b0aeae 0.5px, transparent 0.5px);
     background-size: 3em 3em;
 
@@ -29,6 +43,18 @@
         background: transparent;
       }
     }
+  }
+
+  .map-controls {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    right: 8px;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 
   .map-tooltip {
@@ -55,6 +81,7 @@
       font-size: 11px;
     }
   }
+
   .map-footer {
     display: flex;
     flex-direction: row;
@@ -68,6 +95,7 @@
     display: flex;
     gap: 3px;
     pointer-events: none;
+    z-index: 2;
 
     .legend-item {
       display: flex;
@@ -77,9 +105,7 @@
     }
 
     .legend-label {
-      //font-family: monospace;
       font-size: 12px;
-      //color: #aaa;
     }
 
     .legend-swatch {
