@@ -66,26 +66,29 @@
             (layerMouseLeave)="onPolygonLeave()">
           </mgl-layer>
 
-          <!--          &lt;!&ndash; Default boundary outlines &ndash;&gt;-->
-            <!--          <mgl-layer-->
-            <!--            id="comuni-line"-->
-            <!--            source="comuni"-->
-            <!--            type="line"-->
-            <!--            [paint]="{-->
-            <!--              'line-color': '#0a0f1e',-->
-            <!--              'line-opacity':0.5,-->
-            <!--              'line-width': ['interpolate', ['linear'], ['zoom'], 7, 0.3, 12, 0.5]-->
-            <!--            }">-->
-            <!--          </mgl-layer>-->
+          <mgl-geojson-source id="interventi" [data]="interventiFeatures()"></mgl-geojson-source>
 
-            <!--          &lt;!&ndash; Thicker outline for selected comune &ndash;&gt;-->
-            <!--          <mgl-layer-->
-            <!--            id="comuni-selected"-->
-            <!--            source="comuni"-->
-            <!--            type="line"-->
-            <!--            [filter]="selectedFilter()"-->
-            <!--            [paint]="{ 'line-color': '#ffffff', 'line-width': 2, 'line-opacity': 0.9 }">-->
-            <!--          </mgl-layer>-->
+          <mgl-layer
+            id="interventi-circles"
+            source="interventi"
+            type="symbol"
+            [layout]="{
+              'icon-image': 'interventi-square',
+              'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.4, 14, 1.0],
+              'icon-allow-overlap': true,
+              'icon-ignore-placement': true
+            }"
+            [paint]="{
+              'icon-color': '#ff6b35',
+              'icon-opacity': 0.85,
+              'icon-halo-color': '#ffffff',
+              'icon-halo-width': 1
+            }"
+            (layerMouseEnter)="onInterventiEnter($event)"
+            (layerMouseMove)="onInterventiEnter($event)"
+            (layerMouseLeave)="onInterventiLeave()">
+          </mgl-layer>
+
         }
       </mgl-map>
 
@@ -106,18 +109,22 @@
       </div>
 
       <!-- Hover tooltip -->
-      @if (hoveredFeature() && tooltipPos()) {
+      @if (hoveredIntervento() && interventiTooltipPos()) {
         <div
           class="map-tooltip"
+          [style.left.px]="interventiTooltipPos()!.x"
+          [style.top.px]="interventiTooltipPos()!.y"
           [style.background]="tooltipBackground">
           <strong
-            [style.background]="tooltipGradient">{{ hoveredFeature()?.properties?.[municipalityKey()] }}</strong>
-          @for (prop of this.tooltipProperties(); track prop.property) {
-            @if (hoveredFeature()?.properties?.[prop.property]) {
-              <div
-                class="map-tooltip-item">{{ hoveredFeature()?.properties?.[prop.property] | multiples }} {{ prop.label }}
-              </div>
-            }
+            [style.background]="tooltipGradient">{{ hoveredIntervento()?.properties?.['nome'] }}</strong>
+          @if (hoveredIntervento()?.properties?.['comune']) {
+            <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['comune'] }}</div>
+          }
+          @if (hoveredIntervento()?.properties?.['stato']) {
+            <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['stato'] }}</div>
+          }
+          @if (hoveredIntervento()?.properties?.['importoTotale']) {
+            <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['importoTotale'] | multiples }}</div>
           }
         </div>
       }

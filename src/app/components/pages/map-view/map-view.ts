@@ -12,15 +12,10 @@ import {
 import {TranslocoModule} from '@jsverse/transloco';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
-import {DataInterface, FilterOptionInterface, InterventoInterface} from '../../../interfaces';
+import { FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {FeatureCollection, Polygon} from 'geojson';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {getExplodedData, shuffleArray} from '../../../utils';
-import {
-  InterventoToDataMapping, InterventoToTreeDataMapping,
-  parseInterventiToDataCollection,
-  parseInterventiToTreeDataCollection
-} from '../../../adapters';
 import camelcase from 'camelcase';
 import GlobalSearchComponent from '../../libs/global-search/global-search.component';
 import SheldonInterventiMapComponent from '../../libs/sheldon-interventi-map/sheldon-interventi-map.component';

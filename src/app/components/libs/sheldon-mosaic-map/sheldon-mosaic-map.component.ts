@@ -114,12 +114,12 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   // ── State ──────────────────────────────────────────────────────────────────
   mapReady = signal(false);
   activeAuxReduce = signal<AuxReduceOption | null>(null);
-  private selectedComune = signal<string | null>(null);
+  protected selectedComune = signal<string | null>(null);
   private isHovering = signal(false);
   hoveredFeature = signal<Feature<Polygon> | null>(null);
   tooltipPos = signal<{ x: number; y: number } | null>(null);
 
-  private mapInstance: Map | null = null;
+  protected mapInstance: Map | null = null;
   private hoveredFeatureId: string | number | null = null;
   private pinnedFeature: Feature<Polygon> | null = null;
   private pinnedTooltipPos: { x: number; y: number } | null = null;
