@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/components/libs/chart-label/chart-label.component.scss", "src/app/components/libs/chart-two-lines-label/chart-two-lines-label.component.scss"],
-  "sourcesContent": ["//@use \"@angular/material\" as mat;\n\n:host {\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n  max-height: 90%;\n  color: white;\n  background: black;\n  padding: 0 1px 0 3px;\n  /* riduce l’altezza del rettangolo nero */\n  font-size: 12px;\n  font-weight: 500;\n  line-height: 1.4;\n  letter-spacing: 0.05em;\n  .label-title,\n  .label-subtitle {\n    line-height: 1;\n      padding: 0 1px;\n  }\n  /* barre verticali: niente seconda riga vuota */\n  .label-subtitle:empty {\n    display: none;\n  }\n}", "//@use \"@angular/material\" as mat;\n\n@import url('../chart-label/chart-label.component.scss');\n\n:host {\n  display: block;\n  white-space: nowrap;\n  color: white;\n  background: black;\n  padding-right: 2px;\n\n\n  .label-title,\n  .label-subtitle {\n    overflow: hidden;\n    text-overflow: ellipsis;\n    line-height: 14px;\n    font-size: 12px;\n  }\n}\n"],
-  "mappings": "iBAEA,MACE,YAAA,OACA,SAAA,OACA,cAAA,SACA,WAAA,IACA,MAAA,KACA,WAAA,aACA,EAAA,IAAA,EAAA,IAEA,UAAA,KACA,YAAA,IACA,YAAA,IACA,eAAA,MACA,MAAA,CAAA,YAAA,MAAA,CAAA,eAEE,YAAA,UACE,EAAA,IAGJ,MAAA,CANA,cAMA,OACE,QAAA,KClBJ,MACE,QAAA,MACA,YAAA,OACA,MAAA,KACA,WAAA,KACA,cAAA,IAGA,MAAA,CAAA,YAAA,MAAA,CAAA,eAEE,SAAA,OACA,cAAA,SACA,YAAA,KACA,UAAA",
-  "names": []
-}
