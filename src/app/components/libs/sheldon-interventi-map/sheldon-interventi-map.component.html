@@ -70,15 +70,14 @@
             type="symbol"
             [layout]="{
               'icon-image': 'interventi-square',
-              'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.4, 14, 1.0],
-              'icon-allow-overlap': true,
+              'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.4, 14, 0.8],
+              'icon-allow-overlap': false,
               'icon-ignore-placement': true
             }"
             [paint]="{
-              'icon-color': '#ff6b35',
+              'icon-color': '#000',
               'icon-opacity': 0.85,
-              'icon-halo-color': '#ffffff',
-              'icon-halo-width': 1
+              'icon-halo-color': '#fff',
             }"
             (layerMouseEnter)="onInterventiEnter($event)"
             (layerMouseMove)="onInterventiEnter($event)"
