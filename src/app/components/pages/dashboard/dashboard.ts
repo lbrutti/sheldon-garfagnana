@@ -50,9 +50,10 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     gutter: 16,
     columnWidth: '.grid-sizer',
     percentPosition: false,
-    fitWidth: true,
+    fitWidth: false,
     horizontalOrder: true,
     animations: {},
+
   };
 
   protected layoutReady = signal(false);

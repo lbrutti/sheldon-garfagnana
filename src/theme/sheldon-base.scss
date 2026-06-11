@@ -55,7 +55,7 @@ button {
 .sheldon-grid {
   // Hidden sizer element — masonry reads its pixel width to determine column spacing.
   .grid-sizer {
-    width: var(--sheldon-col);
+    width: calc(1 / 12 * (100% + #{$grid-gutter}) - #{$grid-gutter});
     height: 0;
     margin: 0;
     padding: 0;
@@ -75,12 +75,11 @@ button {
     }
   }
 
-  // Fluid columns: --sheldon-col clamps 72–96px via 8vw so tiles scale
-  // up to 25% before wrapping; at $breakpoint-sm they collapse to full width.
+  // Percentage columns: each unit = 1/12 of container, so N columns always fill the full width.
   @for $i from 1 through 12 {
     .tile--#{$i} {
-      width: calc(#{$i} * (var(--sheldon-col) + #{$grid-gutter}) - #{$grid-gutter});
-            
+      width: calc(#{$i} / 12 * (100% + #{$grid-gutter}) - #{$grid-gutter});
+
       @media (max-width: $breakpoint-sm) {
         width: 100%;
       }
