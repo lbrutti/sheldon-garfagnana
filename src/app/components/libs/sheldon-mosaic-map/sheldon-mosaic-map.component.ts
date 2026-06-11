@@ -197,9 +197,9 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     return ['step', ['get', '_rawValue'], s1, 0.0001, s1, 2, s2, 4, s3];
   });
 
-  /** Transparent fill for zero values; choropleth fill otherwise. */
+  /** White fill for zero values; choropleth fill otherwise. */
   private choroplethFillExpr = computed((): any[] => {
-    return ['case', ['==', ['get', '_rawValue'], 0], 'transparent', this.choroplethColorExpr()];
+    return ['case', ['==', ['get', '_rawValue'], 0], '#ffffff', this.choroplethColorExpr()];
   });
 
   readonly zeroValueFilter = ['==', ['get', '_rawValue'], 0] as any;
