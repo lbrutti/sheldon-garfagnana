@@ -13,7 +13,7 @@ import {
 } from '@angular/core';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
-import type {Feature, FeatureCollection, Polygon} from 'geojson';
+import type {Feature, FeatureCollection, LineString, Polygon} from 'geojson';
 import type {Map, MapLayerMouseEvent, MapLibreEvent, MapLibreZoomEvent, StyleSpecification} from 'maplibre-gl';
 
 import CardComponent from '../card/card.component';
@@ -72,6 +72,80 @@ function generateGradientShades(baseColor: string): [string, string, string, str
   return [mix(0.2), mix(0.45), mix(0.7), mix(1.0)];
 }
 
+const MERCATOR_HALF_WORLD = 20037508.342789244;
+
+function lngLatToMercator(lng: number, lat: number): [number, number] {
+  const x = (lng * MERCATOR_HALF_WORLD) / 180;
+  const latRad = (lat * Math.PI) / 180;
+  const y = Math.log(Math.tan(Math.PI / 4 + latRad / 2)) * (MERCATOR_HALF_WORLD / Math.PI);
+  return [x, y];
+}
+
+function mercatorToLngLat(x: number, y: number): [number, number] {
+  const lng = (x * 180) / MERCATOR_HALF_WORLD;
+  const latRad = 2 * Math.atan(Math.exp((y * Math.PI) / MERCATOR_HALF_WORLD)) - Math.PI / 2;
+  const lat = (latRad * 180) / Math.PI;
+  return [lng, lat];
+}
+
+/** Picks a round step size for ~targetLines divisions across span (meters in Web Mercator). */
+function niceGridStep(span: number, targetLines = 10): number {
+  const raw = span / targetLines;
+  const magnitude = Math.pow(10, Math.floor(Math.log10(raw)));
+  const normalized = raw / magnitude;
+  const nice = normalized <= 1 ? 1 : normalized <= 2 ? 2 : normalized <= 5 ? 5 : 10;
+  return nice * magnitude;
+}
+
+/** Square grid in Web Mercator — equal X/Y spacing renders as square cells on the map. */
+function buildGridGeoJson(bbox: [[number, number], [number, number]]): FeatureCollection<LineString> {
+  const [[minLng, minLat], [maxLng, maxLat]] = bbox;
+  const padLng = (maxLng - minLng) * 0.5;
+  const padLat = (maxLat - minLat) * 0.5;
+  const lng0 = minLng - padLng;
+  const lng1 = maxLng + padLng;
+  const lat0 = minLat - padLat;
+  const lat1 = maxLat + padLat;
+
+  const corners = [
+    lngLatToMercator(lng0, lat0),
+    lngLatToMercator(lng1, lat0),
+    lngLatToMercator(lng0, lat1),
+    lngLatToMercator(lng1, lat1),
+  ];
+  const minX = Math.min(...corners.map(([x]) => x));
+  const maxX = Math.max(...corners.map(([x]) => x));
+  const minY = Math.min(...corners.map(([, y]) => y));
+  const maxY = Math.max(...corners.map(([, y]) => y));
+
+  const step = niceGridStep(Math.min(maxX - minX, maxY - minY));
+  const features: Feature<LineString>[] = [];
+
+  for (let x = Math.floor(minX / step) * step; x <= maxX; x += step) {
+    features.push({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: [mercatorToLngLat(x, minY), mercatorToLngLat(x, maxY)],
+      },
+      properties: {},
+    });
+  }
+
+  for (let y = Math.floor(minY / step) * step; y <= maxY; y += step) {
+    features.push({
+      type: 'Feature',
+      geometry: {
+        type: 'LineString',
+        coordinates: [mercatorToLngLat(minX, y), mercatorToLngLat(maxX, y)],
+      },
+      properties: {},
+    });
+  }
+
+  return {type: 'FeatureCollection', features};
+}
+
 @Component({
   selector: 'sheldon-mosaic-map',
   standalone: true,
@@ -106,6 +180,10 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
 
   // ── Public constants for template ─────────────────────────────────────────
   readonly mapStyle = MAP_STYLE;
+  readonly gridLinePaint = {
+    'line-color': '#b0aeae',
+    'line-width': 1,
+  };
 
   // Track the active theme so the choropleth shades re-read their CSS variables on change.
   protected readonly theme = inject(ThemeService).theme;
@@ -267,6 +345,13 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     const px = (maxX - minX) * 0.1;
     const py = (maxY - minY) * 0.1;
     return [[minX - px, minY - py], [maxX + px, maxY + py]];
+  });
+
+  /** Geographic grid lines — zoom and pan with the map. */
+  gridGeoJson = computed<FeatureCollection<LineString>>(() => {
+    const bb = this.collectionBbox();
+    if (!bb) return EMPTY_COLLECTION as FeatureCollection<LineString>;
+    return buildGridGeoJson(bb);
   });
   protected tooltipBackground: string;
 

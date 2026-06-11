@@ -1,31 +1,29 @@
 <sheldon-card
   class="height-xl"
+  [showSubheader]="false"
   [categoria]="categoria()"
   [infoText]="infoText()"
   [cardId]="cardId()">
   <ng-container title>{{ title() || ('chart.map' | transloco) }}</ng-container>
-  <ng-container subheader>
-    <!-- Controls row -->
-    <div class="map-controls">
-      <sheldon-dynamic-filter
-        [filterBy]="['comune']"
-        [dataset]="comuniDataset()"
-        (filterChange)="onFilterChange($event)"/>
-
-      @if (auxReduce().length > 1) {
-        <mat-button-toggle-group
-          [value]="activeAuxReduce()"
-          (change)="onReduceChange($event)">
-          @for (opt of auxReduce(); track opt.campo) {
-            <mat-button-toggle [value]="opt">{{ opt.campo }}</mat-button-toggle>
-          }
-        </mat-button-toggle-group>
-      }
-    </div>
-  </ng-container>
   <ng-container content>
-    <!-- Map wrapper -->
     <div class="map-wrapper">
+      <div class="map-controls">
+        <sheldon-dynamic-filter
+          [filterBy]="['comune']"
+          [dataset]="comuniDataset()"
+          (filterChange)="onFilterChange($event)"/>
+
+        @if (auxReduce().length > 1) {
+          <mat-button-toggle-group
+            [value]="activeAuxReduce()"
+            (change)="onReduceChange($event)">
+            @for (opt of auxReduce(); track opt.campo) {
+              <mat-button-toggle [value]="opt">{{ opt.campo }}</mat-button-toggle>
+            }
+          </mat-button-toggle-group>
+        }
+      </div>
+
       <mgl-map
         [mapStyle]="mapStyle"
         [canvasContextAttributes]="{preserveDrawingBuffer: true}"
@@ -37,6 +35,15 @@
       >
 
         @if (mapReady()) {
+          <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
+
+          <mgl-layer
+            id="grid-lines"
+            source="grid"
+            type="line"
+            [paint]="gridLinePaint">
+          </mgl-layer>
+
           <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
           <mgl-geojson-source
             id="comuni"
