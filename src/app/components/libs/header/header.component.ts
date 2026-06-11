@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { filter, map } from 'rxjs';
@@ -26,4 +26,14 @@ export default class HeaderComponent {
     if (segment === 'map' || segment === 'stories') return 'dati';
     return 'progetti';
   });
+
+  protected readonly menuOpen = signal(false);
+
+  protected toggleMenu(): void {
+    this.menuOpen.update((v) => !v);
+  }
+
+  protected closeMenu(): void {
+    this.menuOpen.set(false);
+  }
 }

@@ -1,14 +1,19 @@
+@use '../../../../theme/variables' as v;
+
 $border: 1px solid #3a3a3a;
+$header-height: 48px;
 
 :host {
   display: block;
   width: 100%;
+  position: relative;
+  z-index: 100;
 }
 
 .sheldon-header {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  height: 48px;
+  height: $header-height;
   border-bottom: $border;
 }
 
@@ -51,4 +56,110 @@ $border: 1px solid #3a3a3a;
   text-transform: uppercase;
   color: #fff;
   white-space: nowrap;
+}
+
+// ── Hamburger button (hidden on desktop) ──────────────────────────────────────
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  padding: 0 16px;
+  background: #111;
+  border: none;
+  border-left: $border;
+  cursor: pointer;
+
+  span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    transition:
+      transform 0.25s ease,
+      opacity 0.25s ease;
+  }
+
+  &.is-open {
+    span:nth-child(1) {
+      transform: translateY(7px) rotate(45deg);
+    }
+    span:nth-child(2) {
+      opacity: 0;
+      transform: scaleX(0);
+    }
+    span:nth-child(3) {
+      transform: translateY(-7px) rotate(-45deg);
+    }
+  }
+}
+
+// ── Toast menu + backdrop (mobile only) ───────────────────────────────────────
+
+.toast-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.toast-menu {
+  position: fixed;
+  top: $header-height;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  background: #111;
+  border-bottom: $border;
+  animation: toast-slide-down 0.2s ease;
+}
+
+.toast-menu__item {
+  display: flex;
+  align-items: center;
+  padding: 18px 24px;
+  text-decoration: none;
+  border-bottom: $border;
+  transition: background-color 0.15s ease;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #222;
+  }
+
+  .label {
+    font-size: 20px;
+  }
+}
+
+@keyframes toast-slide-down {
+  from {
+    transform: translateY(-8px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+
+@media (max-width: v.$breakpoint-sm) {
+  .sheldon-header {
+    grid-template-columns: 1fr auto;
+  }
+
+  .panel--nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
 }
