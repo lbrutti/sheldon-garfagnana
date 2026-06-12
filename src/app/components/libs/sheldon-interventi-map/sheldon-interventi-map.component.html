@@ -33,11 +33,11 @@
     (mapLoad)="onMapLoad($event)"
   >
 
-<!--    <mgl-control-->
-<!--      class="map-zoom"-->
-<!--      mglNavigation-->
-<!--      [showCompass]="false"-->
-<!--    />-->
+    <!--    <mgl-control-->
+    <!--      class="map-zoom"-->
+    <!--      mglNavigation-->
+    <!--      [showCompass]="false"-->
+    <!--    />-->
     @if (mapReady()) {
       <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
 
@@ -105,7 +105,7 @@
         [closeButton]="false"
         [closeOnMove]="false"
         [closeOnClick]="true"
-        anchor="right">
+      >
         <div
           class="map-tooltip"
           [style.background]="tooltipPolygonColor()">

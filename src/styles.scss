@@ -63,6 +63,10 @@ body.sheldon-theme-transitioning *:not(canvas) {
 
 }
 
+.maplibregl-popup {
+  z-index: 10000;
+}
+
 .maplibregl-popup-tip {
   display: none !important;
 }

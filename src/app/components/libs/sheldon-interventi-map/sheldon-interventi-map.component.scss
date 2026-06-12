@@ -70,6 +70,8 @@
   }
 
   .map-tooltip {
+    z-index: 100000;
+
     .map-tooltip-item {
       font-size: 14px;
       font-weight: 600;
