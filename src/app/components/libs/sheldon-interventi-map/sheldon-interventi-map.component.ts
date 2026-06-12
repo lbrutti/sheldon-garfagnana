@@ -9,7 +9,7 @@ import {
   PopupComponent
 } from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Point} from 'geojson';
-import type {Map, MapLayerMouseEvent} from 'maplibre-gl';
+import type {Map as MapGL, MapLayerMouseEvent} from 'maplibre-gl';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {TranslocoModule} from '@jsverse/transloco';
 import SheldonMosaicMapComponent from '../sheldon-mosaic-map/sheldon-mosaic-map.component';
@@ -29,8 +29,6 @@ import {MatIcon} from '@angular/material/icon';
     TranslocoModule,
     PopupComponent,
     MatIcon,
-    NavigationControlDirective,
-    ControlComponent,
   ],
   templateUrl: './sheldon-interventi-map.component.html',
   styleUrl: './sheldon-interventi-map.component.scss',
@@ -41,7 +39,7 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
 
   protected override fitBoundsPadding = {top: 110};
 
-  override onMapLoad(map: Map): void {
+  override onMapLoad(map: MapGL): void {
     super.onMapLoad(map);
     const size = 20;
     const canvas = document.createElement('canvas');
@@ -84,9 +82,26 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
     if (this.mapInstance) this.mapInstance.getCanvas().style.cursor = '';
   }
 
+  interventiIconPaint = computed(() => {
+    if (this.theme() === 'light') {
+      return {'icon-color': '#000', 'icon-opacity': 1};
+    }
+    return {
+      'icon-color': ['case', ['==', ['get', '_polygonRawValue'], 0], '#000000', '#ffffff'] as any,
+      'icon-opacity': 0.9,
+    };
+  });
+
   interventiFeatures = computed<FeatureCollection<Point>>(() => {
     const comuneFilter = this.selectedComune();
-    console.log(this.interventi());
+    const key = this.municipalityKey();
+    const rawValueByComune = new Map<string, number>();
+    for (const f of this.derivedPolygons().features) {
+      rawValueByComune.set(
+        String(f.properties?.[key] ?? ''),
+        (f.properties?.['_rawValue'] as number) ?? 0,
+      );
+    }
     return {
       type: 'FeatureCollection',
       features: this.interventi()
@@ -103,7 +118,8 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
             stato: i.stato,
             importoTotale: i.importoTotale,
             descrizione: i.descrizione,
-            link: i.link
+            link: i.link,
+            _polygonRawValue: rawValueByComune.get(i.comune) ?? 0,
           },
         })),
     };

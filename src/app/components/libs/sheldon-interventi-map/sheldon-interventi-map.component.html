@@ -86,10 +86,7 @@
               'icon-allow-overlap': false,
               'icon-ignore-placement': true
             }"
-        [paint]="{
-              'icon-color': theme() ==='light' ? '#000': '#dbdbdb',
-              'icon-opacity': theme() ==='light' ? 1: 0.9,
-            }"
+        [paint]="interventiIconPaint()"
         (layerMouseEnter)="onInterventiEnter($event)"
         (layerMouseMove)="onInterventiEnter($event)"
 
