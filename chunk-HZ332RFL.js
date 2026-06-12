@@ -1,2 +1,0 @@
-import{Hb as n,Ib as a,Sc as d,Tc as l,Wa as o,fc as r,gc as p,jb as i,oc as s,pc as c}from"./chunk-XHX5QVZS.js";var D=(()=>{class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=i({type:e,selectors:[["sheldon-public-stories"]],decls:3,vars:3,template:function(t,f){t&1&&(n(0,"p"),r(1),s(2,"transloco"),a()),t&2&&(o(),p(c(2,1,"pages.dataStoriesPlaceholder")))},dependencies:[l,d],encapsulation:2})}return e})();export{D as default};
-//# sourceMappingURL=chunk-HZ332RFL.js.map
