@@ -27,6 +27,11 @@ import {TranslocoModule} from '@jsverse/transloco';
 
 const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
+const MAP_ZOOM_OUT_DELTA = 1.5;
+const MAP_ZOOM_IN_DELTA = 2.5;
+/** Extra grid cells drawn beyond the visible viewport on each side. */
+const GRID_VIEWPORT_MARGIN_CELLS = 2;
+
 const MAP_STYLE: StyleSpecification = {
   version: 8,
   sources: {},
@@ -98,27 +103,13 @@ function niceGridStep(span: number, targetLines = 10): number {
 }
 
 /** Square grid in Web Mercator — equal X/Y spacing renders as square cells on the map. */
-function buildGridGeoJson(bbox: [[number, number], [number, number]]): FeatureCollection<LineString> {
-  const [[minLng, minLat], [maxLng, maxLat]] = bbox;
-  const padLng = (maxLng - minLng) * 0.5;
-  const padLat = (maxLat - minLat) * 0.5;
-  const lng0 = minLng - padLng;
-  const lng1 = maxLng + padLng;
-  const lat0 = minLat - padLat;
-  const lat1 = maxLat + padLat;
-
-  const corners = [
-    lngLatToMercator(lng0, lat0),
-    lngLatToMercator(lng1, lat0),
-    lngLatToMercator(lng0, lat1),
-    lngLatToMercator(lng1, lat1),
-  ];
-  const minX = Math.min(...corners.map(([x]) => x));
-  const maxX = Math.max(...corners.map(([x]) => x));
-  const minY = Math.min(...corners.map(([, y]) => y));
-  const maxY = Math.max(...corners.map(([, y]) => y));
-
-  const step = niceGridStep(Math.min(maxX - minX, maxY - minY));
+function buildGridGeoJsonFromMercatorBounds(
+  minX: number,
+  maxX: number,
+  minY: number,
+  maxY: number,
+  step: number,
+): FeatureCollection<LineString> {
   const features: Feature<LineString>[] = [];
 
   for (let x = Math.floor(minX / step) * step; x <= maxX; x += step) {
@@ -144,6 +135,46 @@ function buildGridGeoJson(bbox: [[number, number], [number, number]]): FeatureCo
   }
 
   return {type: 'FeatureCollection', features};
+}
+
+function mercatorBoundsFromLngLatBbox(bbox: [[number, number], [number, number]]): {
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+} {
+  const [[minLng, minLat], [maxLng, maxLat]] = bbox;
+  const corners = [
+    lngLatToMercator(minLng, minLat),
+    lngLatToMercator(maxLng, minLat),
+    lngLatToMercator(minLng, maxLat),
+    lngLatToMercator(maxLng, maxLat),
+  ];
+
+  return {
+    minX: Math.min(...corners.map(([x]) => x)),
+    maxX: Math.max(...corners.map(([x]) => x)),
+    minY: Math.min(...corners.map(([, y]) => y)),
+    maxY: Math.max(...corners.map(([, y]) => y)),
+  };
+}
+
+/** Grid aligned to the viewport — always covers the full visible area plus a small margin. */
+function buildGridGeoJsonForViewport(
+  visibleBbox: [[number, number], [number, number]],
+  marginCells = GRID_VIEWPORT_MARGIN_CELLS,
+): FeatureCollection<LineString> {
+  const visible = mercatorBoundsFromLngLatBbox(visibleBbox);
+  const step = niceGridStep(Math.min(visible.maxX - visible.minX, visible.maxY - visible.minY));
+  const margin = marginCells * step;
+
+  return buildGridGeoJsonFromMercatorBounds(
+    Math.floor(visible.minX / step) * step - margin,
+    Math.ceil(visible.maxX / step) * step + margin,
+    Math.floor(visible.minY / step) * step - margin,
+    Math.ceil(visible.maxY / step) * step + margin,
+    step,
+  );
 }
 
 @Component({
@@ -191,6 +222,8 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
 
   // ── State ──────────────────────────────────────────────────────────────────
   mapReady = signal(false);
+  mapMinZoom = signal(0);
+  mapMaxZoom = signal(22);
   activeAuxReduce = signal<AuxReduceOption | null>(null);
   private selectedComune = signal<string | null>(null);
   private isHovering = signal(false);
@@ -202,6 +235,20 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   private pinnedFeature: Feature<Polygon> | null = null;
   private pinnedTooltipPos: { x: number; y: number } | null = null;
   private resizeObserver: ResizeObserver | null = null;
+  private gridRefreshPending = false;
+  private readonly onMapMove = (): void => {
+    if (this.gridRefreshPending) return;
+    this.gridRefreshPending = true;
+    requestAnimationFrame(() => {
+      this.gridRefreshPending = false;
+      this.refreshGrid();
+    });
+  };
+
+  /** Grid lines — regenerated from the current viewport. */
+  gridGeoJson = signal<FeatureCollection<LineString>>(
+    EMPTY_COLLECTION as FeatureCollection<LineString>,
+  );
 
   // ── Computed ───────────────────────────────────────────────────────────────
 
@@ -347,12 +394,6 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     return [[minX - px, minY - py], [maxX + px, maxY + py]];
   });
 
-  /** Geographic grid lines — zoom and pan with the map. */
-  gridGeoJson = computed<FeatureCollection<LineString>>(() => {
-    const bb = this.collectionBbox();
-    if (!bb) return EMPTY_COLLECTION as FeatureCollection<LineString>;
-    return buildGridGeoJson(bb);
-  });
   protected tooltipBackground: string;
 
   constructor() {
@@ -361,20 +402,52 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
       if (!bb || !this.mapReady()) return;
       const map = untracked(() => this.mapInstance);
       if (!map) return;
-      map.fitBounds(bb, { animate: false });
+      map.fitBounds(bb, {animate: false});
+      this.applyZoomLimits(map);
+      this.refreshGrid();
     });
+  }
+
+  private applyZoomLimits(map: Map): void {
+    const homeZoom = map.getZoom();
+    const minZoom = Math.max(0, homeZoom - MAP_ZOOM_OUT_DELTA);
+    const maxZoom = homeZoom + MAP_ZOOM_IN_DELTA;
+
+    map.setMinZoom(minZoom);
+    map.setMaxZoom(maxZoom);
+    this.mapMinZoom.set(minZoom);
+    this.mapMaxZoom.set(maxZoom);
   }
 
   ngOnInit(): void {
     if (this.auxReduce().length) {
       this.activeAuxReduce.set(this.auxReduce()[0]);
     }
-    this.resizeObserver = new ResizeObserver(() => this.mapInstance?.resize());
+    this.resizeObserver = new ResizeObserver(() => {
+      this.mapInstance?.resize();
+      this.refreshGrid();
+    });
     this.resizeObserver.observe(this.elRef.nativeElement);
   }
 
   ngOnDestroy(): void {
+    this.mapInstance?.off('move', this.onMapMove);
     this.resizeObserver?.disconnect();
+  }
+
+  private refreshGrid(): void {
+    const map = this.mapInstance;
+    if (!map) return;
+
+    const bounds = map.getBounds();
+    const sw = bounds.getSouthWest();
+    const ne = bounds.getNorthEast();
+    const visibleBbox: [[number, number], [number, number]] = [
+      [sw.lng, sw.lat],
+      [ne.lng, ne.lat],
+    ];
+
+    this.gridGeoJson.set(buildGridGeoJsonForViewport(visibleBbox));
   }
 
   // ── Map lifecycle ──────────────────────────────────────────────────────────
@@ -382,7 +455,9 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   onMapLoad(map: Map): void {
     this.mapInstance = map;
     map.resize();
+    map.on('move', this.onMapMove);
     this.mapReady.set(true);
+    this.refreshGrid();
   }
 
   // ── Layer events ───────────────────────────────────────────────────────────

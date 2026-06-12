@@ -29,8 +29,8 @@
         [canvasContextAttributes]="{preserveDrawingBuffer: true}"
         [cooperativeGestures]="true"
         [cancelPendingTileRequestsWhileZooming]="true"
-        [maxZoom]="20"
-        [minZoom]="0"
+        [maxZoom]="mapMaxZoom()"
+        [minZoom]="mapMinZoom()"
         (mapLoad)="onMapLoad($event)"
       >
 
