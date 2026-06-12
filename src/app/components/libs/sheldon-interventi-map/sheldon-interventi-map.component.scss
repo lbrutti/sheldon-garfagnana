@@ -168,3 +168,12 @@
     }
   }
 }
+
+
+body.sheldon-theme-bw {
+  :host {
+    .map-tooltip-item-title {
+      color: white !important;
+    }
+  }
+}

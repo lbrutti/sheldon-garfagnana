@@ -86,6 +86,82 @@
       }
     }
   }
+
+  &.big-field{
+    ::ng-deep {
+      // closed field: white background, black text (flipped from the global-search select)
+      .mat-mdc-text-field-wrapper {
+        padding: 0 !important;
+        background: white;
+        margin-left: 7px;
+        color: black !important;
+      }
+
+      input.mat-mdc-input-element {
+        color: black !important;
+
+        &::placeholder {
+          color: black !important;
+          opacity: 1;
+        }
+      }
+
+      .mdc-floating-label--float-above {
+        display: none !important;
+      }
+
+      .mdc-notched-outline {
+        border: none !important;
+      }
+
+      .mdc-floating-label {
+        height: var(--filter-control-height) !important;
+
+        mat-label {
+          vertical-align: middle;
+        }
+      }
+
+      .mat-mdc-form-field-infix {
+        min-height: var(--filter-control-height) !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        font-size: 18px;
+        padding-left: 4px;
+
+      }
+
+      .mdc-text-field {
+        height: var(--filter-control-height, 25px) !important;
+      }
+
+      .mat-mdc-option {
+        min-height: var(--filter-control-height);
+        line-height: var(--filter-control-height);
+        font-size: 18px;
+      }
+
+      .mat-mdc-form-field-icon-suffix {
+        display: flex;
+        align-items: center;
+        height: var(--filter-control-height);
+
+        .mat-mdc-icon-button {
+          --mdc-icon-button-state-layer-size: var(--filter-control-height) !important;
+          width: var(--filter-control-height) !important;
+          height: var(--filter-control-height) !important;
+          padding: 0;
+
+          .mat-icon {
+            font-size: calc(var(--filter-control-height) - 2px);
+            line-height: var(--filter-control-height);
+            width: calc(var(--filter-control-height) - 2px);
+            height: calc(var(--filter-control-height) - 2px);
+          }
+        }
+      }
+    }
+  }
 }
 
 // ── autocomplete dropdown panel (rendered in a CDK overlay, outside :host) ────

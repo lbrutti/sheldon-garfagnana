@@ -1,9 +1,23 @@
+@use '@angular/material' as mat;
+
+body.sheldon-theme-bw {
+  :host {
+    --mat-tab-inactive-label-text-color: white !important;
+    @include mat.tabs-overrides((
+      inactive-hover-label-text-color: white,
+    ))
+  }
+}
+
 :host {
+  --mat-tab-inactive-label-text-color: black !important;
+
   ::ng-deep .mat-mdc-tab-link-container {
     flex-grow: unset !important;
     height: 100%;
+
   }
-  
+
 
   .mdc-tab-indicator--active {
     background-color: white !important;

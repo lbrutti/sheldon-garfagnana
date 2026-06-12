@@ -15,6 +15,7 @@
     <ng-content select="[mapControls]"/>
 
     <sheldon-dynamic-filter
+      class="big-field"
       [filterBy]="['comune']"
       [dataset]="comuniDataset()"
       (filterChange)="onFilterChange($event)"/>
@@ -87,8 +88,7 @@
             }"
         [paint]="{
               'icon-color': '#000',
-              'icon-opacity': 0.85,
-              'icon-halo-color': '#fff',
+              'icon-opacity': 1,
             }"
         (layerMouseEnter)="onInterventiEnter($event)"
         (layerMouseMove)="onInterventiEnter($event)"
