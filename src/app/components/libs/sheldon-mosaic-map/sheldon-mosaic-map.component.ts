@@ -435,7 +435,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     this.resizeObserver?.disconnect();
   }
 
-  private refreshGrid(): void {
+  protected refreshGrid(): void {
     const map = this.mapInstance;
     if (!map) return;
 
