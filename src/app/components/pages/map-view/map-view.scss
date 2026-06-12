@@ -1,11 +1,14 @@
 @import '../../../../theme/variables';
 
+// sheldon-header (48px) + mat-tab-nav bar (24px)
+$nav-height: 72px;
+
 :host {
   display: block;
-  padding: 16px 48px;
-  @media (max-width: $breakpoint-md) {
-    padding: 16px 16px;
+  height: calc(100vh - $nav-height);
+  background: white;
+
+  sheldon-interventi-map {
+    height: 100%;
   }
 }
-
-

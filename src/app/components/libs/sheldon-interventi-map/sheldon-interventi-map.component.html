@@ -1,174 +1,172 @@
-<sheldon-card
-  class="height-xl"
-  [categoria]="categoria()"
-  [infoText]="infoText()"
-  [cardId]="cardId()">
-  <ng-container title>{{ title() || ('chart.map' | transloco) }}</ng-container>
-  <ng-container subheader>
-    <!-- Controls row -->
-    <div class="map-controls">
-      <sheldon-dynamic-filter
-        [filterBy]="['comune']"
-        [dataset]="comuniDataset()"
-        (filterChange)="onFilterChange($event)"/>
+<!--<sheldon-card-->
+<!--  class="height-xl"-->
+<!--  [categoria]="categoria()"-->
+<!--  [infoText]="infoText()"-->
+<!--  [cardId]="cardId()">-->
+<!--  <ng-container title>{{ title() || ('chart.map' | transloco) }}</ng-container>-->
+<!--  <ng-container subheader>-->
+<!--    &lt;!&ndash; Controls row &ndash;&gt;-->
+<!--    -->
+<!--  </ng-container>-->
+<!--  <ng-container content>-->
+<div class="map-controls">
+  <div class="fitler-container">
 
-      @if (auxReduce().length > 1) {
-        <mat-button-toggle-group
-          [value]="activeAuxReduce()"
-          (change)="onReduceChange($event)">
-          @for (opt of auxReduce(); track opt.campo) {
-            <mat-button-toggle [value]="opt">{{ opt.campo }}</mat-button-toggle>
-          }
-        </mat-button-toggle-group>
-      }
-    </div>
-  </ng-container>
-  <ng-container content>
-    <!-- Map wrapper -->
-    <div class="map-wrapper">
-      <mgl-map
-        [mapStyle]="mapStyle"
-        [canvasContextAttributes]="{preserveDrawingBuffer: true}"
-        [cooperativeGestures]="true"
-        [cancelPendingTileRequestsWhileZooming]="true"
-        [maxZoom]="20"
-        [minZoom]="0"
-        (mapLoad)="onMapLoad($event)"
+    <ng-content select="[mapControls]"/>
+
+    <sheldon-dynamic-filter
+      [filterBy]="['comune']"
+      [dataset]="comuniDataset()"
+      (filterChange)="onFilterChange($event)"/>
+
+  </div>
+</div>
+<!-- Map wrapper -->
+<div class="map-wrapper">
+  <mgl-map
+    [mapStyle]="mapStyle"
+    [canvasContextAttributes]="{preserveDrawingBuffer: true}"
+    [cooperativeGestures]="true"
+    [cancelPendingTileRequestsWhileZooming]="true"
+    [maxZoom]="20"
+    [minZoom]="0"
+    (mapLoad)="onMapLoad($event)"
+  >
+
+    @if (mapReady()) {
+      <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
+
+      <mgl-layer
+        id="grid-lines"
+        source="grid"
+        type="line"
+        [paint]="gridLinePaint">
+      </mgl-layer>
+
+      <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
+      <mgl-geojson-source
+        id="comuni"
+        [data]="derivedPolygons()"
+        [promoteId]="municipalityKey()">
+      </mgl-geojson-source>
+
+      <!-- Choropleth fill layer — colored by _colorValue property, hover/select via feature-state -->
+      <mgl-layer
+        id="comuni-fill"
+        source="comuni"
+        type="fill"
+        [paint]="comuniFillPaint()"
       >
+      </mgl-layer>
 
-        @if (mapReady()) {
-          <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
+      <mgl-layer
+        id="comuni-zero-line"
+        source="comuni"
+        type="line"
+        [filter]="zeroValueFilter"
+        [paint]="comuniZeroLinePaint()"
+      >
+      </mgl-layer>
 
-          <mgl-layer
-            id="grid-lines"
-            source="grid"
-            type="line"
-            [paint]="gridLinePaint">
-          </mgl-layer>
+      <mgl-geojson-source id="interventi" [data]="interventiFeatures()"></mgl-geojson-source>
 
-          <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
-          <mgl-geojson-source
-            id="comuni"
-            [data]="derivedPolygons()"
-            [promoteId]="municipalityKey()">
-          </mgl-geojson-source>
-
-          <!-- Choropleth fill layer — colored by _colorValue property, hover/select via feature-state -->
-          <mgl-layer
-            id="comuni-fill"
-            source="comuni"
-            type="fill"
-            [paint]="comuniFillPaint()"
-          >
-          </mgl-layer>
-
-          <mgl-layer
-            id="comuni-zero-line"
-            source="comuni"
-            type="line"
-            [filter]="zeroValueFilter"
-            [paint]="comuniZeroLinePaint()"
-          >
-          </mgl-layer>
-
-          <mgl-geojson-source id="interventi" [data]="interventiFeatures()"></mgl-geojson-source>
-
-          <mgl-layer
-            id="interventi-circles"
-            source="interventi"
-            type="symbol"
-            [layout]="{
+      <mgl-layer
+        id="interventi-circles"
+        source="interventi"
+        type="symbol"
+        [layout]="{
               'icon-image': 'interventi-square',
               'icon-size': ['interpolate', ['linear'], ['zoom'], 8, 0.4, 14, 0.8],
               'icon-allow-overlap': false,
               'icon-ignore-placement': true
             }"
-            [paint]="{
+        [paint]="{
               'icon-color': '#000',
               'icon-opacity': 0.85,
               'icon-halo-color': '#fff',
             }"
-            (layerMouseEnter)="onInterventiEnter($event)"
-            (layerMouseMove)="onInterventiEnter($event)"
-        
-          >
-          </mgl-layer>
+        (layerMouseEnter)="onInterventiEnter($event)"
+        (layerMouseMove)="onInterventiEnter($event)"
 
-        }
-        <!-- Hover tooltip -->
-        @if (hoveredIntervento()) {
+      >
+      </mgl-layer>
 
-          <mgl-popup
-            [feature]="hoveredIntervento()"
-            [closeButton]="false"
-            [closeOnMove]="false"
-            [closeOnClick]="true"
-            anchor="right">
+    }
+    <!-- Hover tooltip -->
+    @if (hoveredIntervento()) {
+
+      <mgl-popup
+        [feature]="hoveredIntervento()"
+        [closeButton]="false"
+        [closeOnMove]="false"
+        [closeOnClick]="true"
+        anchor="right">
+        <div
+          class="map-tooltip"
+          [style.background]="tooltipPolygonColor()">
+          <strong class="map-tooltip-item-title"
+                  [style.color]="tooltipPolygonColor()">{{ hoveredIntervento()?.properties?.['nome'] }}
+          </strong>
+
+          @if (hoveredIntervento()?.properties?.['comune']) {
+            <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['comune'] }}</div>
+          }
+          @if (hoveredIntervento()?.properties?.['stato']) {
+            <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['stato'] }}</div>
+          }
+          @if (hoveredIntervento()?.properties?.['importoTotale']) {
             <div
-              class="map-tooltip"
-              [style.background]="tooltipPolygonColor()">
-              <strong class="map-tooltip-item-title"
-                      [style.color]="tooltipPolygonColor()">{{ hoveredIntervento()?.properties?.['nome'] }}
-              </strong>
-
-              @if (hoveredIntervento()?.properties?.['comune']) {
-                <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['comune'] }}</div>
-              }
-              @if (hoveredIntervento()?.properties?.['stato']) {
-                <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['stato'] }}</div>
-              }
-              @if (hoveredIntervento()?.properties?.['importoTotale']) {
-                <div
-                  class="map-tooltip-item">
-                  € {{ this.formatter.format(hoveredIntervento()?.properties?.['importoTotale']) }}
-                </div>
-              }
-              @if (hoveredIntervento()?.properties?.['categoria']) {
-                <div
-                  class="map-tooltip-item">
-                  <span class="map-tooltip-item-chip">{{ hoveredIntervento()?.properties?.['categoria'] }}</span>
-                </div>
-              }
-
-              @if (hoveredIntervento()?.properties?.['descrizione']) {
-                <div
-                  class="map-tooltip-item map-tooltip-item-descrizione"> {{ hoveredIntervento()?.properties?.['descrizione'] }}
-                </div>
-              }
-
-              @if (hoveredIntervento()?.properties?.['link']) {
-                <a
-                  href="{{hoveredIntervento()?.properties?.['link']}}"
-                  [style.color]="tooltipPolygonColor()"
-                  target="_blank">
-                  <div class="map-tooltip-item map-tooltip-item-link"> Scopri il progetto
-                  </div>
-                </a>
-              }
+              class="map-tooltip-item">
+              € {{ this.formatter.format(hoveredIntervento()?.properties?.['importoTotale']) }}
             </div>
-          </mgl-popup>
-
-        }
-      </mgl-map>
-
-      <!-- Choropleth legend -->
-      <div class="map-legend">
-        @for (shade of colorShades(); track shade; let i = $index) {
-          <div class="legend-item">
-            <span class="legend-label">{{ legendLabels[i] }}</span>
+          }
+          @if (hoveredIntervento()?.properties?.['categoria']) {
             <div
-              class="legend-swatch"
-              [class.legend-swatch--outline]="$first"
-              [style.background]="$first ? '#ffffff' : shade"
-              [style.border-color]="$first ? maxColorShade() : null">
+              class="map-tooltip-item">
+              <span class="map-tooltip-item-chip">{{ hoveredIntervento()?.properties?.['categoria'] }}</span>
             </div>
-          </div>
-        }
+          }
+
+          @if (hoveredIntervento()?.properties?.['descrizione']) {
+            <div
+              class="map-tooltip-item map-tooltip-item-descrizione"> {{ hoveredIntervento()?.properties?.['descrizione'] }}
+            </div>
+          }
+
+          @if (hoveredIntervento()?.properties?.['link']) {
+            <a
+              href="{{hoveredIntervento()?.properties?.['link']}}"
+              [style.color]="tooltipPolygonColor()"
+              target="_blank">
+              <div class="map-tooltip-item map-tooltip-item-link"> Scopri il progetto
+                <mat-icon svgIcon="sheldon-download"/>
+              </div>
+            </a>
+          }
+        </div>
+      </mgl-popup>
+
+    }
+  </mgl-map>
+
+  <!-- Choropleth legend -->
+  <div class="map-legend">
+    @for (shade of colorShades(); track shade; let i = $index) {
+      <div class="legend-item">
+        <span class="legend-label">{{ legendLabels[i] }}</span>
+        <div
+          class="legend-swatch"
+          [class.legend-swatch--outline]="$first"
+          [style.background]="$first ? '#ffffff' : shade"
+          [style.border-color]="$first ? maxColorShade() : null">
+        </div>
       </div>
+    }
+  </div>
 
 
-      <!--      }-->
-    </div>
+  <!--      }-->
+</div>
 
-  </ng-container>
-</sheldon-card>
+<!--  </ng-container>-->
+<!--</sheldon-card>-->

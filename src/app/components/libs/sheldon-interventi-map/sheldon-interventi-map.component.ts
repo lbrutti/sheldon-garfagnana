@@ -8,6 +8,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {TranslocoModule} from '@jsverse/transloco';
 import SheldonMosaicMapComponent from '../sheldon-mosaic-map/sheldon-mosaic-map.component';
 import {InterventoInterface} from '../../../interfaces';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'sheldon-interventi-map',
@@ -22,6 +23,7 @@ import {InterventoInterface} from '../../../interfaces';
     MatButtonToggle,
     TranslocoModule,
     PopupComponent,
+    MatIcon,
   ],
   templateUrl: './sheldon-interventi-map.component.html',
   styleUrl: './sheldon-interventi-map.component.scss',

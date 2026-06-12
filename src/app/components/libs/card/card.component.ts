@@ -3,8 +3,7 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map} from 'rxjs';
 import {MatIconButton} from '@angular/material/button';
-import {MatIcon, MatIconRegistry} from '@angular/material/icon';
-import {DomSanitizer} from '@angular/platform-browser';
+import {MatIcon} from '@angular/material/icon';
 import {toPng} from 'html-to-image';
 import {normalizzaStringa, resolveColorVariable} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
@@ -190,11 +189,4 @@ export default class CardComponent {
     return slug || 'card';
   }
 
-  constructor() {
-    const iconRegistry = inject(MatIconRegistry);
-    const sanitizer = inject(DomSanitizer);
-    iconRegistry.addSvgIcon('sheldon-info', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/info.svg'));
-    iconRegistry.addSvgIcon('sheldon-download', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/download.svg'));
-    iconRegistry.addSvgIcon('sheldon-share', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/share.svg'));
-  }
 }
