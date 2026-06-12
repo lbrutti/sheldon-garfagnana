@@ -87,8 +87,8 @@
               'icon-ignore-placement': true
             }"
         [paint]="{
-              'icon-color': '#000',
-              'icon-opacity': 1,
+              'icon-color': theme() ==='light' ? '#000': '#dbdbdb',
+              'icon-opacity': theme() ==='light' ? 1: 0.9,
             }"
         (layerMouseEnter)="onInterventiEnter($event)"
         (layerMouseMove)="onInterventiEnter($event)"

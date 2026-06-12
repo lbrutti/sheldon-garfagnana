@@ -10,7 +10,6 @@ import {
 } from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Point} from 'geojson';
 import type {Map, MapLayerMouseEvent} from 'maplibre-gl';
-import CardComponent from '../card/card.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {TranslocoModule} from '@jsverse/transloco';
 import SheldonMosaicMapComponent from '../sheldon-mosaic-map/sheldon-mosaic-map.component';

@@ -175,5 +175,13 @@ body.sheldon-theme-bw {
     .map-tooltip-item-title {
       color: white !important;
     }
+
+    .map-tooltip {
+      .map-tooltip-item {
+        &:not(:last-child) {
+          border-bottom: 1px solid white;
+        }
+      }
+    }
   }
 }

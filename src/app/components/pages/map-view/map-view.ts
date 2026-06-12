@@ -31,14 +31,6 @@ export default class MapView {
   @ViewChild(NgxMasonryComponent) private masonry!: NgxMasonryComponent;
   @ViewChildren(NgxMasonryDirective) private masonryItems!: QueryList<NgxMasonryDirective>;
 
-  protected masonryOptions: NgxMasonryOptions = {
-    gutter: 16,
-    columnWidth: '.grid-sizer',
-    percentPosition: false,
-    fitWidth: false,
-    horizontalOrder: true,
-    animations: {},
-  };
 
   protected layoutReady = signal(false);
 
