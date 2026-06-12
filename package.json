@@ -7,7 +7,6 @@
     "build": "ng build",
     "publish-gh": "ng build --base-href https://lbrutti.github.io/sheldon-garfagnana/ && npx angular-cli-ghpages --dir=dist/sheldon-garfagnana/browser",
     "publish-prod": "ng build --base-href https://dati.unmotivoinpiu.com --output-path=dist/sheldon-garfagnana/prod && cp -f .htaccess dist/sheldon-garfagnana/prod/browser",
-
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "export-settings": "node scripts/export-settings-csv.mjs"

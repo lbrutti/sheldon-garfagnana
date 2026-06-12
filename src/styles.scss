@@ -45,8 +45,9 @@ body {
 
 body.sheldon-theme-transitioning *:not(canvas) {
   transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease,
-    box-shadow 0.35s ease, fill 0.35s ease !important;
+  box-shadow 0.35s ease, fill 0.35s ease !important;
 }
+
 :root {
   @include mat.button-toggle-overrides((
     text-color: black,
@@ -60,4 +61,17 @@ body.sheldon-theme-transitioning *:not(canvas) {
     display: none !important;
   }
 
+}
+
+.maplibregl-popup-tip {
+  display: none !important;
+}
+
+.maplibregl-popup-content {
+  background: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  pointer-events: auto;
+  position: relative;
 }

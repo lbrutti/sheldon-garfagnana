@@ -1,0 +1,127 @@
+:host {
+  display: block;
+  width: 100%;
+
+  .map-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    //margin-bottom: 12px;
+    margin: auto;
+  }
+
+  .map-wrapper {
+    position: relative;
+    width: 100%;
+    height: 480px;
+    overflow: hidden;
+    background-image: linear-gradient(#b0aeae 0.5px, transparent 0.5px),
+    linear-gradient(90deg, #b0aeae 0.5px, transparent 0.5px);
+    background-size: 3em 3em;
+
+    mgl-map {
+      width: 100%;
+      height: 100%;
+
+      ::ng-deep .maplibregl-map {
+        background: transparent;
+      }
+    }
+  }
+
+  .map-tooltip {
+    .map-tooltip-item {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1%;
+      margin: 4px;
+
+      &:not(:last-child) {
+        border-bottom: 1px solid black;
+      }
+    }
+
+    .map-tooltip-item-chip {
+      display: inline-block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 4%;
+      border: 1px solid black;
+      padding: 2px;
+      margin-bottom: 4px;
+    }
+
+    .map-tooltip-item-descrizione {
+      font-size: 11px;
+      max-height: 96px;
+      overflow: scroll;
+    }
+
+    .map-tooltip-item-link {
+      background: black;
+      color: white;
+      text-decoration: none;
+      margin: 0;
+      padding: 4px;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    strong {
+      display: block;
+      margin-bottom: 2px;
+      padding: 4px;
+    }
+
+    .map-tooltip-item-title {
+      background: black !important;
+      font-size: 18px;
+    }
+
+    span {
+      font-size: 11px;
+    }
+  }
+
+  .map-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .map-legend {
+    position: absolute;
+    bottom: 32px;
+    left: 16px;
+    display: flex;
+    gap: 3px;
+    pointer-events: none;
+
+    .legend-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .legend-label {
+      //font-family: monospace;
+      font-size: 12px;
+      //color: #aaa;
+    }
+
+    .legend-swatch {
+      width: 46px;
+      height: 21px;
+      border-radius: 2px;
+
+      &--outline {
+        box-sizing: border-box;
+        border: 1px solid;
+      }
+    }
+  }
+}

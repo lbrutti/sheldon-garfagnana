@@ -1,1 +1,27 @@
-<p>{{ 'pages.mapViewPlaceholder' | transloco }}</p>
+<sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
+
+<ngx-masonry
+  class="sheldon-grid"
+  [class.layout-ready]="layoutReady()"
+  [options]="masonryOptions"
+  (layoutComplete)="onLayoutComplete()">
+  <div class="grid-sizer"></div>
+  @for (setting of settings(); track setting.id; let idx = $index) {
+    @if ($any(dataMap()[setting.data])) {
+      <div ngxMasonryItem [class]="'tile tile--' + setting.tileWidth">
+        <sheldon-interventi-map
+          [title]="setting.title"
+          [infoText]="setting.info ?? ''"
+          [cardId]="setting.id"
+          [data]="$any(dataMap()[setting.data])"
+          [auxReduce]="$any(setting.auxReduce ?? [])"
+          [municipalityKey]="setting.municipalityKey ?? 'name'"
+          [tooltipProperties]="setting.tooltipProperties"
+          [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+          [interventi]="interventiFiltrati()"
+        />
+
+      </div>
+    }
+  }
+</ngx-masonry>

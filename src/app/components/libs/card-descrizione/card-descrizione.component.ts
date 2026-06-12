@@ -5,10 +5,11 @@ import {
 import CardComponent from '../card/card.component';
 import {MatButton} from '@angular/material/button';
 import {TranslocoModule} from '@jsverse/transloco';
+import {SheldonLinkButton} from './sheldon-link-button/sheldon-link-button';
 
 @Component({
   selector: 'sheldon-descrizione',
-  imports: [CardComponent, MatButton, TranslocoModule],
+  imports: [CardComponent, MatButton, TranslocoModule, SheldonLinkButton],
   templateUrl: './card-descrizione.component.html',
   styleUrl: './card-descrizione.component.scss',
 })

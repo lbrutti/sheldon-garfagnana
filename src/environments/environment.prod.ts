@@ -15,6 +15,9 @@ export const environment = {
   settings: {
     dashboardParsingConfigUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=286859829&single=true&output=csv',
     dashboardSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=688611119&single=true&output=csv',
+
+    mapInterventiParsingConfigUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=309223040&single=true&output=csv',
+    mapInterventiSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=196849019&single=true&output=csv',
   },
-  categorie: ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'economia', 'sociale', 'societa']
+  categorie:['ambiente', 'cultura', 'mobilita', 'sicurezza', 'economia', 'sociale', 'societa']
 };
