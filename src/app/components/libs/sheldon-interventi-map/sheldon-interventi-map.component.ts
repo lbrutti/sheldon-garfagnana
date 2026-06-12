@@ -1,6 +1,13 @@
 import {Component, computed, input, signal} from '@angular/core';
 import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
-import {GeoJSONSourceComponent, LayerComponent, MapComponent, PopupComponent} from '@maplibre/ngx-maplibre-gl';
+import {
+  ControlComponent,
+  GeoJSONSourceComponent,
+  LayerComponent,
+  MapComponent,
+  NavigationControlDirective,
+  PopupComponent
+} from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Point} from 'geojson';
 import type {Map, MapLayerMouseEvent} from 'maplibre-gl';
 import CardComponent from '../card/card.component';
@@ -23,6 +30,8 @@ import {MatIcon} from '@angular/material/icon';
     TranslocoModule,
     PopupComponent,
     MatIcon,
+    NavigationControlDirective,
+    ControlComponent,
   ],
   templateUrl: './sheldon-interventi-map.component.html',
   styleUrl: './sheldon-interventi-map.component.scss',

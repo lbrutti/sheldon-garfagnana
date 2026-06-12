@@ -33,6 +33,11 @@
     (mapLoad)="onMapLoad($event)"
   >
 
+<!--    <mgl-control-->
+<!--      class="map-zoom"-->
+<!--      mglNavigation-->
+<!--      [showCompass]="false"-->
+<!--    />-->
     @if (mapReady()) {
       <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
 

@@ -61,6 +61,11 @@
       ::ng-deep .maplibregl-map {
         background: transparent;
       }
+
+      ::ng-deep .maplibregl-ctrl-top-right {
+        top: 92px;
+        right: 40px;
+      }
     }
   }
 
