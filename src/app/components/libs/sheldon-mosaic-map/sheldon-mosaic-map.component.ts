@@ -14,7 +14,14 @@ import {
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, LineString, Polygon} from 'geojson';
-import type {Map, MapLayerMouseEvent, MapLibreEvent, MapLibreZoomEvent, StyleSpecification} from 'maplibre-gl';
+import type {
+  Map,
+  MapLayerMouseEvent,
+  MapLibreEvent,
+  MapLibreZoomEvent,
+  PaddingOptions,
+  StyleSpecification
+} from 'maplibre-gl';
 
 import CardComponent from '../card/card.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
@@ -396,13 +403,15 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
 
   protected tooltipBackground: string;
 
+  protected fitBoundsPadding: number | PaddingOptions = 0;
+
   constructor() {
     effect(() => {
       const bb = this.collectionBbox();
       if (!bb || !this.mapReady()) return;
       const map = untracked(() => this.mapInstance);
       if (!map) return;
-      map.fitBounds(bb, {animate: false});
+      map.fitBounds(bb, {animate: false, padding: this.fitBoundsPadding});
       this.applyZoomLimits(map);
       this.refreshGrid();
     });

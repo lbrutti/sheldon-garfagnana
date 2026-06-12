@@ -1,3 +1,5 @@
+@import '../../../../theme/variables';
+
 :host {
   display: block;
   position: relative;
@@ -27,12 +29,14 @@
       margin-bottom: 0 !important;
     }
 
-    .fitler-container {
+    .filter-container {
       display: flex;
       width: 100%;
       flex-direction: column;
-      padding-left: 16px;
-      padding-right: 16px;
+      padding: 16px 48px;
+      @media (max-width: $breakpoint-md) {
+        padding: 16px 16px;
+      }
     }
 
     sheldon-dynamic-filter {

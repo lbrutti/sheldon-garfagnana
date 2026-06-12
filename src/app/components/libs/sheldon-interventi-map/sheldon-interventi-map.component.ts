@@ -14,13 +14,12 @@ import {MatIcon} from '@angular/material/icon';
   selector: 'sheldon-interventi-map',
   standalone: true,
   imports: [
-    CardComponent,
+
     DynamicFilterComponent,
     MapComponent,
     GeoJSONSourceComponent,
     LayerComponent,
-    MatButtonToggleGroup,
-    MatButtonToggle,
+
     TranslocoModule,
     PopupComponent,
     MatIcon,
@@ -31,6 +30,8 @@ import {MatIcon} from '@angular/material/icon';
 export default class SheldonInterventiMapComponent extends SheldonMosaicMapComponent {
 
   interventi = input<InterventoInterface[]>([]);
+
+  protected override fitBoundsPadding = {top: 110};
 
   override onMapLoad(map: Map): void {
     super.onMapLoad(map);
