@@ -42,12 +42,6 @@
     @if (mapReady()) {
       <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
 
-      <mgl-layer
-        id="grid-lines"
-        source="grid"
-        type="line"
-        [paint]="gridLinePaint">
-      </mgl-layer>
 
       <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
       <mgl-geojson-source
@@ -69,7 +63,6 @@
         id="comuni-zero-line"
         source="comuni"
         type="line"
-        [filter]="zeroValueFilter"
         [paint]="comuniZeroLinePaint()"
       >
       </mgl-layer>
@@ -92,7 +85,12 @@
 
       >
       </mgl-layer>
-
+      <mgl-layer
+        id="grid-lines"
+        source="grid"
+        type="line"
+        [paint]="gridLinePaint">
+      </mgl-layer>
     }
     <!-- Hover tooltip -->
     @if (hoveredIntervento()) {
@@ -102,6 +100,7 @@
         [closeButton]="false"
         [closeOnMove]="false"
         [closeOnClick]="true"
+        class="full-width"
       >
         <div
           class="map-tooltip"
@@ -131,7 +130,7 @@
 
           @if (hoveredIntervento()?.properties?.['descrizione']) {
             <div
-              class="map-tooltip-item map-tooltip-item-descrizione"> {{ hoveredIntervento()?.properties?.['descrizione'] }}
+              class="map-tooltip-item map-tooltip-item-descrizione twenty-lines-ellipsed"> {{ hoveredIntervento()?.properties?.['descrizione'] }}
             </div>
           }
 

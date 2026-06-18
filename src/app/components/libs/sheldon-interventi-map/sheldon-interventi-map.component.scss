@@ -64,10 +64,17 @@
         right: 40px;
       }
     }
+
+    //::ng-deep {
+    //  .maplibregl-popup {
+    //    max-width: 360px !important;
+    //  }
+    //}
   }
 
+
   .map-tooltip {
-    z-index: 100000;
+    z-index: 200;
 
     .map-tooltip-item {
       font-size: 14px;
@@ -92,8 +99,9 @@
 
     .map-tooltip-item-descrizione {
       font-size: 11px;
-      max-height: 96px;
-      overflow: scroll;
+      //max-height: 240px;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .map-tooltip-item-link {

@@ -348,7 +348,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     const key = this.municipalityKey();
     const hovering = this.isHovering();
     const fillColor = this.choroplethFillExpr();
-    const filteredOutline = this.colorShades()[2];
+    const filteredOutline = this.maxColorShade();
 
     // Filter active: selected keeps choropleth color, others show zero-range shade at full opacity
     if (sel) {
@@ -357,7 +357,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
           'case',
           ['==', ['get', key], sel],
           'transparent',
-          ['case', ['==', ['get', '_rawValue'], 0], 'transparent', filteredOutline],
+          filteredOutline
         ] as any,
         'fill-color': ['case', ['==', ['get', key], sel], fillColor, 'transparent'] as any,
         'fill-opacity': 1.0 as any,
