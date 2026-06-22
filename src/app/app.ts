@@ -13,9 +13,9 @@ export class App {
   protected readonly apiService = inject(ProjectsApiService);
   protected readonly title = signal('sheldon-garfagnana');
   protected links: { url: string; name: string }[] = [
-    {url: 'dashboard', name: 'dashboard'},
-    {url: 'map', name: 'map'},
-    {url: 'stories', name: 'stories'},
+    {url: 'dashboard', name: 'I numeri'},
+    {url: 'stories', name: 'le storie'},
+    {url: 'map', name: 'i luoghi'},
   ];
   protected activeLink: string = '';
 }
