@@ -1,5 +1,6 @@
-<!--<sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>-->
-
+<div class="header">
+  <sheldon-theme-switch/>
+</div>
 <ngx-masonry
   class="sheldon-grid"
   [class.layout-ready]="layoutReady()"
@@ -7,7 +8,7 @@
   (layoutComplete)="onLayoutComplete()">
   <div class="grid-sizer"></div>
   @for (story of stories(); track story.id; ) {
-    <div ngxMasonryItem [class]="'tile tile--4'">
+    <div ngxMasonryItem [class]="'tile tile--3'">
       <sheldon-story [data]="story"/>
     </div>
   }

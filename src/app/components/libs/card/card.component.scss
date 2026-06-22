@@ -1,5 +1,21 @@
 //@use "@angular/material" as mat;
 
+// Custom properties exposed for host-component styling:
+//
+// --sheldon-card-background            host background              (default: white)
+// --sheldon-card-header-background     header background            (default: black)
+// --sheldon-card-header-padding        header padding               (default: 0)
+// --sheldon-card-title-color           title text color             (default: white)
+// --sheldon-card-title-background      title background             (default: black)
+// --sheldon-card-title-font-size       title font size              (default: 12px)
+// --sheldon-card-title-padding         title padding                (default: 3px 8px 1px 8px)
+// --sheldon-card-subheader-min-height  subheader min height         (default: 41px)
+// --sheldon-card-subheader-padding-top subheader top padding        (default: 8px)
+// --sheldon-card-body-font-family      body font family             (default: tasaDeck, sans-serif)
+// --sheldon-card-body-font-size        body font size               (default: 13px)
+// --sheldon-card-body-font-weight      body font weight             (default: 500)
+// --sheldon-card-body-padding          body padding                 (default: 0)
+
 :host {
   display: flex;
   flex-direction: column;
@@ -9,20 +25,21 @@
   padding: 0;
   box-sizing: border-box;
   justify-content: space-between;
-  background: white;
+  background: var(--sheldon-card-background, white);
   --sheldon-card-buttons-width: 40px;
 
   .sheldon-card-title {
     font-weight: 700;
-    font-size: 12px;
+    font-size: var(--sheldon-card-title-font-size, 12px);
     line-height: 128%;
     letter-spacing: 0.6px;
-    color: white;
-    background: black;
-    padding: 3px 8px 1px 8px;
-    text-overflow: ellipsis;
-    overflow-y: hidden;
-    white-space: nowrap;
+    color: var(--sheldon-card-title-color, white);
+    background: var(--sheldon-card-title-background, black);
+    padding: var(--sheldon-card-title-padding, 3px 8px 1px 8px);
+    text-overflow: var(--sheldon-card-title-text-overflow, ellipsis);
+    overflow-y: var(--sheldon-card-title-overflow-y, hidden);
+    white-space: var(--sheldon-card-title-white-space, nowrap);
+    height: var(--sheldon-card-title-height, auto)
   }
 
   .sheldon-card-root {
@@ -33,17 +50,18 @@
 
   .sheldon-card-header {
     flex-shrink: 0;
-    background: black;
+    background: var(--sheldon-card-header-background, black);
+    padding: var(--sheldon-card-header-padding, 0);
   }
 
   .sheldon-card-subheader {
-    min-height: 41px !important;
+    min-height: var(--sheldon-card-subheader-min-height, 41px) !important;
     align-items: baseline;
     display: flex;
     justify-content: space-between;
     flex-direction: row;
     flex-shrink: 0;
-    padding-top: 8px;
+    padding-top: var(--sheldon-card-subheader-padding-top, 8px);
     padding-bottom: 0;
 
     --mat-button-toggle-height: var(--mat-icon-button-heigth, 21px) !important;
@@ -89,14 +107,15 @@
   // Positioning context for the info overlay — it covers the subheader + content.
   .sheldon-card-body {
     position: relative;
-    font-family: tasaDeck, sans-serif;
-    font-size: 13px;
-    font-weight: 500;
+    font-family: var(--sheldon-card-body-font-family, tasaDeck, sans-serif), serif;
+    font-size: var(--sheldon-card-body-font-size, 13px);
+    font-weight: var(--sheldon-card-body-font-weight, 500);
     //line-height: 140%;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     min-height: 0;
+    padding: var(--sheldon-card-body-padding, 0);
     //overflow:scroll;
   }
 

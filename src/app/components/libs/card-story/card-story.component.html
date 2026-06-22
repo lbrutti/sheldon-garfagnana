@@ -1,15 +1,19 @@
 <sheldon-card
   class="height-m"
   [showSubheader]="false"
-  [showButtons]="false">
+  [showButtons]="false"
+  [style]="'--sheldon-card-title-background:'+getRandomGradient(data().categoria, '90deg')">
   <ng-container title>{{ data().titolo }}</ng-container>
   <ng-container content>
     <div class="sheldon-card-descrizione"
          [class.has-button]="data().id">
       {{ data().paragrafo1 }}
+      @if (data().categoria) {
+        <div
+          class="map-tooltip-item">
+          <span class="map-tooltip-item-chip">{{ data().categoria }}</span>
+        </div>
+      }
     </div>
-    @if (data().id) {
-      <sheldon-link-button [data]="data()" [url]="data().id"></sheldon-link-button>
-    }
   </ng-container>
 </sheldon-card>

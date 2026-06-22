@@ -7,6 +7,7 @@ import CardComponent from '../card/card.component';
 import {TranslocoModule} from '@jsverse/transloco';
 import DataStoryInterface from '../../../interfaces/data-story.interface';
 import {SheldonLinkButton} from '../sheldon-link-button/sheldon-link-button';
+import {getRandomGradient, normalizzaStringa} from '../../../utils';
 
 @Component({
   selector: 'sheldon-story',
@@ -16,4 +17,5 @@ import {SheldonLinkButton} from '../sheldon-link-button/sheldon-link-button';
 })
 export default class CardStoryComponent {
   data = input<DataStoryInterface | null>();
+  protected readonly getRandomGradient = getRandomGradient;
 }
