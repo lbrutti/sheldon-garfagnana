@@ -1,1 +1,14 @@
-<p>{{ 'pages.dataStoriesPlaceholder' | transloco }}</p>
+<!--<sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>-->
+
+<ngx-masonry
+  class="sheldon-grid"
+  [class.layout-ready]="layoutReady()"
+  [options]="masonryOptions"
+  (layoutComplete)="onLayoutComplete()">
+  <div class="grid-sizer"></div>
+  @for (story of stories(); track story.id; ) {
+    <div ngxMasonryItem [class]="'tile tile--4'">
+      <sheldon-story [data]="story"/>
+    </div>
+  }
+</ngx-masonry>

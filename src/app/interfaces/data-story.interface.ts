@@ -1,7 +1,9 @@
 export default interface DataStoryInterface {
-  id: number,
-  title: string,
-  body: string,
-  projects: number[],
-  categories: number[],
+  id: string,
+  titolo: string,
+  paragrafo1: string,
+  paragrafo2: string,
+  paragrafo3: string,
+  note: string,
+  fonti: string[],
 }

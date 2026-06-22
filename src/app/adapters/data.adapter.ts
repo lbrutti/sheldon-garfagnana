@@ -1,6 +1,6 @@
 import {DataInterface, InterventoInterface, TreemapDataInterface} from '../interfaces';
 import {Feature, FeatureCollection} from 'geojson';
-import {csv2json} from 'json-2-csv';
+import Papa from 'papaparse';
 import camelcase from 'camelcase';
 
 export type InterventoToDataMapping = { [key in keyof InterventoInterface]?: keyof DataInterface };
@@ -96,10 +96,8 @@ export function parseDataToIntervento(
 }
 
 export function csvToJson(csv: any): any {
-  return csv2json(csv, {
-    trimHeaderFields: true,
-    trimFieldValues: true,
-  }).map((d: any) => {
+
+  return Papa.parse(csv, {header:true}).data.map((d: any) => {
     const keys = Object.keys(d);
     const parsed: any = {};
     keys.forEach((key: string) => {

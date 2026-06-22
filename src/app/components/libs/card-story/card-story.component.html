@@ -1,0 +1,15 @@
+<sheldon-card
+  class="height-m"
+  [showSubheader]="false"
+  [showButtons]="false">
+  <ng-container title>{{ data().titolo }}</ng-container>
+  <ng-container content>
+    <div class="sheldon-card-descrizione"
+         [class.has-button]="data().id">
+      {{ data().paragrafo1 }}
+    </div>
+    @if (data().id) {
+      <sheldon-link-button [data]="data()" [url]="data().id"></sheldon-link-button>
+    }
+  </ng-container>
+</sheldon-card>

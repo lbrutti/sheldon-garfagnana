@@ -5,6 +5,8 @@ import {csvToJson, parseDashboardParsingConfigCsv, parseDashboardSettingsCsv} fr
 import {FeatureCollection, Point, Polygon} from 'geojson';
 import {environment} from '../../environments/environment';
 import WidgetSetting from '../interfaces/widget-setting.interface';
+import DataStoryInterface from '../interfaces/data-story.interface';
+import {parseDataStoryCsv} from '../adapters/data-story.adapter';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +26,7 @@ export class ProjectsApiService {
   private _dashboardParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _mapInterventiSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
   private _mapInterventiParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
+  private _dataStoriesList:WritableSignal<DataStoryInterface[]>=signal<DataStoryInterface[]>([]);
   private _loadingCount = signal(0);
   private _fetched = new Set<string>();
   readonly loading = computed(() => this._loadingCount() > 0);
@@ -133,6 +136,20 @@ export class ProjectsApiService {
     });
   }
 
+
+  getDataStoriesList() {
+    if (this._fetched.has('dataStoriesList')) return;
+    this._fetched.add('dataStoriesList');
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.dataStoriesListUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._dataStoriesList.set(parseDataStoryCsv(csv));
+        this._loadingCount.update(n => n - 1);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
   interventi = this._interventi.asReadonly();
   popolazione = this._popolazione.asReadonly();
   comuniPolygons = this._comuniPolygons.asReadonly();
@@ -142,4 +159,6 @@ export class ProjectsApiService {
 
   mapInterventiSettings = this._mapInterventiSettings.asReadonly();
   mapInterventiParsingConfig = this._mapInterventiParsingConfig.asReadonly();
+
+  dataStoriesList = this._dataStoriesList.asReadonly();
 }
