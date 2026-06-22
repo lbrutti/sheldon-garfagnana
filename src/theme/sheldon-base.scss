@@ -154,3 +154,8 @@ button {
   @extend .one-line-ellipsed;
   -webkit-line-clamp: 20;
 }
+
+.twelve-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 12;
+}
