@@ -8,15 +8,12 @@ const PIPE_FIELDS = new Set(['fonti']);
 
 export function parseDataStoryCsv(csv: string): DataStoryInterface[] {
   let rows: any[] = csvToJson(csv);
-  console.log(rows);
-  
-  debugger;
   rows = rows
     //.filter(row => !!row['id'])
     .map(row => {
       const entry: any = {};
       for (const [k, v] of Object.entries(row)) {
-      //  if (v === '' || v === null || v === undefined) continue;
+        //  if (v === '' || v === null || v === undefined) continue;
         if (JSON_FIELDS.has(k)) {
           try {
             entry[k] = JSON.parse(v as string);

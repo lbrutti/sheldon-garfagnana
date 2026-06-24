@@ -1,39 +1,32 @@
-import {Component, signal, Signal} from '@angular/core';
-import ChartHorizontalBarComponent from "../../libs/chart-horizontal-bar/chart-horizontal-bar.component";
-import ChartLineComponent from "../../libs/chart-line/chart-line.component";
-import ChartBarComponent from "../../libs/chart-bar/chart-bar.component";
-import KpiComponent from "../../libs/kpi/kpi.component";
-import {MatGridList, MatGridTile} from "@angular/material/grid-list";
-import {DataInterface,} from '../../../interfaces';
+import {Component, inject} from '@angular/core';
+
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {TranslocoModule} from '@jsverse/transloco';
+import {ActivatedRoute} from '@angular/router';
+import DataStoryInterface from '../../../interfaces/data-story.interface';
 
 @Component({
-  selector: 'sheldon-public-story',
+  selector: 'sheldon-story',
   imports: [
-    ChartHorizontalBarComponent,
-    ChartLineComponent,
-    ChartBarComponent,
-    KpiComponent,
-    MatGridList,
-    MatGridTile,
     TranslocoModule
   ],
   templateUrl: './data-story.html',
   styleUrl: './data-story.scss',
 })
 export default class DataStory {
-  protected popolazione: Signal<DataInterface[]> = signal([]);
+  private route = inject(ActivatedRoute);
 
 
   constructor(protected apiService: ProjectsApiService) {
-
+    this.route.params.subscribe((params) => {
+      const story: DataStoryInterface = params['id'];
+      console.log(story);
+    });
   }
 
 
   ngOnInit(): void {
-    this.apiService.getPopolazione();
-    this.popolazione = this.apiService.popolazione;
+
   }
 
 
