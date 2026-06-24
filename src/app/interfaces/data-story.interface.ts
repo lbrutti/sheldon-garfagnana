@@ -7,4 +7,6 @@ export default interface DataStoryInterface {
   paragrafo3: string,
   note: string,
   fonti: string[],
+  dati: string,
+  gid: string
 }

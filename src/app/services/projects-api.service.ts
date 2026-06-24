@@ -13,11 +13,7 @@ import {parseDataStoryCsv} from '../adapters/data-story.adapter';
 })
 export class ProjectsApiService {
   private _interventi: WritableSignal<InterventoInterface[]> = signal<InterventoInterface[]>([]);
-  private _popolazione: WritableSignal<DataInterface[]> = signal<DataInterface[]>([]);
-  private _comuniPoints: WritableSignal<FeatureCollection<Point>> = signal<FeatureCollection<Point>>({
-    type: 'FeatureCollection',
-    features: []
-  });
+
   private _comuniPolygons: WritableSignal<FeatureCollection<Polygon>> = signal<FeatureCollection<Polygon>>({
     type: 'FeatureCollection',
     features: []
@@ -26,8 +22,10 @@ export class ProjectsApiService {
   private _dashboardParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _mapInterventiSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
   private _mapInterventiParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
-  private _dataStoriesList:WritableSignal<DataStoryInterface[]>=signal<DataStoryInterface[]>([]);
+  private _dataStoriesList: WritableSignal<DataStoryInterface[]> = signal<DataStoryInterface[]>([]);
   private _loadingCount = signal(0);
+
+  private _datiStories: WritableSignal<Record<string, DataInterface[]>> = signal({});
   private _fetched = new Set<string>();
   readonly loading = computed(() => this._loadingCount() > 0);
 
@@ -36,29 +34,30 @@ export class ProjectsApiService {
   ) {
   }
 
-  getPopolazione() {
-    if (this._fetched.has('popolazione')) return;
-    this._fetched.add('popolazione');
-    const url = this.getGVizURL(environment.sheets.spreadsheetId, environment.sheets.popolazioneGid, "SELECT * WHERE D = 'nati'");
+  getDatiIstat(storyId: string, gid: string, query: string = '') {
+    if (this._fetched.has(storyId)) return;
+    const url = this.getGVizURL(environment.dataStoriesSheet.spreadsheetId, gid, `SELECT * ${query ?? ''}`);
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(url, {responseType: 'text'}).subscribe({
       next: (res: any) => {
-        this._popolazione.set(csvToJson(res) as DataInterface[]);
+        this._datiStories.update(m => ({...m, [storyId]: csvToJson(res) as DataInterface[]}));
         this._loadingCount.update(n => n - 1);
+        this._fetched.add(storyId);
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
   }
 
+
   getInterventi() {
     if (this._fetched.has('interventi')) return;
-    this._fetched.add('interventi');
     const url = this.getGVizURL(environment.sheets.spreadsheetId, environment.sheets.interventiGid, "SELECT *");
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(url, {responseType: 'text'}).subscribe({
       next: (res: any) => {
         this._interventi.set(csvToJson(res) as InterventoInterface[]);
         this._loadingCount.update(n => n - 1);
+        this._fetched.add('interventi');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -67,12 +66,12 @@ export class ProjectsApiService {
 
   getComuniPolygons() {
     if (this._fetched.has('comuniPolygons')) return;
-    this._fetched.add('comuniPolygons');
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.data.comuniPolygons, {responseType: 'json'}).subscribe({
       next: (res: any) => {
         this._comuniPolygons.set(res as FeatureCollection<Polygon>);
         this._loadingCount.update(n => n - 1);
+        this._fetched.add('comuniPolygons');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -85,12 +84,12 @@ export class ProjectsApiService {
 
   getDashboardSettings() {
     if (this._fetched.has('dashboardSettings')) return;
-    this._fetched.add('dashboardSettings');
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.settings.dashboardSettingsUrl, {responseType: 'text'}).subscribe({
       next: csv => {
         this._dashboardSettings.set(parseDashboardSettingsCsv(csv));
         this._loadingCount.update(n => n - 1);
+        this._fetched.add('dashboardSettings');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -98,12 +97,12 @@ export class ProjectsApiService {
 
   getDashboardParsingConfig() {
     if (this._fetched.has('dashboardParsingConfig')) return;
-    this._fetched.add('dashboardParsingConfig');
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.settings.dashboardParsingConfigUrl, {responseType: 'text'}).subscribe({
       next: csv => {
         this._dashboardParsingConfig.set(parseDashboardParsingConfigCsv(csv));
         this._loadingCount.update(n => n - 1);
+        this._fetched.add('dashboardParsingConfig');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -112,12 +111,12 @@ export class ProjectsApiService {
 
   getMapInterventiSettings() {
     if (this._fetched.has('mapInterventiSettings')) return;
-    this._fetched.add('mapInterventiSettings');
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.settings.mapInterventiSettingsUrl, {responseType: 'text'}).subscribe({
       next: csv => {
         this._mapInterventiSettings.set(parseDashboardSettingsCsv(csv));
         this._loadingCount.update(n => n - 1);
+        this._fetched.add('mapInterventiSettings');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -125,12 +124,12 @@ export class ProjectsApiService {
 
   getMapInterventiParsingConfig() {
     if (this._fetched.has('mapInterventiParsingConfig')) return;
-    this._fetched.add('mapInterventiParsingConfig');
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.settings.mapInterventiParsingConfigUrl, {responseType: 'text'}).subscribe({
       next: csv => {
         this._mapInterventiParsingConfig.set(parseDashboardParsingConfigCsv(csv));
         this._loadingCount.update(n => n - 1);
+        this._fetched.add('mapInterventiParsingConfig');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -139,20 +138,24 @@ export class ProjectsApiService {
 
   getDataStoriesList() {
     if (this._fetched.has('dataStoriesList')) return;
-    this._fetched.add('dataStoriesList');
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.settings.dataStoriesListUrl, {responseType: 'text'}).subscribe({
       next: csv => {
         this._dataStoriesList.set(parseDataStoryCsv(csv));
         this._loadingCount.update(n => n - 1);
+        this._fetched.add('dataStoriesList');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
   }
 
+  getDataForStory(storyId: string): DataInterface[] {
+    return this._datiStories()[storyId] ?? [];
+  }
+
   interventi = this._interventi.asReadonly();
-  popolazione = this._popolazione.asReadonly();
   comuniPolygons = this._comuniPolygons.asReadonly();
+
   dashboardSettings = this._dashboardSettings.asReadonly();
   dashboardParsingConfig = this._dashboardParsingConfig.asReadonly();
 
@@ -161,4 +164,5 @@ export class ProjectsApiService {
   mapInterventiParsingConfig = this._mapInterventiParsingConfig.asReadonly();
 
   dataStoriesList = this._dataStoriesList.asReadonly();
+
 }
