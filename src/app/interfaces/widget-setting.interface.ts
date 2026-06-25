@@ -39,4 +39,7 @@ export default interface WidgetSetting {
 
   //testo mostrato nell'overlay info della card
   info?: string,
+
+  // for data-story: which lane this widget belongs to
+  lane?: 'interventi' | 'istat',
 }

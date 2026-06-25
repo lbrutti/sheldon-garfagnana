@@ -6,6 +6,9 @@ export const environment = {
     interventiGid: '807550168',
     popolazioneGid: '691841134',
   },
+  dataStoriesSheet: {
+    spreadsheetId: '1WdSofKLdOmodsFbHiEVUmAM3vhaDqCjxZRuiSemUxas',
+  },
   // Static GeoJSON served from the public/ folder.
   data: {
     comuniPoints: 'data/comuni.points.json',

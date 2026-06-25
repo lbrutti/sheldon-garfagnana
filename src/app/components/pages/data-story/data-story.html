@@ -1,13 +1,269 @@
-<!--<sheldon-global-search [projects]="projects()" (filter)="applyFilters($event)"/>-->
+@if (story()) {
+  <div class="story-layout">
 
+    <!-- LEFT LANE: narrative text -->
+    <div class="story-lane story-lane--text">
+      <h1 class="story-title">{{ story().titolo }}</h1>
 
-{{ this.story() | json }}
+      @if (story().paragrafo1) {
+        <p class="story-paragraph">{{ story().paragrafo1 }}</p>
+      }
+      @if (story().paragrafo2) {
+        <p class="story-paragraph">{{ story().paragrafo2 }}</p>
+      }
+      @if (story().paragrafo3) {
+        <p class="story-paragraph">{{ story().paragrafo3 }}</p>
+      }
+      @if (story().note) {
+        @for (nota of story().note.split('|'); track nota) {
+          <p class="story-note">{{ nota }}</p>
+        }
+      }
+      @if (story().fonti?.length) {
+        <div class="story-fonti">
+          <span class="story-fonti__label">Fonti:</span>
+          @for (fonte of story().fonti; track fonte) {
+            <span class="story-fonti__item">{{ fonte }}</span>
+          }
+        </div>
+      }
+    </div>
 
-<hr>
+    <!-- MIDDLE LANE: interventi widgets -->
+    <div class="story-lane story-lane--interventi">
+      @for (setting of interventiSettings(); track setting.id) {
+        @if ($any(interventiDataMap()[setting.data])) {
+          <div class="story-widget">
+            @switch (setting.tag) {
+              @case ('sheldon-chart-bars') {
+                <sheldon-chart-bars
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [sortBy]="setting.sortBy ?? 'value'"
+                  [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
+                  [showSorting]="setting.showSorting ?? false"
+                  [limit]="setting.limit ?? 0"
+                  [data]="$any(interventiDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-chart-h-bars') {
+                <sheldon-chart-h-bars
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [sortBy]="setting.sortBy ?? 'value'"
+                  [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
+                  [showSorting]="setting.showSorting ?? false"
+                  [limit]="setting.limit ?? 0"
+                  [auxReduce]="setting.auxReduce ?? []"
+                  [data]="$any(interventiDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-kpi') {
+                <sheldon-kpi
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? ''"
+                  [masterField]="setting.masterField ?? null"
+                  [minFontSize]="setting.minFontSize ?? 45"
+                  [limit]="setting.limit ?? 0"
+                  [udm]="setting.udm ?? null"
+                  [data]="$any(interventiDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-list') {
+                <sheldon-list
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [filterBy]="setting.filterBy ?? ''"
+                  [masterField]="setting.masterField ?? null"
+                  [data]="$any(interventiDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-segmented-chart') {
+                <sheldon-segmented-chart
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [defaultSortDirection]="setting.defaultSortDirection ?? 'asc'"
+                  [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [data]="$any(interventiDataMap()[setting.data])"
+                  [expandOnHover]="true"
+                />
+              }
+              @case ('sheldon-chart-treemap') {
+                <sheldon-chart-treemap
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [campo]="setting.campo ?? 'valore'"
+                  [reduceBy]="$any(setting.reduceBy ?? 'sum')"
+                  [groups]="$any(setting.groups ?? [])"
+                  [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [data]="$any(interventiDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-mosaic-map') {
+                <sheldon-mosaic-map
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [data]="$any(interventiDataMap()[setting.data])"
+                  [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [municipalityKey]="setting.municipalityKey ?? 'name'"
+                  [tooltipProperties]="setting.tooltipProperties"
+                />
+              }
+              @case ('sheldon-card-descrizione') {
+                <sheldon-descrizione
+                  [data]="$any(interventiDataMap()[setting.data])"
+                  [title]="setting.title ?? 'nome'"
+                  [description]="setting.desc"
+                  [url]="setting.url"
+                />
+              }
+            }
+          </div>
+        }
+      }
+    </div>
 
-{{ this.interventi() | json }}
+    <!-- RIGHT LANE: ISTAT widgets -->
+    <div class="story-lane story-lane--istat">
+      @for (setting of istatSettings(); track setting.id) {
+        @if ($any(istatDataMap()[setting.data])) {
+          <div class="story-widget">
+            @switch (setting.tag) {
+              @case ('sheldon-chart-bars') {
+                <sheldon-chart-bars
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [sortBy]="setting.sortBy ?? 'value'"
+                  [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
+                  [showSorting]="setting.showSorting ?? false"
+                  [limit]="setting.limit ?? 0"
+                  [data]="$any(istatDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-chart-h-bars') {
+                <sheldon-chart-h-bars
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [sortBy]="setting.sortBy ?? 'value'"
+                  [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
+                  [showSorting]="setting.showSorting ?? false"
+                  [limit]="setting.limit ?? 0"
+                  [auxReduce]="setting.auxReduce ?? []"
+                  [data]="$any(istatDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-kpi') {
+                <sheldon-kpi
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? ''"
+                  [masterField]="setting.masterField ?? null"
+                  [minFontSize]="setting.minFontSize ?? 45"
+                  [limit]="setting.limit ?? 0"
+                  [udm]="setting.udm ?? null"
+                  [data]="$any(istatDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-list') {
+                <sheldon-list
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [filterBy]="setting.filterBy ?? ''"
+                  [masterField]="setting.masterField ?? null"
+                  [data]="$any(istatDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-segmented-chart') {
+                <sheldon-segmented-chart
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [groupBy]="$any(setting.groupBy)"
+                  [reduceBy]="setting.reduceBy ?? 'count'"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [defaultSortDirection]="setting.defaultSortDirection ?? 'asc'"
+                  [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [data]="$any(istatDataMap()[setting.data])"
+                  [expandOnHover]="true"
+                />
+              }
+              @case ('sheldon-chart-treemap') {
+                <sheldon-chart-treemap
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [filterBy]="setting.filterBy ?? null"
+                  [masterField]="setting.masterField ?? null"
+                  [campo]="setting.campo ?? 'valore'"
+                  [reduceBy]="$any(setting.reduceBy ?? 'sum')"
+                  [groups]="$any(setting.groups ?? [])"
+                  [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [data]="$any(istatDataMap()[setting.data])"
+                />
+              }
+              @case ('sheldon-mosaic-map') {
+                <sheldon-mosaic-map
+                  [title]="setting.title"
+                  [infoText]="setting.info ?? ''"
+                  [cardId]="setting.id"
+                  [data]="$any(istatDataMap()[setting.data])"
+                  [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [municipalityKey]="setting.municipalityKey ?? 'name'"
+                  [tooltipProperties]="setting.tooltipProperties"
+                />
+              }
+              @case ('sheldon-card-descrizione') {
+                <sheldon-descrizione
+                  [data]="$any(istatDataMap()[setting.data])"
+                  [title]="setting.title ?? 'nome'"
+                  [description]="setting.desc"
+                  [url]="setting.url"
+                />
+              }
+            }
+          </div>
+        }
+      }
+    </div>
 
-
-<hr>
-
-{{ this.datiIstat() | json }}
+  </div>
+}

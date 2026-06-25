@@ -23,6 +23,8 @@ export class ProjectsApiService {
   private _mapInterventiSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
   private _mapInterventiParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _dataStoriesList: WritableSignal<DataStoryInterface[]> = signal<DataStoryInterface[]>([]);
+  private _storySettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
+  private _storyParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _loadingCount = signal(0);
 
   private _datiStories: WritableSignal<Record<string, DataInterface[]>> = signal({});
@@ -136,6 +138,32 @@ export class ProjectsApiService {
   }
 
 
+  getStorySettings() {
+    if (this._fetched.has('storySettings')) return;
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.dataStoriesSettingsUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._storySettings.set(parseDashboardSettingsCsv(csv));
+        this._loadingCount.update(n => n - 1);
+        this._fetched.add('storySettings');
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
+  getStoryParsingConfig() {
+    if (this._fetched.has('storyParsingConfig')) return;
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.dataStoriesParsingConfigUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._storyParsingConfig.set(parseDashboardParsingConfigCsv(csv));
+        this._loadingCount.update(n => n - 1);
+        this._fetched.add('storyParsingConfig');
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
   getDataStoriesList() {
     if (this._fetched.has('dataStoriesList')) return;
     this._loadingCount.update(n => n + 1);
@@ -164,5 +192,7 @@ export class ProjectsApiService {
   mapInterventiParsingConfig = this._mapInterventiParsingConfig.asReadonly();
 
   dataStoriesList = this._dataStoriesList.asReadonly();
+  storySettings = this._storySettings.asReadonly();
+  storyParsingConfig = this._storyParsingConfig.asReadonly();
 
 }

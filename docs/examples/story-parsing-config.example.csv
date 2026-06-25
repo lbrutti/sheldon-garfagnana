@@ -1,0 +1,6 @@
+key,type,explodeOn,mapping,groupByField,unioneFilter
+interventiPerComune,standard,,"{""comune"":""comune"",""importoTotale"":""valore"",""nome"":""nome"",""unione"":""unione""}",,
+interventiPerStato,standard,,"{""comune"":""comune"",""stato"":""indicatore"",""importoTotale"":""valore"",""unione"":""unione""}",,
+interventiPerFonte,standard,importoFonti,"{""comune"":""comune"",""importoFonti"":""indicatore"",""unione"":""unione""}",,
+interventiPerPartecipazione,standard,,"{""comune"":""comune"",""partecipazione"":""indicatore"",""importoTotale"":""valore"",""unione"":""unione""}",,
+interventiPerCategoria,treemap,target,"{""comune"":""comune"",""importoTotale"":""valore"",""nome"":""nome"",""gruppi"":[""ambitoStrategico"",""tipologia""]}",,

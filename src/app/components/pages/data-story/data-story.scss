@@ -1,0 +1,131 @@
+@import '../../../../theme/variables';
+
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+
+  @media (max-width: $breakpoint-md) {
+    overflow: auto;
+    height: auto;
+  }
+}
+
+.story-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: 'text interventi istat';
+  height: 100%;
+  overflow: hidden;
+
+  @media (max-width: $breakpoint-lg) {
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
+
+  @media (max-width: $breakpoint-md) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'text'
+      'interventi'
+      'istat';
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.story-lane {
+  overflow-y: auto;
+  padding: 24px 20px;
+  height: 100%;
+  box-sizing: border-box;
+
+  @media (max-width: $breakpoint-md) {
+    overflow-y: visible;
+    height: auto;
+    padding: 20px 16px;
+  }
+
+  &--text {
+    grid-area: text;
+    border-right: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+
+    @media (max-width: $breakpoint-md) {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    }
+  }
+
+  &--interventi {
+    grid-area: interventi;
+    border-right: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (max-width: $breakpoint-md) {
+      border-right: none;
+      border-bottom: 1px solid var(--color-border, rgba(0, 0, 0, 0.08));
+    }
+  }
+
+  &--istat {
+    grid-area: istat;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+.story-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 20px;
+  line-height: 1.25;
+}
+
+.story-paragraph {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin: 0 0 16px;
+}
+
+.story-note {
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  opacity: 0.6;
+  margin: 0 0 12px;
+  font-style: italic;
+}
+
+.story-fonti {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+  margin-top: 24px;
+  font-size: 0.75rem;
+  opacity: 0.55;
+
+  &__label {
+    font-weight: 600;
+  }
+
+  &__item + &__item::before {
+    content: '·';
+    margin-right: 6px;
+  }
+}
+
+.story-widget {
+  sheldon-chart-bars,
+  sheldon-chart-h-bars,
+  sheldon-kpi,
+  sheldon-list,
+  sheldon-segmented-chart,
+  sheldon-chart-treemap,
+  sheldon-mosaic-map,
+  sheldon-descrizione {
+    display: block;
+    width: 100%;
+  }
+}

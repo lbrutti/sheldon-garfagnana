@@ -1,0 +1,9 @@
+id,tag,title,data,tileWidth,groupBy,reduceBy,sortBy,defaultSortDirection,showSorting,limit,filterBy,masterField,udm,minFontSize,campo,auxReduce,groups,info,lane
+s-kpi-count,sheldon-kpi,Interventi totali,interventiPerComune,1,comune,count,,,false,0,,,,40,,,,Numero di interventi nella categoria,interventi
+s-kpi-importo,sheldon-kpi,Investimento totale,interventiPerComune,1,comune,sum,,,false,0,,,€,40,,,,Importo totale degli interventi,interventi
+s-bars-comuni,sheldon-chart-h-bars,Interventi per comune,interventiPerComune,2,comune,count,value,desc,false,10,,,,,,,,Distribuzione geografica degli interventi,interventi
+s-seg-stato,sheldon-segmented-chart,Stato di avanzamento,interventiPerStato,2,indicatore,count,,desc,false,0,,,,,,,,Fase corrente di ciascun intervento,interventi
+s-tree-cat,sheldon-chart-treemap,Per categoria e tipologia,interventiPerCategoria,2,,sum,,,,0,,,,,,,"[""ambitoStrategico"",""tipologia""]",Gerarchia: ambito strategico → tipologia,interventi
+s-istat-kpi,sheldon-kpi,Popolazione (ultimo anno),datiIstat,1,comune,sum,,,false,0,,,,40,,,,Somma dei valori ISTAT per tutti i comuni,istat
+s-istat-anno,sheldon-chart-bars,Andamento nel tempo,datiIstat,2,anno,sum,category,asc,false,0,,,,,,,,Evoluzione dell'indicatore per anno,istat
+s-istat-comuni,sheldon-chart-h-bars,Distribuzione per comune,datiIstat,2,comune,sum,value,desc,false,0,,,,,,,,Valore aggregato per comune,istat
