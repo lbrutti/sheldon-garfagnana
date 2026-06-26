@@ -14,13 +14,13 @@ import {
 } from '../../../adapters';
 import {getExplodedData} from '../../../utils';
 import {components} from '../../libs';
-import {DecimalPipe} from '@angular/common';
+import {DecimalPipe, JsonPipe} from '@angular/common';
 import camelcase from 'camelcase';
 import {FeatureCollection, Polygon} from 'geojson';
 
 @Component({
   selector: 'sheldon-story',
-  imports: [...components, TranslocoModule],
+  imports: [...components, TranslocoModule, JsonPipe],
   templateUrl: './data-story.html',
   styleUrl: './data-story.scss',
   providers: [DecimalPipe],
@@ -45,10 +45,10 @@ export default class DataStory {
   });
 
   protected interventiSettings = computed(() =>
-    this.apiService.storySettings().filter(s => s.lane !== 'istat'),
+    this.apiService.storyInterventiSettings(),
   );
   protected istatSettings = computed(() =>
-    this.apiService.storySettings().filter(s => s.lane === 'istat'),
+    this.apiService.storyIstatSettings().filter(setting=>setting.storia===this.story().id),
   );
 
   // ── interventi data signals (middle lane) ─────────────────────────────
@@ -106,6 +106,7 @@ export default class DataStory {
   // ── istat data map (right lane) ───────────────────────────────────────
   protected istatDataMap = computed<Record<string, unknown>>(() => ({
     datiIstat: this.datiIstat(),
+    variazione_popolazione_residente_per_area_2001_2025: this.datiIstat(),
   }));
 
   constructor(protected apiService: ProjectsApiService) {
@@ -184,7 +185,8 @@ export default class DataStory {
   ngOnInit(): void {
     this.apiService.getDataStoriesList();
     this.apiService.getInterventi();
-    this.apiService.getStorySettings();
+    this.apiService.getStoryInterventiSettings();
+    this.apiService.getStoryIstatSettings();
     this.apiService.getStoryParsingConfig();
     this.apiService.getComuniPolygons();
     this.comuniPolygons = this.apiService.comuniPolygons;

@@ -4,7 +4,7 @@ import {DashboardParsingConfig, DataInterface, InterventoInterface} from '../int
 import {csvToJson, parseDashboardParsingConfigCsv, parseDashboardSettingsCsv} from '../adapters';
 import {FeatureCollection, Point, Polygon} from 'geojson';
 import {environment} from '../../environments/environment';
-import WidgetSetting from '../interfaces/widget-setting.interface';
+import WidgetSetting, {StoryWidgetSetting} from '../interfaces/widget-setting.interface';
 import DataStoryInterface from '../interfaces/data-story.interface';
 import {parseDataStoryCsv} from '../adapters/data-story.adapter';
 
@@ -23,7 +23,8 @@ export class ProjectsApiService {
   private _mapInterventiSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
   private _mapInterventiParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _dataStoriesList: WritableSignal<DataStoryInterface[]> = signal<DataStoryInterface[]>([]);
-  private _storySettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
+  private _storyInterventiSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
+  private _storyIstatSettings: WritableSignal<StoryWidgetSetting[]> = signal<StoryWidgetSetting[]>([]);
   private _storyParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
   private _loadingCount = signal(0);
 
@@ -138,14 +139,27 @@ export class ProjectsApiService {
   }
 
 
-  getStorySettings() {
-    if (this._fetched.has('storySettings')) return;
+  getStoryInterventiSettings() {
+    if (this._fetched.has('storyInterventiSettings')) return;
     this._loadingCount.update(n => n + 1);
-    this.httpClient.get(environment.settings.dataStoriesSettingsUrl, {responseType: 'text'}).subscribe({
+    this.httpClient.get(environment.settings.dataStoriesInterventiSettingsUrl, {responseType: 'text'}).subscribe({
       next: csv => {
-        this._storySettings.set(parseDashboardSettingsCsv(csv));
+        this._storyInterventiSettings.set(parseDashboardSettingsCsv(csv));
         this._loadingCount.update(n => n - 1);
-        this._fetched.add('storySettings');
+        this._fetched.add('storyInterventiSettings');
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
+  getStoryIstatSettings() {
+    if (this._fetched.has('storyIstatSettings')) return;
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.dataStoriesIstatSettingsUrl, {responseType: 'text'}).subscribe({
+      next: csv => {
+        this._storyIstatSettings.set(parseDashboardSettingsCsv(csv) as StoryWidgetSetting[]);
+        this._loadingCount.update(n => n - 1);
+        this._fetched.add('storyIstatSettings');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -192,7 +206,8 @@ export class ProjectsApiService {
   mapInterventiParsingConfig = this._mapInterventiParsingConfig.asReadonly();
 
   dataStoriesList = this._dataStoriesList.asReadonly();
-  storySettings = this._storySettings.asReadonly();
+  storyInterventiSettings = this._storyInterventiSettings.asReadonly();
+  storyIstatSettings = this._storyIstatSettings.asReadonly();
   storyParsingConfig = this._storyParsingConfig.asReadonly();
 
 }

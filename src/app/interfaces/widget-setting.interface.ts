@@ -43,3 +43,7 @@ export default interface WidgetSetting {
   // for data-story: which lane this widget belongs to
   lane?: 'interventi' | 'istat',
 }
+
+export interface StoryWidgetSetting extends WidgetSetting {
+  storia: string;
+}
