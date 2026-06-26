@@ -10,7 +10,6 @@ export const environment = {
   dataStoriesSheet: {
     //https://docs.google.com/spreadsheets/d/e/2PACX-1vSh0c8a5h_NUVNdBM8ALmq4qRUp88W1ieyShDnzI1-fCGOyZPlq574HMqWRd7ini_06DJYB_47u8Hq7/pub?gid=2038067554&single=true&output=csv
     spreadsheetId: '1WdSofKLdOmodsFbHiEVUmAM3vhaDqCjxZRuiSemUxas',
-
   },
   // Static GeoJSON served from the public/ folder.
   data: {

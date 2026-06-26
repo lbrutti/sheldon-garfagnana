@@ -109,10 +109,10 @@ export default class DataStory {
       this.storyId = params['id'];
     });
 
-    effect(() => {
-      if (!this.story()) return;
-      this.apiService.getDatiIstat(this.story().id, this.story().gid);
-    });
+    // effect(() => {
+    //   if (!this.story()) return;
+    //   this.apiService.getDatiIstat(this.story().id, this.story().gid);
+    // });
 
     effect(() => {
       const story = this.story();
@@ -123,7 +123,7 @@ export default class DataStory {
         for (const setting of settings) {
           if (setting.fvid && !seen.has(setting.fvid)) {
             seen.add(setting.fvid);
-            this.apiService.getDatiIstatByFvid(setting.fvid, story.gid);
+            this.apiService.getDatiIstatByFvid(setting.fvid, story.gid, setting.query || 'SELECT *');
           }
         }
       });
@@ -194,8 +194,8 @@ export default class DataStory {
 
   ngOnInit(): void {
     this.apiService.getDataStoriesList();
-    this.apiService.getInterventi();
-    this.apiService.getStoryInterventiSettings();
+    // this.apiService.getInterventi();
+    // this.apiService.getStoryInterventiSettings();
     this.apiService.getStoryIstatSettings();
     this.apiService.getStoryParsingConfig();
     this.apiService.getComuniPolygons();

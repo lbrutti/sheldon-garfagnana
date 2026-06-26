@@ -38,30 +38,16 @@ export class ProjectsApiService {
   ) {
   }
 
-  getDatiIstatByFvid(fvid: string, gid: string, query: string = '') {
+  getDatiIstatByFvid(fvid: string, gid: string, query: string = 'SELECT *') {
     const cacheKey = `fvid:${fvid}`;
     if (this._fetched.has(cacheKey)) return;
-    const url = this.getFVizURL(environment.settings.dataStoriesSheetUrl, gid, fvid);
+    const url = this.getGVizURL(environment.dataStoriesSheet.spreadsheetId, gid, query, fvid);
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(url, {responseType: 'text'}).subscribe({
       next: (res: any) => {
         this._datiIstatByFvid.update(m => ({...m, [fvid]: csvToJson(res) as DataInterface[]}));
         this._loadingCount.update(n => n - 1);
         this._fetched.add(cacheKey);
-      },
-      error: () => this._loadingCount.update(n => n - 1),
-    });
-  }
-
-  getDatiIstat(storyId: string, gid: string, query: string = '') {
-    if (this._fetched.has(storyId)) return;
-    const url = this.getGVizURL(environment.dataStoriesSheet.spreadsheetId, gid, `SELECT * ${query ?? ''}`);
-    this._loadingCount.update(n => n + 1);
-    this.httpClient.get(url, {responseType: 'text'}).subscribe({
-      next: (res: any) => {
-        this._datiStories.update(m => ({...m, [storyId]: csvToJson(res) as DataInterface[]}));
-        this._loadingCount.update(n => n - 1);
-        this._fetched.add(storyId);
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
