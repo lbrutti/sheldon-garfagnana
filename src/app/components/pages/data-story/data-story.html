@@ -37,7 +37,7 @@
             @switch (setting.tag) {
               @case ('sheldon-chart-bars') {
                 <sheldon-chart-bars
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -54,6 +54,7 @@
               @case ('sheldon-chart-h-bars') {
                 <sheldon-chart-h-bars
                   [title]="setting.title"
+                  [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -71,6 +72,7 @@
               @case ('sheldon-kpi') {
                 <sheldon-kpi
                   [title]="setting.title"
+                  [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -85,7 +87,7 @@
               }
               @case ('sheldon-list') {
                 <sheldon-list
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [filterBy]="setting.filterBy ?? ''"
@@ -95,7 +97,7 @@
               }
               @case ('sheldon-segmented-chart') {
                 <sheldon-segmented-chart
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -110,7 +112,7 @@
               }
               @case ('sheldon-chart-treemap') {
                 <sheldon-chart-treemap
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [filterBy]="setting.filterBy ?? null"
@@ -124,7 +126,7 @@
               }
               @case ('sheldon-mosaic-map') {
                 <sheldon-mosaic-map
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [data]="$any(interventiDataMap()[setting.data])"
@@ -155,7 +157,7 @@
             @switch (setting.tag) {
               @case ('sheldon-chart-bars') {
                 <sheldon-chart-bars
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -171,7 +173,7 @@
               }
               @case ('sheldon-chart-h-bars') {
                 <sheldon-chart-h-bars
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -188,7 +190,7 @@
               }
               @case ('sheldon-kpi') {
                 <sheldon-kpi
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -203,7 +205,7 @@
               }
               @case ('sheldon-list') {
                 <sheldon-list
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [filterBy]="setting.filterBy ?? ''"
@@ -213,7 +215,7 @@
               }
               @case ('sheldon-segmented-chart') {
                 <sheldon-segmented-chart
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
@@ -228,7 +230,7 @@
               }
               @case ('sheldon-chart-treemap') {
                 <sheldon-chart-treemap
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [filterBy]="setting.filterBy ?? null"
@@ -242,7 +244,7 @@
               }
               @case ('sheldon-mosaic-map') {
                 <sheldon-mosaic-map
-                  [title]="setting.title"
+                  [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [data]="$any(istatDataMap()[setting.data])"
