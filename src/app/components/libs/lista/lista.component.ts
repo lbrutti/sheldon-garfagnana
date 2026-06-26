@@ -65,7 +65,7 @@ export default class ListaComponent {
   totaleValore = computed<number>(() => {
     return this.filteredData()
       .map(d => d.valore)
-      .reduce((a, b) => a + b, 0);
+      .reduce((a, b) => (+a + (+b)), 0);
   });
 
 
