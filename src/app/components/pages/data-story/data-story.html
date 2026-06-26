@@ -151,14 +151,14 @@
 
     <!-- RIGHT LANE: ISTAT widgets -->
     <div class="story-lane story-lane--istat">
-      {{ istatSettings() | json }}
       @for (setting of istatSettings(); track setting.id) {
         @if ($any(istatDataMap()[setting.fvid])) {
           <div class="story-widget">
             @switch (setting.tag) {
               @case ('sheldon-chart-bars') {
                 <sheldon-chart-bars
-                  [title]="setting.title" [categoria]="story().categoria"
+                  [title]="setting.title"
+                  [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"

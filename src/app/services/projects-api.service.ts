@@ -41,7 +41,7 @@ export class ProjectsApiService {
   getDatiIstatByFvid(fvid: string, gid: string, query: string = '') {
     const cacheKey = `fvid:${fvid}`;
     if (this._fetched.has(cacheKey)) return;
-    const url = this.getGVizURL(environment.dataStoriesSheet.spreadsheetId, gid, `SELECT * ${query}`.trim(), fvid);
+    const url = this.getFVizURL(environment.settings.dataStoriesSheetUrl, gid, fvid);
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(url, {responseType: 'text'}).subscribe({
       next: (res: any) => {
@@ -99,6 +99,11 @@ export class ProjectsApiService {
   getGVizURL(spreadsheetId: string, sheetId: string, query: string = 'SELECT *', fvid?: string): string {
     const fvidParam = fvid ? `&fvid=${fvid}` : '';
     return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheetId}${fvidParam}&tq=${encodeURIComponent(query)}`;
+  }
+
+  getFVizURL(spreadsheetUrl: string, sheetId: string, fvid?: string): string {
+    const fvidParam = fvid ? `&fvid=${fvid}` : '';
+    return `${spreadsheetUrl}&gid=${sheetId}${fvidParam}`;
   }
 
   getDashboardSettings() {
