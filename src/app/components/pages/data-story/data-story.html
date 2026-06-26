@@ -153,7 +153,7 @@
     <div class="story-lane story-lane--istat">
       {{ istatSettings() | json }}
       @for (setting of istatSettings(); track setting.id) {
-        @if ($any(istatDataMap()[setting.data])) {
+        @if ($any(istatDataMap()[setting.fvid])) {
           <div class="story-widget">
             @switch (setting.tag) {
               @case ('sheldon-chart-bars') {
@@ -169,7 +169,7 @@
                   [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
                   [showSorting]="setting.showSorting ?? false"
                   [limit]="setting.limit ?? 0"
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }
               @case ('sheldon-chart-h-bars') {
@@ -186,7 +186,7 @@
                   [showSorting]="setting.showSorting ?? false"
                   [limit]="setting.limit ?? 0"
                   [auxReduce]="setting.auxReduce ?? []"
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }
               @case ('sheldon-kpi') {
@@ -201,7 +201,7 @@
                   [minFontSize]="setting.minFontSize ?? 45"
                   [limit]="setting.limit ?? 0"
                   [udm]="setting.udm ?? null"
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }
               @case ('sheldon-list') {
@@ -211,7 +211,7 @@
                   [cardId]="setting.id"
                   [filterBy]="setting.filterBy ?? ''"
                   [masterField]="setting.masterField ?? null"
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }
               @case ('sheldon-segmented-chart') {
@@ -225,7 +225,7 @@
                   [masterField]="setting.masterField ?? null"
                   [defaultSortDirection]="setting.defaultSortDirection ?? 'asc'"
                   [auxReduce]="$any(setting.auxReduce ?? [])"
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                   [expandOnHover]="true"
                 />
               }
@@ -240,7 +240,7 @@
                   [reduceBy]="$any(setting.reduceBy ?? 'sum')"
                   [groups]="$any(setting.groups ?? [])"
                   [auxReduce]="$any(setting.auxReduce ?? [])"
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }
               @case ('sheldon-mosaic-map') {
@@ -248,7 +248,7 @@
                   [title]="setting.title" [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                   [auxReduce]="$any(setting.auxReduce ?? [])"
                   [municipalityKey]="setting.municipalityKey ?? 'name'"
                   [tooltipProperties]="setting.tooltipProperties"
@@ -256,7 +256,7 @@
               }
               @case ('sheldon-card-descrizione') {
                 <sheldon-descrizione
-                  [data]="$any(istatDataMap()[setting.data])"
+                  [data]="$any(istatDataMap()[setting.fvid])"
                   [title]="setting.title ?? 'nome'"
                   [description]="setting.desc"
                   [url]="setting.url"

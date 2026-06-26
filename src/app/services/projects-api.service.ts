@@ -29,12 +29,28 @@ export class ProjectsApiService {
   private _loadingCount = signal(0);
 
   private _datiStories: WritableSignal<Record<string, DataInterface[]>> = signal({});
+  private _datiIstatByFvid: WritableSignal<Record<string, DataInterface[]>> = signal({});
   private _fetched = new Set<string>();
   readonly loading = computed(() => this._loadingCount() > 0);
 
   constructor(
     protected readonly httpClient: HttpClient,
   ) {
+  }
+
+  getDatiIstatByFvid(fvid: string, gid: string, query: string = '') {
+    const cacheKey = `fvid:${fvid}`;
+    if (this._fetched.has(cacheKey)) return;
+    const url = this.getGVizURL(environment.dataStoriesSheet.spreadsheetId, gid, `SELECT * ${query}`.trim(), fvid);
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(url, {responseType: 'text'}).subscribe({
+      next: (res: any) => {
+        this._datiIstatByFvid.update(m => ({...m, [fvid]: csvToJson(res) as DataInterface[]}));
+        this._loadingCount.update(n => n - 1);
+        this._fetched.add(cacheKey);
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
   }
 
   getDatiIstat(storyId: string, gid: string, query: string = '') {
@@ -80,9 +96,9 @@ export class ProjectsApiService {
     });
   }
 
-  getGVizURL(spreadsheetId: string, sheetId: string, query: string = 'SELECT *'): string {
-    return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheetId}&tq=${encodeURIComponent(query)}`;
-
+  getGVizURL(spreadsheetId: string, sheetId: string, query: string = 'SELECT *', fvid?: string): string {
+    const fvidParam = fvid ? `&fvid=${fvid}` : '';
+    return `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?tqx=out:csv&gid=${sheetId}${fvidParam}&tq=${encodeURIComponent(query)}`;
   }
 
   getDashboardSettings() {
@@ -209,5 +225,6 @@ export class ProjectsApiService {
   storyInterventiSettings = this._storyInterventiSettings.asReadonly();
   storyIstatSettings = this._storyIstatSettings.asReadonly();
   storyParsingConfig = this._storyParsingConfig.asReadonly();
+  datiIstatByFvid = this._datiIstatByFvid.asReadonly();
 
 }

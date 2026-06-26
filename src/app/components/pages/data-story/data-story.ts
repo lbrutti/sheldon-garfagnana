@@ -39,11 +39,6 @@ export default class DataStory {
     return this.apiService.interventi().filter(i => normalizzaStringa(i.categoria) === normalizzaStringa(categoria));
   });
 
-  protected datiIstat = computed<DataInterface[]>(() => {
-    if (!this.story()) return [];
-    return this.apiService.getDataForStory(this.story().id);
-  });
-
   protected interventiSettings = computed(() =>
     this.apiService.storyInterventiSettings(),
   );
@@ -104,10 +99,10 @@ export default class DataStory {
   }));
 
   // ── istat data map (right lane) ───────────────────────────────────────
-  protected istatDataMap = computed<Record<string, unknown>>(() => ({
-    datiIstat: this.datiIstat(),
-    variazione_popolazione_residente_per_area_2001_2025: this.datiIstat(),
-  }));
+  protected istatDataMap = computed<Record<string, DataInterface[]>>(() => {
+    const byFvid = this.apiService.datiIstatByFvid();
+    return Object.fromEntries(this.istatSettings().map(s => [s.fvid, byFvid[s.fvid] ?? []]));
+  });
 
   constructor(protected apiService: ProjectsApiService) {
     this.route.params.subscribe(params => {
@@ -117,6 +112,21 @@ export default class DataStory {
     effect(() => {
       if (!this.story()) return;
       this.apiService.getDatiIstat(this.story().id, this.story().gid);
+    });
+
+    effect(() => {
+      const story = this.story();
+      const settings = this.istatSettings();
+      if (!story || !settings.length) return;
+      untracked(() => {
+        const seen = new Set<string>();
+        for (const setting of settings) {
+          if (setting.fvid && !seen.has(setting.fvid)) {
+            seen.add(setting.fvid);
+            this.apiService.getDatiIstatByFvid(setting.fvid, story.gid);
+          }
+        }
+      });
     });
 
     effect(() => {

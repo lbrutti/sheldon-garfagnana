@@ -46,4 +46,6 @@ export default interface WidgetSetting {
 
 export interface StoryWidgetSetting extends WidgetSetting {
   storia: string;
+  //id della visualizzazione filtrata da usare
+  fvid:string;
 }
