@@ -49,7 +49,7 @@ export default class ListaComponent {
   filterByAlias = input<string | null>(null);
   filterFieldAliases: Signal<Record<string, string>> = computed(() => {
     const alias = this.filterByAlias();
-    const key = this.groupBy();
+    const key = this.filterBy();
     return alias && key ? {[key]: alias} : {};
   });
 

@@ -13,12 +13,11 @@ import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValue} from '../../../utils';
-import {FitTextDirective} from '../../../directives/fit-text.directive';
 import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-kpi',
-  imports: [CardComponent, DynamicFilterComponent, FitTextDirective, TranslocoModule],
+  imports: [CardComponent, DynamicFilterComponent,  TranslocoModule],
   templateUrl: './kpi.component.html',
   styleUrl: './kpi.component.scss',
 })
@@ -43,7 +42,7 @@ export default class KpiComponent {
   filterByAlias = input<string | null>(null);
   filterFieldAliases: Signal<Record<string, string>> = computed(() => {
     const alias = this.filterByAlias();
-    return alias ? {[this.groupBy() as string]: alias} : {};
+    return alias ? {[this.filterBy() as string]: alias} : {};
   });
 
   private readonly formatter = new Intl.NumberFormat(navigator.language);
