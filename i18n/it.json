@@ -43,10 +43,28 @@
   "storyLaneInterventi": {
     "societa": {
       "title": "Cosa dicono i dati degli interventi"
+    },
+    "cultura": {
+      "title": "Cosa dicono i dati degli interventi"
+    },
+    "ambiente": {
+      "title": "Cosa dicono i dati degli interventi"
+    },
+    "economia": {
+      "title": "Cosa dicono i dati degli interventi"
     }
   },
   "storyLaneIstat": {
     "societa": {
+      "title": "Cosa dicono i dati pubblici"
+    },
+    "cultura": {
+      "title": "Cosa dicono i dati pubblici"
+    },
+    "ambiente": {
+      "title": "Cosa dicono i dati pubblici"
+    },
+    "economia": {
       "title": "Cosa dicono i dati pubblici"
     }
   }
