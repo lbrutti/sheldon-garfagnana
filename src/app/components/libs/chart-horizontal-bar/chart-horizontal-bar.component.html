@@ -35,7 +35,7 @@
           @if (hoveredBar() !== bar) {
             <sheldon-chart-label
               text="{{bar.label}}"
-              sub="{{bar.value|multiples}}"/>
+              sub="{{(bar.value|multiples) + udm()}}"/>
           }
           <div class="h-bar"
                [class.negative]="bar.negative"
@@ -59,7 +59,7 @@
       [visible]="hoveredBar() !== null"
       [interactive]="touchMode()"
       [text]="hoveredBar()?.label ?? ''"
-      [sub]="hoveredBar() ? (hoveredBar()!.value | multiples) : ''"
+      [sub]="hoveredBar() ? (hoveredBar()!.value | multiples)+udm() : ''"
       [x]="pointer().x"
       [y]="pointer().y"
       [offsetX]="0"

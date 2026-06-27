@@ -1,14 +1,11 @@
 import {Component, computed, Signal} from '@angular/core';
 import CardComponent from '../card/card.component';
-import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import ChartBarComponent from '../chart-bar/chart-bar.component';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import {getRandomGradient} from '../../../utils';
 import ChartLabelComponent from '../chart-label/chart-label.component';
-import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {MultiplesPipe} from '../../../pipes';
-import {MatList} from '@angular/material/list';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import {TranslocoModule} from '@jsverse/transloco';
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
@@ -17,16 +14,10 @@ import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
   selector: 'sheldon-chart-h-bars',
   imports: [
     CardComponent,
-    MatButtonToggleGroup,
-    MatButtonToggle,
     DynamicFilterComponent,
     SortToggle,
     ChartLabelComponent,
-    CdkVirtualScrollViewport,
-    CdkFixedSizeVirtualScroll,
-    CdkVirtualForOf,
     MultiplesPipe,
-    MatList,
     ReduceToggleComponent,
     TranslocoModule,
     ChartTooltipComponent,

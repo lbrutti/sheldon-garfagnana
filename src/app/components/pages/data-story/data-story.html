@@ -31,7 +31,8 @@
 
     <!-- MIDDLE LANE: interventi widgets -->
     <div class="story-lane story-lane--interventi">
-      <h5 class="story-title">{{ 'storyLaneInterventi.' + normalizzaStringa(story().categoria)+'.title'  | transloco }}</h5>
+      <h5
+        class="story-title">{{ 'storyLaneInterventi.' + normalizzaStringa(story().categoria) + '.title'  | transloco }}</h5>
       @for (setting of interventiSettings(); track setting.id) {
         @if ($any(interventiDataMap()[setting.data])) {
           <div class="story-widget">
@@ -152,7 +153,8 @@
 
     <!-- RIGHT LANE: ISTAT widgets -->
     <div class="story-lane story-lane--istat">
-      <h5 class="story-title">{{ 'storyLaneIstat.' + normalizzaStringa(story().categoria)+'.title'  | transloco }}</h5>
+      <h5
+        class="story-title">{{ 'storyLaneIstat.' + normalizzaStringa(story().categoria) + '.title'  | transloco }}</h5>
 
       @for (setting of istatSettings(); track setting.id) {
         @if ($any(istatDataMap()[setting.fvid])) {
@@ -161,6 +163,7 @@
               @case ('sheldon-chart-bars') {
                 <sheldon-chart-bars
                   [title]="setting.title"
+                  [udm]="setting.udm??''"
                   [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
@@ -173,11 +176,13 @@
                   [showSorting]="setting.showSorting ?? false"
                   [limit]="setting.limit ?? 0"
                   [data]="$any(istatDataMap()[setting.fvid])"
-                />
+                  />
               }
               @case ('sheldon-chart-h-bars') {
                 <sheldon-chart-h-bars
-                  [title]="setting.title" [categoria]="story().categoria"
+                  [title]="setting.title"
+                  [categoria]="story().categoria"
+                  [udm]="setting.udm??''"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"

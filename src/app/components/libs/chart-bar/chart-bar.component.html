@@ -53,7 +53,7 @@
       [visible]="hoveredBar() !== null"
       [interactive]="touchMode()"
       [text]="hoveredBar()?.label ?? ''"
-      [sub]="hoveredBar() ? (hoveredBar()!.value | multiples) : ''"
+      [sub]="hoveredBar() ? (hoveredBar()!.value | multiples)+udm() : ''"
       [x]="pointer().x"
       [y]="pointer().y"
       [offsetX]="0"

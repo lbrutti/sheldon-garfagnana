@@ -22,9 +22,12 @@ export const environment = {
     mapInterventiParsingConfigUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=309223040&single=true&output=csv',
     mapInterventiSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=196849019&single=true&output=csv',
 
+    dataStoriesSheetUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSh0c8a5h_NUVNdBM8ALmq4qRUp88W1ieyShDnzI1-fCGOyZPlq574HMqWRd7ini_06DJYB_47u8Hq7/pub?single=true&output=csv',
     dataStoriesListUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSh0c8a5h_NUVNdBM8ALmq4qRUp88W1ieyShDnzI1-fCGOyZPlq574HMqWRd7ini_06DJYB_47u8Hq7/pub?gid=2038067554&single=true&output=csv',
+    dataStoriesParsingConfigUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSh0c8a5h_NUVNdBM8ALmq4qRUp88W1ieyShDnzI1-fCGOyZPlq574HMqWRd7ini_06DJYB_47u8Hq7/pub?gid=758044191&single=true&output=csv',
     dataStoriesInterventiSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSh0c8a5h_NUVNdBM8ALmq4qRUp88W1ieyShDnzI1-fCGOyZPlq574HMqWRd7ini_06DJYB_47u8Hq7/pub?gid=650860672&single=true&output=csv',
     dataStoriesIstatSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSh0c8a5h_NUVNdBM8ALmq4qRUp88W1ieyShDnzI1-fCGOyZPlq574HMqWRd7ini_06DJYB_47u8Hq7/pub?gid=803620129&single=true&output=csv',
+
   },
   categorie: ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'economia', 'sociale', 'societa']
 };

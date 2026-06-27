@@ -51,6 +51,7 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
   title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
+  udm = input<string>('');
 
   showSorting = input<boolean>(true);
   sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
@@ -121,7 +122,7 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
     const maxVal = Math.max(...values, 0);
     const range = maxVal - minVal || 1;
     return keys.map((label, i): BarItem => ({
-      label,
+      label: label,
       value: values[i],
       pct: (Math.abs(values[i]) / range) * 100,
       background: this.gradients()[i],
