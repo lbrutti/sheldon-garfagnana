@@ -6,19 +6,14 @@
   .bars-container {
     position: relative;
     display: flex;
-    align-items: flex-end;
+    align-items: stretch;
     height: 112px;
   }
 
   .bar-col {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    height: 100%;
-    justify-content: flex-end;
+    position: relative;
     transition: filter 0.15s ease;
-
 
     &.dimmed {
       filter: brightness(0.75);
@@ -34,14 +29,33 @@
   .bar {
     container-type: inline-size;
     cursor: pointer;
+    position: absolute;
     width: 100%;
-    min-height: 24px;
+    min-height: 2px;
     display: flex;
     align-items: flex-end;
     border-radius: 3px 3px 0 0;
     overflow: hidden;
     transition: height var(--chart-transition-duration) ease;
     text-align: left;
+    bottom: var(--zero-pct, 0%);
+
+    &.negative {
+      bottom: auto;
+      top: calc(100% - var(--zero-pct, 0%));
+      border-radius: 0 0 3px 3px;
+      align-items: flex-start;
+    }
+  }
+
+  .zero-line {
+    position: absolute;
+    bottom: var(--zero-pct, 0%);
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.2));
+    pointer-events: none;
   }
 
   .bar-label {

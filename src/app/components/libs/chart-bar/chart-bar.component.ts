@@ -28,6 +28,7 @@ export interface BarItem {
   value: number;
   pct: number;
   background: string;
+  negative: boolean;
 }
 
 @Component({
@@ -116,14 +117,26 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
     const grouped = Object.groupBy(filteredData, (p: any) => p[this.groupBy()]);
     const keys = this.getGroupedKeys(grouped);
     const values = keys.map(label => getReducedValueByLabel(grouped, label, reduce.reduceBy));
-    const max = Math.max(...values, 1);
+    const minVal = Math.min(...values, 0);
+    const maxVal = Math.max(...values, 0);
+    const range = maxVal - minVal || 1;
     return keys.map((label, i): BarItem => ({
       label,
       value: values[i],
-      pct: (values[i] / max) * 100,
-      background: this.gradients()[i]
+      pct: (Math.abs(values[i]) / range) * 100,
+      background: this.gradients()[i],
+      negative: values[i] < 0,
     }));
   });
+  zeroLinePct: Signal<number> = computed(() => {
+    const values = this.bars().map(b => b.value);
+    if (!values.length) return 0;
+    const minVal = Math.min(...values, 0);
+    const maxVal = Math.max(...values, 0);
+    const range = maxVal - minVal || 1;
+    return (-minVal / range) * 100;
+  });
+
   categoria = input<string>('');
 
   getGroupedKeys(grouped: any): string[] {

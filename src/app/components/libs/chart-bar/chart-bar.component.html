@@ -24,13 +24,14 @@
     }
   </ng-container>
   <ng-container content>
-    <div class="bars-container" #wrapper>
+    <div class="bars-container" #wrapper [style.--zero-pct]="zeroLinePct() + '%'">
       @for (bar of bars(); track bar.label) {
         <div
           class="bar-col"
           [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar">
           <div
             class="bar"
+            [class.negative]="bar.negative"
             [style.height.%]="bar.pct"
             [style.background]="bar.background"
             (mouseenter)="onBarEnter(bar, $event)"
@@ -42,6 +43,9 @@
             }
           </div>
         </div>
+      }
+      @if (zeroLinePct() > 0) {
+        <div class="zero-line"></div>
       }
     </div>
 

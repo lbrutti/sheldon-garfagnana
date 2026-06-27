@@ -6,6 +6,7 @@
   //}
 
   .h-bars-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -31,7 +32,7 @@
 
   .h-bar {
     height: 28px;
-    min-width: 40px;
+    min-width: 2px;
     border-radius: 0 3px 3px 0;
     display: flex;
     align-items: center;
@@ -41,7 +42,22 @@
     overflow: hidden;
     transition: width var(--chart-transition-duration) ease;
     cursor: pointer;
+    margin-left: var(--zero-pct, 0%);
 
+    &.negative {
+      margin-left: calc(var(--zero-pct, 0%) - var(--bar-pct, 0%));
+      border-radius: 3px 0 0 3px;
+    }
+  }
+
+  .zero-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: var(--zero-pct, 0%);
+    width: 1px;
+    background: var(--mat-sys-outline-variant, rgba(0, 0, 0, 0.2));
+    pointer-events: none;
   }
 
   .h-bar-label,
