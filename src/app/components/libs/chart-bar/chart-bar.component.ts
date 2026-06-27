@@ -75,7 +75,7 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
   filterByAlias = input<string | null>(null);
   filterFieldAliases: Signal<Record<string, string>> = computed(() => {
     const alias = this.filterByAlias();
-    return alias ? {[this.groupBy() as string]: alias} : {};
+    return alias ? {[this.filterBy() as string]: alias} : {};
   });
 
   currentReduce = signal<ReduceByDeclaration | null>(null);
