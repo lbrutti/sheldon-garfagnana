@@ -194,8 +194,8 @@ export default class DataStory {
 
   ngOnInit(): void {
     this.apiService.getDataStoriesList();
-    // this.apiService.getInterventi();
-    // this.apiService.getStoryInterventiSettings();
+    this.apiService.getInterventi();
+    this.apiService.getStoryInterventiSettings();
     this.apiService.getStoryIstatSettings();
     this.apiService.getStoryParsingConfig();
     this.apiService.getComuniPolygons();
