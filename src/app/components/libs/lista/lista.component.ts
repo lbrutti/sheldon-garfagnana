@@ -13,6 +13,7 @@ import {MatList, MatListItem} from '@angular/material/list';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {MultiplesPipe} from '../../../pipes';
 import {SortToggle} from '../sort-toggle/sort-toggle';
+import {getReducedValueByLabel} from '../../../utils';
 import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
@@ -46,6 +47,7 @@ export default class ListaComponent {
   data = input<DataInterface[]>([]);
 
   groupBy = input<string | null>(null);
+  reduceBy = input<string | null>(null);
   filterByAlias = input<string | null>(null);
   filterFieldAliases: Signal<Record<string, string>> = computed(() => {
     const alias = this.filterByAlias();
@@ -68,6 +70,17 @@ export default class ListaComponent {
           )
         )
       : this.data();
+
+    const groupBy = this.groupBy();
+    const reduceBy = this.reduceBy();
+    if (groupBy && reduceBy) {
+      const grouped = Object.groupBy(result, (d: any) => d[groupBy]);
+      result = Object.keys(grouped).map(key => ({
+        ...grouped[key]![0],
+        nome: key,
+        valore: getReducedValueByLabel(grouped, key, reduceBy),
+      }));
+    }
 
     const dir = this.sortDirection();
     result = [...result].sort((a, b) =>
