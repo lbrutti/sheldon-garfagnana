@@ -39,5 +39,15 @@
   "pages": {
     "dataStoriesPlaceholder": "data-stories works!",
     "mapViewPlaceholder": "map-view works!"
+  },
+  "storyLaneInterventi": {
+    "societa": {
+      "title": "Cosa dicono i dati degli interventi"
+    }
+  },
+  "storyLaneIstat": {
+    "societa": {
+      "title": "Cosa dicono i dati pubblici"
+    }
   }
 }

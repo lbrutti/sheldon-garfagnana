@@ -31,6 +31,7 @@
 
     <!-- MIDDLE LANE: interventi widgets -->
     <div class="story-lane story-lane--interventi">
+      <h5 class="story-title">{{ 'storyLaneInterventi.' + normalizzaStringa(story().categoria)+'.title'  | transloco }}</h5>
       @for (setting of interventiSettings(); track setting.id) {
         @if ($any(interventiDataMap()[setting.data])) {
           <div class="story-widget">
@@ -151,6 +152,8 @@
 
     <!-- RIGHT LANE: ISTAT widgets -->
     <div class="story-lane story-lane--istat">
+      <h5 class="story-title">{{ 'storyLaneIstat.' + normalizzaStringa(story().categoria)+'.title'  | transloco }}</h5>
+
       @for (setting of istatSettings(); track setting.id) {
         @if ($any(istatDataMap()[setting.fvid])) {
           <div class="story-widget">

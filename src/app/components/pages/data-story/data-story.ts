@@ -201,4 +201,6 @@ export default class DataStory {
     this.apiService.getComuniPolygons();
     this.comuniPolygons = this.apiService.comuniPolygons;
   }
+
+  protected readonly normalizzaStringa = normalizzaStringa;
 }
