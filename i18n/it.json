@@ -11,7 +11,7 @@
     "allCategories": "Tutte le categorie"
   },
   "filter": {
-    "search": "Cerca un {field}",
+    "search": "Cerca per {field}",
     "clear": "Cancella"
   },
   "list": {
