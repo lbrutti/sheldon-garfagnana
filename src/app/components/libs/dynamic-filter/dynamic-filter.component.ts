@@ -42,6 +42,9 @@ export class DynamicFilterComponent<T extends Record<string, unknown>> {
   /** String array of field names to filter on, e.g. ['nome_comune', 'unione'] */
   filterBy = input<string[]>([]);
 
+  /** Optional display-name overrides: { fieldName: 'Label to show in placeholder' } */
+  fieldAliases = input<Record<string, string>>({});
+
   /**
    * The full dataset. The component uses it to derive cascading autocomplete
    * options: when one field is set, only values present in the matching rows

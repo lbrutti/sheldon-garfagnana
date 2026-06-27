@@ -45,6 +45,14 @@ export default class ListaComponent {
   limit = input<number>(15);
   data = input<DataInterface[]>([]);
 
+  groupBy = input<string | null>(null);
+  filterByAlias = input<string | null>(null);
+  filterFieldAliases: Signal<Record<string, string>> = computed(() => {
+    const alias = this.filterByAlias();
+    const key = this.groupBy();
+    return alias && key ? {[key]: alias} : {};
+  });
+
   showSorting = input<boolean>(false);
   sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
   sortDirection = signal<string>('desc');

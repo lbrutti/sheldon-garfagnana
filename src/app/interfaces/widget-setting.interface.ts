@@ -42,6 +42,8 @@ export default interface WidgetSetting {
 
   // for data-story: which lane this widget belongs to
   lane?: 'interventi' | 'istat',
+
+  filterByAlias?: string,
 }
 
 export interface StoryWidgetSetting extends WidgetSetting {

@@ -40,6 +40,12 @@ export default class KpiComponent {
   data = input<DataInterface[]>([]);
   reduceBy = input<string>('sum');
 
+  filterByAlias = input<string | null>(null);
+  filterFieldAliases: Signal<Record<string, string>> = computed(() => {
+    const alias = this.filterByAlias();
+    return alias ? {[this.groupBy() as string]: alias} : {};
+  });
+
   private readonly formatter = new Intl.NumberFormat(navigator.language);
   private rafId: number | null = null;
 

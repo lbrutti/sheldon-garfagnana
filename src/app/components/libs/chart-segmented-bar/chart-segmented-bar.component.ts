@@ -80,6 +80,12 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
   });
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
+  filterByAlias = input<string | null>(null);
+  filterFieldAliases: Signal<Record<string, string>> = computed(() => {
+    const alias = this.filterByAlias();
+    return alias ? {[this.groupBy() as string]: alias} : {};
+  });
+
   // ── Hover state ───────────────────────────────────────────────────────────────
   protected hoveredSegment = signal<SegmentInterface | null>(null);
 
