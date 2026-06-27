@@ -5,6 +5,12 @@
   [cardId]="cardId()">
   <ng-container title>{{ title() || ('chart.projectsByComune' | transloco) }}</ng-container>
   <ng-container subheader>
+    @if (showSorting()) {
+      <sheldon-sort-toggle
+        [defaultSortDirection]="defaultSortDirection()"
+        (sortChange)="onSortChange($event)"
+      />
+    }
     <sheldon-dynamic-filter
       [filterBy]="filtersFields()"
       [dataset]="data()"

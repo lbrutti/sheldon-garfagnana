@@ -1,17 +1,18 @@
 import {
   Component, computed,
   input,
+  InputSignal,
   signal,
   Signal,
-
 } from '@angular/core';
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
+import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {MatList, MatListItem} from '@angular/material/list';
-import {DecimalPipe} from '@angular/common';
 import {CdkFixedSizeVirtualScroll, CdkVirtualForOf, CdkVirtualScrollViewport} from '@angular/cdk/scrolling';
 import {MultiplesPipe} from '../../../pipes';
+import {SortToggle} from '../sort-toggle/sort-toggle';
 import {TranslocoModule} from '@jsverse/transloco';
 
 @Component({
@@ -19,6 +20,7 @@ import {TranslocoModule} from '@jsverse/transloco';
   imports: [
     CardComponent,
     DynamicFilterComponent,
+    SortToggle,
     MatList,
     MatListItem,
     CdkFixedSizeVirtualScroll,
@@ -43,22 +45,38 @@ export default class ListaComponent {
   limit = input<number>(15);
   data = input<DataInterface[]>([]);
 
+  showSorting = input<boolean>(false);
+  sortBy: InputSignal<'category' | 'value'> = input<'category' | 'value'>('value');
+  sortDirection = signal<string>('desc');
+  defaultSortDirection = input<'asc' | 'desc'>('desc');
 
   filteredData: Signal<DataInterface[]> = computed(() => {
     const filters = this.appliedFilters();
     const filterSet = filters.length && filters.some(d => d.value);
-    return filterSet
+    let result = filterSet
       ? this.data().filter(d =>
-        filters.every(filter =>
-          filter.value.length && filter.value === `${(d as any)[filter.key]}`
+          filters.every(filter =>
+            filter.value.length && filter.value === `${(d as any)[filter.key]}`
+          )
         )
-      )
       : this.data();
-  });
 
+    const dir = this.sortDirection();
+    result = [...result].sort((a, b) =>
+      this.sortBy() === 'category'
+        ? `${a.nome}`.localeCompare(`${b.nome}`)
+        : (+a.valore) - (+b.valore)
+    );
+    if (dir === 'desc') result.reverse();
+    return result;
+  });
 
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
+  }
+
+  protected onSortChange($event: MatButtonToggleChange) {
+    this.sortDirection.set($event.value);
   }
 
   udm = input<string | null>('€');
