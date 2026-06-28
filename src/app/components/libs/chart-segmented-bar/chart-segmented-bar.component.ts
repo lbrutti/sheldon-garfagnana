@@ -146,7 +146,7 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.currentReduce.set({campo: this.groupBy(), reduceBy: this.reduceBy()});
+    this.currentReduce.set({campo: 'valore', reduceBy: this.reduceBy()});
     this.sortDirection.set(this.defaultSortDirection());
   }
 
