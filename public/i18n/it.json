@@ -71,6 +71,8 @@
   "numero_edifici_accessibili_n": "Accessibili",
   "numero_edifici_con_ascensore_disabili_n":"Ascensore disabili",
   "numero_edifici_con_cert_agibilita_n": "Certificazione agibilità",
-  "numero_edifici_con_cpi_n":"CPI"
+  "numero_edifici_con_cpi_n":"CPI",
+  "presenze_italiane_n": "Italia",
+  "presenze_straniere_n":"Estero"
 
 }

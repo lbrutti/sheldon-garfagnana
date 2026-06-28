@@ -20,7 +20,7 @@
         (filterChange)="onFilterChange($event)"/>
     }
     <!--    AUX REDUCE SWITCHES-->
-    @if (this.auxReduce().length) {
+    @if (this.auxReduce().length > 1) {
       <sheldon-reduce-toggle [options]="this.auxReduce()" (reduceChange)="onReduceChange($event)"/>
     }
   </ng-container>

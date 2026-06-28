@@ -156,15 +156,18 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
 
   getGroupedKeys(grouped: any): string[] {
     const groupKeys = this.sortBy() === 'category'
-      ? Object.keys(grouped).sort((a, b) => `${a}`.localeCompare(`${b}`))
+      ? Object.keys(grouped).sort((a, b) => {
+        return this.defaultSortDirection() === 'asc' ? `${a}`.localeCompare(`${b}`) : `${b}`.localeCompare(`${a}`);
+      })
       : Object.keys(grouped).sort((a, b) => {
-        return getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy) -
-          getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy);
+        return this.defaultSortDirection() === 'asc' ?
+          getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy) -
+          getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy) :
+          getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy) -
+          getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy)
+        ;
       });
-    if ((!this.showSorting() && (this.defaultSortDirection() === 'desc')) ||
-      (this.showSorting() && this.sortDirection() === 'desc')) {
-      groupKeys.reverse();
-    }
+
     return this.limit() ? groupKeys.slice(0, this.limit()) : groupKeys;
   }
 

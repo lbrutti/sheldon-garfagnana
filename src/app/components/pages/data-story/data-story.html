@@ -240,10 +240,12 @@
               }
               @case ('sheldon-segmented-chart') {
                 <sheldon-segmented-chart
-                  [title]="setting.title" [categoria]="story().categoria"
+                  [title]="setting.title"
+                  [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [groupBy]="$any(setting.groupBy)"
+                  [sortBy]="$any(setting.sortBy)"
                   [filterByAlias]="setting.filterByAlias ?? null"
                   [reduceBy]="setting.reduceBy ?? 'count'"
                   [filterBy]="setting.filterBy ?? null"
