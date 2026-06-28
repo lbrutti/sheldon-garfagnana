@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   ElementRef,
+  inject,
   Input,
   input,
   OnDestroy,
@@ -10,6 +11,7 @@ import {
   Signal,
   viewChild,
 } from '@angular/core';
+import {TranslocoService} from '@jsverse/transloco';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
@@ -54,6 +56,8 @@ export interface TreemapTile {
 })
 export default class ChartTreemapComponent implements OnInit, OnDestroy {
 
+  private readonly transloco = inject(TranslocoService);
+
   title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
@@ -64,10 +68,17 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
   reduceBy = input<ReduceMode>('sum');
   auxReduce = input<ReduceByDeclaration[]>([]);
 
+  translationKey = input<string | null>(null);
   filterBy = input<string | null>(null);
   filtersFields = computed<string[]>((): string[] =>
     this.filterBy() !== null ? this.filterBy()!.split('|') : []
   );
+  filterByAlias = input<string | null>(null);
+  filterFieldAliases: Signal<Record<string, string>> = computed(() => {
+    const alias = this.filterByAlias();
+    const key = this.filterBy();
+    return alias && key ? {[key]: alias} : {};
+  });
   masterField = input<string | null>(null);
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
@@ -114,13 +125,15 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
     const outerField = groupFields[0];
     const innerField = groupFields[groupFields.length - 1];
 
+    const useTranslation = !!this.translationKey();
     const buckets = new Map<string, { groupKey: string; label: string; rows: TreemapDataInterface[] }>();
     for (const row of raw) {
       const key = groupFields.map(f => `${row[f] ?? '—'}`).join('||');
       if (!buckets.has(key)) {
+        const rawLabel = `${row[innerField] ?? '—'}`;
         buckets.set(key, {
           groupKey: `${row[outerField] ?? '—'}`,
-          label: `${row[innerField] ?? '—'}`,
+          label: useTranslation ? this.transloco.translate(rawLabel) : rawLabel,
           rows: [],
         });
       }

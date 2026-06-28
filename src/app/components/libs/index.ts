@@ -30,10 +30,8 @@ export * from './chart-line/chart-line.component';
 export * from './kpi/kpi.component';
 export * from './lista/lista.component';
 export * from './chart-treemap/chart-treemap.component';
-export {default as ChartTooltipComponent} from './chart-tooltip/chart-tooltip.component';
 export {default as SheldonMosaicMapComponent} from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 
-export { default as HeaderComponent } from './header/header.component';
 
 export const components = [
   HeaderComponent,
@@ -41,6 +39,7 @@ export const components = [
   CardComponent,
   ChartHorizontalBarComponent,
   ChartTreemapComponent,
+  ChartTwoLinesLabelComponent,
   ChartSegmentedBarComponent,
   ChartBarComponent,
   ChartLineComponent,

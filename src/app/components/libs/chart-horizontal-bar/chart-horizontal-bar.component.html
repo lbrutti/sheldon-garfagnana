@@ -33,9 +33,9 @@
              [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar"
         >
           @if (hoveredBar() !== bar) {
-            <sheldon-chart-label
+            <sheldon-two-lines-chart-label
               text="{{bar.label}}"
-              sub="{{(bar.value|multiples) + udm()}}"/>
+              sub="{{(bar.value|multiples) +' '+ udm()}}"/>
           }
           <div class="h-bar"
                [class.negative]="bar.negative"

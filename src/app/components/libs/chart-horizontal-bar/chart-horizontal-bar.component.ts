@@ -4,11 +4,12 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import ChartBarComponent from '../chart-bar/chart-bar.component';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import {getRandomGradient} from '../../../utils';
-import ChartLabelComponent from '../chart-label/chart-label.component';
 import {MultiplesPipe} from '../../../pipes';
 import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import {TranslocoModule} from '@jsverse/transloco';
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
+
+import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -16,7 +17,7 @@ import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
     CardComponent,
     DynamicFilterComponent,
     SortToggle,
-    ChartLabelComponent,
+    ChartTwoLinesLabelComponent,
     MultiplesPipe,
     ReduceToggleComponent,
     TranslocoModule,

@@ -125,11 +125,13 @@
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [filterBy]="setting.filterBy ?? null"
+                  [filterByAlias]="setting.filterByAlias ?? null"
                   [masterField]="setting.masterField ?? null"
                   [campo]="setting.campo ?? 'valore'"
                   [reduceBy]="$any(setting.reduceBy ?? 'sum')"
                   [groups]="$any(setting.groups ?? [])"
                   [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [translationKey]="setting.translationKey ?? null"
                   [data]="$any(interventiDataMap()[setting.data])"
                 />
               }
@@ -259,15 +261,18 @@
               }
               @case ('sheldon-chart-treemap') {
                 <sheldon-chart-treemap
-                  [title]="setting.title" [categoria]="story().categoria"
+                  [title]="setting.title"
+                  [categoria]="story().categoria"
                   [infoText]="setting.info ?? ''"
                   [cardId]="setting.id"
                   [filterBy]="setting.filterBy ?? null"
+                  [filterByAlias]="setting.filterByAlias ?? null"
                   [masterField]="setting.masterField ?? null"
                   [campo]="setting.campo ?? 'valore'"
                   [reduceBy]="$any(setting.reduceBy ?? 'sum')"
                   [groups]="$any(setting.groups ?? [])"
                   [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [translationKey]="setting.translationKey ?? null"
                   [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }

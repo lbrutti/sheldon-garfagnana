@@ -12,6 +12,7 @@
         [filterBy]="this.filtersFields()"
         [dataset]="this.data()"
         [masterField]="this.masterField()"
+        [fieldAliases]="filterFieldAliases()"
         (filterChange)="onFilterChange($event)"/>
     }
 

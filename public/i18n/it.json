@@ -73,6 +73,10 @@
   "numero_edifici_con_cert_agibilita_n": "Certificazione agibilità",
   "numero_edifici_con_cpi_n":"CPI",
   "presenze_italiane_n": "Italia",
-  "presenze_straniere_n":"Estero"
+  "presenze_straniere_n":"Estero",
+  "uso_suolo_acque_kmq": "Acque km²",
+  "uso_suolo_agricolo_kmq":"Agricolo km²",
+  "uso_suolo_artificiale_kmq": "Artificiale km²",
+  "uso_suolo_bosco_kmq":"Bosco km²"
 
 }

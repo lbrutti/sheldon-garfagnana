@@ -21,8 +21,9 @@
       filter: brightness(0.75);
     }
 
-    sheldon-chart-label {
+    sheldon-two-lines-chart-label {
       position: absolute;
+      width: fit-content !important;
       top: 0;
       left: 0;
       z-index: 1;
