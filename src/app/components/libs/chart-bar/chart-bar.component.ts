@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   ElementRef,
+  inject,
   input,
   InputSignal,
   OnDestroy,
@@ -10,6 +11,7 @@ import {
   Signal,
   viewChild,
 } from '@angular/core';
+import {TranslocoService} from '@jsverse/transloco';
 import CardComponent from '../card/card.component';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
@@ -48,6 +50,8 @@ export interface BarItem {
 })
 export default class ChartBarComponent implements OnInit, OnDestroy {
 
+  private readonly transloco = inject(TranslocoService);
+
   title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
@@ -73,6 +77,7 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
   auxReduce = input<ReduceByDeclaration[]>([]);
 
   filterByAlias = input<string | null>(null);
+  translationKey = input<string | null>(null);
   filterFieldAliases: Signal<Record<string, string>> = computed(() => {
     const alias = this.filterByAlias();
     return alias ? {[this.filterBy() as string]: alias} : {};
@@ -127,8 +132,9 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
     const minVal = Math.min(...values, 0);
     const maxVal = Math.max(...values, 0);
     const range = maxVal - minVal || 1;
+    const useTranslation = !!this.translationKey();
     return keys.map((label, i): BarItem => ({
-      label: label,
+      label: useTranslation ? this.transloco.translate(label) : label,
       value: values[i],
       pct: (Math.abs(values[i]) / range) * 100,
       background: this.gradients()[i],

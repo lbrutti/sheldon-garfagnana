@@ -3,6 +3,7 @@ import {
   computed,
   signal,
   ElementRef,
+  inject,
   input,
   InputSignal,
   OnDestroy,
@@ -10,6 +11,7 @@ import {
   Signal,
   viewChild,
 } from '@angular/core';
+import {TranslocoService} from '@jsverse/transloco';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {DynamicFilterComponent} from '../index';
@@ -53,6 +55,8 @@ export interface SegmentInterface {
   styleUrls: ['./chart-segmented-bar.component.scss'],
 })
 export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
+  private readonly transloco = inject(TranslocoService);
+
   readonly title = input<string>('');
   readonly infoText = input<string>('');
   readonly cardId = input<string>('');
@@ -81,6 +85,7 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
   filterByAlias = input<string | null>(null);
+  translationKey = input<string | null>(null);
   filterFieldAliases: Signal<Record<string, string>> = computed(() => {
     const alias = this.filterByAlias();
     return alias ? {[this.groupBy() as string]: alias} : {};
@@ -117,12 +122,14 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
     let groupKeys = this.getGroupedKeys(grouped);
     const segments: SegmentInterface[] = [];
     const reducedTotal = getReducedValue(filteredData, this.currentReduce().reduceBy, this.currentReduce().campo);
+    const useTranslation = !!this.translationKey();
     groupKeys.map(dataKey => {
       const reducedValue = getReducedValueByLabel(grouped, dataKey, this.currentReduce().reduceBy);
       const color = getRandomGradient(this.categoria(), '90deg');
+      const displayLabel = useTranslation ? this.transloco.translate(dataKey) : dataKey;
       segments.push({
-        label: dataKey,
-        shortLabel: dataKey,
+        label: displayLabel,
+        shortLabel: displayLabel,
         percentage: reducedValue / reducedTotal * 100,
         count: reducedValue,
         color: color,

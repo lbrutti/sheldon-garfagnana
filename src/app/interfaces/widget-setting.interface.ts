@@ -44,6 +44,7 @@ export default interface WidgetSetting {
   lane?: 'interventi' | 'istat',
 
   filterByAlias?: string,
+  translationKey?: string | null,
 }
 
 export interface StoryWidgetSetting extends WidgetSetting {

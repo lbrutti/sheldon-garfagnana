@@ -1,10 +1,12 @@
 import {
   Component, computed,
+  inject,
   input,
   InputSignal,
   signal,
   Signal,
 } from '@angular/core';
+import {TranslocoService} from '@jsverse/transloco';
 import CardComponent from '../card/card.component';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
@@ -34,6 +36,8 @@ import {TranslocoModule} from '@jsverse/transloco';
 })
 export default class ListaComponent {
 
+  private readonly transloco = inject(TranslocoService);
+
   title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
@@ -49,6 +53,7 @@ export default class ListaComponent {
   groupBy = input<string | null>(null);
   reduceBy = input<string | null>(null);
   filterByAlias = input<string | null>(null);
+  translationKey = input<string | null>(null);
   filterFieldAliases: Signal<Record<string, string>> = computed(() => {
     const alias = this.filterByAlias();
     const key = this.filterBy();
@@ -73,11 +78,12 @@ export default class ListaComponent {
 
     const groupBy = this.groupBy();
     const reduceBy = this.reduceBy();
+    const useTranslation = !!this.translationKey();
     if (groupBy && reduceBy) {
       const grouped = Object.groupBy(result, (d: any) => d[groupBy]);
       result = Object.keys(grouped).map(key => ({
         ...grouped[key]![0],
-        nome: key,
+        nome: useTranslation ? this.transloco.translate(key) : key,
         valore: getReducedValueByLabel(grouped, key, reduceBy),
       }));
     }

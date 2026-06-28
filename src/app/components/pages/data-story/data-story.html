@@ -183,8 +183,9 @@
                   [defaultSortDirection]="setting.defaultSortDirection ?? 'desc'"
                   [showSorting]="setting.showSorting ?? false"
                   [limit]="setting.limit ?? 0"
+                  [translationKey]="setting.translationKey ?? null"
                   [data]="$any(istatDataMap()[setting.fvid])"
-                  />
+                />
               }
               @case ('sheldon-chart-h-bars') {
                 <sheldon-chart-h-bars
@@ -203,6 +204,7 @@
                   [showSorting]="setting.showSorting ?? false"
                   [limit]="setting.limit ?? 0"
                   [auxReduce]="setting.auxReduce ?? []"
+                  [translationKey]="setting.translationKey ?? null"
                   [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }
@@ -232,6 +234,7 @@
                   [filterByAlias]="setting.filterByAlias ?? null"
                   [filterBy]="setting.filterBy ?? ''"
                   [masterField]="setting.masterField ?? null"
+                  [translationKey]="setting.translationKey ?? null"
                   [data]="$any(istatDataMap()[setting.fvid])"
                 />
               }
@@ -247,6 +250,7 @@
                   [masterField]="setting.masterField ?? null"
                   [defaultSortDirection]="setting.defaultSortDirection ?? 'asc'"
                   [auxReduce]="$any(setting.auxReduce ?? [])"
+                  [translationKey]="setting.translationKey ?? null"
                   [data]="$any(istatDataMap()[setting.fvid])"
                   [expandOnHover]="true"
                 />
