@@ -1,5 +1,11 @@
 export const environment = {
   production: true,
+  // Replace with the Google Sheets CSV export URL after importing public/assets/i18n/it.csv
+  i18n: {
+    // translationCsvUrl: 'assets/i18n/it.csv',
+    translationCsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRrmf1dXB6sE4abUjVPGSNAqzGlWuF2tQaBQmoHgHWNDesSLILSFlt-I5kkc4X2s3fCyHVhNPi1tams/pub?output=csv'
+    
+  },
   // Public Google Sheet exported as CSV via the gviz/tq endpoint.
   sheets: {
     spreadsheetId: '1v6tjQ-JyeN9MY01-oVRDcqzqbAyFIDmUozo1uV2_trY',

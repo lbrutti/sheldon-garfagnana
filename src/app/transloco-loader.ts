@@ -1,15 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { Translation, TranslocoLoader } from '@jsverse/transloco';
-import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { TranslationCsvService } from './services/translation-csv.service';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
-  private http = inject(HttpClient);
+  private csv = inject(TranslationCsvService);
 
-  getTranslation(lang: string) {
-    // Resolve relative to the app's <base href> so it works under a custom
-    // base path (e.g. GitHub Pages at /sheldon-garfagnana/).
-    const url = new URL(`i18n/${lang}.json`, document.baseURI).href;
-    return this.http.get<Translation>(url);
+  getTranslation(lang: string): Observable<Translation> {
+    return this.csv.getTranslations(lang);
   }
 }
