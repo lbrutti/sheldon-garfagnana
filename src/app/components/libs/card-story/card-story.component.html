@@ -3,7 +3,7 @@
     class="height-m"
     [showSubheader]="false"
     [showButtons]="false"
-    [style]="'--sheldon-card-title-background:'+getRandomGradient(data().categoria, '90deg')">
+    [style]="gradient()">
     <ng-container title>{{ data().titolo }}</ng-container>
     <ng-container content>
       <div class="sheldon-card-descrizione"

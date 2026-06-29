@@ -6,7 +6,8 @@
   overflow: hidden;
 
   @media (max-width: $breakpoint-md) {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: visible;
     height: auto;
   }
 }
@@ -38,11 +39,16 @@
   padding: 24px 20px;
   height: 100%;
   box-sizing: border-box;
+  min-width: 0;
 
   @media (max-width: $breakpoint-md) {
     overflow-y: visible;
     height: auto;
     padding: 20px 16px;
+  }
+
+  @media (max-width: $breakpoint-sm) {
+    padding: 16px 12px;
   }
 
   &--text {

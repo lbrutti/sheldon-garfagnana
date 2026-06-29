@@ -1,31 +1,27 @@
 import {
   AfterViewInit,
   Component,
-  computed,
   effect,
   OnDestroy,
   OnInit,
   QueryList,
   signal,
-  Signal,
   untracked,
   ViewChild,
   ViewChildren,
-  WritableSignal,
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {components} from '../../libs';
 
 
-import {DecimalPipe, JsonPipe} from '@angular/common';
-import camelcase from 'camelcase';
+import {DecimalPipe} from '@angular/common';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 import DataStoryInterface from '../../../interfaces/data-story.interface';
 import CardStoryComponent from '../../libs/card-story/card-story.component';
 
 @Component({
   selector: 'sheldon-data-stories',
-  imports: [...components, NgxMasonryModule, JsonPipe, CardStoryComponent],
+  imports: [...components, NgxMasonryModule, CardStoryComponent],
   templateUrl: './data-stories.html',
   styleUrl: './data-stories.scss',
   providers: [DecimalPipe]
@@ -72,7 +68,6 @@ export default class DataStories implements OnInit, AfterViewInit, OnDestroy {
       untracked(() => {
         // this.settings.set(shuffleArray([...raw]).sort((a, b) => a.tileWidth - b.tileWidth));
         this.stories.set([...raw]);
-        console.log(this.stories());
       });
     });
 

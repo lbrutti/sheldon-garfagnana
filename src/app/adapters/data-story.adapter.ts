@@ -32,6 +32,5 @@ export function parseDataStoryCsv(csv: string): DataStoryInterface[] {
       }
       return entry as DataStoryInterface;
     });
-  console.log(rows);
   return rows;
 }

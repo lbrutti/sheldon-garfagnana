@@ -20,7 +20,7 @@ import {FeatureCollection, Polygon} from 'geojson';
 
 @Component({
   selector: 'sheldon-story',
-  imports: [...components, TranslocoModule, JsonPipe],
+  imports: [...components, TranslocoModule],
   templateUrl: './data-story.html',
   styleUrl: './data-story.scss',
   providers: [DecimalPipe],

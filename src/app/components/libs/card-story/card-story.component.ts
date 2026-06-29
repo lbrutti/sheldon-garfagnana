@@ -1,5 +1,5 @@
 import {
-  Component, inject,
+  Component, computed, inject,
   input,
 } from '@angular/core';
 import CardComponent from '../card/card.component';
@@ -7,7 +7,7 @@ import CardComponent from '../card/card.component';
 import {TranslocoModule} from '@jsverse/transloco';
 import DataStoryInterface from '../../../interfaces/data-story.interface';
 import {SheldonLinkButton} from '../sheldon-link-button/sheldon-link-button';
-import {getRandomGradient, normalizzaStringa} from '../../../utils';
+import {getRandomGradient} from '../../../utils';
 import {Router, RouterLink} from '@angular/router';
 
 @Component({
@@ -18,6 +18,8 @@ import {Router, RouterLink} from '@angular/router';
 })
 export default class CardStoryComponent {
   data = input<DataStoryInterface | null>();
-  protected readonly getRandomGradient = getRandomGradient;
+  protected readonly gradient = computed(() =>
+    `--sheldon-card-title-background:${getRandomGradient(this.data()?.categoria ?? '', '90deg')}`
+  );
   private router = inject(Router);
 }

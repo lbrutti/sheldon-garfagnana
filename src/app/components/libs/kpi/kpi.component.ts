@@ -1,8 +1,9 @@
 import {
   afterNextRender,
   Component, computed,
+  DestroyRef,
   effect,
-  ElementRef, Injector,
+  ElementRef, inject, Injector,
   input,
   signal,
   Signal,
@@ -45,6 +46,18 @@ export default class KpiComponent {
     return alias ? {[this.filterBy() as string]: alias} : {};
   });
 
+  private readonly mql = window.matchMedia('(max-width: 959px)');
+  private readonly isMobile = signal(this.mql.matches);
+  private readonly kpiTextLength = computed(() => {
+    const formatted = this.formatter.format(this.aggregatedValue());
+    const udm = this.udm() ?? '';
+    return `${formatted} ${udm}`.trim().length;
+  });
+  protected readonly effectiveFontSize = computed(() => {
+    const min = this.minFontSize();
+    return this.isMobile() && min >= 80 && this.kpiTextLength() > 6 ? 48 : min;
+  });
+
   private readonly formatter = new Intl.NumberFormat(navigator.language);
   private rafId: number | null = null;
 
@@ -70,6 +83,10 @@ export default class KpiComponent {
   udm = input<string | null>(null);
 
   constructor(private injector: Injector) {
+    const handler = (e: MediaQueryListEvent) => this.isMobile.set(e.matches);
+    this.mql.addEventListener('change', handler);
+    inject(DestroyRef).onDestroy(() => this.mql.removeEventListener('change', handler));
+
     effect(() => {
       const to = this.aggregatedValue();
       const from = untracked(() => this.animFrom);
