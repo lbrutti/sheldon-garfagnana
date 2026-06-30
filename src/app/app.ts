@@ -14,7 +14,7 @@ export class App {
   protected readonly title = signal('sheldon-garfagnana');
   protected links: { url: string; name: string }[] = [
     {url: 'dashboard', name: 'I numeri'},
-    {url: 'stories', name: 'le storie'},
+    // {url: 'stories', name: 'le storie'},
     {url: 'map', name: 'i luoghi'},
   ];
 }
