@@ -4,13 +4,14 @@ export const environment = {
   i18n: {
     // translationCsvUrl: 'assets/i18n/it.csv',
     translationCsvUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRrmf1dXB6sE4abUjVPGSNAqzGlWuF2tQaBQmoHgHWNDesSLILSFlt-I5kkc4X2s3fCyHVhNPi1tams/pub?output=csv'
-    
+
   },
   // Public Google Sheet exported as CSV via the gviz/tq endpoint.
   sheets: {
     spreadsheetId: '1v6tjQ-JyeN9MY01-oVRDcqzqbAyFIDmUozo1uV2_trY',
     interventiGid: '807550168',
     popolazioneGid: '691841134',
+
   },
   dataStoriesSheet: {
     spreadsheetId: '1WdSofKLdOmodsFbHiEVUmAM3vhaDqCjxZRuiSemUxas',
@@ -24,6 +25,7 @@ export const environment = {
   settings: {
     dashboardParsingConfigUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=286859829&single=true&output=csv',
     dashboardSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=688611119&single=true&output=csv',
+    unioniNascosteUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=1649942683&single=true&output=csv',
 
     mapInterventiParsingConfigUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=309223040&single=true&output=csv',
     mapInterventiSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=196849019&single=true&output=csv',

@@ -13,6 +13,7 @@
     >
       <sheldon-global-search
         mapControls [interventi]="interventi()"
+        [unioniNascoste]="apiService.unioniNascoste()"
         (filter)="applyFilters($event)"/>
     </sheldon-interventi-map>
   }

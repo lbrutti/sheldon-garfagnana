@@ -42,13 +42,17 @@ export default class GlobalSearchComponent {
   selectCategoria = new FormControl<FilterOptionInterface | string>('');
 
   interventi = input<InterventoInterface[]>([]);
+  unioniNascoste = input<{unione: string}[]>([]);
   filter = output<FilterOptionInterface[]>();
 
   suggestions: Signal<FilterOptionInterface[]> = computed(() => {
     const unioni = Array.from(new Set(this.interventi().map(i => i.unione.trim())))
       .map(c => ({label: c.trim(), value: c.trim(), key: 'unione'}))
       .sort((a, b) => a.value.localeCompare(b.value));
-    return [{label: 'Tutte le unioni', key: 'unione', value: ''}, ...unioni];
+    const nascoste = this.unioniNascoste()
+      .map(u => ({label: `${u.unione.trim()} (WORK IN PROGRESS)`, value: u.unione.trim(), key: 'unione', disabled: true}))
+      .sort((a, b) => a.value.localeCompare(b.value));
+    return [{label: 'Tutte le unioni', key: 'unione', value: ''}, ...unioni, ...nascoste];
   });
 
   chips: Signal<FilterOptionInterface[]> = computed(() =>

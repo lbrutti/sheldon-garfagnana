@@ -10,7 +10,7 @@
       (selectionChange)="(applyFilter())"
     >
       @for (option of suggestions(); track option) {
-        <mat-option [value]="option">{{ option.label }}</mat-option>
+        <mat-option [value]="option" [disabled]="option.disabled">{{ option.label }}</mat-option>
       }
     </mat-select>
 

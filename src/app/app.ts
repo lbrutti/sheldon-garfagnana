@@ -17,5 +17,4 @@ export class App {
     {url: 'stories', name: 'le storie'},
     {url: 'map', name: 'i luoghi'},
   ];
-  protected activeLink: string = '';
 }

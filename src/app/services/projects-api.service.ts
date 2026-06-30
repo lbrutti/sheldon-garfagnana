@@ -2,7 +2,7 @@ import {computed, Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DashboardParsingConfig, DataInterface, InterventoInterface} from '../interfaces';
 import {csvToJson, parseDashboardParsingConfigCsv, parseDashboardSettingsCsv} from '../adapters';
-import {FeatureCollection, Point, Polygon} from 'geojson';
+import {FeatureCollection, Polygon} from 'geojson';
 import {environment} from '../../environments/environment';
 import WidgetSetting, {StoryWidgetSetting} from '../interfaces/widget-setting.interface';
 import DataStoryInterface from '../interfaces/data-story.interface';
@@ -32,10 +32,12 @@ export class ProjectsApiService {
   private _datiIstatByFvid: WritableSignal<Record<string, DataInterface[]>> = signal({});
   private _fetched = new Set<string>();
   readonly loading = computed(() => this._loadingCount() > 0);
+  private _unioniNascoste: WritableSignal<{ unione: string }[]> = signal([]);
 
   constructor(
     protected readonly httpClient: HttpClient,
   ) {
+    this.getUnioniNascoste();
   }
 
   getDatiIstatByFvid(fvid: string, gid: string, query: string = 'SELECT *') {
@@ -68,6 +70,18 @@ export class ProjectsApiService {
     });
   }
 
+  getUnioniNascoste() {
+    if (this._fetched.has('unioniNascoste')) return;
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.unioniNascosteUrl, {responseType: 'text'}).subscribe({
+      next: (res: any) => {
+        this._unioniNascoste.set(csvToJson(res) as { unione: string }[]);
+        this._loadingCount.update(n => n - 1);
+        this._fetched.add('unioniNascoste');
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
 
   getComuniPolygons() {
     if (this._fetched.has('comuniPolygons')) return;
@@ -198,11 +212,17 @@ export class ProjectsApiService {
     });
   }
 
+  private _hiddenUnioni = computed(() => new Set(this._unioniNascoste().map(u => u.unione)));
+
   getDataForStory(storyId: string): DataInterface[] {
-    return this._datiStories()[storyId] ?? [];
+    const hidden = this._hiddenUnioni();
+    return (this._datiStories()[storyId] ?? []).filter(d => !hidden.has(d.unione!));
   }
 
-  interventi = this._interventi.asReadonly();
+  interventi = computed(() => {
+    const hidden = this._hiddenUnioni();
+    return this._interventi().filter(i => !hidden.has(i.unione));
+  });
   comuniPolygons = this._comuniPolygons.asReadonly();
 
   dashboardSettings = this._dashboardSettings.asReadonly();
@@ -216,6 +236,11 @@ export class ProjectsApiService {
   storyInterventiSettings = this._storyInterventiSettings.asReadonly();
   storyIstatSettings = this._storyIstatSettings.asReadonly();
   storyParsingConfig = this._storyParsingConfig.asReadonly();
-  datiIstatByFvid = this._datiIstatByFvid.asReadonly();
-
+  datiIstatByFvid = computed(() => {
+    const hidden = this._hiddenUnioni();
+    return Object.fromEntries(
+      Object.entries(this._datiIstatByFvid()).map(([k, arr]) => [k, arr.filter(d => !hidden.has(d.unione!))])
+    );
+  });
+  unioniNascoste = this._unioniNascoste.asReadonly();
 }

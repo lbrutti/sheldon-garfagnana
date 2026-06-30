@@ -1,4 +1,4 @@
-<sheldon-global-search [interventi]="interventi()" (filter)="applyFilters($event)"/>
+<sheldon-global-search [interventi]="interventi()" [unioniNascoste]="apiService.unioniNascoste()" (filter)="applyFilters($event)"/>
 
 <ngx-masonry
   class="sheldon-grid"
