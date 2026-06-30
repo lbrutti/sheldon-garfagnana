@@ -13,8 +13,8 @@ export class App {
   protected readonly apiService = inject(ProjectsApiService);
   protected readonly title = signal('sheldon-garfagnana');
   protected links: { url: string; name: string }[] = [
-    {url: 'dashboard', name: 'I numeri'},
-    // {url: 'stories', name: 'le storie'},
-    {url: 'map', name: 'i luoghi'},
+    {url: 'dashboard', name: 'dashboard'},
+    {url: 'stories', name: 'stories'},
+    {url: 'map', name: 'map'},
   ];
 }

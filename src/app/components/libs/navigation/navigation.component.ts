@@ -6,6 +6,7 @@ import {MatTabLink, MatTabNav, MatTabNavPanel} from '@angular/material/tabs';
 import {normalizzaStringa, resolveColorVariable, shuffleArray} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
 import HeaderComponent from '../header/header.component';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-navigation',
@@ -16,6 +17,7 @@ import HeaderComponent from '../header/header.component';
     RouterOutlet,
     RouterLink,
     HeaderComponent,
+    TranslocoPipe,
   ],
   templateUrl: './navigation.component.html',
   styleUrl: './navigation.component.scss',
