@@ -1,7 +1,16 @@
 @use '../../../../theme/variables' as v;
 
-$border: 1px solid #3a3a3a;
-$header-height: 48px;
+$nero: #000000;
+$bianco: #ffffff;
+$gradient: linear-gradient(90deg, #ff9900 0%, #eeb900 100%);
+$font-display: 'Funnel Display', system-ui, sans-serif;
+$spacing-10: 0.5rem;
+$spacing-20: 1rem;
+$font-size-medium: 1rem;
+$font-size-large: clamp(1.125rem, 1.04rem + 0.42vw, 1.3rem);
+
+// Offset for the toast menu — label height (padding 1.3rem × 2) + border (2px)
+$toast-top: calc(2.6rem + 2px);
 
 :host {
   display: block;
@@ -10,55 +19,129 @@ $header-height: 48px;
   z-index: 100;
 }
 
-.sheldon-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  height: $header-height;
-  border-bottom: $border;
+// ── Base ─────────────────────────────────────────────────────────────────────
+
+.site-header {
+  background-color: $nero;
+  color: $bianco;
+  font-family: $font-display;
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  svg {
+    display: block;
+  }
 }
 
-.panel {
+// ── Topbar grid ───────────────────────────────────────────────────────────────
+
+.site-header__topbar {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: stretch;
+  border-block: 1px solid $bianco;
+}
+
+// ── Left: Racconto (hover-only gradient — we are the dati side) ───────────────
+
+.site-brand {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: $spacing-10 clamp(1rem, 2vw, 2.5rem);
+  color: $bianco;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    background: currentColor;
+    margin-inline-end: 0.6em;
+  }
+
+  &:hover,
+  &:focus-visible {
+    background: $gradient;
+    color: $nero;
+  }
+}
+
+// ── Right: Dati (gradient always active — this IS the dati dashboard) ─────────
+
+.site-header__dati {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  padding: $spacing-10 clamp(1rem, 2vw, 2.5rem);
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+  background: $gradient;
+  color: $nero;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 0.5em;
+    height: 0.5em;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    margin-inline-end: 0.6em;
+  }
+}
+
+// ── Titles and arrows ─────────────────────────────────────────────────────────
+
+.site-brand__title,
+.site-header__dati-title {
+  font-family: $font-display;
+  font-weight: 400;
+  font-size: $font-size-medium;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.site-brand__arrow,
+.site-header__dati-arrow {
+  flex: 0 0 auto;
+  margin-inline-start: $spacing-20;
+}
+
+// ── Centre: brand label ───────────────────────────────────────────────────────
+
+.site-header__label {
   display: flex;
   align-items: center;
-  padding: 0 20px;
-  background-color: #111;
-  border-right: $border;
-  text-decoration: none;
-
-  &:last-child {
-    border-right: none;
-  }
-
-  &--nav {
-    justify-content: center;
-    cursor: pointer;
-    transition: background-color 0.2s ease, color 0.2s ease;
-
-    &:hover:not(.panel--active) {
-      background-color: #222;
-    }
-  }
-
-  &--active {
-    background-color: #e8e4e0;
-
-    .label {
-      color: #111;
-    }
-  }
-}
-
-.label {
-  font-family: inherit;
-  font-size: 22px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #fff;
+  justify-content: center;
+  background: $bianco;
+  color: $nero;
+  padding: 1.3rem;
+  line-height: 0;
+  font-weight: 800;
+  font-family: $font-display;
+  font-size: $font-size-large;
   white-space: nowrap;
 }
 
-// ── Hamburger button (hidden on desktop) ──────────────────────────────────────
+// ── Focus ─────────────────────────────────────────────────────────────────────
+
+.site-header a:focus-visible {
+  outline: 3px solid #eeb900;
+  outline-offset: -3px;
+}
+
+// ── Hamburger (hidden on desktop) ─────────────────────────────────────────────
 
 .hamburger {
   display: none;
@@ -66,30 +149,32 @@ $header-height: 48px;
   justify-content: center;
   align-items: center;
   gap: 5px;
-  padding: 0 16px;
-  background: #111;
+  width: 44px;
+  padding: 0;
+  background: none;
   border: none;
-  border-left: $border;
+  color: $bianco;
   cursor: pointer;
 
   span {
     display: block;
     width: 22px;
     height: 2px;
-    background: #fff;
-    transition:
-      transform 0.25s ease,
-      opacity 0.25s ease;
+    background: currentColor;
+    transition: transform 0.25s ease,
+    opacity 0.25s ease;
   }
 
   &.is-open {
     span:nth-child(1) {
       transform: translateY(7px) rotate(45deg);
     }
+
     span:nth-child(2) {
       opacity: 0;
       transform: scaleX(0);
     }
+
     span:nth-child(3) {
       transform: translateY(-7px) rotate(-45deg);
     }
@@ -107,12 +192,12 @@ $header-height: 48px;
 
 .toast-menu {
   position: fixed;
-  top: $header-height;
+  top: $toast-top;
   left: 0;
   right: 0;
   z-index: 99;
-  background: #111;
-  border-bottom: $border;
+  background: $nero;
+  border-bottom: 1px solid $bianco;
   animation: toast-slide-down 0.2s ease;
 }
 
@@ -121,19 +206,18 @@ $header-height: 48px;
   align-items: center;
   padding: 18px 24px;
   text-decoration: none;
-  border-bottom: $border;
-  transition: background-color 0.15s ease;
+  border-bottom: 1px solid $bianco;
+  color: $bianco;
+  transition: background 0.15s ease, color 0.15s ease;
 
   &:last-child {
     border-bottom: none;
   }
 
-  &:hover {
-    background-color: #222;
-  }
-
-  .label {
-    font-size: 20px;
+  &:hover,
+  &--active {
+    background: $gradient;
+    color: $nero;
   }
 }
 
@@ -151,12 +235,19 @@ $header-height: 48px;
 // ── Responsive ────────────────────────────────────────────────────────────────
 
 @media (max-width: v.$breakpoint-sm) {
-  .sheldon-header {
-    grid-template-columns: 1fr auto;
+  .site-header__topbar {
+    display: flex;
+    align-items: stretch;
   }
 
-  .panel--nav {
+  .site-brand,
+  .site-header__dati {
     display: none;
+  }
+
+  .site-header__label {
+    flex: 1;
+    justify-content: flex-start;
   }
 
   .hamburger {

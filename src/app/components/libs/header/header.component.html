@@ -1,37 +1,48 @@
-<header class="sheldon-header">
-  <div class="panel panel--brand">
-    <span class="label">PAESAGGI FUTURI</span>
+<header class="site-header">
+  <div class="site-header__topbar">
+
+    <a class="site-brand" href="https://racconto.unmotivoinpiu.com/" target="_blank">
+      <span class="site-brand__title">Racconto / Naviga la Strategia</span>
+      <svg class="site-header__dati-arrow" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true"
+           focusable="false" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M5 12h14M13 6l6 6-6 6"/>
+      </svg>
+    </a>
+
+    <span class="site-header__label">Un motivo in più</span>
+
+
+    <a class="site-header__dati" routerLink="/dashboard">
+      <span class="site-header__dati-title">Dati / Naviga gli interventi</span>
+      <svg class="site-brand__arrow" viewBox="0 0 24 24" width="1em" height="1em" aria-hidden="true" focusable="false"
+           fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M6 13l6 6 6-6"/>
+      </svg>
+    </a>
+
+    <button
+      class="hamburger"
+      [class.is-open]="menuOpen()"
+      (click)="toggleMenu()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-label="Toggle menu"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
   </div>
-
-  <a class="panel panel--nav" href="https://unmotivoinpiu.com/" target="_blank">
-    <span class="label">I PROGETTI</span>
-  </a>
-
-  <a class="panel panel--nav panel--active" routerLink="/dashboard">
-    <span class="label">I DATI</span>
-  </a>
-
-  <button
-    class="hamburger"
-    [class.is-open]="menuOpen()"
-    (click)="toggleMenu()"
-    [attr.aria-expanded]="menuOpen()"
-    aria-label="Toggle menu"
-  >
-    <span></span>
-    <span></span>
-    <span></span>
-  </button>
 </header>
 
 @if (menuOpen()) {
   <div class="toast-backdrop" (click)="closeMenu()"></div>
   <nav class="toast-menu">
     <a class="toast-menu__item" href="https://unmotivoinpiu.com/" target="_blank" (click)="closeMenu()">
-      <span class="label">I PROGETTI</span>
+      <span class="site-brand__title">Racconto / Naviga la Strategia</span>
     </a>
-    <a class="toast-menu__item panel--active" routerLink="/dashboard" (click)="closeMenu()">
-      <span class="label">I DATI</span>
+    <a class="toast-menu__item toast-menu__item--active" routerLink="/dashboard" (click)="closeMenu()">
+      <span class="site-header__dati-title">Dati / Naviga gli interventi</span>
     </a>
   </nav>
 }

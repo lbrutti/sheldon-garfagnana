@@ -1,4 +1,20 @@
 @font-face {
+  font-family: 'Funnel Display';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../../public/fonts/funnel-display-regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Funnel Display';
+  font-style: normal;
+  font-weight: 700 800;
+  font-display: swap;
+  src: url('../../public/fonts/funnel-display-bold.woff2') format('woff2');
+}
+
+@font-face {
   font-family: 'tasaDeck';
   font-style: normal;
   font-weight: 400 500;
