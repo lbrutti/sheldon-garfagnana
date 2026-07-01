@@ -16,7 +16,10 @@ html {
         primary: mat.$azure-palette,
         tertiary: mat.$blue-palette,
       ),
-      typography: tasaDeck,
+      typography: (
+        plain-family: 'Funnel Display',
+        brand-family: 'Funnel Display',
+      ),
       density: 0,
     )
   );
@@ -35,6 +38,7 @@ body {
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
   font: var(--mat-sys-body-medium);
+  font-family: 'Funnel Display', sans-serif;
 
   // Reset the user agent margin.
   margin: 0;
