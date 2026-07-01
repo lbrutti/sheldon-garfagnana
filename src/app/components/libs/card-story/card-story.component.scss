@@ -8,16 +8,6 @@
     color: unset !important;
   }
 
-  sheldon-card {
-    --sheldon-tile-height: 100%;
-    --sheldon-card-title-height: auto !important;
-    --sheldon-card-title-font-size: 22px;
-    --sheldon-card-title-text-overflow: visible;
-    --sheldon-card-title-overflow-y: visble;
-    --sheldon-card-title-white-space: break;
-    --sheldon-card-title-color: black;
-  }
-
   .sheldon-card-descrizione {
     padding: 0 8px;
     overflow-y: visible;
@@ -40,13 +30,5 @@
     padding: 0 2px;
     margin-bottom: 10px;
     font-weight: bolder;
-  }
-}
-
-body.sheldon-theme-bw {
-  :host {
-    sheldon-card {
-      --sheldon-card-title-color: white;
-    }
   }
 }

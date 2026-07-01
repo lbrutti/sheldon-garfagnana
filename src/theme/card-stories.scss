@@ -1,0 +1,21 @@
+// Story listing cards — apply `sheldon-card--story` on sheldon-card.
+sheldon-card.sheldon-card--story {
+  --sheldon-tile-height: 100%;
+  --sheldon-card-title-height: auto;
+  --sheldon-card-title-font-size: 22px;
+  --sheldon-card-title-text-overflow: visible;
+  --sheldon-card-title-overflow-y: visible;
+  --sheldon-card-title-white-space: normal;
+  --sheldon-card-title-color: black;
+
+  .sheldon-card-title {
+    text-transform: none;
+    line-height: 100%;
+  }
+}
+
+body.sheldon-theme-bw {
+  sheldon-card.sheldon-card--story {
+    --sheldon-card-title-color: white;
+  }
+}
