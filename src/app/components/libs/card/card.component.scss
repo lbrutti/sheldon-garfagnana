@@ -220,3 +220,7 @@
     height: auto;
   }
 }
+
+@import '../../../../theme/card-stories';
+
+@include sheldon-card-story;

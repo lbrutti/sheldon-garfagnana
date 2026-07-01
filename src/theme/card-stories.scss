@@ -1,21 +1,54 @@
-// Story listing cards — apply `sheldon-card--story` on sheldon-card.
-sheldon-card.sheldon-card--story {
-  --sheldon-tile-height: 100%;
-  --sheldon-card-title-height: auto;
-  --sheldon-card-title-font-size: 22px;
-  --sheldon-card-title-text-overflow: visible;
-  --sheldon-card-title-overflow-y: visible;
-  --sheldon-card-title-white-space: normal;
-  --sheldon-card-title-color: black;
+@mixin sheldon-card-story {
+  :host.sheldon-card--story {
+    --sheldon-tile-height: 100%;
+    --sheldon-card-title-height: auto;
+    --sheldon-card-title-font-size: 22px;
+    --sheldon-card-title-text-overflow: visible;
+    --sheldon-card-title-overflow-y: visible;
+    --sheldon-card-title-white-space: normal;
+    --sheldon-card-title-color: black;
 
-  .sheldon-card-title {
-    text-transform: none;
-    line-height: 100%;
+    .sheldon-card-title {
+      text-transform: none;
+      line-height: 100%;
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+
+  :host-context(body.sheldon-theme-bw) :host.sheldon-card--story {
+    --sheldon-card-title-color: white;
   }
 }
 
-body.sheldon-theme-bw {
-  sheldon-card.sheldon-card--story {
-    --sheldon-card-title-color: white;
+@mixin sheldon-card-story-descrizione {
+  font-weight: 400;
+  line-height: 130%;
+  padding: 0 8px 0 12px;
+}
+
+@mixin sheldon-card-story-chip {
+  font-size: 10px;
+  padding-left: 8px;
+  padding-right: 8px;
+  background-color: black;
+  color: white;
+}
+
+@mixin sheldon-card-story-hover {
+  overflow: visible;
+
+  a {
+    display: block;
+
+    sheldon-card {
+      transition: transform 0.35s ease;
+      transform-origin: center center;
+    }
+
+    &:hover sheldon-card,
+    &:focus-visible sheldon-card {
+      transform: scale(1.015);
+    }
   }
 }

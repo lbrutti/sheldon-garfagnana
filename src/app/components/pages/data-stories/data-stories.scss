@@ -16,6 +16,10 @@
     margin-bottom: 8px;
   }
 
+  .tile:has(sheldon-story) {
+    overflow: visible;
+  }
+
 }
 
 
