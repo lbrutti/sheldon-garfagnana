@@ -48,10 +48,10 @@ $search-select-font: 'Funnel Display', sans-serif;
       .mat-mdc-select-arrow {
         color: white;
         font-family: $search-select-font;
-        font-weight: 800;
+        font-weight: 500;
         letter-spacing: -0.001em;
         padding-left: 3px;
-        font-size: 18px;
+        font-size: 1rem;
       }
 
       .mat-mdc-select-arrow-wrapper {
@@ -108,11 +108,11 @@ $search-select-font: 'Funnel Display', sans-serif;
       .mat-button-toggle-label-content {
         line-height: $control-height;
         padding: 0 8px;
-        font-size: 18px;
+        font-size: 1rem;
         //  color: white;
         font-family: $search-select-font;
-        font-weight: 800;
-        letter-spacing: -0.001em;
+        font-weight: 400;
+        letter-spacing: -0em;
 
       }
     }

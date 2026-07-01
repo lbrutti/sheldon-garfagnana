@@ -25,7 +25,7 @@ body.sheldon-theme-bw {
   }
 
   nav {
-    height: 24px !important;
+    height: 77px !important;
     display: flex;
     flex-direction: row;
 
@@ -38,9 +38,10 @@ body.sheldon-theme-bw {
       height: 100%;
       margin-top: auto;
       margin-bottom: auto;
-      font-weight: 800;
-      font-size: 18px;
-      letter-spacing: -0.001em;
+      font-weight: 400;
+      font-family: 'Funnel Display', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0em;
     }
   }
 }

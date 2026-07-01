@@ -29,7 +29,8 @@
   --sheldon-card-buttons-width: 40px;
 
   .sheldon-card-title {
-    font-weight: 700;
+    font-family: 'Funnel Display', sans-serif;
+    font-weight: 300;
     font-size: var(--sheldon-card-title-font-size, 12px);
     line-height: 128%;
     letter-spacing: 0.6px;
@@ -39,7 +40,8 @@
     text-overflow: var(--sheldon-card-title-text-overflow, ellipsis);
     overflow-y: var(--sheldon-card-title-overflow-y, hidden);
     white-space: var(--sheldon-card-title-white-space, nowrap);
-    height: var(--sheldon-card-title-height, auto)
+    height: var(--sheldon-card-title-height, auto);
+    text-transform: uppercase;
   }
 
   .sheldon-card-root {
@@ -107,7 +109,7 @@
   // Positioning context for the info overlay — it covers the subheader + content.
   .sheldon-card-body {
     position: relative;
-    font-family: var(--sheldon-card-body-font-family, tasaDeck, sans-serif), serif;
+    font-family: var(--sheldon-card-body-font-family, 'Funnel Display', sans-serif);
     font-size: var(--sheldon-card-body-font-size, 13px);
     font-weight: var(--sheldon-card-body-font-weight, 500);
     //line-height: 140%;
