@@ -2,14 +2,15 @@ import {
   afterNextRender,
   Component,
   DestroyRef,
+  effect,
   ElementRef,
   inject,
   input,
-  OnInit,
+  signal,
   viewChild,
 } from '@angular/core';
-import {environment} from '../../../../environments/environment';
-import {shuffleArray} from '../../../utils';
+import {ProjectsApiService} from '../../../services/projects-api.service';
+import {normalizzaStringa, shuffleArray} from '../../../utils';
 
 const PRELOADER_KEYFRAMES = [
   {time: 0, yellow: 0, purple: 0},
@@ -28,7 +29,7 @@ const PRELOADER_DURATION_MS = 2400;
   templateUrl: './fullscreen-loader.component.html',
   styleUrl: './fullscreen-loader.component.scss',
 })
-export default class FullscreenLoaderComponent implements OnInit {
+export default class FullscreenLoaderComponent {
   private readonly destroyRef = inject(DestroyRef);
 
   readonly visible = input<boolean>(false);
@@ -36,15 +37,19 @@ export default class FullscreenLoaderComponent implements OnInit {
   private readonly yellowStop = viewChild<ElementRef<SVGStopElement>>('yellowStop');
   private readonly purpleStop = viewChild<ElementRef<SVGStopElement>>('purpleStop');
 
-  protected gradientStyle = '';
+  protected readonly gradientStyle = signal<string>('');
 
   constructor() {
+    const apiService = inject(ProjectsApiService);
     afterNextRender(() => this.startGradientAnimation());
-  }
-
-  ngOnInit(): void {
-    const cat = shuffleArray([...environment.categorie])[0];
-    this.gradientStyle = `linear-gradient(135deg, var(--color-gradient-${cat}-start), var(--color-gradient-${cat}-end))`;
+    effect(() => {
+      const cats = apiService.categorie();
+      if (!cats.length || this.gradientStyle()) return;
+      const cat = normalizzaStringa(shuffleArray(cats)[0].nome);
+      this.gradientStyle.set(
+        `linear-gradient(135deg, var(--color-gradient-${cat}-start), var(--color-gradient-${cat}-end))`,
+      );
+    });
   }
 
   private startGradientAnimation(): void {

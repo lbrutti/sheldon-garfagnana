@@ -87,8 +87,8 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
   featureComuni = signal<FeatureCollection<Polygon>>({type: "FeatureCollection", features: []});
 
   getCategoriaRandom(index: number): string {
-
-    return this.categorieInterventi[index % this.categorieInterventi.length];
+    const cats = this.categorieInterventi();
+    return cats.length ? cats[index % cats.length] : '';
   }
 
   interventiFiltrati = computed(() => {
@@ -150,7 +150,8 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     featureComuni: this.featureComuni(),
   }));
 
-  categorieInterventi = ['ambiente', 'cultura', 'mobilità', 'sicurezza', 'sociale'];
+  private readonly _categorieNomi = signal<string[]>([]);
+  protected readonly categorieInterventi = this._categorieNomi.asReadonly();
 
   private dataSignals: Record<string, WritableSignal<any>> = {
     interventiPerComune: this.interventiPerComune,
@@ -173,7 +174,11 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
   };
 
   constructor(protected apiService: ProjectsApiService) {
-    this.categorieInterventi = shuffleArray(this.categorieInterventi);
+    effect(() => {
+      const cats = this.apiService.categorie();
+      if (!cats.length || this._categorieNomi().length) return;
+      untracked(() => this._categorieNomi.set(shuffleArray(cats.map(c => c.nome))));
+    });
 
     effect(() => {
       const raw = this.apiService.dashboardSettings();

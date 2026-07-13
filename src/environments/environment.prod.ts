@@ -39,5 +39,4 @@ export const environment = {
     dataStoriesIstatSettingsUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSh0c8a5h_NUVNdBM8ALmq4qRUp88W1ieyShDnzI1-fCGOyZPlq574HMqWRd7ini_06DJYB_47u8Hq7/pub?gid=803620129&single=true&output=csv',
 
   },
-  categorie: ['ambiente', 'cultura', 'mobilita', 'sicurezza', 'economia', 'sociale', 'societa']
 };

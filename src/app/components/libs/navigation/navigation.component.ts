@@ -1,4 +1,4 @@
-import {Component, computed, inject, Input} from '@angular/core';
+import {Component, computed, effect, inject, Input, signal} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, NavigationEnd, Router, RouterLink, RouterOutlet} from '@angular/router';
 import {filter, map} from 'rxjs';
@@ -7,6 +7,7 @@ import {normalizzaStringa, resolveColorVariable, shuffleArray} from '../../../ut
 import {ThemeService} from '../../../services/theme.service';
 import HeaderComponent from '../header/header.component';
 import {TranslocoPipe} from '@jsverse/transloco';
+import {ProjectsApiService} from '../../../services/projects-api.service';
 
 @Component({
   selector: 'sheldon-navigation',
@@ -24,14 +25,13 @@ import {TranslocoPipe} from '@jsverse/transloco';
 })
 export default class NavigationComponent {
   @Input() links: { url: string, name: string }[] = [];
-  protected randomCategory = 'mobilita';
 
-  constructor() {
-    this.randomCategory = shuffleArray(['ambiente', 'sociale', 'mobilita'])[0];
-  }
-
+  private readonly apiService = inject(ProjectsApiService);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly theme = inject(ThemeService).theme;
+
+  private readonly _randomCategory = signal<string>('');
 
   /** Current URL, kept in sync on every navigation (including direct loads/redirects). */
   private readonly url = toSignal(
@@ -47,23 +47,30 @@ export default class NavigationComponent {
     const path = this.url().split(/[?#]/)[0];
     return path.split('/').filter(Boolean)[0] ?? 'dashboard';
   });
-  // Re-read CSS variables when the theme changes (gradients collapse to grayscale in b/w).
-  private readonly theme = inject(ThemeService).theme;
+
+  private readonly _queryParam = toSignal(
+    this.route.queryParamMap.pipe(map(params => params.get('categoria'))),
+    {initialValue: new URLSearchParams(window.location.search).get('categoria')},
+  );
 
   /** Currently selected categoria, mirrored from the `categoria` query param. */
-  protected readonly categoria = toSignal(
-    this.route.queryParamMap.pipe(map((params) => params.get('categoria') ?? this.randomCategory)),
-    {initialValue: new URLSearchParams(window.location.search).get('categoria') ?? shuffleArray(['ambiente', 'sociale', 'mobilita'])[0]},
-  );
+  protected readonly categoria = computed(() => this._queryParam() ?? this._randomCategory());
 
   /** Gradient of the selected categoria, used as the nav background (empty when none). */
   protected readonly background = computed(() => {
     this.theme();
+    this.apiService.categorie(); // recompute when CSS vars are populated
     const categoria = this.categoria();
     if (!categoria) return '';
     const norm = normalizzaStringa(categoria);
-    const start = resolveColorVariable(`--color-gradient-${norm}-start`);
-
-    return start;
+    return resolveColorVariable(`--color-gradient-${norm}-start`);
   });
+
+  constructor() {
+    effect(() => {
+      const cats = this.apiService.categorie();
+      if (!cats.length || this._randomCategory()) return;
+      this._randomCategory.set(shuffleArray(cats)[0].nome);
+    });
+  }
 }
