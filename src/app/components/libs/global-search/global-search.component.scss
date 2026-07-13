@@ -117,36 +117,8 @@ $search-select-font: 'Funnel Display', sans-serif;
       }
     }
 
-    .mdc-list-item--selected *, .mat-button-toggle-checked, #select-categoria {
-
-      &[data-categoria=ambiente] {
-        background: linear-gradient(to left, var(--color-gradient-ambiente-start), var(--color-gradient-ambiente-end));
-      }
-
-      &[data-categoria=cultura] {
-        background: linear-gradient(to left, var(--color-gradient-cultura-start), var(--color-gradient-cultura-end));
-      }
-
-      &[data-categoria=mobilita] {
-        background: linear-gradient(to left, var(--color-gradient-mobilita-start), var(--color-gradient-mobilita-end));
-      }
-
-      &[data-categoria=sicurezza] {
-        background: linear-gradient(to left, var(--color-gradient-sicurezza-start), var(--color-gradient-sicurezza-end));
-      }
-
-      &[data-categoria=economia] {
-        background: linear-gradient(to left, var(--color-gradient-economia-start), var(--color-gradient-economia-end));
-      }
-
-      &[data-categoria=sociale] {
-        background: linear-gradient(to left, var(--color-gradient-sociale-start), var(--color-gradient-sociale-end));
-      }
-
-      &[data-categoria=societa] {
-        background: linear-gradient(to left, var(--color-gradient-societa-start), var(--color-gradient-societa-end));
-      }
-    }
+    // gradient background for active category chips and mobile select is applied via [style.background] binding
+    // in the template, so no per-category SCSS rules are needed here
 
   }
 }

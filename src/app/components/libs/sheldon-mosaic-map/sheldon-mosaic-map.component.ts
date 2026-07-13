@@ -480,10 +480,10 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     });
     this.resizeObserver.observe(this.elRef.nativeElement);
 
-    this.http.get<FeatureCollection<Polygon>>('data/comuni.mosaic.geojson').subscribe(
+    this.http.get<FeatureCollection<Polygon>>('data/comuni.polygons.grid.focus.geojson').subscribe(
       fc => this.mosaicComuni.set(fc),
     );
-    this.http.get<FeatureCollection<Polygon>>('data/toscana.mosaic.geojson').subscribe(
+    this.http.get<FeatureCollection<Polygon>>('data/comuni.polygons.grid.toscana.geojson').subscribe(
       fc => this.mosaicToscana.set(fc),
     );
   }

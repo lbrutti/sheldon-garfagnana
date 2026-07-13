@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, output, Signal, untracked} from '@angular/core';
+import {Component, computed, effect, inject, input, output, Signal, signal, untracked} from '@angular/core';
 import {MatFormField, MatInputModule} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -35,6 +35,18 @@ export default class GlobalSearchComponent {
 
   chipSet = new FormControl<string[]>([]);
   chipSetSignal = toSignal(this.chipSet.valueChanges);
+
+  private readonly _activeChip = signal<string | null>(null);
+  protected readonly activeChipNorm = computed<string | null>(() => {
+    const v = this._activeChip();
+    return v ? normalizzaStringa(v) : null;
+  });
+  protected readonly activeChipGradient = computed<string | null>(() => {
+    const norm = this.activeChipNorm();
+    return norm
+      ? `linear-gradient(to left, var(--color-gradient-${norm}-start), var(--color-gradient-${norm}-end))`
+      : null;
+  });
 
   // single-value control backing the mobile categoria <mat-select>
   selectCategoria = new FormControl<FilterOptionInterface | string>('');
@@ -140,11 +152,12 @@ export default class GlobalSearchComponent {
     return value && typeof value === 'object' ? normalizzaStringa(value.value) : null;
   }
 
-  /** Keep the toggle group (chipSet) and the categoria select in sync from one source. */
+  /** Keep the toggle group (chipSet), the categoria select, and the active-chip signal in sync from one source. */
   private setCategoria(value: string | null): void {
     this.chipSet.setValue(value ? [value] : [], {emitEvent: false});
     const option = value ? this.chips().find(c => c.value === value) ?? null : null;
     this.selectCategoria.setValue(option ?? '', {emitEvent: false});
+    this._activeChip.set(value);
   }
 
   protected readonly normalizzaStringa = normalizzaStringa;

@@ -18,6 +18,7 @@
       id="select-categoria"
       [formControl]="selectCategoria"
       [attr.data-categoria]="selectedCategoria"
+      [style.background]="activeChipGradient()"
       [placeholder]="'globalSearch.category' | transloco"
       panelClass="global-search-select-panel"
       (selectionChange)="(handleCategoriaSelect())"
@@ -40,6 +41,7 @@
         <mat-button-toggle
           [attr.data-categoria]="normalizzaStringa(option.value)"
           [value]="option.value"
+          [style.background]="activeChipNorm() === normalizzaStringa(option.value) ? activeChipGradient() : null"
           (change)="(handleToggle($event))">{{ option.value }}
         </mat-button-toggle>
       }

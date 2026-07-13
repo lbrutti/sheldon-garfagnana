@@ -7,7 +7,7 @@ import {environment} from '../../environments/environment';
 import WidgetSetting, {StoryWidgetSetting} from '../interfaces/widget-setting.interface';
 import DataStoryInterface from '../interfaces/data-story.interface';
 import {parseDataStoryCsv} from '../adapters/data-story.adapter';
-import {normalizzaStringa} from '../utils/data.utils';
+import {normalizzaStringa} from '../utils';
 
 export interface CategoriaColore {
   nome: string;
