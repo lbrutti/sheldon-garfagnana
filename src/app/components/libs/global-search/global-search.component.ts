@@ -6,7 +6,6 @@ import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {ActivatedRoute, Router} from '@angular/router';
 import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
-import {components} from '../index';
 import ThemeSwitchComponent from '../theme-switch/theme-switch.component';
 import {normalizzaStringa} from '../../../utils';
 import {TranslocoModule} from '@jsverse/transloco';
@@ -15,7 +14,6 @@ import {TranslocoModule} from '@jsverse/transloco';
   selector: 'sheldon-global-search',
   imports: [
     MatInputModule,
-    MatFormField,
     MatOption,
     FormsModule,
     ReactiveFormsModule,
@@ -35,7 +33,7 @@ export default class GlobalSearchComponent {
   selectUnione = new FormControl<FilterOptionInterface>({key: '', value: ''});
   selectUnioneSignal = toSignal(this.selectUnione.valueChanges);
 
-  chipSet = new FormControl<FilterOptionInterface[]>([]);
+  chipSet = new FormControl<string[]>([]);
   chipSetSignal = toSignal(this.chipSet.valueChanges);
 
   // single-value control backing the mobile categoria <mat-select>
@@ -89,7 +87,7 @@ export default class GlobalSearchComponent {
     if (params['categoria']) {
       const match = this.chips().find(c => c.value === params['categoria']);
       if (match) {
-        this.setCategoria(match);
+        this.setCategoria(match.value);
         hasFilter = true;
       }
     }
@@ -104,7 +102,7 @@ export default class GlobalSearchComponent {
       relativeTo: this.route,
       queryParams: {
         unione: this.selectUnione.value?.value || null,
-        categoria: this.chipSet.value?.[0]?.value || null,
+        categoria: this.chipSet.value?.[0] || null,
       },
       queryParamsHandling: 'merge',
       replaceUrl: true,
@@ -112,9 +110,10 @@ export default class GlobalSearchComponent {
   }
 
   private emitFilter(): void {
-    this.filter.emit(
-      [this.selectUnione.value, ...(this.chipSet.value ?? [])].filter(f => f),
-    );
+    const selectedChips = (this.chipSet.value ?? [])
+      .map(v => this.chips().find(c => c.value === v))
+      .filter((c): c is FilterOptionInterface => !!c);
+    this.filter.emit([this.selectUnione.value, ...selectedChips].filter(f => f));
   }
 
   protected applyFilter() {
@@ -124,13 +123,14 @@ export default class GlobalSearchComponent {
 
   protected handleToggle($event: MatButtonToggleChange) {
     // Enforce single-or-none: deselect all others when a new one is picked
-    this.setCategoria($event.source.checked ? $event.source.value : null);
+    this.setCategoria($event.source.checked ? ($event.source.value as string) : null);
     this.applyFilter();
   }
 
   protected handleCategoriaSelect() {
     const value = this.selectCategoria.value;
-    this.setCategoria(value && typeof value === 'object' ? value : null);
+    const option = value && typeof value === 'object' ? value : null;
+    this.setCategoria(option ? option.value : null);
     this.applyFilter();
   }
 
@@ -141,8 +141,9 @@ export default class GlobalSearchComponent {
   }
 
   /** Keep the toggle group (chipSet) and the categoria select in sync from one source. */
-  private setCategoria(option: FilterOptionInterface | null): void {
-    this.chipSet.setValue(option ? [option] : [], {emitEvent: false});
+  private setCategoria(value: string | null): void {
+    this.chipSet.setValue(value ? [value] : [], {emitEvent: false});
+    const option = value ? this.chips().find(c => c.value === value) ?? null : null;
     this.selectCategoria.setValue(option ?? '', {emitEvent: false});
   }
 
