@@ -7,6 +7,13 @@ import {environment} from '../../environments/environment';
 import WidgetSetting, {StoryWidgetSetting} from '../interfaces/widget-setting.interface';
 import DataStoryInterface from '../interfaces/data-story.interface';
 import {parseDataStoryCsv} from '../adapters/data-story.adapter';
+import {normalizzaStringa} from '../utils/data.utils';
+
+export interface CategoriaColore {
+  nome: string;
+  coloreStart: string;
+  coloreEnd: string;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +33,7 @@ export class ProjectsApiService {
   private _storyInterventiSettings: WritableSignal<WidgetSetting[]> = signal<WidgetSetting[]>([]);
   private _storyIstatSettings: WritableSignal<StoryWidgetSetting[]> = signal<StoryWidgetSetting[]>([]);
   private _storyParsingConfig: WritableSignal<DashboardParsingConfig | null> = signal<DashboardParsingConfig | null>(null);
+  private _categorie: WritableSignal<CategoriaColore[]> = signal<CategoriaColore[]>([]);
   private _loadingCount = signal(0);
 
   private _datiStories: WritableSignal<Record<string, DataInterface[]>> = signal({});
@@ -38,6 +46,7 @@ export class ProjectsApiService {
     protected readonly httpClient: HttpClient,
   ) {
     this.getUnioniNascoste();
+    this.getCategorieColori();
   }
 
   getDatiIstatByFvid(fvid: string, gid: string, query: string = 'SELECT *') {
@@ -78,6 +87,25 @@ export class ProjectsApiService {
         this._unioniNascoste.set(csvToJson(res) as { unione: string }[]);
         this._loadingCount.update(n => n - 1);
         this._fetched.add('unioniNascoste');
+      },
+      error: () => this._loadingCount.update(n => n - 1),
+    });
+  }
+
+  getCategorieColori() {
+    if (this._fetched.has('categorieColori')) return;
+    this._loadingCount.update(n => n + 1);
+    this.httpClient.get(environment.settings.categorieUrl, {responseType: 'text'}).subscribe({
+      next: (res: any) => {
+        const categorie = csvToJson(res) as CategoriaColore[];
+        categorie.forEach(({nome, coloreStart, coloreEnd}) => {
+          const key = normalizzaStringa(nome);
+          document.documentElement.style.setProperty(`--color-gradient-${key}-start`, coloreStart);
+          document.documentElement.style.setProperty(`--color-gradient-${key}-end`, coloreEnd);
+        });
+        this._categorie.set(categorie);
+        this._loadingCount.update(n => n - 1);
+        this._fetched.add('categorieColori');
       },
       error: () => this._loadingCount.update(n => n - 1),
     });
@@ -243,4 +271,5 @@ export class ProjectsApiService {
     );
   });
   unioniNascoste = this._unioniNascoste.asReadonly();
+  categorie = this._categorie.asReadonly();
 }
