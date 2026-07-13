@@ -44,14 +44,27 @@
             [paint]="gridLinePaint">
           </mgl-layer>
 
-          <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
+          <!-- Toscana background (behind comuni) -->
+          <mgl-geojson-source
+            id="toscana"
+            [data]="mosaicToscana() ?? {type: 'FeatureCollection', features: []}">
+          </mgl-geojson-source>
+
+          <mgl-layer
+            id="toscana-fill"
+            source="toscana"
+            type="fill"
+            [paint]="toscanaFillPaint">
+          </mgl-layer>
+
+          <!-- Comuni mosaic source — promoteId='name' so all tiles of a municipality share hover state -->
           <mgl-geojson-source
             id="comuni"
             [data]="derivedPolygons()"
-            [promoteId]="municipalityKey()">
+            [promoteId]="'name'">
           </mgl-geojson-source>
 
-          <!-- Choropleth fill layer — colored by _colorValue property, hover/select via feature-state -->
+          <!-- Choropleth fill layer — colored by _rawValue, hover/select via feature-state -->
           <mgl-layer
             id="comuni-fill"
             source="comuni"
@@ -70,6 +83,17 @@
             (layerMouseEnter)="onPolygonEnter($event)"
             (layerMouseMove)="onPolygonEnter($event)"
             (layerMouseLeave)="onPolygonLeave()">
+          </mgl-layer>
+
+          <!-- Municipality name labels at centroid of each comune -->
+          <mgl-geojson-source id="comuni-labels" [data]="comuniCentroids()"></mgl-geojson-source>
+
+          <mgl-layer
+            id="comuni-label-text"
+            source="comuni-labels"
+            type="symbol"
+            [layout]="labelLayout"
+            [paint]="labelPaint">
           </mgl-layer>
         }
       </mgl-map>

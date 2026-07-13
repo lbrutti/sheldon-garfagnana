@@ -11,9 +11,10 @@ import {
   signal,
   untracked,
 } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {GeoJSONSourceComponent, LayerComponent, MapComponent} from '@maplibre/ngx-maplibre-gl';
-import type {Feature, FeatureCollection, LineString, Polygon} from 'geojson';
+import type {Feature, FeatureCollection, LineString, Point, Polygon} from 'geojson';
 import type {
   Map,
   MapLayerMouseEvent,
@@ -41,6 +42,7 @@ const GRID_VIEWPORT_MARGIN_CELLS = 2;
 
 const MAP_STYLE: StyleSpecification = {
   version: 8,
+  glyphs: 'https://protomaps.github.io/basemaps-assets/fonts/{fontstack}/{range}.pbf',
   sources: {},
   layers: [],
 };
@@ -226,6 +228,11 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   // Track the active theme so the choropleth shades re-read their CSS variables on change.
   protected readonly theme = inject(ThemeService).theme;
   private readonly elRef = inject(ElementRef<HTMLElement>);
+  private readonly http = inject(HttpClient);
+
+  // ── Mosaic GeoJSON (loaded internally) ────────────────────────────────────
+  mosaicComuni = signal<FeatureCollection<Polygon> | null>(null);
+  mosaicToscana = signal<FeatureCollection<Polygon> | null>(null);
 
   // ── State ──────────────────────────────────────────────────────────────────
   mapReady = signal(false);
@@ -286,20 +293,44 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     return out;
   });
 
-  /** Polygons with `_rawValue` (raw reduced value) injected per comune for choropleth fill. */
+  /** Mosaic tiles with `_rawValue` injected per tile (looked up by properties.name). */
   derivedPolygons = computed<FeatureCollection<Polygon>>(() => {
-    const polys = this.data();
-    if (!polys) return EMPTY_COLLECTION as FeatureCollection<Polygon>;
+    const mosaic = this.mosaicComuni();
+    if (!mosaic) return EMPTY_COLLECTION as FeatureCollection<Polygon>;
     const rawVals = this.comuneValues();
-    const key = this.municipalityKey();
     return {
-      ...polys,
-      features: polys.features.map((f) => ({
+      ...mosaic,
+      features: mosaic.features.map((f) => ({
         ...f,
         properties: {
           ...f.properties,
-          _rawValue: rawVals[String(f.properties?.[key] ?? '')] ?? 0,
+          _rawValue: rawVals[String(f.properties?.['name'] ?? '')] ?? 0,
         },
+      })),
+    };
+  });
+
+  /** One Point feature per unique municipality at the centroid of all its mosaic tiles. */
+  comuniCentroids = computed<FeatureCollection<Point>>(() => {
+    const mosaic = this.mosaicComuni();
+    if (!mosaic) return EMPTY_COLLECTION as FeatureCollection<Point>;
+    const acc: Record<string, {sumX: number; sumY: number; count: number}> = {};
+    for (const f of mosaic.features) {
+      const name = String(f.properties?.['name'] ?? '');
+      if (!name) continue;
+      for (const [x, y] of f.geometry.coordinates[0] as [number, number][]) {
+        if (!acc[name]) acc[name] = {sumX: 0, sumY: 0, count: 0};
+        acc[name].sumX += x;
+        acc[name].sumY += y;
+        acc[name].count++;
+      }
+    }
+    return {
+      type: 'FeatureCollection',
+      features: Object.entries(acc).map(([name, {sumX, sumY, count}]) => ({
+        type: 'Feature' as const,
+        geometry: {type: 'Point' as const, coordinates: [sumX / count, sumY / count]},
+        properties: {name},
       })),
     };
   });
@@ -380,9 +411,20 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     };
   });
 
-  /** Bounding box of the full FeatureCollection expanded by 10% on each side. */
+  readonly toscanaFillPaint = {'fill-color': '#e8e4e0', 'fill-opacity': 0.6};
+  readonly labelLayout = {
+    'text-field': ['get', 'name'] as any,
+    'text-font': ['Noto Sans Regular'],
+    'text-size': 10,
+    'text-anchor': 'center' as const,
+    'text-max-width': 7,
+    'text-allow-overlap': false,
+  };
+  readonly labelPaint = {'text-color': '#333333', 'text-halo-color': '#ffffff', 'text-halo-width': 1.5};
+
+  /** Bounding box of the mosaic FeatureCollection expanded by 10% on each side. */
   private collectionBbox = computed<[[number, number], [number, number]] | null>(() => {
-    const fc = this.data();
+    const fc = this.mosaicComuni();
     if (!fc?.features.length) return null;
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
     for (const f of fc.features) {
@@ -437,6 +479,13 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
       this.refreshGrid();
     });
     this.resizeObserver.observe(this.elRef.nativeElement);
+
+    this.http.get<FeatureCollection<Polygon>>('data/comuni.mosaic.geojson').subscribe(
+      fc => this.mosaicComuni.set(fc),
+    );
+    this.http.get<FeatureCollection<Polygon>>('data/toscana.mosaic.geojson').subscribe(
+      fc => this.mosaicToscana.set(fc),
+    );
   }
 
   ngOnDestroy(): void {
@@ -487,10 +536,20 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
       map.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: true});
     }
 
-    this.hoveredFeature.set(feature);
+    this.hoveredFeature.set(this.enrichWithData(feature));
     this.tooltipPos.set({x: event.point.x, y: event.point.y});
     map.getCanvas().style.cursor = 'pointer';
     this.polygonHover.emit(feature);
+  }
+
+  /** Merge data() properties onto a mosaic tile feature so the tooltip can read them. */
+  private enrichWithData(feature: Feature<Polygon>): Feature<Polygon> {
+    const name = String(feature.properties?.['name'] ?? '');
+    const dataFeature = this.data()?.features.find(
+      (f) => String(f.properties?.[this.municipalityKey()]) === name,
+    );
+    if (!dataFeature) return feature;
+    return {...feature, properties: {...dataFeature.properties, ...feature.properties}};
   }
 
   onPolygonLeave(): void {
@@ -531,11 +590,12 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Use the data() feature for tooltip properties; mosaic only for geometry when needed.
     const feature = this.data()?.features.find(
-      (f) => String(f.properties?.[this.municipalityKey()]) === value
+      (f) => String(f.properties?.[this.municipalityKey()]) === value,
     );
     if (feature && this.mapInstance) {
-      const coords = feature.geometry.coordinates[0];
+      const coords = feature.geometry.coordinates[0] as [number, number][];
       const lng = coords.reduce((sum, c) => sum + c[0], 0) / coords.length;
       const lat = coords.reduce((sum, c) => sum + c[1], 0) / coords.length;
       const point = this.mapInstance.project([lng, lat]);
@@ -543,10 +603,10 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
       if (this.hoveredFeatureId !== null) {
         this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: false});
       }
-      this.hoveredFeatureId = feature.id ?? null;
-      if (this.hoveredFeatureId !== null) {
-        this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: true});
-      }
+      // With promoteId='name', the feature ID is the name string.
+      this.hoveredFeatureId = value;
+      this.mapInstance.setFeatureState({source: 'comuni', id: this.hoveredFeatureId}, {hover: true});
+
       this.pinnedFeature = feature;
       this.pinnedTooltipPos = {x: point.x, y: point.y};
       this.hoveredFeature.set(feature);

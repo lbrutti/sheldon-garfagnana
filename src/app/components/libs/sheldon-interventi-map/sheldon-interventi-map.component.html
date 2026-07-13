@@ -42,29 +42,50 @@
     @if (mapReady()) {
       <mgl-geojson-source id="grid" [data]="gridGeoJson()"></mgl-geojson-source>
 
+      <!-- Toscana background (behind comuni) -->
+      <mgl-geojson-source
+        id="toscana"
+        [data]="mosaicToscana() ?? {type: 'FeatureCollection', features: []}">
+      </mgl-geojson-source>
 
-      <!-- Comuni polygons source (promoteId maps comune → feature id for feature-state) -->
+      <mgl-layer
+        id="toscana-fill"
+        source="toscana"
+        type="fill"
+        [paint]="toscanaFillPaint">
+      </mgl-layer>
+
+      <!-- Comuni mosaic source — promoteId='name' so all tiles of a municipality share hover state -->
       <mgl-geojson-source
         id="comuni"
         [data]="derivedPolygons()"
-        [promoteId]="municipalityKey()">
+        [promoteId]="'name'">
       </mgl-geojson-source>
 
-      <!-- Choropleth fill layer — colored by _colorValue property, hover/select via feature-state -->
+      <!-- Choropleth fill layer — colored by _rawValue, hover/select via feature-state -->
       <mgl-layer
         id="comuni-fill"
         source="comuni"
         type="fill"
-        [paint]="comuniFillPaint()"
-      >
+        [paint]="comuniFillPaint()">
       </mgl-layer>
 
       <mgl-layer
         id="comuni-zero-line"
         source="comuni"
         type="line"
-        [paint]="comuniZeroLinePaint()"
-      >
+        [paint]="comuniZeroLinePaint()">
+      </mgl-layer>
+
+      <!-- Municipality name labels at centroid of each comune -->
+      <mgl-geojson-source id="comuni-labels" [data]="comuniCentroids()"></mgl-geojson-source>
+
+      <mgl-layer
+        id="comuni-label-text"
+        source="comuni-labels"
+        type="symbol"
+        [layout]="labelLayout"
+        [paint]="labelPaint">
       </mgl-layer>
 
       <mgl-geojson-source id="interventi" [data]="interventiFeatures()"></mgl-geojson-source>
@@ -81,10 +102,9 @@
             }"
         [paint]="interventiIconPaint()"
         (layerMouseEnter)="onInterventiEnter($event)"
-        (layerMouseMove)="onInterventiEnter($event)"
-
-      >
+        (layerMouseMove)="onInterventiEnter($event)">
       </mgl-layer>
+
       <mgl-layer
         id="grid-lines"
         source="grid"
