@@ -265,7 +265,7 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
   }
-  
+
 }
 
 // ── Squarify layout ───────────────────────────────────────────────────────────

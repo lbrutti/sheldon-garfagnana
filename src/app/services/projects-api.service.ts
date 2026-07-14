@@ -232,7 +232,7 @@ export class ProjectsApiService {
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.settings.dataStoriesListUrl, {responseType: 'text'}).subscribe({
       next: csv => {
-        this._dataStoriesList.set(parseDataStoryCsv(csv));
+        this._dataStoriesList.set(parseDataStoryCsv(csv).filter(s=>s.pubblica==1));
         this._loadingCount.update(n => n - 1);
         this._fetched.add('dataStoriesList');
       },

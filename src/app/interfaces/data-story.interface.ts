@@ -8,5 +8,6 @@ export default interface DataStoryInterface {
   note: string,
   fonti: string[],
   dati: string,
-  gid: string
+  gid: string,
+  pubblica: number
 }
