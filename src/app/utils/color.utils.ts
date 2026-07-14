@@ -5,10 +5,10 @@ export function resolveColorVariable(variableName: string): string {
   return style.getPropertyValue(variableName).trim();
 }
 
-export function getRandomGradient(categoria: string, rotation: string = '0deg', minStop = 10, maxStop = 90) {
+export function getRandomGradient(categoria: string, rotation: string = '0deg', theme = 'light') {
   const startPoint = Math.floor(Math.random() * (40 - 10 + 1) + 10);
   const endPoint = Math.floor(Math.random() * (80 - 40 + 1) + 40);
   const catNorm = normalizzaStringa(categoria);
   if (!catNorm) return '';
-  return `linear-gradient(${rotation}, var(--color-gradient-${catNorm}-start) ${Math.min(startPoint, endPoint)}%, var(--color-gradient-${catNorm}-end) ${Math.max(startPoint, endPoint)}%)`;
+  return theme === 'light' ? `linear-gradient(${rotation}, var(--color-gradient-${catNorm}-start) ${Math.min(startPoint, endPoint)}%, var(--color-gradient-${catNorm}-end) ${Math.max(startPoint, endPoint)}%)` : '#000';
 }

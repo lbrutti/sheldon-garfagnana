@@ -24,6 +24,7 @@ import ReduceToggleComponent from '../reduce-toggle/reduce-toggle';
 import {TranslocoModule} from '@jsverse/transloco';
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 import {MultiplesPipe} from '../../../pipes';
+import {ThemeService} from '../../../services/theme.service';
 
 export interface BarItem {
   label: string;
@@ -84,6 +85,7 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
   });
 
   currentReduce = signal<ReduceByDeclaration | null>(null);
+  protected readonly theme = inject(ThemeService).theme;
 
   // ── Hover / touch tooltip ─────────────────────────────────────────────────────
   protected readonly wrapperRef = viewChild<ElementRef<HTMLElement>>('wrapper');
@@ -112,7 +114,7 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.scrollListener, true);
   }
 
-  gradients: Signal<string[]> = computed(() => this.data().map(d => getRandomGradient(this.categoria(), '0deg')));
+  gradients: Signal<string[]> = computed(() => this.data().map(d => getRandomGradient(this.categoria(), '0deg', this.theme())));
   bars: Signal<BarItem[]> = computed(() => {
     const reduce = this.currentReduce();
     if (!reduce) return [];

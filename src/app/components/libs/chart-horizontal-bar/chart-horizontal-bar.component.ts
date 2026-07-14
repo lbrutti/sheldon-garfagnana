@@ -28,7 +28,7 @@ import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-line
 })
 export default class ChartHorizontalBarComponent extends ChartBarComponent {
   override gradients: Signal<string[]> = computed(() => {
-    return this.data().map(d => getRandomGradient(this.categoria(), '90deg'));
+    return this.data().map(d => getRandomGradient(this.categoria(), '90deg', this.theme()));
   });
 
 }

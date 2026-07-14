@@ -1,5 +1,6 @@
 import {inject, Injectable, signal} from '@angular/core';
-import {Router} from '@angular/router';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter} from 'rxjs';
 
 export type Theme = 'light' | 'dark' | 'system';
 
@@ -30,6 +31,16 @@ export class ThemeService {
     const fromUrl = this.parse(new URLSearchParams(window.location.search).get(QUERY_KEY));
     const fromStore = this.parse(localStorage.getItem(STORAGE_KEY));
     this.set(fromUrl ?? fromStore ?? 'light');
+
+    // Some in-app links navigate without preserving query params (e.g. the
+    // header's "Dati" link), which drops `theme` from the URL on route change.
+    // Re-stamp it after every navigation so the theme stays reflected in the URL.
+    this.router.events
+      .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
+      .subscribe(() => {
+        const current = new URLSearchParams(window.location.search).get(QUERY_KEY);
+        if (current !== this.theme()) this.syncUrl(this.theme());
+      });
   }
 
   /** Update the theme, persist it, apply it to the DOM, and reflect it in the URL. */

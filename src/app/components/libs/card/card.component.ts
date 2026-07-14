@@ -50,7 +50,7 @@ export default class CardComponent {
   readonly isFullscreen = computed(() => !!this.cardId() && this.activeCard() === this.cardId());
   startColor = computed(() => {
     this.theme();
-    return resolveColorVariable(`--color-gradient-${normalizzaStringa(this.categoria())}-start`);
+    return this.theme()==='light' ?  resolveColorVariable(`--color-gradient-${normalizzaStringa(this.categoria())}-start`) : '#000';
   });
   endColor = computed(() => {
     this.theme();

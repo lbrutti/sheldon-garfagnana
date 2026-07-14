@@ -27,7 +27,6 @@ import type {
 import CardComponent from '../card/card.component';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {AuxReduceOption, FilterOptionInterface} from '../../../interfaces';
-import {EventData} from '@angular/cdk/testing';
 import {MultiplesPipe} from '../../../pipes';
 import {getRandomGradient, normalizzaStringa, resolveColorVariable} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
@@ -314,7 +313,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   comuniCentroids = computed<FeatureCollection<Point>>(() => {
     const mosaic = this.mosaicComuni();
     if (!mosaic) return EMPTY_COLLECTION as FeatureCollection<Point>;
-    const acc: Record<string, {sumX: number; sumY: number; count: number}> = {};
+    const acc: Record<string, { sumX: number; sumY: number; count: number }> = {};
     for (const f of mosaic.features) {
       const name = String(f.properties?.['name'] ?? '');
       if (!name) continue;
@@ -341,11 +340,11 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   colorShades = computed<[string, string, string, string]>(() => {
     this.theme();
     const categoria = normalizzaStringa(this.categoria());
-    let baseColor = resolveColorVariable(`--color-gradient-${categoria}-start`);
+    let baseColor = this.theme() === 'light' ? resolveColorVariable(`--color-gradient-${categoria}-start`) : '#000';
     if (baseColor === '#000') {
       baseColor = '#1d1d1d';
     }
-    this.tooltipGradient = getRandomGradient(this.categoria(), '90deg', 80);
+    this.tooltipGradient = getRandomGradient(this.categoria(), '90deg', this.theme());
     this.tooltipBackground = resolveColorVariable(`--color-gradient-${categoria}-end`)
     return generateGradientShades(baseColor);
   });
@@ -619,8 +618,5 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     this.activeAuxReduce.set(event.value as AuxReduceOption);
   }
 
-
-  protected readonly getRandomGradient = getRandomGradient;
-  protected readonly resolveColorVariable = resolveColorVariable;
   protected tooltipGradient: string;
 }

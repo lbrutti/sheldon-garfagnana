@@ -25,6 +25,7 @@ import {components} from '../index';
 import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 import {TranslocoModule} from '@jsverse/transloco';
+import {ThemeService} from '../../../services/theme.service';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -84,8 +85,9 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
 
   currentReduce = signal<ReduceByDeclaration | null>(null);
 
+  protected readonly theme = inject(ThemeService).theme;
   gradients: Signal<string[]> = computed(() => {
-    return this.data().map(d => getRandomGradient(this.categoria(), '0deg'));
+    return this.data().map(d => getRandomGradient(this.categoria(), '0deg', this.theme()));
   });
 
   private readonly scrollListener = () => {
@@ -263,11 +265,7 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
   protected onFilterChange($event: FilterOptionInterface[]) {
     this.appliedFilters.set($event.filter((f: FilterOptionInterface) => f.value));
   }
-
-  protected getBarBackground(rotation: string = '0deg'): string {
-
-    return getRandomGradient(this.categoria(), rotation);
-  }
+  
 }
 
 // ── Squarify layout ───────────────────────────────────────────────────────────

@@ -25,6 +25,7 @@ import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-line
 import {MultiplesPipe} from '../../../pipes';
 import {TranslocoModule} from '@jsverse/transloco';
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
+import {ThemeService} from '../../../services/theme.service';
 
 export interface SegmentInterface {
   label: string;
@@ -107,6 +108,7 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
       this.touchMode.set(false);
     }
   };
+  protected readonly theme = inject(ThemeService).theme;
 
   segments: Signal<SegmentInterface[]> = computed((): any[] => {
     const filterSet = this.appliedFilters().length && this.appliedFilters().some(d => d.value);
@@ -125,7 +127,7 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
     const useTranslation = !!this.translationKey();
     groupKeys.map(dataKey => {
       const reducedValue = getReducedValueByLabel(grouped, dataKey, this.currentReduce().reduceBy);
-      const color = getRandomGradient(this.categoria(), '90deg');
+      const color = getRandomGradient(this.categoria(), '90deg', this.theme());
       const displayLabel = useTranslation ? this.transloco.translate(dataKey) : dataKey;
       segments.push({
         label: displayLabel,
@@ -165,7 +167,7 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
           getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy) :
           getReducedValueByLabel(grouped, b, this.currentReduce().reduceBy) -
           getReducedValueByLabel(grouped, a, this.currentReduce().reduceBy)
-        ;
+          ;
       });
 
     return this.limit() ? groupKeys.slice(0, this.limit()) : groupKeys;

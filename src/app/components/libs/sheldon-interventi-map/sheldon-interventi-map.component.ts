@@ -1,11 +1,8 @@
 import {Component, computed, input, signal} from '@angular/core';
-import {MatButtonToggle, MatButtonToggleGroup} from '@angular/material/button-toggle';
 import {
-  ControlComponent,
   GeoJSONSourceComponent,
   LayerComponent,
   MapComponent,
-  NavigationControlDirective,
   PopupComponent
 } from '@maplibre/ngx-maplibre-gl';
 import type {Feature, FeatureCollection, Point} from 'geojson';
