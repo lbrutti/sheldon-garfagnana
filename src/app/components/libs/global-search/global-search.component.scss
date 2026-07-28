@@ -28,9 +28,11 @@ $search-select-font: 'Funnel Display', sans-serif;
   form {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
+    row-gap: 8px;
     width: 100%;
-    height: $control-height;
     min-height: $control-height;
   }
 
@@ -78,7 +80,7 @@ $search-select-font: 'Funnel Display', sans-serif;
 
     // comune autocomplete field: mirror the black-background / white-text mat-select look
     #comune-field {
-      width: 240px;
+      width: 320px;
 
       .mat-mdc-text-field-wrapper {
         background: black;
@@ -110,6 +112,13 @@ $search-select-font: 'Funnel Display', sans-serif;
 
       .mdc-text-field {
         height: $control-height !important;
+      }
+
+      // Angular Material reserves space below the input for hint/error text by
+      // default; this field never shows either, so drop it to match the height
+      // of the mat-selects it sits next to (keeps the stacked mobile layout evenly spaced).
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none;
       }
 
       .mat-mdc-form-field-icon-suffix {
@@ -207,8 +216,10 @@ $search-select-font: 'Funnel Display', sans-serif;
 }
 
 // ── mobile: full-width unione select + categoria select instead of toggles ───
-@media (max-width: $breakpoint-md){
-
+@media (max-width: $breakpoint-md) {
+  :host {
+    margin-bottom: unset;
+  }
   form {
     flex-direction: column !important;
     gap: 8px;
@@ -216,7 +227,7 @@ $search-select-font: 'Funnel Display', sans-serif;
     height: unset;
     min-height: unset;
     margin-top: 20px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     //margin-left: -16px; // counter :host horizontal padding so 100vw is full-bleed
   }
   :host {
