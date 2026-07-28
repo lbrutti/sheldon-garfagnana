@@ -81,6 +81,7 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
     return alias && key ? {[key]: alias} : {};
   });
   masterField = input<string | null>(null);
+  externalFilters = input<Record<string, string>>({});
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
   currentReduce = signal<ReduceByDeclaration | null>(null);

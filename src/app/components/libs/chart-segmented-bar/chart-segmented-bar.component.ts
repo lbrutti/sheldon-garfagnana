@@ -84,6 +84,7 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
     return this.filterBy() !== null ? this.filterBy().split('|') : [];
   });
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
+  externalFilters = input<Record<string, string>>({});
 
   filterByAlias = input<string | null>(null);
   translationKey = input<string | null>(null);

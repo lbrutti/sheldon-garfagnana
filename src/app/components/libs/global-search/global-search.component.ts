@@ -1,6 +1,9 @@
 import {Component, computed, effect, inject, input, output, Signal, signal, untracked} from '@angular/core';
-import {MatFormField, MatInputModule} from '@angular/material/input';
+import {MatFormField, MatInput, MatInputModule, MatSuffix} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
+import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {MatButtonToggle, MatButtonToggleChange, MatButtonToggleGroup} from '@angular/material/button-toggle';
@@ -14,7 +17,14 @@ import {TranslocoModule} from '@jsverse/transloco';
   selector: 'sheldon-global-search',
   imports: [
     MatInputModule,
+    MatFormField,
+    MatInput,
+    MatSuffix,
     MatOption,
+    MatAutocomplete,
+    MatAutocompleteTrigger,
+    MatIconButton,
+    MatIcon,
     FormsModule,
     ReactiveFormsModule,
     MatButtonToggle,
@@ -32,6 +42,10 @@ export default class GlobalSearchComponent {
 
   selectUnione = new FormControl<FilterOptionInterface>({key: '', value: ''});
   selectUnioneSignal = toSignal(this.selectUnione.valueChanges);
+  private readonly _unioneNorm = signal<string>('');
+
+  comuneInput = new FormControl<string>('');
+  private readonly _selectedComune = signal<FilterOptionInterface | null>(null);
 
   chipSet = new FormControl<string[]>([]);
   chipSetSignal = toSignal(this.chipSet.valueChanges);
@@ -71,6 +85,29 @@ export default class GlobalSearchComponent {
       .sort((a, b) => a.value.localeCompare(b.value)),
   );
 
+  comuneOptions: Signal<FilterOptionInterface[]> = computed(() => {
+    const unione = this._unioneNorm();
+    const pool = unione
+      ? this.interventi().filter(i => i.unione.trim() === unione)
+      : this.interventi();
+    return Array.from(new Set(pool.map(i => i.comune.trim())))
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b))
+      .map(c => ({label: c, value: c, key: 'comune'}));
+  });
+
+  protected filteredComuneOptions(): FilterOptionInterface[] {
+    const options = this.comuneOptions();
+    const query = (this.comuneInput.value ?? '').trim().toLowerCase();
+    if (!query) return options;
+    const isExactMatch = options.some(o => o.value.toLowerCase() === query);
+    return isExactMatch ? options : options.filter(o => o.value.toLowerCase().includes(query));
+  }
+
+  protected hasComuneValue(): boolean {
+    return !!this._selectedComune();
+  }
+
   constructor() {
     // Restore filter state from URL once data is available (runs once)
     let restored = false;
@@ -92,6 +129,7 @@ export default class GlobalSearchComponent {
       const match = this.suggestions().find(s => s.value === params['unione']);
       if (match) {
         this.selectUnione.setValue(match, {emitEvent: false});
+        this._unioneNorm.set(match.value);
         hasFilter = true;
       }
     }
@@ -100,6 +138,15 @@ export default class GlobalSearchComponent {
       const match = this.chips().find(c => c.value === params['categoria']);
       if (match) {
         this.setCategoria(match.value);
+        hasFilter = true;
+      }
+    }
+
+    if (params['comune']) {
+      const match = this.comuneOptions().find(c => c.value === params['comune']);
+      if (match) {
+        this.comuneInput.setValue(match.value, {emitEvent: false});
+        this._selectedComune.set(match);
         hasFilter = true;
       }
     }
@@ -115,6 +162,7 @@ export default class GlobalSearchComponent {
       queryParams: {
         unione: this.selectUnione.value?.value || null,
         categoria: this.chipSet.value?.[0] || null,
+        comune: this._selectedComune()?.value || null,
       },
       queryParamsHandling: 'merge',
       replaceUrl: true,
@@ -125,7 +173,9 @@ export default class GlobalSearchComponent {
     const selectedChips = (this.chipSet.value ?? [])
       .map(v => this.chips().find(c => c.value === v))
       .filter((c): c is FilterOptionInterface => !!c);
-    this.filter.emit([this.selectUnione.value, ...selectedChips].filter(f => f));
+    this.filter.emit(
+      [this.selectUnione.value, this._selectedComune(), ...selectedChips].filter(f => f),
+    );
   }
 
   protected applyFilter() {
@@ -137,6 +187,34 @@ export default class GlobalSearchComponent {
     // Enforce single-or-none: deselect all others when a new one is picked
     this.setCategoria($event.source.checked ? ($event.source.value as string) : null);
     this.applyFilter();
+  }
+
+  protected handleUnioneSelect(): void {
+    this._unioneNorm.set(this.selectUnione.value?.value ?? '');
+    // the previously selected comune may not belong to the new unione, so reset it
+    this.resetComune();
+    this.applyFilter();
+  }
+
+  protected onComuneSelected(value: string): void {
+    const option = this.comuneOptions().find(c => c.value === value) ?? null;
+    this._selectedComune.set(option);
+    this.applyFilter();
+  }
+
+  protected clearComune(trigger: MatAutocompleteTrigger, inputEl: HTMLInputElement): void {
+    this.resetComune();
+    this.applyFilter();
+
+    setTimeout(() => {
+      inputEl.blur();
+      trigger.closePanel();
+    }, 0);
+  }
+
+  private resetComune(): void {
+    this.comuneInput.setValue('', {emitEvent: false});
+    this._selectedComune.set(null);
   }
 
   protected handleCategoriaSelect() {

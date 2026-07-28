@@ -98,13 +98,30 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
       }
       const filtroUnione = this.filters().find(f => (f.key === 'unione' && f.value));
       const matchUnione = filtroUnione ? intervento.unione === filtroUnione.value : true;
-      const altriFiltri = this.filters().filter(f => f.key && f.key !== 'unione');
+      // 'comune' is intentionally excluded here: it only drives the search field of
+      // widgets whose filterBy includes 'comune' (see externalFiltersFor), it does not
+      // globally pre-filter the dataset for every widget.
+      const altriFiltri = this.filters().filter(f => f.key && f.key !== 'unione' && f.key !== 'comune');
       const matchAltriFiltri = altriFiltri.length ? altriFiltri.some((f: FilterOptionInterface) => {
         return (intervento as any)[(f as FilterOptionInterface).key].indexOf((f as FilterOptionInterface).value) >= 0;
       }) : true;
       return matchUnione && matchAltriFiltri
     });
   });
+
+  /** Global comune selection from sheldon-global-search, keyed to feed into per-widget dynamic filters. */
+  protected comuneSelezionato = computed<string>(() => this.filters().find(f => f.key === 'comune')?.value ?? '');
+
+  /** Values to impose on a widget's own dynamic-filter fields; only 'comune' fields react to the global search. */
+  protected externalFiltersFor(setting: WidgetSetting): Record<string, string> {
+    const fields = (setting.filterBy ?? '').split('|').map(f => f.trim());
+    return fields.includes('comune') ? {comune: this.comuneSelezionato()} : {};
+  }
+
+  /** The mosaic map always exposes its own comune filter, regardless of WidgetSetting.filterBy. */
+  protected mosaicMapExternalFilters = computed<Record<string, string>>(() => ({
+    comune: this.comuneSelezionato(),
+  }));
 
   //kpi, barre
   interventiPerComune = signal<DataInterface[]>([]);

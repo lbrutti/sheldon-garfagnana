@@ -68,6 +68,7 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
   filtersFields = computed<string[]>((): string[] => {
     return this.filterBy() !== null ? this.filterBy()!.split('|') : [];
   });
+  externalFilters = input<Record<string, string>>({});
   protected appliedFilters = signal<FilterOptionInterface[]>([]);
 
   limit = input<number>(15);

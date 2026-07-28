@@ -16,6 +16,7 @@
       [dataset]="data()"
       [masterField]="masterField()"
       [fieldAliases]="filterFieldAliases()"
+      [externalFilters]="externalFilters()"
       (filterChange)="onFilterChange($event)"/>
     <!--    <span class="list-count">{{ 'list.itemsCount' | transloco: { count: filteredData().length } }}</span>-->
   </ng-container>

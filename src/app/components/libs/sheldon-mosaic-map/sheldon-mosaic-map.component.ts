@@ -213,6 +213,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   municipalityKey = input<string>('comune');
   tooltipProperties = input<{ property: string, label: string }[]>([]);
   categoria = input<string>('ambiente');
+  externalFilters = input<Record<string, string>>({});
 
   // ── Outputs ────────────────────────────────────────────────────────────────
   polygonHover = output<Feature<Polygon>>();

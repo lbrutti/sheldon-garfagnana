@@ -56,6 +56,13 @@ export class DynamicFilterComponent<T extends Record<string, unknown>> {
   /** Emits the full form value on every (debounced) change */
   filterChange = output<FilterOptionInterface[]>();
 
+  /**
+   * Values imposed from outside the component (e.g. a page-level search bar).
+   * Keyed by field name; only fields present in `filterBy` are affected.
+   * Setting a key to '' clears that field.
+   */
+  externalFilters = input<Record<string, string>>({});
+
   private fb = inject(FormBuilder);
 
   fields = computed(() =>
@@ -72,6 +79,7 @@ export class DynamicFilterComponent<T extends Record<string, unknown>> {
 
   constructor() {
     effect(() => this._buildForm(this.fields()));
+    effect(() => this._applyExternalFilters(this.externalFilters()));
   }
 
   // ---------------------------------------------------------------------------
@@ -136,6 +144,17 @@ export class DynamicFilterComponent<T extends Record<string, unknown>> {
       inputEl.blur();
       trigger.closePanel();
     }, 0);
+  }
+
+  /** Push externally-imposed values into the matching form controls, as if the user had typed them. */
+  private _applyExternalFilters(values: Record<string, string>): void {
+    Object.entries(values).forEach(([field, value]) => {
+      const control = this.filterForm.get(field);
+      const next = value ?? '';
+      if (control && control.value !== next) {
+        control.setValue(next, {emitEvent: true});
+      }
+    });
   }
 
   // ---------------------------------------------------------------------------

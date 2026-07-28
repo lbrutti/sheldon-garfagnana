@@ -76,6 +76,64 @@ $search-select-font: 'Funnel Display', sans-serif;
       display: none;
     }
 
+    // comune autocomplete field: mirror the black-background / white-text mat-select look
+    #comune-field {
+      width: 240px;
+
+      .mat-mdc-text-field-wrapper {
+        background: black;
+      }
+
+      input.mat-mdc-input-element {
+        color: white;
+        font-family: $search-select-font;
+        font-weight: 500;
+        letter-spacing: -0.001em;
+        font-size: 1rem;
+
+        &::placeholder {
+          color: white;
+          opacity: 1;
+        }
+      }
+
+      .mdc-notched-outline {
+        border: none !important;
+      }
+
+      .mat-mdc-form-field-infix {
+        min-height: $control-height;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        padding-left: 3px;
+      }
+
+      .mdc-text-field {
+        height: $control-height !important;
+      }
+
+      .mat-mdc-form-field-icon-suffix {
+        display: flex;
+        align-items: center;
+        height: $control-height;
+
+        .mat-mdc-icon-button {
+          --mdc-icon-button-state-layer-size: #{$control-height};
+          width: $control-height !important;
+          height: $control-height !important;
+          padding: 0;
+          color: white;
+
+          .mat-icon {
+            font-size: calc(#{$control-height} - 2px);
+            line-height: $control-height;
+            width: calc(#{$control-height} - 2px);
+            height: calc(#{$control-height} - 2px);
+          }
+        }
+      }
+    }
+
 
     // mat-option in the dropdown panel
     .mat-mdc-option {
@@ -187,7 +245,8 @@ $search-select-font: 'Funnel Display', sans-serif;
 
 
     #select-unione,
-    #select-categoria {
+    #select-categoria,
+    #comune-field {
       display: block;
       width: 100% !important;
     }

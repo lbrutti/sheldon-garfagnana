@@ -7,12 +7,38 @@
       [value]="{value: '',key: 'unione'}"
       [placeholder]="'globalSearch.searchByUnione' | transloco"
       panelClass="global-search-select-panel"
-      (selectionChange)="(applyFilter())"
+      (selectionChange)="(handleUnioneSelect())"
     >
       @for (option of suggestions(); track option) {
         <mat-option [value]="option" [disabled]="option.disabled">{{ option.label }}</mat-option>
       }
     </mat-select>
+
+    <mat-form-field appearance="outline" id="comune-field">
+      <input
+        matInput
+        #comuneInputEl
+        [formControl]="comuneInput"
+        [placeholder]="'globalSearch.searchByComune' | transloco"
+        [matAutocomplete]="autoComune"
+        #comuneTrigger="matAutocompleteTrigger"
+      />
+      @if (hasComuneValue()) {
+        <button matSuffix mat-icon-button (click)="clearComune(comuneTrigger, comuneInputEl)" type="button"
+                [attr.aria-label]="'filter.clear' | transloco">
+          <mat-icon>close</mat-icon>
+        </button>
+      }
+      <mat-autocomplete
+        #autoComune="matAutocomplete"
+        panelClass="global-search-select-panel"
+        (optionSelected)="onComuneSelected($event.option.value)"
+      >
+        @for (option of filteredComuneOptions(); track option.value) {
+          <mat-option [value]="option.value">{{ option.label }}</mat-option>
+        }
+      </mat-autocomplete>
+    </mat-form-field>
 
     <mat-select
       id="select-categoria"

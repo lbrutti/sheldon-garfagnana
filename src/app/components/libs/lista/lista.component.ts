@@ -44,6 +44,7 @@ export default class ListaComponent {
   categoria = input<string>('sociale');
   filterBy = input<string>('');
   filtersFields = computed<string[]>(() => this.filterBy().split('|'));
+  externalFilters = input<Record<string, string>>({});
   private appliedFilters = signal<FilterOptionInterface[]>([]);
 
   masterField = input<string | null>(null);

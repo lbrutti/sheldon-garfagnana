@@ -11,6 +11,7 @@
         <sheldon-dynamic-filter
           [filterBy]="['comune']"
           [dataset]="comuniDataset()"
+          [externalFilters]="externalFilters()"
           (filterChange)="onFilterChange($event)"/>
 
         @if (auxReduce().length > 1) {
