@@ -219,6 +219,9 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   polygonHover = output<Feature<Polygon>>();
 
   // ── Public constants for template ─────────────────────────────────────────
+  // Stable array reference: an inline `['comune']` literal in the template would be
+  // recreated every change-detection cycle, constantly rebuilding the dynamic-filter's form.
+  protected readonly comuneFilterFields = ['comune'];
   readonly mapStyle = MAP_STYLE;
   readonly gridLinePaint = {
     'line-color': '#b0aeae',

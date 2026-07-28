@@ -9,7 +9,7 @@
     <div class="map-wrapper">
       <div class="map-controls">
         <sheldon-dynamic-filter
-          [filterBy]="['comune']"
+          [filterBy]="comuneFilterFields"
           [dataset]="comuniDataset()"
           [externalFilters]="externalFilters()"
           (filterChange)="onFilterChange($event)"/>

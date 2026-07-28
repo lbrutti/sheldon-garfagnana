@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, input, output, Signal, signal, untracked} from '@angular/core';
+import {Component, computed, effect, inject, input, output, Signal, signal, untracked, viewChild} from '@angular/core';
 import {MatFormField, MatInput, MatInputModule, MatSuffix} from '@angular/material/input';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatAutocomplete, MatAutocompleteTrigger} from '@angular/material/autocomplete';
@@ -45,6 +45,8 @@ export default class GlobalSearchComponent {
   private readonly _unioneNorm = signal<string>('');
 
   comuneInput = new FormControl<string>('');
+  comuneInputSignal = toSignal(this.comuneInput.valueChanges);
+  private readonly comuneTrigger = viewChild(MatAutocompleteTrigger);
   private readonly _selectedComune = signal<FilterOptionInterface | null>(null);
 
   chipSet = new FormControl<string[]>([]);
@@ -118,6 +120,18 @@ export default class GlobalSearchComponent {
         restored = true;
         untracked(() => this.restoreFromUrl());
       }
+    });
+
+    // If the comune input is emptied by typing/deleting (not just the clear button),
+    // drop the selected comune filter too.
+    effect(() => {
+      const value = this.comuneInputSignal();
+      if (value !== '') return;
+      untracked(() => {
+        if (!this._selectedComune()) return;
+        this.resetComune();
+        this.applyFilter();
+      });
     });
   }
 
@@ -215,6 +229,7 @@ export default class GlobalSearchComponent {
   private resetComune(): void {
     this.comuneInput.setValue('', {emitEvent: false});
     this._selectedComune.set(null);
+    this.comuneTrigger()?.autocomplete.options.filter(o => o.selected).forEach(o => o.deselect());
   }
 
   protected handleCategoriaSelect() {
