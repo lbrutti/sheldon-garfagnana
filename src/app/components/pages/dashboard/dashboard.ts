@@ -14,6 +14,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
+import {FilterStateService} from '../../../services/filter-state.service';
 import {
   DataInterface,
   FilterOptionInterface,
@@ -190,7 +191,7 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     featureComuni: this.featureComuni,
   };
 
-  constructor(protected apiService: ProjectsApiService) {
+  constructor(protected apiService: ProjectsApiService, private filterState: FilterStateService) {
     effect(() => {
       const cats = this.apiService.categorie();
       if (!cats.length || this._categorieNomi().length) return;
@@ -298,6 +299,7 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   protected applyFilters($event: FilterOptionInterface[]) {
     this.filters.set($event);
+    this.filterState.notifyChanged();
   }
 
 }

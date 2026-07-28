@@ -1,4 +1,4 @@
-import {Component, computed, ElementRef, inject, input, signal} from '@angular/core';
+import {Component, computed, effect, ElementRef, inject, input, signal} from '@angular/core';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map} from 'rxjs';
@@ -7,6 +7,7 @@ import {MatIcon} from '@angular/material/icon';
 import {toPng} from 'html-to-image';
 import {normalizzaStringa, resolveColorVariable} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
+import {FilterStateService} from '../../../services/filter-state.service';
 import {TranslocoModule, TranslocoService} from '@jsverse/transloco';
 
 /** Query-string key holding the id of the card to display fullscreen. */
@@ -32,6 +33,7 @@ export default class CardComponent {
   // Track the active theme so the colours below re-read their CSS variables on change.
   private readonly theme = inject(ThemeService).theme;
   private readonly transloco = inject(TranslocoService);
+  private readonly filterState = inject(FilterStateService);
   showButtons = input<boolean>(true);
   categoria = input<string>('ambiente');
   /** Text shown in the info overlay opened by the info button. */
@@ -59,6 +61,14 @@ export default class CardComponent {
 
   /** Whether the info overlay is currently shown over the subheader/content. */
   readonly showInfo = signal(false);
+
+  constructor() {
+    // Close the info overlay whenever a page-level global filter (unione/comune/categoria) changes.
+    effect(() => {
+      this.filterState.version();
+      this.showInfo.set(false);
+    });
+  }
 
   openInfo(): void {
     this.showInfo.set(true);

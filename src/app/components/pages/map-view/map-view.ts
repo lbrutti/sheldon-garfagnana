@@ -15,6 +15,7 @@ import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import { FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {FeatureCollection, Polygon} from 'geojson';
 import {ProjectsApiService} from '../../../services/projects-api.service';
+import {FilterStateService} from '../../../services/filter-state.service';
 import {getExplodedData, shuffleArray} from '../../../utils';
 import camelcase from 'camelcase';
 import GlobalSearchComponent from '../../libs/global-search/global-search.component';
@@ -95,7 +96,7 @@ export default class MapView {
     featureComuni: this.featureComuni,
   };
 
-  constructor(protected apiService: ProjectsApiService) {
+  constructor(protected apiService: ProjectsApiService, private filterState: FilterStateService) {
     effect(() => {
       const cats = this.apiService.categorie();
       if (!cats.length || this._categorieNomi().length) return;
@@ -182,6 +183,7 @@ export default class MapView {
 
   protected applyFilters($event: FilterOptionInterface[]) {
     this.filters.set($event);
+    this.filterState.notifyChanged();
   }
 
 }
