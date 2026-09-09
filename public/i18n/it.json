@@ -69,6 +69,36 @@
       "title": "Cosa dicono i dati pubblici"
     }
   },
+  "ambiente": {
+    "tooltip": "Interventi su verde, acqua, suolo e rischio idrogeologico.\nRaggruppa i progetti che tutelano gli ecosistemi del territorio."
+  },
+  "cultura": {
+    "tooltip": "Interventi su musei, biblioteche, teatri e beni storici.\nRaggruppa i progetti che valorizzano il patrimonio culturale."
+  },
+  "economia": {
+    "tooltip": "Interventi su imprese, turismo e filiere locali.\nRaggruppa i progetti che sostengono lo sviluppo economico."
+  },
+  "societa": {
+    "tooltip": "Interventi su servizi alla persona, scuola e comunità.\nRaggruppa i progetti che rafforzano la coesione sociale."
+  },
+  "istruzione": {
+    "tooltip": "Interventi su scuole, formazione e servizi educativi.\nRaggruppa i progetti dedicati alla crescita delle nuove generazioni."
+  },
+  "cura": {
+    "tooltip": "Interventi su sanità, assistenza e servizi socio-sanitari.\nRaggruppa i progetti dedicati alla cura delle persone."
+  },
+  "mobilita": {
+    "tooltip": "Interventi su strade, trasporto pubblico e percorsi ciclopedonali.\nRaggruppa i progetti che rendono il territorio più accessibile."
+  },
+  "sviluppo": {
+    "tooltip": "Interventi su infrastrutture, digitale e attività produttive.\nRaggruppa i progetti che sostengono la crescita del territorio."
+  },
+  "territorio": {
+    "tooltip": "Interventi su paesaggio, borghi e spazi pubblici.\nRaggruppa i progetti che riqualificano i luoghi della Garfagnana."
+  },
+  "tutela": {
+    "tooltip": "Interventi su sicurezza, prevenzione e messa in sicurezza degli edifici.\nRaggruppa i progetti che proteggono persone e beni comuni."
+  },
   "numero_edifici_accessibili_n": "Accessibili",
   "numero_edifici_con_ascensore_disabili_n":"Ascensore disabili",
   "numero_edifici_con_cert_agibilita_n": "Certificazione agibilità",

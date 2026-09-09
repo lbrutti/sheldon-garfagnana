@@ -1,0 +1,25 @@
+:host {
+  .sheldon-tooltip {
+    position: fixed;
+    z-index: 1000;
+    pointer-events: none;
+    background: black;
+    color: white;
+    // multi-line: wrap long copy instead of clipping it on a single row
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-transform: none;
+    font-size: 14px;
+    line-height: 1.3;
+    padding: 6px 8px;
+
+    .sheldon-tooltip-title {
+      font-weight: 600;
+    }
+
+    .sheldon-tooltip-line + .sheldon-tooltip-line,
+    .sheldon-tooltip-title + .sheldon-tooltip-line {
+      margin-top: 4px;
+    }
+  }
+}

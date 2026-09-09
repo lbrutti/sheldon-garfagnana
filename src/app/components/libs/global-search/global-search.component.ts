@@ -11,7 +11,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import ThemeSwitchComponent from '../theme-switch/theme-switch.component';
 import {normalizzaStringa} from '../../../utils';
-import {TranslocoModule} from '@jsverse/transloco';
+import {TranslocoModule, TranslocoService} from '@jsverse/transloco';
+import TooltipComponent from '../tooltip/tooltip.component';
+
+/** Keep the tooltip this far from the viewport edges. */
+const TOOLTIP_VIEWPORT_MARGIN = 8;
 
 @Component({
   selector: 'sheldon-global-search',
@@ -32,6 +36,7 @@ import {TranslocoModule} from '@jsverse/transloco';
     MatSelect,
     ThemeSwitchComponent,
     TranslocoModule,
+    TooltipComponent,
   ],
   templateUrl: './global-search.component.html',
   styleUrl: './global-search.component.scss',
@@ -39,6 +44,7 @@ import {TranslocoModule} from '@jsverse/transloco';
 export default class GlobalSearchComponent {
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
+  private readonly transloco = inject(TranslocoService);
 
   selectUnione = new FormControl<FilterOptionInterface>({key: '', value: ''});
   selectUnioneSignal = toSignal(this.selectUnione.valueChanges);
@@ -67,8 +73,14 @@ export default class GlobalSearchComponent {
   // single-value control backing the mobile categoria <mat-select>
   selectCategoria = new FormControl<FilterOptionInterface | string>('');
 
+  // ── Categoria chip tooltip ───────────────────────────────────────────────────
+  protected readonly tooltipMaxWidth = 320;
+  protected readonly tooltipText = signal<string>('');
+  protected readonly tooltipPosition = signal<{ x: number; y: number }>({x: 0, y: 0});
+  protected readonly tooltipVisible = computed<boolean>(() => !!this.tooltipText());
+
   interventi = input<InterventoInterface[]>([]);
-  unioniNascoste = input<{unione: string}[]>([]);
+  unioniNascoste = input<{ unione: string }[]>([]);
   filter = output<FilterOptionInterface[]>();
 
   suggestions: Signal<FilterOptionInterface[]> = computed(() => {
@@ -76,14 +88,19 @@ export default class GlobalSearchComponent {
       .map(c => ({label: c.trim(), value: c.trim(), key: 'unione'}))
       .sort((a, b) => a.value.localeCompare(b.value));
     const nascoste = this.unioniNascoste()
-      .map(u => ({label: `${u.unione.trim()} (WORK IN PROGRESS)`, value: u.unione.trim(), key: 'unione', disabled: true}))
+      .map(u => ({
+        label: `${u.unione.trim()} (WORK IN PROGRESS)`,
+        value: u.unione.trim(),
+        key: 'unione',
+        disabled: true
+      }))
       .sort((a, b) => a.value.localeCompare(b.value));
     return [{label: 'Tutte le unioni', key: 'unione', value: ''}, ...unioni, ...nascoste];
   });
 
   chips: Signal<FilterOptionInterface[]> = computed(() =>
     Array.from(new Set(this.interventi().flatMap(i => i.categoria.split('|')).map(c => c.trim())))
-      .map(c => ({value: c.trim(), key: 'categoria', label:c.trim()}))
+      .map(c => ({value: c.trim(), key: 'categoria', label: c.trim()}))
       .sort((a, b) => a.value.localeCompare(b.value)),
   );
 
@@ -201,6 +218,34 @@ export default class GlobalSearchComponent {
     // Enforce single-or-none: deselect all others when a new one is picked
     this.setCategoria($event.source.checked ? ($event.source.value as string) : null);
     this.applyFilter();
+  }
+
+  /** Show the categoria tooltip anchored under the hovered chip. */
+  protected handleMouseEnter($event: MouseEvent, option: FilterOptionInterface) {
+    const text = this.categoriaTooltipText(option.value);
+    if (!text) return;
+
+    const rect = ($event.currentTarget as HTMLElement).getBoundingClientRect();
+    const maxLeft = window.innerWidth - this.tooltipMaxWidth - TOOLTIP_VIEWPORT_MARGIN;
+    this.tooltipPosition.set({
+      x: Math.max(TOOLTIP_VIEWPORT_MARGIN, Math.min(rect.left, maxLeft)),
+      y: rect.bottom,
+    });
+    this.tooltipText.set(text);
+  }
+
+  protected handleMouseLeave(_$event: MouseEvent) {
+    this.tooltipText.set('');
+  }
+
+  /**
+   * Tooltip copy for a categoria, from the `<categoria>.tooltip` translation.
+   * Transloco echoes the key back when it is missing, so treat that as "no tooltip".
+   */
+  private categoriaTooltipText(categoria: string): string {
+    const key = `${normalizzaStringa(categoria)}.tooltip`;
+    const text = this.transloco.translate<string>(key);
+    return !text || text === key ? '' : text;
   }
 
   protected handleUnioneSelect(): void {

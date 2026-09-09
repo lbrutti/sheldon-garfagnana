@@ -1,0 +1,14 @@
+@if (visible() && hasContent()) {
+  <div
+    class="sheldon-tooltip"
+    [style.left.px]="x() + offsetX()"
+    [style.top.px]="y() + offsetY()"
+    [style.max-width.px]="maxWidth()">
+    @if (title()) {
+      <div class="sheldon-tooltip-title">{{ title() }}</div>
+    }
+    @for (line of lines(); track $index) {
+      <div class="sheldon-tooltip-line">{{ line }}</div>
+    }
+  </div>
+}

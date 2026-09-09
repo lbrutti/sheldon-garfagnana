@@ -68,9 +68,18 @@
           [attr.data-categoria]="normalizzaStringa(option.value)"
           [value]="option.value"
           [style.background]="activeChipNorm() === normalizzaStringa(option.value) ? activeChipGradient() : null"
-          (change)="(handleToggle($event))">{{ option.value }}
+          (mouseenter)="handleMouseEnter($event, option)"
+          (mouseleave)="handleMouseLeave($event)"
+          (change)="handleToggle($event)">{{ option.value }}
         </mat-button-toggle>
       }
     </mat-button-toggle-group>
   </form>
+
+  <sheldon-tooltip
+    [visible]="tooltipVisible()"
+    [text]="tooltipText()"
+    [x]="tooltipPosition().x"
+    [y]="tooltipPosition().y"
+    [maxWidth]="tooltipMaxWidth"/>
 </div>

@@ -13,6 +13,7 @@ import SheldonMosaicMapComponent from './sheldon-mosaic-map/sheldon-mosaic-map.c
 import ChartLabelComponent from './chart-label/chart-label.component';
 import ChartTwoLinesLabelComponent from './chart-two-lines-label/chart-two-lines-label.component';
 import ChartTooltipComponent from './chart-tooltip/chart-tooltip.component';
+import TooltipComponent from './tooltip/tooltip.component';
 import ReduceToggleComponent from './reduce-toggle/reduce-toggle';
 import CardDescrizioneComponent from './card-descrizione/card-descrizione.component';
 import ThemeSwitchComponent from './theme-switch/theme-switch.component';
@@ -51,6 +52,7 @@ export const components = [
   ChartLabelComponent,
   ChartTwoLinesLabelComponent,
   ChartTooltipComponent,
+  TooltipComponent,
   ReduceToggleComponent,
   CardDescrizioneComponent,
   ThemeSwitchComponent
