@@ -159,3 +159,23 @@ button {
   @extend .one-line-ellipsed;
   -webkit-line-clamp: 12;
 }
+
+.eight-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 8;
+}
+
+.seven-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 7;
+}
+
+.six-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 6;
+}
+
+.five-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 5;
+}

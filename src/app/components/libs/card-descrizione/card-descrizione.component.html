@@ -5,8 +5,24 @@
   <ng-container title>{{ data()[title()] }}</ng-container>
   <ng-container content>
     <div class="sheldon-card-descrizione"
-         [class.has-button]="data()[url()]">
+         [class.has-button]="data()[url()]"
+         [ngClass]="{'eight-lines-ellipsed':!data()[url()], 'seven-lines-ellipsed':data()[url()]}"
+    >
       {{ data()[description()] }}
+<!--      Ut ut consequuntur voluptates dolores vel. Qui voluptate magnam tempora voluptas non repellat quae nisi.-->
+<!--      Aspernatur omnis recusandae magni sed ut error. Ex dolores sed cumque doloribus atque magni iusto. Dicta similique-->
+<!--      dolorem sunt perspiciatis. Veniam ut fuga ab autem. Autem eligendi blanditiis ipsa neque. Eligendi quos iste-->
+<!--      voluptates sunt et eum. Earum voluptatum impedit et tenetur. Eius et sit cum non est qui voluptas. Rerum iusto-->
+<!--      tempora consequatur repellat molestias autem tempora. Dolorum voluptatem ut fuga praesentium dolor. Fugiat facere-->
+<!--      est ex voluptatibus. Quae error voluptas maxime eveniet quis nihil atque. Voluptas nemo vitae reprehenderit. Vel-->
+<!--      tenetur aut quas commodi molestiae deserunt itaque. Nihil rerum quia qui rerum iusto odio a. Aliquid quibusdam-->
+<!--      sunt consequatur et et id possimus. Doloribus magnam nulla possimus quos. Laboriosam eum ut aut eos. Distinctio-->
+<!--      magni voluptatem et. Odit praesentium libero voluptatem fugiat animi. Aspernatur laudantium excepturi labore.-->
+<!--      Officia tempore voluptas ipsum perspiciatis minima maiores sed pariatur. Eaque repudiandae tempore nisi itaque-->
+<!--      asperiores. Dignissimos aut aut nisi velit eum corporis. Aut officiis odit ut laborum praesentium ipsam fugit. Ut-->
+<!--      qui molestias molestias in odio tenetur. Reprehenderit aut consequatur quo rerum et. Quo tempore dicta praesentium-->
+<!--      dignissimos quaerat voluptatem modi dolorem.-->
+
     </div>
     @if (data()[url()]) {
       <sheldon-link-button [data]="data()" [url]="url()"></sheldon-link-button>

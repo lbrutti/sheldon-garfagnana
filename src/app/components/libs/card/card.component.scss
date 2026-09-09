@@ -9,13 +9,13 @@
 // --sheldon-card-title-background      title background             (default: black)
 // --sheldon-card-title-font-size       title font size              (default: 12px)
 // --sheldon-card-title-padding         title padding                (default: 3px 8px 1px 8px)
+// --sheldon-card-title-max-height      title max height
 // --sheldon-card-subheader-min-height  subheader min height         (default: 41px)
 // --sheldon-card-subheader-padding-top subheader top padding        (default: 8px)
 // --sheldon-card-body-font-family      body font family             (default: 'Funnel Display', sans-serif)
 // --sheldon-card-body-font-size        body font size               (default: 13px)
 // --sheldon-card-body-font-weight      body font weight             (default: 500)
 // --sheldon-card-body-padding          body padding                 (default: 0)
-
 :host {
   display: flex;
   flex-direction: column;
@@ -41,6 +41,7 @@
     overflow-y: var(--sheldon-card-title-overflow-y, hidden);
     white-space: var(--sheldon-card-title-white-space, nowrap);
     height: var(--sheldon-card-title-height, auto);
+    max-height: var(--sheldon-card-title-max-height);
     text-transform: uppercase;
   }
 

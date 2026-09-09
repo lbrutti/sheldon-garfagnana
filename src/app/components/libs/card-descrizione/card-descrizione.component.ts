@@ -5,10 +5,11 @@ import {
 import CardComponent from '../card/card.component';
 import {TranslocoModule} from '@jsverse/transloco';
 import {SheldonLinkButton} from '../sheldon-link-button/sheldon-link-button';
+import {NgClass} from '@angular/common';
 
 @Component({
   selector: 'sheldon-descrizione',
-  imports: [CardComponent,  TranslocoModule, SheldonLinkButton, SheldonLinkButton],
+  imports: [CardComponent, TranslocoModule, SheldonLinkButton, SheldonLinkButton, NgClass],
   templateUrl: './card-descrizione.component.html',
   styleUrl: './card-descrizione.component.scss',
 })
