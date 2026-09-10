@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["src/app/components/libs/tooltip/tooltip.component.scss"],
+  "sourcesContent": [":host {\n  .sheldon-tooltip {\n    position: fixed;\n    z-index: 1000;\n    pointer-events: none;\n    background: black;\n    color: white;\n    // multi-line: wrap long copy instead of clipping it on a single row\n    white-space: normal;\n    overflow-wrap: anywhere;\n    text-transform: none;\n    font-size: 14px;\n    line-height: 1.3;\n    padding: 6px 8px;\n\n    .sheldon-tooltip-title {\n      font-weight: 600;\n    }\n\n    .sheldon-tooltip-line + .sheldon-tooltip-line,\n    .sheldon-tooltip-title + .sheldon-tooltip-line {\n      margin-top: 4px;\n    }\n  }\n}\n"],
+  "mappings": "AACE,MAAA,CAAA,gBACE,SAAA,MACA,QAAA,KACA,eAAA,KACA,WAAA,KACA,MAAA,KAEA,YAAA,OACA,cAAA,SACA,eAAA,KACA,UAAA,KACA,YAAA,IAXF,QAYE,IAAA,IAEA,MAAA,CAdF,gBAcE,CAAA,sBACE,YAAA,IAGF,MAAA,CAlBF,gBAkBE,CAAA,oBAAA,CAAA,CAAA,qBAAA,MAAA,CAlBF,gBAkBE,CAJA,qBAIA,CAAA,CAAA,qBAEE,WAAA",
+  "names": []
+}
