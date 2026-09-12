@@ -30,7 +30,7 @@ import {
   parseInterventiToDataCollection,
   parseInterventiToTreeDataCollection,
 } from '../../../adapters';
-import {getExplodedData, shuffleArray} from '../../../utils';
+import {getExplodedData, normalizzaStringa, resolveColorVariable, shuffleArray} from '../../../utils';
 import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
@@ -105,6 +105,12 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
   getCategoriaRandom(index: number): string {
     const cats = this.categorieInterventi();
     return cats.length ? cats[index % cats.length] : '';
+  }
+
+  /** Accent color for a sheldon-map-tooltip widget, matching its category gradient. */
+  protected tooltipColorFor(index: number): string {
+    const cat = normalizzaStringa(this.categoriaCorrente() || this.getCategoriaRandom(index));
+    return resolveColorVariable(`--color-gradient-${cat}-end`);
   }
 
   interventiFiltrati = computed(() => {

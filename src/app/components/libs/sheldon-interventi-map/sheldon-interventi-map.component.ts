@@ -11,7 +11,7 @@ import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component
 import {TranslocoModule} from '@jsverse/transloco';
 import SheldonMosaicMapComponent from '../sheldon-mosaic-map/sheldon-mosaic-map.component';
 import {InterventoInterface} from '../../../interfaces';
-import {MatIcon} from '@angular/material/icon';
+import MapTooltipComponent from '../map-tooltip/map-tooltip.component';
 
 @Component({
   selector: 'sheldon-interventi-map',
@@ -25,7 +25,7 @@ import {MatIcon} from '@angular/material/icon';
 
     TranslocoModule,
     PopupComponent,
-    MatIcon,
+    MapTooltipComponent,
   ],
   templateUrl: './sheldon-interventi-map.component.html',
   styleUrl: './sheldon-interventi-map.component.scss',
@@ -47,8 +47,6 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
     ctx.fillRect(0, 0, size, size);
     map.addImage('interventi-square', ctx.getImageData(0, 0, size, size), {sdf: true});
   }
-
-  protected readonly formatter = new Intl.NumberFormat(navigator.language);
 
   hoveredIntervento = signal<Feature<Point> | null>(null);
 

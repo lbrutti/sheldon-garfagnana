@@ -1,0 +1,97 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.intervento-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  padding: 48px 24px;
+  box-sizing: border-box;
+}
+
+.intervento-card {
+  width: min(480px, 100%);
+  background: #fff;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.2);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.intervento-card__header {
+  background: #000;
+  padding: 20px 24px;
+}
+
+.intervento-card__title {
+  margin: 0;
+  font-size: clamp(20px, 3vw, 26px);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.intervento-card__body {
+  padding: 20px 24px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.intervento-field {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 0;
+  border-bottom: 2px solid;
+}
+
+.intervento-field__label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgb(0 0 0 / 0.55);
+}
+
+.intervento-field__value {
+  font-size: 19px;
+  font-weight: 700;
+  color: #000;
+}
+
+.intervento-category-badge {
+  align-self: flex-start;
+  border: 1.5px solid #000;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #000;
+}
+
+.intervento-card__descrizione {
+  margin: 16px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #000;
+  white-space: pre-line;
+}
+
+.intervento-card__footer {
+  display: block;
+  background: #000;
+  padding: 18px 24px;
+  font-size: 18px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.intervento-not-found {
+  margin: 0;
+  text-align: center;
+  opacity: 0.6;
+  padding: 48px 24px;
+}

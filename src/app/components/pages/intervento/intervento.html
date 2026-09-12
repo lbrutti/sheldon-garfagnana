@@ -1,0 +1,52 @@
+@if (intervento(); as data) {
+  <div class="intervento-page" [style.background]="categoriaColor()">
+    <div class="intervento-card">
+      <div class="intervento-card__header">
+        <h1 class="intervento-card__title" [style.color]="categoriaColor()">{{ data.nome }}</h1>
+      </div>
+
+      <div class="intervento-card__body">
+        @if (data.comune) {
+          <div class="intervento-field" [style.border-bottom-color]="categoriaColor()">
+            <span class="intervento-field__label">Comune</span>
+            <span class="intervento-field__value">{{ data.comune }}</span>
+          </div>
+        }
+        @if (data.stato) {
+          <div class="intervento-field" [style.border-bottom-color]="categoriaColor()">
+            <span class="intervento-field__label">Stato</span>
+            <span class="intervento-field__value">{{ data.stato }}</span>
+          </div>
+        }
+        @if (data.importoTotale) {
+          <div class="intervento-field" [style.border-bottom-color]="categoriaColor()">
+            <span class="intervento-field__label">Importo</span>
+            <span class="intervento-field__value">€ {{ formatter.format(data.importoTotale) }}</span>
+          </div>
+        }
+        @if (data.categoria) {
+          <div class="intervento-field" [style.border-bottom-color]="categoriaColor()">
+            <span class="intervento-category-badge">{{ data.categoria }}</span>
+          </div>
+        }
+
+        @if (data.descrizione) {
+          <p class="intervento-card__descrizione">{{ data.descrizione }}</p>
+        }
+      </div>
+
+      @if (data.link) {
+        <a
+          class="intervento-card__footer"
+          [href]="data.link"
+          [style.color]="categoriaColor()"
+          target="_blank"
+        >
+          Scopri il progetto →
+        </a>
+      }
+    </div>
+  </div>
+} @else {
+  <p class="intervento-not-found">Intervento non trovato.</p>
+}

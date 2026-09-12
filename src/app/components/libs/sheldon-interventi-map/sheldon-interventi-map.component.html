@@ -122,49 +122,11 @@
         [closeOnClick]="true"
         class="full-width"
       >
-        <div
-          class="map-tooltip"
-          [style.background]="tooltipPolygonColor()">
-          <strong class="map-tooltip-item-title"
-                  [style.color]="tooltipPolygonColor()">{{ hoveredIntervento()?.properties?.['nome'] }}
-          </strong>
-
-          @if (hoveredIntervento()?.properties?.['comune']) {
-            <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['comune'] }}</div>
-          }
-          @if (hoveredIntervento()?.properties?.['stato']) {
-            <div class="map-tooltip-item">{{ hoveredIntervento()?.properties?.['stato'] }}</div>
-          }
-          @if (hoveredIntervento()?.properties?.['importoTotale']) {
-            <div
-              class="map-tooltip-item">
-              € {{ this.formatter.format(hoveredIntervento()?.properties?.['importoTotale']) }}
-            </div>
-          }
-          @if (hoveredIntervento()?.properties?.['categoria']) {
-            <div
-              class="map-tooltip-item">
-              <span class="map-tooltip-item-chip">{{ hoveredIntervento()?.properties?.['categoria'] }}</span>
-            </div>
-          }
-
-          @if (hoveredIntervento()?.properties?.['descrizione']) {
-            <div
-              class="map-tooltip-item map-tooltip-item-descrizione twelve-lines-ellipsed"> {{ hoveredIntervento()?.properties?.['descrizione'] }}
-            </div>
-          }
-
-          @if (hoveredIntervento()?.properties?.['link']) {
-            <a
-              href="{{hoveredIntervento()?.properties?.['link']}}"
-              [style.color]="tooltipPolygonColor()"
-              target="_blank">
-              <div class="map-tooltip-item map-tooltip-item-link"> Scopri il progetto
-                <mat-icon svgIcon="sheldon-download"/>
-              </div>
-            </a>
-          }
-        </div>
+        <sheldon-map-tooltip
+          [intervento]="hoveredIntervento()?.properties ?? {}"
+          [color]="tooltipPolygonColor()"
+          [ellipsisLines]="12"
+        />
       </mgl-popup>
 
     }

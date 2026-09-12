@@ -19,9 +19,9 @@ export function parseDashboardSettingsCsv(csv: string): WidgetSetting[] {
         } else if (NUMBER_FIELDS.has(k)) {
           entry[k] = Number(v);
         } else if (BOOLEAN_FIELDS.has(k)) {
-          entry[k] = (v as string).toLowerCase() === 'true';
+          entry[k] = (v as string).toLowerCase().trim() === 'true';
         } else {
-          entry[k] = v;
+          entry[k] = typeof v === 'string' ? v.trim() : v;
         }
       }
       return entry as WidgetSetting;

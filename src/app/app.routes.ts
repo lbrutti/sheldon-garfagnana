@@ -24,4 +24,8 @@ export const routes: Routes = [
     path: 'map',
     loadComponent: () => import('./components/pages/map-view/map-view')
   },
+  {
+    path: 'intervento/:id',
+    loadComponent: () => import('./components/pages/intervento/intervento')
+  },
 ];

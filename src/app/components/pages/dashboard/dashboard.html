@@ -149,6 +149,12 @@
               [url]="setting.url"
             />
           }
+          @case ('sheldon-map-tooltip') {
+            <sheldon-map-tooltip
+              [intervento]="$any(dataMap()[setting.data])"
+              [color]="tooltipColorFor(idx)"
+            />
+          }
         }
 
       </div>
