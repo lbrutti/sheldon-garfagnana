@@ -97,10 +97,8 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
   protected touchMode = signal<boolean>(false);
 
   private readonly scrollListener = () => {
-    if (this.touchMode()) {
-      this.hoveredBar.set(null);
-      this.touchMode.set(false);
-    }
+    this.hoveredBar.set(null);
+    this.touchMode.set(false);
   };
 
   constructor() {

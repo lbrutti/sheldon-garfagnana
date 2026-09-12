@@ -10,6 +10,7 @@
   .filter-field {
     display: flex;
     flex-direction: column;
+    border: 0 !important;
     //gap: 4px;
   }
 
@@ -20,14 +21,23 @@
       background: white;
       margin-left: 7px;
       color: black !important;
+      border: 0 !important;
     }
 
     input.mat-mdc-input-element {
       color: black !important;
+      border: 0 !important;
+
 
       &::placeholder {
         color: black !important;
         opacity: 1;
+      }
+
+      &:read-only {
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
       }
     }
 
@@ -35,7 +45,10 @@
       display: none !important;
     }
 
-    .mdc-notched-outline {
+    .mdc-notched-outline,
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
       border: none !important;
     }
 
@@ -87,7 +100,7 @@
     }
   }
 
-  &.big-field{
+  &.big-field {
     ::ng-deep {
       // closed field: white background, black text (flipped from the global-search select)
       .mat-mdc-text-field-wrapper {

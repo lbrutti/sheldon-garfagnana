@@ -92,10 +92,8 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
   });
 
   private readonly scrollListener = () => {
-    if (this.touchMode()) {
-      this.hoveredTile.set(null);
-      this.touchMode.set(false);
-    }
+    this.hoveredTile.set(null);
+    this.touchMode.set(false);
   };
 
   constructor(private readonly multiples: MultiplesPipe) {

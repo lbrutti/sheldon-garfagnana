@@ -5,6 +5,7 @@
 
       <input
         matInput
+        readonly
         #inputEl
         [id]="field"
         [formControlName]="field"
@@ -13,12 +14,12 @@
         #trigger="matAutocompleteTrigger"
       />
 
-      @if (hasValue(field)) {
-        <button matSuffix mat-icon-button (click)="clearField(field, trigger, inputEl)" type="button"
-                [attr.aria-label]="'filter.clear' | transloco">
-          <mat-icon>close</mat-icon>
-        </button>
-      }
+<!--      @if (hasValue(field)) {-->
+<!--        <button matSuffix mat-icon-button (click)="clearField(field, trigger, inputEl)" type="button"-->
+<!--                [attr.aria-label]="'filter.clear' | transloco">-->
+<!--          <mat-icon>close</mat-icon>-->
+<!--        </button>-->
+<!--      }-->
 
       <mat-autocomplete #auto="matAutocomplete"
                         class="dynamic-filter-autocomplete-panel">

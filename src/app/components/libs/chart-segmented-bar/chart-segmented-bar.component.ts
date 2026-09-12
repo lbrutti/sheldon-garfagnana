@@ -104,10 +104,8 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
   protected touchMode = signal<boolean>(false);
 
   private readonly scrollListener = () => {
-    if (this.touchMode()) {
-      this.hoveredSegment.set(null);
-      this.touchMode.set(false);
-    }
+    this.hoveredSegment.set(null);
+    this.touchMode.set(false);
   };
   protected readonly theme = inject(ThemeService).theme;
 
