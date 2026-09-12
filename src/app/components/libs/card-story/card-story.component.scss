@@ -11,6 +11,20 @@
     color: unset !important;
   }
 
+  .sheldon-card--story {
+    // override default card style
+    ::ng-deep{
+      .two-lines-ellipsed {
+        overflow-y: unset !important;
+        overflow-x: unset !important;
+        text-overflow: unset !important;
+        display: unset !important;
+        -webkit-box-orient: unset !important;
+        -webkit-line-clamp: unset !important;
+      }
+    }
+  }
+
   .sheldon-card-descrizione {
     @include sheldon-card-story-descrizione;
     padding: 0 8px;
