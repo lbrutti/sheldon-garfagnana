@@ -1,3 +1,12 @@
+@if (!popupDismissed()) {
+  <sheldon-popup
+    [title]="'dashboard.popup.title' | transloco"
+    [paragraphs]="['dashboard.popup.p1' | transloco, 'dashboard.popup.p2' | transloco, 'dashboard.popup.p3' | transloco, 'dashboard.popup.p4' | transloco]"
+    [visible]="popupVisible()"
+    (prosegui)="onPopupProsegui()"
+  />
+}
+
 <div class="header">
   <sheldon-theme-switch/>
 </div>

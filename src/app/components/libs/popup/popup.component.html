@@ -1,0 +1,24 @@
+<div class="sheldon-popup" [class.sheldon-popup--hidden]="!visible()">
+  <div class="sheldon-popup__panel" role="dialog" aria-modal="true">
+    <div class="sheldon-popup__blobs" aria-hidden="true">
+      <span class="sheldon-popup__blob sheldon-popup__blob--yellow"></span>
+      <span class="sheldon-popup__blob sheldon-popup__blob--orange"></span>
+      <span class="sheldon-popup__blob sheldon-popup__blob--pink"></span>
+      <span class="sheldon-popup__blob sheldon-popup__blob--purple"></span>
+    </div>
+
+    <div class="sheldon-popup__content">
+      <h1 class="sheldon-popup__title">{{ title() }}</h1>
+
+      <div class="sheldon-popup__body">
+        @for (paragraph of paragraphs(); track $index) {
+          <p class="sheldon-popup__paragraph" [innerHTML]="paragraph"></p>
+        }
+      </div>
+
+      <button type="button" class="sheldon-popup__cta" (click)="prosegui.emit()">
+        {{ 'popup.prosegui' | transloco }}
+      </button>
+    </div>
+  </div>
+</div>

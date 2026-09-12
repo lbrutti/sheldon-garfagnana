@@ -1,7 +1,9 @@
 import {
   AfterViewInit,
   Component,
+  computed,
   effect,
+  inject,
   OnDestroy,
   OnInit,
   QueryList,
@@ -12,21 +14,34 @@ import {
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {components} from '../../libs';
+import {WelcomePopupService} from '../../../services/welcome-popup.service';
 
 
 import {DecimalPipe} from '@angular/common';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 import DataStoryInterface from '../../../interfaces/data-story.interface';
 import CardStoryComponent from '../../libs/card-story/card-story.component';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-data-stories',
-  imports: [...components, NgxMasonryModule, CardStoryComponent],
+  imports: [...components, NgxMasonryModule, CardStoryComponent, TranslocoPipe],
   templateUrl: './data-stories.html',
   styleUrl: './data-stories.scss',
   providers: [DecimalPipe]
 })
 export default class DataStories implements OnInit, AfterViewInit, OnDestroy {
+
+  private readonly welcomePopupService = inject(WelcomePopupService);
+  protected readonly popupDismissed = signal(!this.welcomePopupService.shouldShow('data-stories'));
+  // Wait for the initial data fetch to settle so the popup never races with
+  // sheldon-fullscreen-loader (both are full-viewport, same z-index).
+  protected popupVisible = computed(() => !this.popupDismissed() && !this.apiService.loading());
+
+  protected onPopupProsegui(): void {
+    this.welcomePopupService.dismiss('data-stories');
+    this.popupDismissed.set(true);
+  }
 
   @ViewChild(NgxMasonryComponent) private masonry!: NgxMasonryComponent;
   @ViewChildren(NgxMasonryDirective) private masonryItems!: QueryList<NgxMasonryDirective>;

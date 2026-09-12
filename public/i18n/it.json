@@ -31,6 +31,18 @@
   "cardDescrizione": {
     "detail": "Dettaglio intervento"
   },
+  "popup": {
+    "prosegui": "Prosegui"
+  },
+  "dashboard": {
+    "popup": {
+      "title": "Paesaggi futuri: i dati",
+      "p1": "Ciao! Questa è l'area in cui puoi esplorare tutti gli interventi che stanno cambiando i territori dell'Area 5.",
+      "p2": "Usa i grafici e i filtri per scoprire dove sono gli interventi, di cosa si occupano, a chi sono rivolti e a che punto sono.",
+      "p3": "Puoi partire da un comune, da un tema che ti interessa, o semplicemente curiosare tra i dati.",
+      "p4": "Nelle sezione <u>STORIE</u> troverai poi piccoli approfondimenti per capire meglio le storie e i fenomeni che emergono dai numeri."
+    }
+  },
   "dataStory": {
     "populationByComune": "Popolazione per comune",
     "populationByComuneStacked": "Popolazione per comune (stacked bars)",

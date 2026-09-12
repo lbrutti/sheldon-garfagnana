@@ -1,0 +1,146 @@
+@use '../../../../theme/variables' as v;
+
+.sheldon-popup {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+
+  &--hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.sheldon-popup__panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(672.8px, 92vw);
+  height: min(606.77px, 90vh);
+  overflow: hidden;
+  box-sizing: border-box;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 0.25);
+}
+
+.sheldon-popup__blobs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #F4B80D;
+  opacity: 0.9;
+  backdrop-filter: blur(50px);
+}
+
+.sheldon-popup__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+
+  &--yellow {
+    top: -20%;
+    left: -15%;
+    width: 65%;
+    height: 65%;
+    background: #F4B80D;
+  }
+
+  &--orange {
+    top: 0;
+    right: -20%;
+    width: 60%;
+    height: 60%;
+    background: #FF9966;
+  }
+
+  &--pink {
+    bottom: -15%;
+    right: -10%;
+    width: 65%;
+    height: 65%;
+    background: #E39BB5;
+  }
+
+  &--purple {
+    bottom: -25%;
+    left: -15%;
+    width: 70%;
+    height: 70%;
+    background: #C79BCC;
+  }
+}
+
+.sheldon-popup__content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 40px 40px;
+}
+
+.sheldon-popup__title {
+  margin: 0 0 24px;
+  font-size: clamp(24px, 3.2vw, 36px);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: #000;
+}
+
+.sheldon-popup__body {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.sheldon-popup__paragraph {
+  margin: 0;
+  font-size: clamp(14px, 1.6vw, 17px);
+  font-weight: 700;
+  line-height: 1.3;
+  color: #000;
+}
+
+.sheldon-popup__cta {
+  align-self: center;
+  margin-top: auto;
+  padding: 10px 28px;
+  border: none;
+  border-radius: 0;
+  background: #000;
+  color: #fff;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+@media (max-width: v.$breakpoint-sm) {
+  .sheldon-popup__panel {
+    width: 100%;
+    height: 100%;
+  }
+
+  .sheldon-popup__content {
+    padding: 40px 24px;
+  }
+}

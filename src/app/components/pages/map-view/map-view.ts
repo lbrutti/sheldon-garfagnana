@@ -2,6 +2,7 @@ import {
   Component,
   computed,
   effect,
+  inject,
   QueryList,
   Signal,
   signal, untracked,
@@ -16,18 +17,31 @@ import { FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {FeatureCollection, Polygon} from 'geojson';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {FilterStateService} from '../../../services/filter-state.service';
+import {WelcomePopupService} from '../../../services/welcome-popup.service';
 import {getExplodedData, shuffleArray} from '../../../utils';
 import camelcase from 'camelcase';
 import GlobalSearchComponent from '../../libs/global-search/global-search.component';
 import SheldonInterventiMapComponent from '../../libs/sheldon-interventi-map/sheldon-interventi-map.component';
+import PopupComponent from '../../libs/popup/popup.component';
 
 @Component({
   selector: 'sheldon-map-view',
-  imports: [TranslocoModule, GlobalSearchComponent, NgxMasonryModule, SheldonInterventiMapComponent],
+  imports: [TranslocoModule, GlobalSearchComponent, NgxMasonryModule, SheldonInterventiMapComponent, PopupComponent],
   templateUrl: './map-view.html',
   styleUrl: './map-view.scss',
 })
 export default class MapView {
+
+  private readonly welcomePopupService = inject(WelcomePopupService);
+  protected readonly popupDismissed = signal(!this.welcomePopupService.shouldShow('map-view'));
+  // Wait for the initial data fetch to settle so the popup never races with
+  // sheldon-fullscreen-loader (both are full-viewport, same z-index).
+  protected popupVisible = computed(() => !this.popupDismissed() && !this.apiService.loading());
+
+  protected onPopupProsegui(): void {
+    this.welcomePopupService.dismiss('map-view');
+    this.popupDismissed.set(true);
+  }
 
   @ViewChild(NgxMasonryComponent) private masonry!: NgxMasonryComponent;
   @ViewChildren(NgxMasonryDirective) private masonryItems!: QueryList<NgxMasonryDirective>;

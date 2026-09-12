@@ -18,6 +18,7 @@ import ReduceToggleComponent from './reduce-toggle/reduce-toggle';
 import CardDescrizioneComponent from './card-descrizione/card-descrizione.component';
 import ThemeSwitchComponent from './theme-switch/theme-switch.component';
 import HeaderComponent from './header/header.component';
+import PopupComponent from './popup/popup.component';
 
 export * from './card/card.component';
 export * from './chart-label/chart-label.component';
@@ -32,6 +33,7 @@ export * from './kpi/kpi.component';
 export * from './lista/lista.component';
 export * from './chart-treemap/chart-treemap.component';
 export {default as SheldonMosaicMapComponent} from './sheldon-mosaic-map/sheldon-mosaic-map.component';
+export {default as PopupComponent} from './popup/popup.component';
 
 
 export const components = [
@@ -55,6 +57,7 @@ export const components = [
   TooltipComponent,
   ReduceToggleComponent,
   CardDescrizioneComponent,
-  ThemeSwitchComponent
+  ThemeSwitchComponent,
+  PopupComponent
 ];
 

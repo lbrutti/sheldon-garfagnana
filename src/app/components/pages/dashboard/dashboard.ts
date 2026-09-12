@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   effect,
+  inject,
   OnDestroy,
   OnInit,
   QueryList,
@@ -15,6 +16,7 @@ import {
 } from '@angular/core';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {FilterStateService} from '../../../services/filter-state.service';
+import {WelcomePopupService} from '../../../services/welcome-popup.service';
 import {
   DataInterface,
   FilterOptionInterface,
@@ -34,10 +36,11 @@ import WidgetSetting from '../../../interfaces/widget-setting.interface';
 import {DecimalPipe} from '@angular/common';
 import camelcase from 'camelcase';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, NgxMasonryModule],
+  imports: [...components, NgxMasonryModule, TranslocoPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   providers: [DecimalPipe]
@@ -71,6 +74,17 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
   protected onLayoutComplete(): void {
     if (!this.layoutReady()) this.layoutReady.set(true);
+  }
+
+  private readonly welcomePopupService = inject(WelcomePopupService);
+  protected readonly popupDismissed = signal(!this.welcomePopupService.shouldShow('dashboard'));
+  // Wait for the initial data fetch to settle so the popup never races with
+  // sheldon-fullscreen-loader (both are full-viewport, same z-index).
+  protected popupVisible = computed(() => !this.popupDismissed() && !this.apiService.loading());
+
+  protected onPopupProsegui(): void {
+    this.welcomePopupService.dismiss('dashboard');
+    this.popupDismissed.set(true);
   }
 
   protected settings = signal<WidgetSetting[]>([]);
