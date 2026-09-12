@@ -5,6 +5,10 @@
     "close": "Chiudi",
     "copyPrompt": "Copia il link della card:"
   },
+  "footerLoghi": {
+    "ariaLabel": "Partner e sostenitori",
+    "claim": "Il progetto è realizzato grazie al Fondo Sociale Europeo+ della Regione Toscana"
+  },
   "globalSearch": {
     "searchByUnione": "Cerca per unione",
     "searchByComune": "Cerca per comune",

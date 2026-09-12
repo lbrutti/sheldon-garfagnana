@@ -23,10 +23,11 @@ import camelcase from 'camelcase';
 import GlobalSearchComponent from '../../libs/global-search/global-search.component';
 import SheldonInterventiMapComponent from '../../libs/sheldon-interventi-map/sheldon-interventi-map.component';
 import PopupComponent from '../../libs/popup/popup.component';
+import FooterLoghiComponent from '../../libs/footer-loghi/footer-loghi.component';
 
 @Component({
   selector: 'sheldon-map-view',
-  imports: [TranslocoModule, GlobalSearchComponent, NgxMasonryModule, SheldonInterventiMapComponent, PopupComponent],
+  imports: [TranslocoModule, GlobalSearchComponent, NgxMasonryModule, SheldonInterventiMapComponent, PopupComponent, FooterLoghiComponent],
   templateUrl: './map-view.html',
   styleUrl: './map-view.scss',
 })

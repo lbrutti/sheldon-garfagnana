@@ -7,7 +7,8 @@
   />
 }
 
-<sheldon-global-search [interventi]="interventi()" [unioniNascoste]="apiService.unioniNascoste()" (filter)="applyFilters($event)"/>
+<sheldon-global-search [interventi]="interventi()" [unioniNascoste]="apiService.unioniNascoste()"
+                       (filter)="applyFilters($event)"/>
 
 <ngx-masonry
   class="sheldon-grid"
@@ -154,3 +155,12 @@
     }
   }
 </ngx-masonry>
+
+
+<div class="colophon">
+  <span>
+    {{ 'colophon'|transloco }}
+  </span>
+</div>
+
+<sheldon-footer-loghi/>

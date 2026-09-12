@@ -37,10 +37,11 @@ import {DecimalPipe} from '@angular/common';
 import camelcase from 'camelcase';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 import {TranslocoPipe} from '@jsverse/transloco';
+import PopupComponent from '../../libs/popup/popup.component';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, NgxMasonryModule, TranslocoPipe],
+  imports: [...components, NgxMasonryModule, TranslocoPipe, PopupComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   providers: [DecimalPipe]

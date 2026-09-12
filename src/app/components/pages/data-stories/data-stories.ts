@@ -22,10 +22,11 @@ import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOp
 import DataStoryInterface from '../../../interfaces/data-story.interface';
 import CardStoryComponent from '../../libs/card-story/card-story.component';
 import {TranslocoPipe} from '@jsverse/transloco';
+import PopupComponent from '../../libs/popup/popup.component';
 
 @Component({
   selector: 'sheldon-data-stories',
-  imports: [...components, NgxMasonryModule, CardStoryComponent, TranslocoPipe],
+  imports: [...components, NgxMasonryModule, CardStoryComponent, TranslocoPipe, PopupComponent],
   templateUrl: './data-stories.html',
   styleUrl: './data-stories.scss',
   providers: [DecimalPipe]

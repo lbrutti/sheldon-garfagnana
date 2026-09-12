@@ -179,3 +179,17 @@ button {
   @extend .one-line-ellipsed;
   -webkit-line-clamp: 5;
 }
+
+
+.colophon {
+  display: flex;
+
+  span {
+    margin: auto;
+    margin-top: 96px;
+    opacity: 40%;
+    text-align: center;
+    display: inline-block;
+    width: 50vw;
+  }
+}

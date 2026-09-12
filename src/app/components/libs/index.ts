@@ -19,6 +19,7 @@ import CardDescrizioneComponent from './card-descrizione/card-descrizione.compon
 import ThemeSwitchComponent from './theme-switch/theme-switch.component';
 import HeaderComponent from './header/header.component';
 import PopupComponent from './popup/popup.component';
+import FooterLoghiComponent from './footer-loghi/footer-loghi.component';
 
 export * from './card/card.component';
 export * from './chart-label/chart-label.component';
@@ -34,6 +35,7 @@ export * from './lista/lista.component';
 export * from './chart-treemap/chart-treemap.component';
 export {default as SheldonMosaicMapComponent} from './sheldon-mosaic-map/sheldon-mosaic-map.component';
 export {default as PopupComponent} from './popup/popup.component';
+export {default as FooterLoghiComponent} from './footer-loghi/footer-loghi.component';
 
 
 export const components = [
@@ -58,6 +60,7 @@ export const components = [
   ReduceToggleComponent,
   CardDescrizioneComponent,
   ThemeSwitchComponent,
-  PopupComponent
+  PopupComponent,
+  FooterLoghiComponent
 ];
 
