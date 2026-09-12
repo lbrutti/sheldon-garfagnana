@@ -191,5 +191,12 @@ button {
     text-align: center;
     display: inline-block;
     width: 50vw;
+
+    // Match .footer-loghi's mobile width (calc(100% - 2rem), centered) instead
+    // of staying pinned at 50vw, which gets illegibly narrow on small screens.
+    @media (max-width: $breakpoint-sm) {
+      width: calc(100% - 2rem);
+      max-width: 1100px;
+    }
   }
 }
