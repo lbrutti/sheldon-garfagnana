@@ -1,6 +1,6 @@
 import {
   Component, computed,
-  inject,
+  inject, Input,
   input,
   InputSignal,
   signal,
@@ -17,6 +17,8 @@ import {MultiplesPipe} from '../../../pipes';
 import {SortToggle} from '../sort-toggle/sort-toggle';
 import {getReducedValueByLabel} from '../../../utils';
 import {TranslocoModule} from '@jsverse/transloco';
+import {RouterLink} from '@angular/router';
+import {ThemeService} from '../../../services/theme.service';
 
 @Component({
   selector: 'sheldon-list',
@@ -30,14 +32,18 @@ import {TranslocoModule} from '@jsverse/transloco';
     CdkVirtualScrollViewport,
     CdkVirtualForOf,
     MultiplesPipe,
-    TranslocoModule],
+    TranslocoModule,
+    RouterLink
+  ],
   templateUrl: './lista.component.html',
   styleUrl: './lista.component.scss',
 })
 export default class ListaComponent {
 
   private readonly transloco = inject(TranslocoService);
+  protected readonly theme = inject(ThemeService).theme;
 
+  pageUrl = input<string>('');
   title = input<string>('');
   infoText = input<string>('');
   cardId = input<string>('');
@@ -71,10 +77,10 @@ export default class ListaComponent {
     const filterSet = filters.length && filters.some(d => d.value);
     let result = filterSet
       ? this.data().filter(d =>
-          filters.every(filter =>
-            filter.value.length && filter.value === `${(d as any)[filter.key]}`
-          )
+        filters.every(filter =>
+          filter.value.length && filter.value === `${(d as any)[filter.key]}`
         )
+      )
       : this.data();
 
     const groupBy = this.groupBy();

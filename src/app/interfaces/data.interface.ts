@@ -9,9 +9,11 @@ export declare interface DataInterface {
   udm?: string,
   note?: string,
   fonte?: string,
-  nome?: string
+  nome?: string,
+  pageUrlId?: string,
+  pageUrl?: string,
 }
 
 export declare interface TreemapDataInterface extends DataInterface {
-  [k: string]:any,
+  [k: string]: any,
 }

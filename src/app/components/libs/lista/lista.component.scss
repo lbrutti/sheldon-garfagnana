@@ -45,6 +45,11 @@
   }
 
   .nome-container {
+    a {
+      //text-decoration: unset !important;
+      color: unset;
+    }
+
     flex: 1;
     min-width: 0;
     overflow: hidden;
@@ -63,13 +68,14 @@
     padding-right: 8px;
   }
 
-::ng-deep {
-  .cdk-virtual-scroll-content-wrapper {
-    position: relative;
-    contain: content;
+  ::ng-deep {
+    .cdk-virtual-scroll-content-wrapper {
+      position: relative;
+      contain: content;
+    }
+
+    .cdk-virtual-scroll-spacer {
+      height: 0 !important;
+    }
   }
-  .cdk-virtual-scroll-spacer {
-    height: 0 !important;
-  }
-}
 }

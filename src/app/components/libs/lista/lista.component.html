@@ -30,7 +30,12 @@
 
         <mat-list-item *cdkVirtualFor="let dato of filteredData()">
           <div class="list-row">
-            <span class="nome-container">{{ dato.nome }}</span>
+
+              <span class="nome-container">
+                <a [routerLink]="'/'+pageUrl()+'/'+dato.pageUrlId"
+                   [queryParams]="{theme: theme()}"
+                   target="_blank">{{ dato.nome }}</a>
+              </span>
             <span class="valore-container">{{ dato.valore | multiples }}</span>
           </div>
         </mat-list-item>

@@ -80,8 +80,10 @@
             />
           }
           @case ('sheldon-list') {
+            <!--            {{$any(dataMap()[setting.data]) | json}}-->
             <sheldon-list
               [title]="setting.title"
+              [pageUrl]="setting.pageUrl"
               [infoText]="setting.info ?? ''"
               [cardId]="setting.id"
               [groupBy]="setting.groupBy ?? null"

@@ -33,7 +33,7 @@ import {
 import {getExplodedData, normalizzaStringa, resolveColorVariable, shuffleArray} from '../../../utils';
 import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
-import {DecimalPipe} from '@angular/common';
+import {DecimalPipe, JsonPipe} from '@angular/common';
 import camelcase from 'camelcase';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 import {TranslocoPipe} from '@jsverse/transloco';
@@ -41,7 +41,7 @@ import PopupComponent from '../../libs/popup/popup.component';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, NgxMasonryModule, TranslocoPipe, PopupComponent],
+  imports: [...components, NgxMasonryModule, TranslocoPipe, PopupComponent, JsonPipe],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   providers: [DecimalPipe]
@@ -235,6 +235,9 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     effect(() => {
       const interventi = this.interventiFiltrati();
       const config = this.apiService.dashboardParsingConfig();
+      const settings = this.settings();
+      console.log(this.settings());
+      console.log(config);
       if (!config) return;
 
       untracked(() => {
@@ -253,7 +256,13 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
           switch (entry.type) {
             case 'standard': {
               const source = entry.explodeOn ? getExploded(entry.explodeOn) : interventi;
-              sig.set(parseInterventiToDataCollection(source, entry.mapping as InterventoToDataMapping));
+              const data = parseInterventiToDataCollection(source, entry.mapping as InterventoToDataMapping);
+              const {pageUrl, pageUrlId} = settings.find(s => s.data === entry.key) ?? {};
+              sig.set(
+                pageUrl && pageUrlId
+                  ? data.map((d, i) => ({...d, pageUrl, pageUrlId: (source[i] as any)?.[pageUrlId]}))
+                  : data,
+              );
               break;
             }
             case 'treemap': {

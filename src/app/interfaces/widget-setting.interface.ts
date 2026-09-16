@@ -14,6 +14,8 @@ export default interface WidgetSetting {
   defaultSortDirection?: 'asc' | 'desc',
   showSorting?: boolean,
   limit?: number,
+  pageUrl?: string,
+  pageUrlId?: string,
   //per kpi con font scale
   minFontSize?: number,
   udm?: string,
