@@ -2,10 +2,11 @@ import {Component, inject, signal} from '@angular/core';
 import NavigationComponent from './components/libs/navigation/navigation.component';
 import FullscreenLoaderComponent from './components/libs/fullscreen-loader/fullscreen-loader.component';
 import {ProjectsApiService} from './services/projects-api.service';
+import FooterLoghiComponent from './components/libs/footer-loghi/footer-loghi.component';
 
 @Component({
   selector: 'sheldon-root',
-  imports: [NavigationComponent, FullscreenLoaderComponent],
+  imports: [NavigationComponent, FullscreenLoaderComponent, FooterLoghiComponent],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
