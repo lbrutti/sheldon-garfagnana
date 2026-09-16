@@ -12,8 +12,9 @@ import {normalizzaStringa, resolveColorVariable} from '../../../utils';
 export default class Intervento implements OnInit {
   private readonly route = inject(ActivatedRoute);
   protected readonly apiService = inject(ProjectsApiService);
+  private readonly themeService = inject(ThemeService);
   // Track the active theme so categoriaColor re-reads its CSS variable on change.
-  private readonly theme = inject(ThemeService).theme;
+  private readonly theme = this.themeService.theme;
 
   protected readonly formatter = new Intl.NumberFormat(navigator.language);
 
@@ -43,6 +44,9 @@ export default class Intervento implements OnInit {
   }
 
   ngOnInit(): void {
+    // This page can be opened directly (e.g. a list link opened in a new tab), so the
+    // theme must be initialized here too — it's normally only done by sheldon-theme-switch.
+    this.themeService.init();
     this.apiService.getInterventi();
   }
 }
