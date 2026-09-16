@@ -30,10 +30,9 @@ export default class Intervento implements OnInit {
     // (set asynchronously by ProjectsApiService) are actually available.
     this.apiService.categorie();
     // Dark theme uses a flat grey accent instead of the (light-tuned) gradient colors.
-    console.log(this.theme());
     if (this.theme() === 'system') return '#A9A9A9';
     const categoria = this.intervento()?.categoria;
-    if (!categoria) return '#000';
+    if (!categoria) return '#A9A9A9';
     return resolveColorVariable(`--color-gradient-${normalizzaStringa(categoria)}-end`);
   });
 

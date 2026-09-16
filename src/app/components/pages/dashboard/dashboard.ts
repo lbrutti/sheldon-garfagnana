@@ -236,8 +236,6 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
       const interventi = this.interventiFiltrati();
       const config = this.apiService.dashboardParsingConfig();
       const settings = this.settings();
-      console.log(this.settings());
-      console.log(config);
       if (!config) return;
 
       untracked(() => {
