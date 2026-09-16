@@ -1,0 +1,50 @@
+
+.one-line-ellipsed {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.two-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 2;
+}
+
+.three-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 3;
+}
+
+
+.twenty-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 20;
+}
+
+.twelve-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 12;
+}
+
+.eight-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 8;
+}
+
+.seven-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 7;
+}
+
+.six-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 6;
+}
+
+.five-lines-ellipsed {
+  @extend .one-line-ellipsed;
+  -webkit-line-clamp: 5;
+}

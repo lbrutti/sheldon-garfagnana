@@ -22,6 +22,9 @@ export default class Intervento implements OnInit {
 
   /** Solid accent color derived from the intervento's categoria, used as the page background. */
   protected categoriaColor = computed<string>(() => {
+    // Track categorie so this recomputes once the --color-gradient-* CSS variables
+    // (set asynchronously by ProjectsApiService) are actually available.
+    this.apiService.categorie();
     const categoria = this.intervento()?.categoria;
     if (!categoria) return '#000';
     return resolveColorVariable(`--color-gradient-${normalizzaStringa(categoria)}-end`);

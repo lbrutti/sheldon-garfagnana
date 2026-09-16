@@ -107,9 +107,13 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
     return cats.length ? cats[index % cats.length] : '';
   }
 
-  /** Accent color for a sheldon-map-tooltip widget, matching its category gradient. */
-  protected tooltipColorFor(index: number): string {
-    const cat = normalizzaStringa(this.categoriaCorrente() || this.getCategoriaRandom(index));
+  /**
+   * Accent color for a sheldon-map-tooltip widget. Prefers the bound intervento's own
+   * categoria; falls back to the widget-level category when the data has none.
+   */
+  protected tooltipColorFor(index: number, data?: unknown): string {
+    const categoria = (data as InterventoInterface | undefined)?.categoria;
+    const cat = normalizzaStringa(categoria || this.categoriaCorrente() || this.getCategoriaRandom(index));
     return resolveColorVariable(`--color-gradient-${cat}-end`);
   }
 

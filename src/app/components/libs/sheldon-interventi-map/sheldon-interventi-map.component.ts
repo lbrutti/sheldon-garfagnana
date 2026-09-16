@@ -1,4 +1,4 @@
-import {Component, computed, input, signal} from '@angular/core';
+import {Component, computed, effect, input, signal, untracked} from '@angular/core';
 import {
   GeoJSONSourceComponent,
   LayerComponent,
@@ -12,6 +12,7 @@ import {TranslocoModule} from '@jsverse/transloco';
 import SheldonMosaicMapComponent from '../sheldon-mosaic-map/sheldon-mosaic-map.component';
 import {InterventoInterface} from '../../../interfaces';
 import MapTooltipComponent from '../map-tooltip/map-tooltip.component';
+import {normalizzaStringa, resolveColorVariable} from '../../../utils';
 
 @Component({
   selector: 'sheldon-interventi-map',
@@ -36,6 +37,22 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
 
   protected override fitBoundsPadding = {top: 110};
 
+  constructor() {
+    super();
+    // Master filters (Unione/comune/categoria) narrow `interventi` — if the currently
+    // tooltipped feature falls out of the new set, its tooltip must close.
+    effect(() => {
+      const currentInterventi = this.interventi();
+      untracked(() => {
+        const hovered = this.hoveredIntervento();
+        if (!hovered) return;
+        const id = hovered.properties?.['id'];
+        const stillVisible = currentInterventi.some((i) => i.id === id);
+        if (!stillVisible) this.onInterventiLeave();
+      });
+    });
+  }
+
   override onMapLoad(map: MapGL): void {
     super.onMapLoad(map);
     const size = 20;
@@ -51,18 +68,9 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
   hoveredIntervento = signal<Feature<Point> | null>(null);
 
   tooltipPolygonColor = computed<string>(() => {
-    const comune = this.hoveredIntervento()?.properties?.['comune'] as string | undefined;
-    if (!comune) return this.tooltipBackground;
-    const feature = this.derivedPolygons().features.find(
-      (f) => f.properties?.[this.municipalityKey()] === comune,
-    );
-    if (!feature) return this.tooltipBackground;
-    const rawValue = (feature.properties?.['_rawValue'] as number) ?? 0;
-    const shades = this.colorShades();
-    if (rawValue === 0) return '#ffffff';
-    if (rawValue < 2) return shades[1];
-    if (rawValue < 4) return shades[2];
-    return shades[3];
+    const categoria = this.hoveredIntervento()?.properties?.['categoria'] as string | undefined;
+    if (!categoria) return this.tooltipBackground;
+    return resolveColorVariable(`--color-gradient-${normalizzaStringa(categoria)}-end`);
   });
 
   onInterventiEnter(event: MapLayerMouseEvent): void {
