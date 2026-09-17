@@ -2,7 +2,7 @@
   <div class="story-layout">
 
     <!-- LEFT LANE: narrative text -->
-    <div class="story-lane story-lane--text">
+    <div class="story-lane story-lane--text" #textLane>
       <h1 class="story-title">{{ story().titolo }}</h1>
 
       @if (story().paragrafo1) {
@@ -30,7 +30,7 @@
     </div>
 
     <!-- MIDDLE LANE: interventi widgets -->
-    <div class="story-lane story-lane--interventi">
+    <div class="story-lane story-lane--interventi" #interventiLane>
       <h5
         class="story-title">{{ 'storyLaneInterventi.' + normalizzaStringa(story().categoria) + '.title'  | transloco }}</h5>
       @for (setting of interventiSettings(); track setting.id) {
@@ -161,7 +161,7 @@
     </div>
 
     <!-- RIGHT LANE: ISTAT widgets -->
-    <div class="story-lane story-lane--istat">
+    <div class="story-lane story-lane--istat" #istatLane>
       <h5
         class="story-title">{{ 'storyLaneIstat.' + normalizzaStringa(story().categoria) + '.title'  | transloco }}</h5>
 

@@ -1,4 +1,4 @@
-import {Component, computed, effect, inject, signal, Signal, untracked, WritableSignal} from '@angular/core';
+import {Component, computed, effect, ElementRef, inject, signal, Signal, untracked, ViewChild, WritableSignal} from '@angular/core';
 
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {TranslocoModule} from '@jsverse/transloco';
@@ -27,6 +27,10 @@ import {FeatureCollection, Polygon} from 'geojson';
 })
 export default class DataStory {
   private route = inject(ActivatedRoute);
+
+  @ViewChild('textLane') private textLane?: ElementRef<HTMLElement>;
+  @ViewChild('interventiLane') private interventiLane?: ElementRef<HTMLElement>;
+  @ViewChild('istatLane') private istatLane?: ElementRef<HTMLElement>;
 
   protected storyId = signal<string>('');
   protected story = computed<DataStoryInterface>(() => {
@@ -121,7 +125,7 @@ export default class DataStory {
   constructor(protected apiService: ProjectsApiService) {
     this.route.params.subscribe(params => {
       this.storyId.set(params['id']);
-      window.scrollTo(0, 0);
+      this.resetScroll();
     });
 
     // effect(() => {
@@ -205,6 +209,17 @@ export default class DataStory {
         }
       });
     });
+  }
+
+  private resetScroll(): void {
+    window.scrollTo(0, 0);
+    [this.textLane, this.interventiLane, this.istatLane].forEach(lane => {
+      if (lane?.nativeElement) lane.nativeElement.scrollTop = 0;
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.resetScroll();
   }
 
   ngOnInit(): void {
