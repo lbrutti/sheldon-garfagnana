@@ -2,7 +2,7 @@ import {Component, computed, effect, inject, signal, Signal, untracked, Writable
 
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {TranslocoModule} from '@jsverse/transloco';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, RouterLink} from '@angular/router';
 import DataStoryInterface from '../../../interfaces/data-story.interface';
 import {DataInterface, InterventoInterface, TreemapDataInterface} from '../../../interfaces';
 import {normalizzaStringa} from '../../../utils';
@@ -20,7 +20,7 @@ import {FeatureCollection, Polygon} from 'geojson';
 
 @Component({
   selector: 'sheldon-story',
-  imports: [...components, TranslocoModule],
+  imports: [...components, TranslocoModule, RouterLink],
   templateUrl: './data-story.html',
   styleUrl: './data-story.scss',
   providers: [DecimalPipe],
@@ -28,9 +28,23 @@ import {FeatureCollection, Polygon} from 'geojson';
 export default class DataStory {
   private route = inject(ActivatedRoute);
 
-  protected storyId: string = '';
+  protected storyId = signal<string>('');
   protected story = computed<DataStoryInterface>(() => {
-    return this.apiService.dataStoriesList().find(ds => ds.id === this.storyId);
+    return this.apiService.dataStoriesList().find(ds => ds.id === this.storyId());
+  });
+
+  protected prevStory = computed<DataStoryInterface | null>(() => {
+    const list = this.apiService.dataStoriesList();
+    const idx = list.findIndex(ds => ds.id === this.storyId());
+    if (idx <= 0) return null;
+    return list[idx - 1];
+  });
+
+  protected nextStory = computed<DataStoryInterface | null>(() => {
+    const list = this.apiService.dataStoriesList();
+    const idx = list.findIndex(ds => ds.id === this.storyId());
+    if (idx === -1 || idx >= list.length - 1) return null;
+    return list[idx + 1];
   });
 
   protected interventi = computed<InterventoInterface[]>(() => {
@@ -106,7 +120,8 @@ export default class DataStory {
 
   constructor(protected apiService: ProjectsApiService) {
     this.route.params.subscribe(params => {
-      this.storyId = params['id'];
+      this.storyId.set(params['id']);
+      window.scrollTo(0, 0);
     });
 
     // effect(() => {
