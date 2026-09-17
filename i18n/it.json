@@ -51,7 +51,11 @@
     "populationByComune": "Popolazione per comune",
     "populationByComuneStacked": "Popolazione per comune (stacked bars)",
     "populationTrendByComune": "Andamento popolazione per comune",
-    "totalAreaPopulation": "Popolazione totale dell'area"
+    "totalAreaPopulation": "Popolazione totale dell'area",
+    "nav": {
+      "prev": "Storia precedente",
+      "next": "Prossima storia"
+    }
   },
   "pages": {
     "dataStoriesPlaceholder": "data-stories works!",
