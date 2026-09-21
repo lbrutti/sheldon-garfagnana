@@ -20,6 +20,7 @@ export const appConfig: ApplicationConfig = {
       iconRegistry.addSvgIcon('sheldon-info', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/info.svg'));
       iconRegistry.addSvgIcon('sheldon-download', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/download.svg'));
       iconRegistry.addSvgIcon('sheldon-share', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/share.svg'));
+      iconRegistry.addSvgIcon('sheldon-no-data', sanitizer.bypassSecurityTrustResourceUrl('assets/svg/no-data.svg'));
     }),
     provideAnimations(),
     provideRouter(routes),

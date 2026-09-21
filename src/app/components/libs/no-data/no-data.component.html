@@ -1,4 +1,8 @@
 <div class="sheldon-no-data">
-  <mat-icon aria-hidden="true">inbox</mat-icon>
+  @if (iconAvailable()) {
+    <mat-icon aria-hidden="true" svgIcon="sheldon-no-data"></mat-icon>
+  } @else {
+    <mat-icon aria-hidden="true">inbox</mat-icon>
+  }
   <span>{{ message() || ('noData.message' | transloco) }}</span>
 </div>
