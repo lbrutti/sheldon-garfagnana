@@ -28,33 +28,37 @@
   </ng-container>
 
   <ng-container content>
-    <div class="h-bars-container" #wrapper [style.--zero-pct]="zeroLinePct() + '%'">
-      @for (bar of bars(); track bar.label) {
-        <div class="h-bar-container"
-             [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar"
-        >
-          @if (hoveredBar() !== bar) {
-            <sheldon-two-lines-chart-label
-              text="{{bar.label}}"
-              sub="{{(bar.value|multiples) +' '+ udm()}}"/>
-          }
-          <div class="h-bar"
-               [class.negative]="bar.negative"
-               [style.width.%]="bar.pct"
-               [style.--bar-pct]="bar.pct + '%'"
-               [style.min-height]="'var(--min-bar-height, 96px)'"
-               [style.background]="bar.background"
-               (mouseenter)="onBarEnter(bar, $event)"
-               (mousemove)="onBarMove($event)"
-               (mouseleave)="onBarLeave()"
-               (touchstart)="onBarTouch(bar, $event)">
+    @if (hasData()) {
+      <div class="h-bars-container" #wrapper [style.--zero-pct]="zeroLinePct() + '%'">
+        @for (bar of bars(); track bar.label) {
+          <div class="h-bar-container"
+               [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar"
+          >
+            @if (hoveredBar() !== bar) {
+              <sheldon-two-lines-chart-label
+                text="{{bar.label}}"
+                sub="{{(bar.value|multiples) +' '+ udm()}}"/>
+            }
+            <div class="h-bar"
+                 [class.negative]="bar.negative"
+                 [style.width.%]="bar.pct"
+                 [style.--bar-pct]="bar.pct + '%'"
+                 [style.min-height]="'var(--min-bar-height, 96px)'"
+                 [style.background]="bar.background"
+                 (mouseenter)="onBarEnter(bar, $event)"
+                 (mousemove)="onBarMove($event)"
+                 (mouseleave)="onBarLeave()"
+                 (touchstart)="onBarTouch(bar, $event)">
+            </div>
           </div>
-        </div>
-      }
-      @if (zeroLinePct() > 0) {
-        <div class="zero-line"></div>
-      }
-    </div>
+        }
+        @if (zeroLinePct() > 0) {
+          <div class="zero-line"></div>
+        }
+      </div>
+    } @else if (showNoData()) {
+      <sheldon-no-data/>
+    }
 
     <sheldon-chart-tooltip
       [visible]="hoveredBar() !== null"

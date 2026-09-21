@@ -16,8 +16,11 @@
   </ng-container>
   <ng-container content>
 
-    <div class="kpi-value" [style.font-size.px]="effectiveFontSize()" #counter>
-    </div>
-
+    @if (hasData() || !showNoData()) {
+      <div class="kpi-value" [style.font-size.px]="effectiveFontSize()" #counter>
+      </div>
+    } @else if (!hasData() && showNoData()) {
+      <sheldon-no-data/>
+    }
   </ng-container>
 </sheldon-card>

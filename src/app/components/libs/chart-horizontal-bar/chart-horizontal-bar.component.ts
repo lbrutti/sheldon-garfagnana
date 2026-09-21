@@ -10,6 +10,7 @@ import {TranslocoModule} from '@jsverse/transloco';
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 
 import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-lines-label.component';
+import NoDataComponent from '../no-data/no-data.component';
 
 @Component({
   selector: 'sheldon-chart-h-bars',
@@ -22,6 +23,7 @@ import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-line
     ReduceToggleComponent,
     TranslocoModule,
     ChartTooltipComponent,
+    NoDataComponent,
   ],
   templateUrl: './chart-horizontal-bar.component.html',
   styleUrl: './chart-horizontal-bar.component.scss',

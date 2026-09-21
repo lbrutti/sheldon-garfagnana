@@ -35,6 +35,9 @@
   "cardDescrizione": {
     "detail": "Dettaglio intervento"
   },
+  "noData": {
+    "message": "Nessun dato disponibile per questa selezione"
+  },
   "popup": {
     "prosegui": "Prosegui"
   },

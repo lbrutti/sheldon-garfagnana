@@ -31,6 +31,7 @@ import {MultiplesPipe} from '../../../pipes';
 import {getRandomGradient, normalizzaStringa, resolveColorVariable} from '../../../utils';
 import {ThemeService} from '../../../services/theme.service';
 import {TranslocoModule} from '@jsverse/transloco';
+import NoDataComponent from '../no-data/no-data.component';
 
 const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
@@ -198,6 +199,7 @@ function buildGridGeoJsonForViewport(
     MatButtonToggle,
     MultiplesPipe,
     TranslocoModule,
+    NoDataComponent,
   ],
   templateUrl: './sheldon-mosaic-map.component.html',
   styleUrl: './sheldon-mosaic-map.component.scss',
@@ -214,6 +216,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   tooltipProperties = input<{ property: string, label: string }[]>([]);
   categoria = input<string>('ambiente');
   externalFilters = input<Record<string, string>>({});
+  showNoData = input<boolean>(true);
 
   // ── Outputs ────────────────────────────────────────────────────────────────
   polygonHover = output<Feature<Polygon>>();
@@ -268,6 +271,9 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   );
 
   // ── Computed ───────────────────────────────────────────────────────────────
+
+  /** Whether data() carries any features to color/report on. */
+  protected readonly hasData = computed(() => (this.data()?.features.length ?? 0) > 0);
 
   /** Dataset shaped for sheldon-dynamic-filter. */
   comuniDataset = computed(() => {

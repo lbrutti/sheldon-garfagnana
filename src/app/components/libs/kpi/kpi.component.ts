@@ -15,10 +15,11 @@ import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
 import {getReducedValue} from '../../../utils';
 import {TranslocoModule} from '@jsverse/transloco';
+import NoDataComponent from '../no-data/no-data.component';
 
 @Component({
   selector: 'sheldon-kpi',
-  imports: [CardComponent, DynamicFilterComponent,  TranslocoModule],
+  imports: [CardComponent, DynamicFilterComponent, TranslocoModule, NoDataComponent],
   templateUrl: './kpi.component.html',
   styleUrl: './kpi.component.scss',
 })
@@ -74,6 +75,9 @@ export default class KpiComponent {
       : this.data();
     return getReducedValue(filteredData, this.reduceBy());
   });
+
+  showNoData = input<boolean>(true);
+  protected readonly hasData = computed(() => this.aggregatedValue());
 
 
   protected onFilterChange($event: FilterOptionInterface[]) {

@@ -234,6 +234,7 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
 
     effect(() => {
       const interventi = this.interventiFiltrati();
+      const comuneFiltro = this.comuneSelezionato();
       const config = this.apiService.dashboardParsingConfig();
       const settings = this.settings();
       if (!config) return;
@@ -276,7 +277,10 @@ export default class Dashboard implements OnInit, AfterViewInit, OnDestroy {
               break;
             }
             case 'randomByUnion': {
-              sig.set(shuffleArray(interventi.filter(i => i.unione === entry.unioneFilter))[0]);
+              const pool = interventi.filter(i =>
+                i.unione === entry.unioneFilter && (!comuneFiltro || i.comune === comuneFiltro)
+              );
+              sig.set(shuffleArray(pool)[0]);
               break;
             }
             case 'mapMerge': {

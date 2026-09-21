@@ -42,6 +42,9 @@ export default interface WidgetSetting {
   //testo mostrato nell'overlay info della card
   info?: string,
 
+  //mostra il pannello "nessun dato" quando il widget non ha dati da visualizzare (default: true)
+  showNoData?: boolean,
+
   // for data-story: which lane this widget belongs to
   lane?: 'interventi' | 'istat',
 

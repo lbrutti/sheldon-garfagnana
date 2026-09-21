@@ -1,35 +1,39 @@
-<div class="map-tooltip" [style.background]="color()">
-  <strong class="map-tooltip-item-title" [style.color]="color()">{{ intervento().nome }}</strong>
+@if (hasData()) {
+  <div class="map-tooltip" [style.background]="color()">
+    <strong class="map-tooltip-item-title" [style.color]="color()">{{ intervento().nome }}</strong>
 
-  @if (intervento().comune) {
-    <div class="map-tooltip-item">{{ intervento().comune }}</div>
-  }
-  @if (intervento().stato) {
-    <div class="map-tooltip-item">{{ intervento().stato }}</div>
-  }
-  @if (intervento().importoTotale) {
-    <div class="map-tooltip-item">
-      € {{ formatter.format(intervento().importoTotale!) }}
-    </div>
-  }
-  @if (intervento().categoria) {
-    <div class="map-tooltip-item">
-      <span class="map-tooltip-item-chip">{{ intervento().categoria }}</span>
-    </div>
-  }
-
-  @if (intervento().descrizione) {
-    <div class="map-tooltip-item map-tooltip-item-descrizione {{ descrizioneEllipsisClass() }}">
-      {{ intervento().descrizione }}
-    </div>
-  }
-
-  @if (showLink() && intervento().id) {
-    <a [routerLink]="['/intervento', intervento().id]" [style.color]="color()">
-      <div class="map-tooltip-item map-tooltip-item-link">
-        Scopri il progetto
-        <mat-icon svgIcon="sheldon-download"/>
+    @if (intervento().comune) {
+      <div class="map-tooltip-item">{{ intervento().comune }}</div>
+    }
+    @if (intervento().stato) {
+      <div class="map-tooltip-item">{{ intervento().stato }}</div>
+    }
+    @if (intervento().importoTotale) {
+      <div class="map-tooltip-item">
+        € {{ formatter.format(intervento().importoTotale!) }}
       </div>
-    </a>
-  }
-</div>
+    }
+    @if (intervento().categoria) {
+      <div class="map-tooltip-item">
+        <span class="map-tooltip-item-chip">{{ intervento().categoria }}</span>
+      </div>
+    }
+
+    @if (intervento().descrizione) {
+      <div class="map-tooltip-item map-tooltip-item-descrizione {{ descrizioneEllipsisClass() }}">
+        {{ intervento().descrizione }}
+      </div>
+    }
+
+    @if (showLink() && intervento().id) {
+      <a [routerLink]="['/intervento', intervento().id]" [style.color]="color()">
+        <div class="map-tooltip-item map-tooltip-item-link">
+          Scopri il progetto
+          <mat-icon svgIcon="sheldon-download"/>
+        </div>
+      </a>
+    }
+  </div>
+} @else if (showNoData()) {
+  <sheldon-no-data/>
+}

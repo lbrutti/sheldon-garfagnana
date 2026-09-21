@@ -21,6 +21,7 @@ import HeaderComponent from './header/header.component';
 import PopupComponent from './popup/popup.component';
 import FooterLoghiComponent from './footer-loghi/footer-loghi.component';
 import MapTooltipComponent from './map-tooltip/map-tooltip.component';
+import NoDataComponent from './no-data/no-data.component';
 
 export * from './card/card.component';
 export * from './chart-label/chart-label.component';
@@ -38,6 +39,7 @@ export {default as SheldonMosaicMapComponent} from './sheldon-mosaic-map/sheldon
 export {default as PopupComponent} from './popup/popup.component';
 export {default as FooterLoghiComponent} from './footer-loghi/footer-loghi.component';
 export {default as MapTooltipComponent} from './map-tooltip/map-tooltip.component';
+export {default as NoDataComponent} from './no-data/no-data.component';
 
 
 export const components = [
@@ -64,6 +66,7 @@ export const components = [
   ThemeSwitchComponent,
   PopupComponent,
   FooterLoghiComponent,
-  MapTooltipComponent
+  MapTooltipComponent,
+  NoDataComponent
 ];
 

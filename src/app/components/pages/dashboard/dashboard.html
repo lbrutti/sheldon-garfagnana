@@ -39,6 +39,7 @@
               [limit]="setting.limit ?? 0"
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
               [data]="$any(dataMap()[setting.data])"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-chart-h-bars') {
@@ -59,6 +60,7 @@
               [auxReduce]="setting.auxReduce ?? []"
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
               [data]="$any(dataMap()[setting.data])"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-kpi') {
@@ -77,6 +79,7 @@
               [udm]="setting.udm ?? null"
               [data]="$any(dataMap()[setting.data])"
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-list') {
@@ -94,6 +97,7 @@
               [externalFilters]="externalFiltersFor(setting)"
               [data]="$any(dataMap()[setting.data])"
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-segmented-chart') {
@@ -112,6 +116,7 @@
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
               [data]="$any(dataMap()[setting.data])"
               [expandOnHover]="true"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-chart-treemap') {
@@ -128,6 +133,7 @@
               [auxReduce]="$any(setting.auxReduce ?? [])"
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
               [data]="$any(dataMap()[setting.data])"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-mosaic-map') {
@@ -141,6 +147,7 @@
               [tooltipProperties]="setting.tooltipProperties"
               [externalFilters]="mosaicMapExternalFilters()"
               [categoria]="categoriaCorrente() || getCategoriaRandom(idx)"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-card-descrizione') {
@@ -149,12 +156,14 @@
               [title]="setting.title ?? 'nome'"
               [description]="setting.desc"
               [url]="setting.url"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
           @case ('sheldon-map-tooltip') {
             <sheldon-map-tooltip
               [intervento]="$any(dataMap()[setting.data])"
               [color]="tooltipColorFor(idx, dataMap()[setting.data])"
+              [showNoData]="setting.showNoData ?? false"
             />
           }
         }

@@ -3,7 +3,7 @@ import {csvToJson} from './data.adapter';
 
 const JSON_FIELDS = new Set(['auxReduce', 'groups', 'tooltipProperties']);
 const NUMBER_FIELDS = new Set(['limit', 'tileWidth', 'minFontSize']);
-const BOOLEAN_FIELDS = new Set(['showSorting']);
+const BOOLEAN_FIELDS = new Set(['showSorting', 'showNoData']);
 
 export function parseDashboardSettingsCsv(csv: string): WidgetSetting[] {
   const rows: any[] = csvToJson(csv);
@@ -19,7 +19,9 @@ export function parseDashboardSettingsCsv(csv: string): WidgetSetting[] {
         } else if (NUMBER_FIELDS.has(k)) {
           entry[k] = Number(v);
         } else if (BOOLEAN_FIELDS.has(k)) {
-          entry[k] = (v as string).toLowerCase().trim() === 'true';
+          // Sheet values arrive as 'true'/'false' or '1'/'0' depending on the column.
+          const normalized = String(v).toLowerCase().trim();
+          entry[k] = normalized === 'true' || normalized === '1';
         } else {
           entry[k] = typeof v === 'string' ? v.trim() : v;
         }

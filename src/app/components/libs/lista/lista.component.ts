@@ -19,6 +19,7 @@ import {getReducedValueByLabel} from '../../../utils';
 import {TranslocoModule} from '@jsverse/transloco';
 import {RouterLink} from '@angular/router';
 import {ThemeService} from '../../../services/theme.service';
+import NoDataComponent from '../no-data/no-data.component';
 
 @Component({
   selector: 'sheldon-list',
@@ -33,7 +34,8 @@ import {ThemeService} from '../../../services/theme.service';
     CdkVirtualForOf,
     MultiplesPipe,
     TranslocoModule,
-    RouterLink
+    RouterLink,
+    NoDataComponent,
   ],
   templateUrl: './lista.component.html',
   styleUrl: './lista.component.scss',
@@ -114,6 +116,10 @@ export default class ListaComponent {
   }
 
   udm = input<string | null>('€');
+
+  showNoData = input<boolean>(true);
+  protected readonly hasData = computed(() => this.filteredData().length > 0);
+
   totaleValore = computed<number>(() => {
     return this.filteredData()
       .map(d => d.valore)

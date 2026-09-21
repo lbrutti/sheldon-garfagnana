@@ -13,6 +13,7 @@ import {
 } from '@angular/core';
 import {TranslocoService} from '@jsverse/transloco';
 import CardComponent from '../card/card.component';
+import NoDataComponent from '../no-data/no-data.component';
 import {MatButtonToggleChange} from '@angular/material/button-toggle';
 import {DataInterface, FilterOptionInterface} from '../../../interfaces';
 import {DynamicFilterComponent} from '../dynamic-filter/dynamic-filter.component';
@@ -45,6 +46,7 @@ export interface BarItem {
     TranslocoModule,
     ChartTooltipComponent,
     MultiplesPipe,
+    NoDataComponent,
   ],
   templateUrl: './chart-bar.component.html',
   styleUrl: './chart-bar.component.scss',
@@ -152,6 +154,9 @@ export default class ChartBarComponent implements OnInit, OnDestroy {
   });
 
   categoria = input<string>('');
+
+  showNoData = input<boolean>(true);
+  protected readonly hasData = computed(() => this.bars().length > 0);
 
   getGroupedKeys(grouped: any): string[] {
     const reduce = this.currentReduce();

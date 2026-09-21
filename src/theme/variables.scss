@@ -8,7 +8,7 @@ $breakpoint-sm: 599px;
 // tile-N width = N * ($col-unit + $grid-gutter) - $grid-gutter
 // --sheldon-col is the fluid runtime value (clamps between 72–96px via 8vw).
 $col-unit: 96px;
-$col-min: 60px;   // minimum column unit — tiles stop shrinking below this width
+$col-min: 60px; // minimum column unit — tiles stop shrinking below this width
 $grid-gutter: 16px;
 
 // Gradient variables on :root so getComputedStyle(document.documentElement) resolves them.
@@ -20,12 +20,16 @@ $grid-gutter: 16px;
 // At 1366px (SD/laptop), drop to 90px: floor((1270+16)/106) = 12 masonry slots
 // in the 1270px content area → 4 tile--3-wide widgets per row instead of 3.
 @media (max-width: $breakpoint-lg) {
-  :root { --sheldon-col: 90px; }
+  :root {
+    --sheldon-col: 90px;
+  }
 }
 
 // At 959px (tablet), drop to 56px: 12 slots in 863px → 4 tile--3s per row.
 @media (max-width: $breakpoint-md) {
-  :root { --sheldon-col: 56px; }
+  :root {
+    --sheldon-col: 56px;
+  }
 }
 
 :root {
@@ -92,6 +96,19 @@ body.sheldon-theme-bw {
 
   --color-gradient-societa-start: #000;
   --color-gradient-societa-end: #000;
+
+
+  --color-gradient-cura-start: #000;
+  --color-gradient-cura-end: #000;
+
+  --color-gradient-istruzione-start: #000;
+  --color-gradient-istruzione-end: #000;
+
+  --color-gradient-sviluppo-start: #000;
+  --color-gradient-sviluppo-end: #000;
+
+  --color-gradient-territorio-start: #000;
+  --color-gradient-territorio-end: #000;
 
   --mat-sys-secondary-container: rgb(219 219 219 / 0.44);
 }

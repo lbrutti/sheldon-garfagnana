@@ -21,32 +21,36 @@
     <!--    <span class="list-count">{{ 'list.itemsCount' | transloco: { count: filteredData().length } }}</span>-->
   </ng-container>
   <ng-container content>
-    <mat-list>
-      <!--      @for (dato of filteredData(); track dato) {-->
-      <cdk-virtual-scroll-viewport
-        appendOnly
-        itemSize="30"
-        class="list-container">
+    @if (hasData()) {
+      <mat-list>
+        <!--      @for (dato of filteredData(); track dato) {-->
+        <cdk-virtual-scroll-viewport
+          appendOnly
+          itemSize="30"
+          class="list-container">
 
-        <mat-list-item *cdkVirtualFor="let dato of filteredData()">
-          <div class="list-row">
+          <mat-list-item *cdkVirtualFor="let dato of filteredData()">
+            <div class="list-row">
 
-              <span class="nome-container">
-                <a [routerLink]="'/'+pageUrl()+'/'+dato.pageUrlId"
-                   [queryParams]="{theme: theme()}"
-                   target="_blank">{{ dato.nome }}</a>
-              </span>
-            <span class="valore-container">{{ dato.valore | multiples }}</span>
-          </div>
-        </mat-list-item>
-        <mat-list-item>
-          <div class="list-row" [style.font-weight]="'bold'">
-            <span class="nome-container">{{ 'list.total' | transloco }}</span>
-            <span class="valore-container">{{ totaleValore() | multiples }}</span>
-          </div>
-        </mat-list-item>
-      </cdk-virtual-scroll-viewport>
-      <!--      }-->
-    </mat-list>
+                <span class="nome-container">
+                  <a [routerLink]="'/'+pageUrl()+'/'+dato.pageUrlId"
+                     [queryParams]="{theme: theme()}"
+                     target="_blank">{{ dato.nome }}</a>
+                </span>
+              <span class="valore-container">{{ dato.valore | multiples }}</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item>
+            <div class="list-row" [style.font-weight]="'bold'">
+              <span class="nome-container">{{ 'list.total' | transloco }}</span>
+              <span class="valore-container">{{ totaleValore() | multiples }}</span>
+            </div>
+          </mat-list-item>
+        </cdk-virtual-scroll-viewport>
+        <!--      }-->
+      </mat-list>
+    } @else if (showNoData()) {
+      <sheldon-no-data/>
+    }
   </ng-container>
 </sheldon-card>

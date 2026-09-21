@@ -2,6 +2,7 @@ import {Component, computed, input} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {RouterLink} from '@angular/router';
 import {InterventoInterface} from '../../../interfaces';
+import NoDataComponent from '../no-data/no-data.component';
 
 /** Maps a line count to one of the shared *-lines-ellipsed utility classes (src/theme/sheldon-base.scss). */
 const ELLIPSIS_CLASS_BY_LINES: Record<number, string> = {
@@ -17,13 +18,15 @@ const ELLIPSIS_CLASS_BY_LINES: Record<number, string> = {
 
 @Component({
   selector: 'sheldon-map-tooltip',
-  imports: [MatIcon, RouterLink],
+  imports: [MatIcon, RouterLink, NoDataComponent],
   templateUrl: './map-tooltip.component.html',
   styleUrl: './map-tooltip.component.scss',
 })
 export default class MapTooltipComponent {
   intervento = input.required<Partial<InterventoInterface>>();
   color = input<string>('#000');
+  showNoData = input<boolean>(true);
+  protected readonly hasData = computed(() => !!this.intervento()?.nome);
 
   /**
    * Number of lines to clamp the "descrizione" text to, using the existing

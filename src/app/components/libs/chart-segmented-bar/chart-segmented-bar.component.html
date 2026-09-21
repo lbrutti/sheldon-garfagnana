@@ -27,39 +27,43 @@
   </ng-container>
   <ng-container content>
     <!-- ── CUSTOM SEGMENTED BAR ───────────────────────── -->
-    <div class="pop-bar-container" #wrapper>
-      <div
-        class="pop-bar"
-        role="img"
-        [attr.aria-label]="'segmentedBar.populationDistribution' | transloco: { title: title() }"
-      >
-        @for (seg of segments(); track seg.label; let i = $index) {
-          <div
-            class="pop-segment"
-            [class.pop-segment--hovered]="expandOnHover() && hoveredSegment() === seg"
-            [class.pop-segment--dimmed]="hoveredSegment() !== null && hoveredSegment() !== seg"
-            [style.flex]="expandOnHover() && hoveredSegment() === seg ? seg.percentage * 3 : seg.percentage"
-            [style.min-width]="expandOnHover() && hoveredSegment() === seg ? 'max-content' : null"
-            [style.background]="seg.color"
-            (mouseenter)="onSegmentEnter(seg, $event)"
-            (mousemove)="onSegmentMove($event)"
-            (mouseleave)="onSegmentLeave()"
-            (touchstart)="onSegmentTouch(seg, $event)"
-            [attr.aria-label]="seg.label + ': ' + formatPercentage(seg)"
-          >
-            @if (hoveredSegment() !== seg) {
-              <div class="pop-segment__content" [style.color]="seg.textColor">
-                <sheldon-two-lines-chart-label
-                  class="pop-segment__label"
-                  text="{{ seg.shortLabel }}"
-                  sub="{{ formatPercentage(seg) }}"
-                />
-              </div>
-            }
-          </div>
-        }
+    @if (hasData()) {
+      <div class="pop-bar-container" #wrapper>
+        <div
+          class="pop-bar"
+          role="img"
+          [attr.aria-label]="'segmentedBar.populationDistribution' | transloco: { title: title() }"
+        >
+          @for (seg of segments(); track seg.label; let i = $index) {
+            <div
+              class="pop-segment"
+              [class.pop-segment--hovered]="expandOnHover() && hoveredSegment() === seg"
+              [class.pop-segment--dimmed]="hoveredSegment() !== null && hoveredSegment() !== seg"
+              [style.flex]="expandOnHover() && hoveredSegment() === seg ? seg.percentage * 3 : seg.percentage"
+              [style.min-width]="expandOnHover() && hoveredSegment() === seg ? 'max-content' : null"
+              [style.background]="seg.color"
+              (mouseenter)="onSegmentEnter(seg, $event)"
+              (mousemove)="onSegmentMove($event)"
+              (mouseleave)="onSegmentLeave()"
+              (touchstart)="onSegmentTouch(seg, $event)"
+              [attr.aria-label]="seg.label + ': ' + formatPercentage(seg)"
+            >
+              @if (hoveredSegment() !== seg) {
+                <div class="pop-segment__content" [style.color]="seg.textColor">
+                  <sheldon-two-lines-chart-label
+                    class="pop-segment__label"
+                    text="{{ seg.shortLabel }}"
+                    sub="{{ formatPercentage(seg) }}"
+                  />
+                </div>
+              }
+            </div>
+          }
+        </div>
       </div>
-    </div>
+    } @else if (showNoData()) {
+      <sheldon-no-data/>
+    }
 
     <sheldon-chart-tooltip
       [visible]="hoveredSegment() !== null"

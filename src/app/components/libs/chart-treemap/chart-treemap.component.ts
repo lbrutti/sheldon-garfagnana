@@ -26,6 +26,7 @@ import ChartTwoLinesLabelComponent from '../chart-two-lines-label/chart-two-line
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 import {TranslocoModule} from '@jsverse/transloco';
 import {ThemeService} from '../../../services/theme.service';
+import NoDataComponent from '../no-data/no-data.component';
 
 type ReduceMode = 'sum' | 'count' | 'max';
 
@@ -49,7 +50,8 @@ export interface TreemapTile {
     ReduceToggleComponent,
     ChartTwoLinesLabelComponent,
     ChartTooltipComponent,
-    TranslocoModule
+    TranslocoModule,
+    NoDataComponent,
   ],
   providers: [DecimalPipe, MultiplesPipe],
   templateUrl: './chart-treemap.component.html',
@@ -175,6 +177,9 @@ export default class ChartTreemapComponent implements OnInit, OnDestroy {
     });
   });
   categoria = input<string>('');
+
+  showNoData = input<boolean>(true);
+  protected readonly hasData = computed(() => this.tiles().length > 0);
 
   // ── Hover / touch tooltip ─────────────────────────────────────────────────────
   private readonly wrapperRef = viewChild<ElementRef<HTMLElement>>('wrapper');

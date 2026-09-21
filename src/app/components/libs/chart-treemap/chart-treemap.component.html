@@ -26,28 +26,32 @@
   <ng-container content>
 
     <!--  TREEMAP -->
-    <div class="treemap-wrapper" #wrapper>
-      @for (tile of tiles(); track tile.label) {
-        <div
-          class="treemap-tile cursor-pointer"
-          [class.dimmed]="hoveredTile() !== null && hoveredTile() !== tile"
-          [style.left.%]="tile.x"
-          [style.top.%]="tile.y"
-          [style.width.%]="tile.w"
-          [style.height.%]="tile.h"
-          [style.background]="tile.color"
-          (mouseenter)="onTileEnter(tile, $event)"
-          (mousemove)="onTileMove($event)"
-          (mouseleave)="onTileLeave()"
-          (touchstart)="onTileTouch(tile, $event)">
-          @if (hoveredTile() !== tile) {
-            <sheldon-two-lines-chart-label
-              [text]="tile.label"
-              [sub]="tile.formattedValue"/>
-          }
-        </div>
-      }
-    </div>
+    @if (hasData()) {
+      <div class="treemap-wrapper" #wrapper>
+        @for (tile of tiles(); track tile.label) {
+          <div
+            class="treemap-tile cursor-pointer"
+            [class.dimmed]="hoveredTile() !== null && hoveredTile() !== tile"
+            [style.left.%]="tile.x"
+            [style.top.%]="tile.y"
+            [style.width.%]="tile.w"
+            [style.height.%]="tile.h"
+            [style.background]="tile.color"
+            (mouseenter)="onTileEnter(tile, $event)"
+            (mousemove)="onTileMove($event)"
+            (mouseleave)="onTileLeave()"
+            (touchstart)="onTileTouch(tile, $event)">
+            @if (hoveredTile() !== tile) {
+              <sheldon-two-lines-chart-label
+                [text]="tile.label"
+                [sub]="tile.formattedValue"/>
+            }
+          </div>
+        }
+      </div>
+    } @else if (showNoData()) {
+      <sheldon-no-data/>
+    }
 
     <!--  HOVER / TOUCH TOOLTIP -->
     <sheldon-chart-tooltip

@@ -115,6 +115,11 @@
         }
       </div>
 
+      <!-- No-data overlay -->
+      @if (!hasData() && showNoData()) {
+        <sheldon-no-data class="mosaic-no-data-overlay"/>
+      }
+
       <!-- Hover tooltip -->
       @if (hoveredFeature() && tooltipPos()) {
         <div

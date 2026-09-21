@@ -4,14 +4,18 @@
   [showButtons]="false">
   <ng-container title>{{ data()[title()] }}</ng-container>
   <ng-container content>
-    <div class="sheldon-card-descrizione"
-         [class.has-button]="data()[url()]"
-         [ngClass]="{'eight-lines-ellipsed':!data()[url()], 'seven-lines-ellipsed':data()[url()]}"
-    >
-      {{ data()[description()] }}
-    </div>
-    @if (data()[url()]) {
-      <sheldon-link-button [data]="data()" [url]="url()"></sheldon-link-button>
+    @if (hasData()) {
+      <div class="sheldon-card-descrizione"
+           [class.has-button]="data()[url()]"
+           [ngClass]="{'eight-lines-ellipsed':!data()[url()], 'seven-lines-ellipsed':data()[url()]}"
+      >
+        {{ data()[description()] }}
+      </div>
+      @if (data()[url()]) {
+        <sheldon-link-button [data]="data()" [url]="url()"></sheldon-link-button>
+      }
+    } @else if (showNoData()) {
+      <sheldon-no-data/>
     }
   </ng-container>
 </sheldon-card>

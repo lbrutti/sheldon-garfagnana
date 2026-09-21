@@ -26,6 +26,7 @@ import {MultiplesPipe} from '../../../pipes';
 import {TranslocoModule} from '@jsverse/transloco';
 import ChartTooltipComponent from '../chart-tooltip/chart-tooltip.component';
 import {ThemeService} from '../../../services/theme.service';
+import NoDataComponent from '../no-data/no-data.component';
 
 export interface SegmentInterface {
   label: string;
@@ -50,6 +51,7 @@ export interface SegmentInterface {
     ChartTwoLinesLabelComponent,
     TranslocoModule,
     ChartTooltipComponent,
+    NoDataComponent,
   ],
   providers: [MultiplesPipe],
   templateUrl: './chart-segmented-bar.component.html',
@@ -141,6 +143,9 @@ export default class ChartSegmentedBarComponent implements OnInit, OnDestroy {
 
     return segments;
   });
+
+  showNoData = input<boolean>(true);
+  protected readonly hasData = computed(() => this.segments().length > 0);
 
   constructor(private readonly multiples: MultiplesPipe) {
     window.addEventListener('scroll', this.scrollListener, {passive: true, capture: true});

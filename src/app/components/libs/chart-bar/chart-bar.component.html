@@ -26,30 +26,34 @@
     }
   </ng-container>
   <ng-container content>
-    <div class="bars-container" #wrapper [style.--zero-pct]="zeroLinePct() + '%'">
-      @for (bar of bars(); track bar.label) {
-        <div
-          class="bar-col"
-          [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar">
+    @if (hasData()) {
+      <div class="bars-container" #wrapper [style.--zero-pct]="zeroLinePct() + '%'">
+        @for (bar of bars(); track bar.label) {
           <div
-            class="bar"
-            [class.negative]="bar.negative"
-            [style.height.%]="bar.pct"
-            [style.background]="bar.background"
-            (mouseenter)="onBarEnter(bar, $event)"
-            (mousemove)="onBarMove($event)"
-            (mouseleave)="onBarLeave()"
-            (touchstart)="onBarTouch(bar, $event)">
-            @if (hoveredBar() !== bar) {
-              <sheldon-chart-label [text]="bar.label"/>
-            }
+            class="bar-col"
+            [class.dimmed]="hoveredBar() !== null && hoveredBar() !== bar">
+            <div
+              class="bar"
+              [class.negative]="bar.negative"
+              [style.height.%]="bar.pct"
+              [style.background]="bar.background"
+              (mouseenter)="onBarEnter(bar, $event)"
+              (mousemove)="onBarMove($event)"
+              (mouseleave)="onBarLeave()"
+              (touchstart)="onBarTouch(bar, $event)">
+              @if (hoveredBar() !== bar) {
+                <sheldon-chart-label [text]="bar.label"/>
+              }
+            </div>
           </div>
-        </div>
-      }
-      @if (zeroLinePct() > 0) {
-        <div class="zero-line"></div>
-      }
-    </div>
+        }
+        @if (zeroLinePct() > 0) {
+          <div class="zero-line"></div>
+        }
+      </div>
+    } @else if (showNoData()) {
+      <sheldon-no-data/>
+    }
 
     <sheldon-chart-tooltip
       [visible]="hoveredBar() !== null"
