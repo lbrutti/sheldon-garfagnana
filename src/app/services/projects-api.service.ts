@@ -1,4 +1,4 @@
-import {computed, Injectable, signal, WritableSignal} from '@angular/core';
+import {computed, effect, Injectable, signal, WritableSignal} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {DashboardParsingConfig, DataInterface, InterventoInterface} from '../interfaces';
 import {csvToJson, parseDashboardParsingConfigCsv, parseDashboardSettingsCsv} from '../adapters';
@@ -8,11 +8,16 @@ import WidgetSetting, {StoryWidgetSetting} from '../interfaces/widget-setting.in
 import DataStoryInterface from '../interfaces/data-story.interface';
 import {parseDataStoryCsv} from '../adapters/data-story.adapter';
 import {normalizzaStringa} from '../utils';
+import {ThemeService} from './theme.service';
 
 export interface CategoriaColore {
   nome: string;
   coloreStart: string;
   coloreEnd: string;
+  // Dark-mode ("system"/B&W theme) variants — read from the same sheet's
+  // coloreStartDark/coloreEndDark columns; fall back to the light colors when blank.
+  coloreStartDark?: string;
+  coloreEndDark?: string;
 }
 
 @Injectable({
@@ -44,9 +49,25 @@ export class ProjectsApiService {
 
   constructor(
     protected readonly httpClient: HttpClient,
+    private readonly themeService: ThemeService,
   ) {
     this.getUnioniNascoste();
     this.getCategorieColori();
+
+    // Re-apply the category gradient CSS vars whenever the fetched colors or the
+    // active theme change, picking the dark-cell colors while the B&W/"system"
+    // theme is active (falling back to light colors when a dark cell is blank).
+    effect(() => {
+      const categorie = this._categorie();
+      const isDark = this.themeService.theme() === 'system';
+      categorie.forEach(({nome, coloreStart, coloreEnd, coloreStartDark, coloreEndDark}) => {
+        const key = normalizzaStringa(nome);
+        const start = (isDark && coloreStartDark) ? coloreStartDark : coloreStart;
+        const end = (isDark && coloreEndDark) ? coloreEndDark : coloreEnd;
+        document.documentElement.style.setProperty(`--color-gradient-${key}-start`, start);
+        document.documentElement.style.setProperty(`--color-gradient-${key}-end`, end);
+      });
+    });
   }
 
   getDatiIstatByFvid(fvid: string, gid: string, query: string = 'SELECT *') {
@@ -97,13 +118,7 @@ export class ProjectsApiService {
     this._loadingCount.update(n => n + 1);
     this.httpClient.get(environment.settings.categorieUrl, {responseType: 'text'}).subscribe({
       next: (res: any) => {
-        const categorie = csvToJson(res) as CategoriaColore[];
-        categorie.forEach(({nome, coloreStart, coloreEnd}) => {
-          const key = normalizzaStringa(nome);
-          document.documentElement.style.setProperty(`--color-gradient-${key}-start`, coloreStart);
-          document.documentElement.style.setProperty(`--color-gradient-${key}-end`, coloreEnd);
-        });
-        this._categorie.set(categorie);
+        this._categorie.set(csvToJson(res) as CategoriaColore[]);
         this._loadingCount.update(n => n - 1);
         this._fetched.add('categorieColori');
       },

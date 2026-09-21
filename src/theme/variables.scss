@@ -73,43 +73,11 @@ $grid-gutter: 16px;
   --mat-button-toggle-label-text-weight: bolder;
 }
 
-// Black-and-white-only theme: all category gradients collapse to grayscale
+// Black-and-white-only theme. Category gradient colors are no longer hardcoded to
+// flat black here — ProjectsApiService now reactively writes the sheet's dark-mode
+// cells (coloreStartDark/coloreEndDark) onto --color-gradient-*-start/-end whenever
+// this theme is active, so real per-category colors render instead.
 body.sheldon-theme-bw {
-
-  --color-gradient-ambiente-start: #000;
-  --color-gradient-ambiente-end: #000;
-
-  --color-gradient-cultura-start: #000;
-  --color-gradient-cultura-end: #000;
-
-  --color-gradient-mobilita-start: #000;
-  --color-gradient-mobilita-end: #000;
-
-  --color-gradient-sicurezza-start: #000;
-  --color-gradient-sicurezza-end: #000;
-
-  --color-gradient-economia-start: #000;
-  --color-gradient-economia-end: #000;
-
-  --color-gradient-sociale-start: #000;
-  --color-gradient-sociale-end: #000;
-
-  --color-gradient-societa-start: #000;
-  --color-gradient-societa-end: #000;
-
-
-  --color-gradient-cura-start: #000;
-  --color-gradient-cura-end: #000;
-
-  --color-gradient-istruzione-start: #000;
-  --color-gradient-istruzione-end: #000;
-
-  --color-gradient-sviluppo-start: #000;
-  --color-gradient-sviluppo-end: #000;
-
-  --color-gradient-territorio-start: #000;
-  --color-gradient-territorio-end: #000;
-
   --mat-sys-secondary-container: rgb(219 219 219 / 0.44);
 }
 
