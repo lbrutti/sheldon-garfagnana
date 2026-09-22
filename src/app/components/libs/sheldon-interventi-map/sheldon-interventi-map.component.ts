@@ -159,11 +159,15 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
     const radiusMeters =
       iconDiameterPx * INTERVENTI_JITTER_MARGIN * metersPerPixel(avgLat, zoom);
 
+    // Passed as `constrain` rather than applied after the fact: clamping a jittered
+    // point back into its comune's cells can snap it into the same spot as a
+    // neighbor (e.g. both inset to the same corner of a small cell), which a
+    // separate post-pass has no way to undo. Interleaving it into the relaxation
+    // loop lets the next pass detect and re-resolve any overlap the clamp causes.
     const jitteredCoordinates = jitterOverlappingPoints(
       filtered.map((i) => [i.long, i.lat] as [number, number]),
       radiusMeters,
-    ).map((coordinate, index) =>
-      clampPointToCells(coordinate, cellsByComune.get(filtered[index].comune) ?? []),
+      (point, index) => clampPointToCells(point, cellsByComune.get(filtered[index].comune) ?? []),
     );
     return {
       type: 'FeatureCollection',

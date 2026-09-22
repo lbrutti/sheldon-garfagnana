@@ -76,8 +76,10 @@ const JITTER_DAMPING = 0.5;
  * corrections it received that pass (not their sum — a point touching many
  * overlapping neighbors at once would otherwise accumulate one shift per
  * neighbor and could be flung arbitrarily far in a single pass), scaled by
- * `JITTER_DAMPING` to avoid overshooting back into a new overlap. Repeats
- * until no pair overlaps or the iteration cap is hit.
+ * `JITTER_DAMPING` to avoid overshooting back into a new overlap. `radiusMeters`
+ * is therefore the *minimum* separation this function will settle for — callers
+ * should pass the on-screen marker size (plus any margin) so two markers are
+ * never left closer together than they are wide.
  *
  * This is deliberately global rather than cluster-then-spiral: resolving
  * pairs in isolated groups can push a point *into* a third point it wasn't
@@ -86,43 +88,79 @@ const JITTER_DAMPING = 0.5;
  * already-resolved pair, since a later pass would simply push it apart
  * again.
  *
+ * If `constrain` is given (e.g. to keep each point inside its own region's
+ * borders), it's applied *inside* the relaxation loop — after every pass's
+ * repulsion, not as a separate step afterwards — and a pass that moves any
+ * point counts as unfinished, same as a pass that finds an overlap. Applying
+ * it only once at the end, after repulsion has already declared victory,
+ * would let it snap two already-separated points back together (e.g. both
+ * clamped to the same inset corner of a small region) with nothing left to
+ * push them apart again; interleaving it means any overlap the clamp
+ * reintroduces gets caught and re-relaxed on the next pass, so both
+ * constraints — no overlap, inside the border — converge together instead
+ * of one undoing the other.
+ *
  * Points are projected to a local planar (meters) frame using one shared
  * reference latitude — longitude degrees are narrower than latitude degrees
  * away from the equator, so this keeps pushes isotropic (circular) rather
  * than stretched east-west, and keeps the projection stable as points move
  * across iterations (re-deriving it per-point per-iteration would make the
- * relaxation's convergence direction inconsistent).
+ * relaxation's convergence direction inconsistent). `constrain` itself is
+ * called in the caller's original [lon, lat] space, since that's what region
+ * geometry (e.g. GeoJSON polygons) is expressed in.
  */
 export function jitterOverlappingPoints(
   coordinates: [number, number][],
   radiusMeters: number,
+  constrain?: (point: [number, number], index: number) => [number, number],
 ): [number, number][] {
   const n = coordinates.length;
-  if (n < 2) return [...coordinates];
+  if (n === 0) return [];
 
   const refLat = coordinates.reduce((sum, [, lat]) => sum + lat, 0) / n;
   const metersPerDegreeLon = METERS_PER_DEGREE_LAT * Math.cos((refLat * Math.PI) / 180);
 
-  const points: [number, number][] = coordinates.map(([lon, lat]) => [
+  const toMeters = ([lon, lat]: [number, number]): [number, number] => [
     lon * metersPerDegreeLon,
     lat * METERS_PER_DEGREE_LAT,
-  ]);
+  ];
+  const toDegrees = ([x, y]: [number, number]): [number, number] => [
+    x / metersPerDegreeLon,
+    y / METERS_PER_DEGREE_LAT,
+  ];
 
-  // Exact duplicates start at zero distance, which has no direction to push along —
-  // nudge them apart first (golden-angle spaced) so the relaxation below always has
-  // a well-defined vector to work with.
-  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-  const seen = new Map<string, number>();
-  points.forEach((p) => {
-    const key = `${p[0]},${p[1]}`;
-    const count = seen.get(key) ?? 0;
-    if (count > 0) {
-      const angle = count * goldenAngle;
-      p[0] += Math.cos(angle) * 1e-3;
-      p[1] += Math.sin(angle) * 1e-3;
+  const points: [number, number][] = coordinates.map(toMeters);
+
+  // Applies `constrain` (in degree space) to every point and reports whether any
+  // of them actually moved, so the caller can treat "the clamp had to do something"
+  // the same as "a pair still overlaps" when deciding whether another pass is needed.
+  const applyConstrain = (): boolean => {
+    if (!constrain) return false;
+    let moved = false;
+    for (let k = 0; k < n; k++) {
+      const [beforeX, beforeY] = points[k];
+      const [afterX, afterY] = toMeters(constrain(toDegrees(points[k]), k));
+      if (Math.abs(afterX - beforeX) > 1e-6 || Math.abs(afterY - beforeY) > 1e-6) moved = true;
+      points[k][0] = afterX;
+      points[k][1] = afterY;
     }
-    seen.set(key, count + 1);
-  });
+    return moved;
+  };
+
+  if (n === 1) {
+    applyConstrain();
+    return points.map(toDegrees);
+  }
+
+  // Coincident points (exact duplicate input coordinates, or two points the
+  // border clamp above snapped to the same spot) start at zero distance, which
+  // has no direction to push along — fall back to a deterministic golden-angle
+  // spaced direction (keyed on the pair) so the relaxation below always has a
+  // well-defined vector to work with, at *any* point during the loop, not just
+  // before it starts.
+  const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+
+  applyConstrain();
 
   const dispX = new Array<number>(n);
   const dispY = new Array<number>(n);
@@ -140,8 +178,15 @@ export function jitterOverlappingPoints(
         if (dist >= radiusMeters) continue;
         anyOverlap = true;
         const push = (radiusMeters - dist) / 2;
-        const ux = dx / dist;
-        const uy = dy / dist;
+        let ux: number, uy: number;
+        if (dist < 1e-9) {
+          const angle = (i * n + j) * goldenAngle;
+          ux = Math.cos(angle);
+          uy = Math.sin(angle);
+        } else {
+          ux = dx / dist;
+          uy = dy / dist;
+        }
         dispX[i] -= ux * push;
         dispY[i] -= uy * push;
         degree[i]++;
@@ -150,15 +195,16 @@ export function jitterOverlappingPoints(
         degree[j]++;
       }
     }
-    if (!anyOverlap) break;
     for (let k = 0; k < n; k++) {
       if (!degree[k]) continue;
       points[k][0] += (dispX[k] / degree[k]) * JITTER_DAMPING;
       points[k][1] += (dispY[k] / degree[k]) * JITTER_DAMPING;
     }
+    const constrained = applyConstrain();
+    if (!anyOverlap && !constrained) break;
   }
 
-  return points.map(([x, y]) => [x / metersPerDegreeLon, y / METERS_PER_DEGREE_LAT]);
+  return points.map(toDegrees);
 }
 
 export interface BoundingBox {
