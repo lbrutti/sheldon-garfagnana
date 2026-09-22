@@ -33,7 +33,7 @@ import {
 import {getExplodedData, normalizzaStringa, resolveColorVariable, shuffleArray} from '../../../utils';
 import {FeatureCollection, Polygon} from 'geojson';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
-import {DecimalPipe, JsonPipe} from '@angular/common';
+import {DecimalPipe} from '@angular/common';
 import camelcase from 'camelcase';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 import {TranslocoPipe} from '@jsverse/transloco';
@@ -41,7 +41,7 @@ import PopupComponent from '../../libs/popup/popup.component';
 
 @Component({
   selector: 'sheldon-dashboard',
-  imports: [...components, NgxMasonryModule, TranslocoPipe, PopupComponent, JsonPipe],
+  imports: [...components, NgxMasonryModule, TranslocoPipe, PopupComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
   providers: [DecimalPipe]

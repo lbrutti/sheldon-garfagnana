@@ -13,7 +13,7 @@ import {
 import {TranslocoModule} from '@jsverse/transloco';
 import {NgxMasonryComponent, NgxMasonryDirective, NgxMasonryModule, NgxMasonryOptions} from 'ngx-masonry';
 import WidgetSetting from '../../../interfaces/widget-setting.interface';
-import { FilterOptionInterface, InterventoInterface} from '../../../interfaces';
+import {FilterOptionInterface, InterventoInterface} from '../../../interfaces';
 import {FeatureCollection, Polygon} from 'geojson';
 import {ProjectsApiService} from '../../../services/projects-api.service';
 import {FilterStateService} from '../../../services/filter-state.service';
@@ -27,7 +27,9 @@ import FooterLoghiComponent from '../../libs/footer-loghi/footer-loghi.component
 
 @Component({
   selector: 'sheldon-map-view',
-  imports: [TranslocoModule, GlobalSearchComponent, NgxMasonryModule, SheldonInterventiMapComponent, PopupComponent, FooterLoghiComponent],
+  imports: [TranslocoModule, GlobalSearchComponent,
+    NgxMasonryModule, SheldonInterventiMapComponent, PopupComponent
+  ],
   templateUrl: './map-view.html',
   styleUrl: './map-view.scss',
 })
