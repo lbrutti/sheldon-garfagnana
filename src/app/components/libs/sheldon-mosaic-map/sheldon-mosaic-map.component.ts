@@ -244,6 +244,8 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
   mapReady = signal(false);
   mapMinZoom = signal(0);
   mapMaxZoom = signal(22);
+  /** Live zoom level, updated (rAF-throttled) as the user pans/zooms. */
+  currentZoom = signal(0);
   activeAuxReduce = signal<AuxReduceOption | null>(null);
   protected selectedComune = signal<string | null>(null);
   private isHovering = signal(false);
@@ -262,6 +264,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     requestAnimationFrame(() => {
       this.gridRefreshPending = false;
       this.refreshGrid();
+      this.currentZoom.set(this.mapInstance?.getZoom() ?? 0);
     });
   };
 
@@ -477,6 +480,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     map.setMaxZoom(maxZoom);
     this.mapMinZoom.set(minZoom);
     this.mapMaxZoom.set(maxZoom);
+    this.currentZoom.set(homeZoom);
   }
 
   ngOnInit(): void {
@@ -524,6 +528,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     map.resize();
     map.on('move', this.onMapMove);
     this.mapReady.set(true);
+    this.currentZoom.set(map.getZoom());
     this.refreshGrid();
   }
 
