@@ -26,7 +26,11 @@ import PopupComponent from '../../libs/popup/popup.component';
 
 @Component({
   selector: 'sheldon-data-stories',
-  imports: [...components, NgxMasonryModule, CardStoryComponent, TranslocoPipe, PopupComponent],
+  standalone: true,
+
+  imports: [...components, NgxMasonryModule,
+    CardStoryComponent,
+    TranslocoPipe, PopupComponent],
   templateUrl: './data-stories.html',
   styleUrl: './data-stories.scss',
   providers: [DecimalPipe]

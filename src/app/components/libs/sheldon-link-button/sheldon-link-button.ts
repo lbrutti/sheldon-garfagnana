@@ -4,6 +4,7 @@ import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'sheldon-link-button',
+  standalone: true,
   imports: [
     TranslocoPipe,
     MatButton

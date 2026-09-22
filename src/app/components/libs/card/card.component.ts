@@ -22,6 +22,7 @@ const CARD_PARAM = 'card';
   ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
+  standalone: true,
   host: {
     '[class.fullscreen]': 'isFullscreen()',
   },
@@ -52,7 +53,7 @@ export default class CardComponent {
   readonly isFullscreen = computed(() => !!this.cardId() && this.activeCard() === this.cardId());
   startColor = computed(() => {
     this.theme();
-    return this.theme()==='light' ?  resolveColorVariable(`--color-gradient-${normalizzaStringa(this.categoria())}-start`) : '#000';
+    return this.theme() === 'light' ? resolveColorVariable(`--color-gradient-${normalizzaStringa(this.categoria())}-start`) : '#000';
   });
   endColor = computed(() => {
     this.theme();

@@ -6,14 +6,14 @@ import CardComponent from '../card/card.component';
 
 import {TranslocoModule} from '@jsverse/transloco';
 import DataStoryInterface from '../../../interfaces/data-story.interface';
-import {SheldonLinkButton} from '../sheldon-link-button/sheldon-link-button';
 import {getRandomGradient} from '../../../utils';
 import {Router, RouterLink} from '@angular/router';
 import {ThemeService} from '../../../services/theme.service';
 
 @Component({
   selector: 'sheldon-story',
-  imports: [CardComponent, TranslocoModule, SheldonLinkButton, SheldonLinkButton, RouterLink],
+  standalone: true,
+  imports: [CardComponent, TranslocoModule, RouterLink],
   templateUrl: './card-story.component.html',
   styleUrl: './card-story.component.scss',
 })

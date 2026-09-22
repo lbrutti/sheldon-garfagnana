@@ -3,6 +3,7 @@ import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
   selector: 'sheldon-popup',
+  standalone: true,
   imports: [TranslocoPipe],
   templateUrl: './popup.component.html',
   styleUrl: './popup.component.scss',

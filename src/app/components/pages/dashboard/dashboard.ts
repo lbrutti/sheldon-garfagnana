@@ -41,6 +41,7 @@ import PopupComponent from '../../libs/popup/popup.component';
 
 @Component({
   selector: 'sheldon-dashboard',
+  standalone: true,
   imports: [...components, NgxMasonryModule, TranslocoPipe, PopupComponent],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss',
