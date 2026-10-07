@@ -42,7 +42,6 @@
     box-sizing: border-box;
     overflow: hidden;
     transition: width var(--chart-transition-duration) ease;
-    cursor: pointer;
     margin-left: var(--zero-pct, 0%);
 
     &.negative {

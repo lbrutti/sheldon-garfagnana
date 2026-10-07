@@ -30,7 +30,7 @@
       <div class="treemap-wrapper" #wrapper>
         @for (tile of tiles(); track tile.label) {
           <div
-            class="treemap-tile cursor-pointer"
+            class="treemap-tile"
             [class.dimmed]="hoveredTile() !== null && hoveredTile() !== tile"
             [style.left.%]="tile.x"
             [style.top.%]="tile.y"

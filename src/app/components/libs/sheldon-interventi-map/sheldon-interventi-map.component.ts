@@ -104,7 +104,7 @@ export default class SheldonInterventiMapComponent extends SheldonMosaicMapCompo
     if (!this.mapInstance || !event.features?.length) return;
     const feature = event.features[0] as unknown as Feature<Point>;
     this.hoveredIntervento.set(feature);
-    this.mapInstance.getCanvas().style.cursor = 'pointer';
+    // this.mapInstance.getCanvas().style.cursor = 'pointer';
   }
 
   onInterventiLeave(): void {

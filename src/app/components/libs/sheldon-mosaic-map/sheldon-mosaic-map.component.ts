@@ -552,7 +552,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
 
     this.hoveredFeature.set(this.enrichWithData(feature));
     this.tooltipPos.set({x: event.point.x, y: event.point.y});
-    map.getCanvas().style.cursor = 'pointer';
+    map.getCanvas().style.cursor = 'default';
     this.polygonHover.emit(feature);
   }
 
