@@ -10,7 +10,11 @@
       (selectionChange)="(handleUnioneSelect())"
     >
       @for (option of suggestions(); track option) {
-        <mat-option [value]="option" [disabled]="option.disabled">{{ option.label }}</mat-option>
+        @if (option.value === '') {
+          <mat-option [value]="option">{{ 'globalSearch.searchByUnione' | transloco }}</mat-option>
+        } @else {
+          <mat-option [value]="option" [disabled]="option.disabled">{{ option.label }}</mat-option>
+        }
       }
     </mat-select>
 
