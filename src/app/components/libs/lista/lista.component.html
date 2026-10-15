@@ -33,9 +33,13 @@
             <div class="list-row">
 
                 <span class="nome-container">
-                  <a [routerLink]="'/'+pageUrl()+'/'+dato.pageUrlId"
-                     [queryParams]="{theme: theme()}"
-                     target="_blank">{{ dato.nome }}</a>
+                  @if (dato.pageUrlId) {
+                    <a [routerLink]="'/'+pageUrl()+'/'+dato.pageUrlId"
+                       [queryParams]="{theme: theme()}"
+                       target="_blank">{{ dato.nome }}</a>
+                  } @else {
+                    {{ dato.nome }}
+                  }
                 </span>
               <span class="valore-container">{{ dato.valore | multiples }}</span>
             </div>
