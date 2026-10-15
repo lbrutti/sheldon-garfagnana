@@ -18,7 +18,7 @@ export const environment = {
   },
   // Static GeoJSON served from the public/ folder.
   data: {
-    toscanaPolygons: 'data/toscana.polygons.grid.geojson',
+    toscanaPolygons: 'data/toscana.mosaic.json',
     comuniPolygons: 'data/comuni.polygons.json',
     comuniMosaic: 'data/comuni.mosaic.json'  },
   // Dashboard configuration sheets (separate spreadsheet).
