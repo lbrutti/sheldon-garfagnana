@@ -20,7 +20,7 @@ export const environment = {
   data: {
     comuniPolygons: 'data/comuni.poly.json',
     comuniMosaic: 'data/comuni.mosaic.json',
-    toscanaPolygons: 'data/toscana.mosaic-edited.json'
+    toscanaPolygons: 'data/toscana.mosaic.json'
   },
   // Dashboard configuration sheets (separate spreadsheet).
   settings: {
