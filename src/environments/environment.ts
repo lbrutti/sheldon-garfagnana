@@ -20,6 +20,8 @@ export const environment = {
   data: {
     comuniPoints: 'data/comuni.points.json',
     comuniPolygons: 'data/comuni.polygons.grid.json',
+    toscanaPolygons: 'data/toscana.polygons.grid.geojson',
+    comuniFocusPolygons: 'data/comuni.polygons.grid.focus.geojson'
   },
   // Dashboard configuration sheets (separate spreadsheet).
   settings: {

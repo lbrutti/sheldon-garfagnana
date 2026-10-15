@@ -32,6 +32,7 @@ import {getRandomGradient, normalizzaStringa, resolveColorVariable} from '../../
 import {ThemeService} from '../../../services/theme.service';
 import {TranslocoModule} from '@jsverse/transloco';
 import NoDataComponent from '../no-data/no-data.component';
+import {environment} from '../../../../environments/environment';
 
 const EMPTY_COLLECTION: FeatureCollection = {type: 'FeatureCollection', features: []};
 
@@ -493,10 +494,10 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     });
     this.resizeObserver.observe(this.elRef.nativeElement);
 
-    this.http.get<FeatureCollection<Polygon>>('data/comuni.polygons.grid.focus.geojson').subscribe(
+    this.http.get<FeatureCollection<Polygon>>(environment.data.comuniFocusPolygons).subscribe(
       fc => this.mosaicComuni.set(fc),
     );
-    this.http.get<FeatureCollection<Polygon>>('data/comuni.polygons.grid.toscana.geojson').subscribe(
+    this.http.get<FeatureCollection<Polygon>>(environment.data.toscanaPolygons).subscribe(
       fc => this.mosaicToscana.set(fc),
     );
   }
