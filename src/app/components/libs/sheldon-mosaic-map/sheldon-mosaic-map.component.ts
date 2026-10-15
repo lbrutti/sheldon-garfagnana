@@ -355,7 +355,9 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     this.theme();
     const categoria = normalizzaStringa(this.categoria());
     let baseColor = this.theme() === 'light' ? resolveColorVariable(`--color-gradient-${categoria}-start`) : '#000';
-    if (baseColor === '#000') {
+    // Unknown/empty categoria resolves to '' — an invalid color makes MapLibre reject the
+    // choropleth paint and silently drop the comuni-fill layer.
+    if (baseColor === '#000' || !hexToRgb(baseColor)) {
       baseColor = '#1d1d1d';
     }
     this.tooltipGradient = getRandomGradient(this.categoria(), '90deg', this.theme());
