@@ -18,9 +18,10 @@ export const environment = {
   },
   // Static GeoJSON served from the public/ folder.
   data: {
-    toscanaPolygons: 'data/toscana.mosaic.json',
-    comuniPolygons: 'data/comuni.polygons.json',
-    comuniMosaic: 'data/comuni.mosaic.json'  },
+    comuniPolygons: 'data/comuni.polygons-edited-no-value.json',
+    comuniMosaic: 'data/comuni.mosaic-edited.json',
+    toscanaPolygons: 'data/toscana.mosaic-edited.json'
+  },
   // Dashboard configuration sheets (separate spreadsheet).
   settings: {
     categorieUrl: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT_8-NWzBRl0rclOV-LjFPBSl6N2e8twTe4y4hgvowiSyZF4QV9XZCFpxj_SId0zlx5u3SQu8HC7Md1/pub?gid=988971919&single=true&output=csv',
