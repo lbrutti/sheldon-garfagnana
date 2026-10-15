@@ -494,7 +494,7 @@ export default class SheldonMosaicMapComponent implements OnInit, OnDestroy {
     });
     this.resizeObserver.observe(this.elRef.nativeElement);
 
-    this.http.get<FeatureCollection<Polygon>>(environment.data.comuniFocusPolygons).subscribe(
+    this.http.get<FeatureCollection<Polygon>>(environment.data.comuniMosaic).subscribe(
       fc => this.mosaicComuni.set(fc),
     );
     this.http.get<FeatureCollection<Polygon>>(environment.data.toscanaPolygons).subscribe(

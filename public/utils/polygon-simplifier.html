@@ -798,7 +798,7 @@ downloadBtn.addEventListener('click', () => {
   if (!simplifiedFC) return;
   const blob = new Blob([JSON.stringify(simplifiedFC)], { type: 'application/json' });
   const url  = URL.createObjectURL(blob);
-  const a    = Object.assign(document.createElement('a'), { href: url, download: 'comuni.polygons.grid.json' });
+  const a    = Object.assign(document.createElement('a'), { href: url, download: 'comuni.polygons.json' });
   a.click();
   URL.revokeObjectURL(url);
 });
